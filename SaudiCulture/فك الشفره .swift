@@ -178,6 +178,7 @@ struct PuzzleView: View {
 
                     }
                     .padding(.leading, 20)
+                    .offset(x: 0, y: 110)
 
                     
                     
