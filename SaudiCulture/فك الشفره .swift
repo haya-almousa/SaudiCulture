@@ -28,6 +28,7 @@ extension Color {
 
 struct PuzzleView: View {
     @State private var answer: String = ""
+    @State private var showText = false
 
     
     
@@ -62,6 +63,21 @@ struct PuzzleView: View {
                 .padding()
 
                
+                HStack {
+                    Button(action: {
+                        
+                    }) {
+                        Image(systemName: "house")
+                            .font(.system(size: 30, weight: .medium)) // ⭐ حجم الأيقونة
+                                       .foregroundColor(Color(hex: "874F35"))
+                                       .padding(2)
+                    }
+                    .offset(x: -155, y: -50)
+                }
+                
+                
+                
+                
                 // الكرت
                 VStack(spacing: 10) {
                     
@@ -69,7 +85,7 @@ struct PuzzleView: View {
                     
                     Text("فك الشفرة")
                         .font(.title)
-                        .foregroundColor(Color.brown)
+                        .foregroundColor(Color(hex: "874F35"))
                         .padding(.bottom, 20)
                         .offset(x: 0 , y: -100)
 
@@ -97,34 +113,79 @@ struct PuzzleView: View {
                             .frame(width: 220) // ⭐ تتحكمين بطول الخط هنا
 
                         Rectangle()
-                            .frame(width: 290, height: 1) // ⭐ نفس العرض
-                            .foregroundColor(Color.brown.opacity(0.5))
+                            .frame(width: 290, height: 2) // ⭐ نفس العرض
+                            .foregroundColor(Color(hex: "874F35")/*.opacity(0.5)*/)
                     }
                     .offset(x: 0 , y: -0)
 
 
 
+//                    HStack {
+//                        Button(action: {
+//                            withAnimation(.easeInOut) {
+//                                showText.toggle()
+//                            }
+//                        }) {
+//                            if showText {
+//                                Text("شراب ")
+//                                    .font(.headline)
+//                                    .foregroundColor(Color(hex: "FCF0DD"))
+//                                    .padding(.horizontal, 28)
+//                                    .padding(.vertical, 14)
+//                            } else {
+//                                Image(systemName: "questionmark")
+//                                    .font(.system(size: 22))
+//                                    .foregroundColor(.white)
+//                                    .padding(16)
+//                            }
+//                        }
+//                        .background(Color(hex: "874F35"))
+//                        .clipShape(
+//                            showText ? AnyShape(Capsule()) : AnyShape(Circle())
+//                        )
+//                        .offset(x: -140, y: 120)
+//                    }
+
+                    
                     HStack {
-                        Button(action: {
-                            
-                        }) {
-                            Image(systemName: "questionmark")
-                                .foregroundColor(.white)
-                                .padding()
-                                .background(Color.brown)
-                                .clipShape(Circle())
+                        ZStack(alignment: .leading) { // نثبت النص على اليسار
+                            Button(action: {
+                                withAnimation(.easeInOut(duration: 0.3)) {
+                                    showText.toggle()
+                                }
+                            }) {
+                                HStack {
+                                    if showText {
+                                        Text(" شراب ")
+                                            .font(.headline)
+                                            .foregroundColor(Color(hex: "FCF0DD"))
+                                            .padding(.horizontal, 28)
+                                            .padding(.vertical, 14)
+                                    } else {
+                                        Image(systemName: "questionmark")
+                                            .font(.system(size: 22))
+                                            .foregroundColor(.white)
+                                            .padding(16)
+                                    }
+                                }
+                                .background(Color(hex: "874F35"))
+                                .clipShape(RoundedRectangle(cornerRadius: showText ? 25 : 30)) // morph
+                                .frame(minWidth: showText ? 140 : 60, alignment: .leading) // الثبات على اليسار
+                            }
                         }
-                        .offset(x: -140, y: 120) // ← تحكم كامل بالموقع
+                        Spacer() // يخلي الزر على اليسار
+//                        .offset(x: -140, y: 120)
 
-//                        Spacer()
                     }
-                }
-//                .padding()
-                .frame(width: 355, height: 520) // ← هنا التحكم بالحجم
+                    .padding(.leading, 20)
 
+                    
+                    
+                }
+                .frame(width: 355, height: 520) // ← هنا التحكم بالحجم
                 .background(
                     RoundedRectangle(cornerRadius: 30)
-                        .stroke(Color.brown, lineWidth: 4)
+                        .stroke(Color(hex: "874F35"), lineWidth: 4)
                         .background(
                             RoundedRectangle(cornerRadius: 30)
                                 .fill(Color(hex: "FCF0DD"))
@@ -136,10 +197,10 @@ struct PuzzleView: View {
 
                 Button(action: {}) {
                     Text("إنهاء")
-                        .foregroundColor(.white)
+                        .foregroundColor(Color(hex: "FCF0DD"))
                         .padding(.horizontal, 40)
                         .padding(.vertical, 12)
-                        .background(Color.brown)
+                        .background(Color(hex: "874F35"))
                         .cornerRadius(25)
                 }
 
