@@ -38,8 +38,7 @@ struct Name: View {
         .background(Color("BackgroundMain"))
         .ignoresSafeArea() //  يغطي كامل الشاشة
     }
-    }
-
+}
 
 #Preview {
     Name()
