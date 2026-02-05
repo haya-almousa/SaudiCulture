@@ -7,26 +7,9 @@
 
 import SwiftUI
 
-extension Color {
-    init(hex: String) {
-        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
-        var int: UInt64 = 0
-        Scanner(string: hex).scanHexInt64(&int)
-        let r, g, b: UInt64
-        r = (int >> 16) & 0xFF
-        g = (int >> 8) & 0xFF
-        b = int & 0xFF
-        self.init(
-            .sRGB,
-            red: Double(r) / 255,
-            green: Double(g) / 255,
-            blue: Double(b) / 255
-        )
-    }
-}
   
 
-struct PuzzleView: View {
+struct PuzzleView2: View {
     @State private var answer: String = ""
     @State private var showText = false
 
@@ -41,7 +24,7 @@ struct PuzzleView: View {
 
             // صورة النخلة بالخلفية
             GeometryReader { proxy in
-                Image("background")
+                Image("palm_bg")
                     .resizable()
                     .scaledToFit()
                     .opacity(0.15)
@@ -83,7 +66,7 @@ struct PuzzleView: View {
                     
                     
                     
-                    Text("فك الشفرة")
+                    Text("اكتشف العاده ")
                         .font(.title)
                         .foregroundColor(Color(hex: "874F35"))
                         .padding(.bottom, 20)
@@ -159,10 +142,8 @@ struct PuzzleView: View {
                                         Text(" شراب ")
                                             .font(.headline)
                                             .foregroundColor(Color(hex: "FCF0DD"))
-                                        
                                             .padding(.horizontal, 28)
                                             .padding(.vertical, 14)
-                                        
                                     } else {
                                         Image(systemName: "questionmark")
                                             .font(.system(size: 22))
@@ -172,8 +153,6 @@ struct PuzzleView: View {
                                 }
                                 .background(Color(hex: "874F35"))
                                 .clipShape(RoundedRectangle(cornerRadius: showText ? 25 : 30)) // morph
-//                                .opacity(0.77)
-
                                 .frame(minWidth: showText ? 140 : 60, alignment: .leading) // الثبات على اليسار
                             }
                         }
@@ -216,5 +195,5 @@ struct PuzzleView: View {
 }
 
 #Preview {
-    PuzzleView()
+    PuzzleView2()
 }
