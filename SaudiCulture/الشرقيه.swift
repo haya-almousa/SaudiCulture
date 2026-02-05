@@ -18,12 +18,12 @@ struct الشرقيه: View {
                 Image("شرقاوية")
                     .resizable()
                     .scaledToFit()
-                    .frame(height: 360)
+                    .frame(height: 500)
                 
                 Image("شرقاوي")
                     .resizable()
                     .scaledToFit()
-                    .frame(height: 360)
+                    .frame(height: 500)
             }
             .position(x: UIScreen.main.bounds.width / 2, y: 160)
             

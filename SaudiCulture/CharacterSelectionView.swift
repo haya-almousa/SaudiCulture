@@ -7,100 +7,100 @@
 
 import SwiftUI
 
-// 1) تعريف المناطق
-enum Region: Hashable {
-    case central, east, west, south, north
-}
-
-// 2) عنصر الشخصية
+// 1. الموديل: كل شخصية منفصلة تماماً
 struct CharacterItem: Identifiable {
     let id = UUID()
-    let title: String
+    let name: String
     let imageName: String
-    let region: Region
+}
+
+// 2. تنظيم البيانات في أزواج (كل زوج يمثل سطر)
+struct RegionRow: Identifiable {
+    let id = UUID()
+    let regionName: String
+    let man: CharacterItem
+    let woman: CharacterItem
+    let isLeading: Bool // تحديد الجهة (يسار أو يمين)
 }
 
 struct CharacterSelectionView: View {
-
-    // 3) هذا هو “الطريق” اللي بنمشيه في التنقل (أنظف من booleans)
-    @State private var path: [Region] = []
-
-    // 4) اختيار المستخدم
-    @State private var selectedID: UUID? = nil
-
-    // ✳️ عدلي أسماء الصور هنا لتطابق Assets عندك
-    private let items: [CharacterItem] = [
-        .init(title: "نجدي",  imageName: "نجدي",   region: .central),
-        .init(title: "نجدية", imageName: "نجديه", region: .central),
+    
+    // مصفوفة البيانات مرتبة حسب طلبك
+    let regions = [
+        RegionRow(regionName: "الوسطى", man: .init(name: "نجدي", imageName: "نجدي"), woman: .init(name: "نجدية", imageName: "نجدية"), isLeading: true),
+        RegionRow(regionName: "الشرقية", man: .init(name: "شرقاوي", imageName: "شرقاوي"), woman: .init(name: "شرقية", imageName: "شرقية"), isLeading: false),
+        RegionRow(regionName: "الغربية", man: .init(name: "غربي", imageName: "غربي"), woman: .init(name: "غربية", imageName: "غربية"), isLeading: true),
+        RegionRow(regionName: "الشمالية", man: .init(name: "شمالي", imageName: "شمالي"), woman: .init(name: "شمالية", imageName: "شمالية"), isLeading: false),
+        RegionRow(regionName: "الجنوبية", man: .init(name: "جنوبي", imageName: "جنوبي"), woman: .init(name: "جنوبية", imageName: "جنوبية"), isLeading: true)
     ]
-
+    
+    // لتخزين الـ ID الخاص بالشخصية المختارة فقط
+    @State private var selectedCharacterID: UUID? = nil
+    
     var body: some View {
-        NavigationStack(path: $path) {
-            VStack(spacing: 24) {
-
+        ZStack {
+            Color(red: 0.98, green: 0.97, blue: 0.95).ignoresSafeArea()
+            
+            VStack {
                 Text("اضغط على شخصيتك")
-                    .font(.custom("Saudi-Regular", size: 34))
-                    .foregroundStyle(Color("brown"))
-                    .padding(.top, 24)
-
-                HStack(spacing: 24) {
-                    ForEach(items) { item in
-                        characterCard(item)
+                    .font(.custom("Traditional Arabic", size: 35))
+                    .padding(.top, 40)
+                
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 40) {
+                        ForEach(regions) { row in
+                            HStack(spacing: 20) {
+                                if !row.isLeading { Spacer() }
+                                
+                                // عرض الرجل والمرأة بجانب بعض في نفس السطر
+                                characterView(for: row.man)
+                                characterView(for: row.woman)
+                                
+                                if row.isLeading { Spacer() }
+                            }
+                            .padding(.horizontal, 25)
+                        }
                     }
+                    .padding(.vertical, 20)
                 }
-                .padding(.horizontal, 24)
-
-                Button("التالي") {
-                    goNext()
-                }
-                .font(.custom("Saudi-Regular", size: 20))
-                .padding(.horizontal, 40)
-                .padding(.vertical, 12)
-                .background(Color("brown"))
-                .foregroundStyle(.white)
-                .clipShape(Capsule())
-                .disabled(selectedID == nil)
-                .opacity(selectedID == nil ? 0.4 : 1)
-                .padding(.bottom, 32)
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color("BackgroundMain"))
-            .ignoresSafeArea()
-            .navigationDestination(for: Region.self) { region in
-                switch region {
-                case .central:
-                    الوسطى()      // ✅ واجهتك الجاهزة
-                default:
-                    Text("قريبًا") // مؤقت لباقي المناطق
+                
+                // زر التأكيد: يظهر فقط عند اختيار شخصية
+                if selectedCharacterID != nil {
+                    Button(action: {
+                        print("تم التأكيد")
+                    }) {
+                        Text("تأكيد")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 55)
+                            .background(Color.brown)
+                            .cornerRadius(15)
+                            .padding()
+                    }
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
             }
         }
     }
-
-    private func characterCard(_ item: CharacterItem) -> some View {
-        let isSelected = (selectedID == item.id)
-
-        return VStack(spacing: 12) {
-            Image(item.imageName)
+    
+    // مكون الصورة المنفصلة مع منطق الشفافية
+    @ViewBuilder
+    private func characterView(for character: CharacterItem) -> some View {
+        VStack {
+            Image(character.imageName)
                 .resizable()
                 .scaledToFit()
-                .contentShape(Rectangle())
-                .opacity(selectedID == nil ? 1 : (isSelected ? 1 : 0.25))
-                .animation(.easeInOut(duration: 0.2), value: selectedID)
-                .onTapGesture { selectedID = item.id }
-
-            Text(item.title)
-                .font(.custom("Saudi-Regular", size: 22))
-                .foregroundStyle(Color("brown"))
+                .frame(height: 180)
+                // المنطق: إذا كانت مختارة وضوح كامل، غير ذلك شفافة
+                .opacity(selectedCharacterID == character.id ? 1.0 : 0.3)
+                .scaleEffect(selectedCharacterID == character.id ? 1.1 : 1.0)
+                .onTapGesture {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                        selectedCharacterID = character.id
+                    }
+                }
         }
-        .frame(maxWidth: .infinity)
-    }
-
-    private func goNext() {
-        guard let selectedID,
-              let selected = items.first(where: { $0.id == selectedID }) else { return }
-
-        path.append(selected.region) // ✅ هذا هو التنقل النظيف
     }
 }
 #Preview {

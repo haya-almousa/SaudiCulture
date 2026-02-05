@@ -14,7 +14,7 @@ struct الغربيه: View {
                 .ignoresSafeArea()
             
             // صورتين جنب بعض
-            HStack(spacing: 20) {
+            HStack(spacing: 0.10) {
                 Image("غربيه")
                     .resizable()
                     .scaledToFit()
