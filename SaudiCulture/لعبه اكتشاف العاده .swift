@@ -18,45 +18,54 @@ struct PuzzleView2: View {
     
     var body: some View {
         ZStack {
-            // لون الخلفية
-            Color(hex: "FFF9F2")
+            Image("background")
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: .infinity)
                 .ignoresSafeArea()
 
             // صورة النخلة بالخلفية
-            GeometryReader { proxy in
-                Image("palm_bg")
-                    .resizable()
-                    .scaledToFit()
-                    .opacity(0.15)
-                    .frame(maxWidth: .infinity)
-                    .position(x: proxy.size.width / 2,
-                              y: proxy.size.height * 0.75)
-            }
-            .ignoresSafeArea()
+//            GeometryReader { proxy in
+//                Image("palm_bg")
+//                    .resizable()
+//                    .scaledToFit()
+//                    .opacity(0.15)
+//                    .frame(maxWidth: .infinity)
+//                    .position(x: proxy.size.width / 2,
+//                              y: proxy.size.height * 0.75)
+//            }
+//            .ignoresSafeArea()
 
             VStack {
                 // Header
                 HStack {
-                    Image("home")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-
                     Spacer()
+                    Button(action: {}) {
+                        Text("انهاء اللعبه ")
+                            .font(.custom("Saudi-Regular", size: 14))
+
+                            .foregroundColor(Color(hex: "FCF0DD"))
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 8)
+                            .background(Color(hex: "874F35"))
+                            .cornerRadius(25)
+                        
+                    }
                 }
                 .padding()
 
-               
-                HStack {
-                    Button(action: {
-                        
-                    }) {
-                        Image(systemName: "house")
-                            .font(.system(size: 30, weight: .medium)) // ⭐ حجم الأيقونة
-                                       .foregroundColor(Color(hex: "874F35"))
-                                       .padding(2)
-                    }
-                    .offset(x: -155, y: -50)
-                }
+//               
+//                HStack {
+//                    Button(action: {
+//                        
+//                    }) {
+//                        Image(systemName: "house")
+//                            .font(.system(size: 30, weight: .medium)) // ⭐ حجم الأيقونة
+//                                       .foregroundColor(Color(hex: "874F35"))
+//                                       .padding(2)
+//                    }
+//                    .offset(x: -155, y: -50)
+//                }
                 
                 
                 
@@ -67,68 +76,28 @@ struct PuzzleView2: View {
                     
                     
                     Text("اكتشف العاده ")
-                        .font(.title)
+                        .font(.custom("Saudi-Regular", size: 25))
                         .foregroundColor(Color(hex: "874F35"))
                         .padding(.bottom, 20)
-                        .offset(x: 0 , y: -100)
+                        .offset(x: 0 , y: -10)
 
 
                     HStack(spacing: 20) {
-                        Text("🟢 ☕ 🏜️")
-//                        Text("☕")
-//                        Text("🏜️")
+                        Text("اجعل الفنجال يتحرك  ")
                     }
-                    .font(.title)
+                    .font(.custom("Saudi-Regular", size: 30))
+                    .foregroundColor(Color(hex: "874F35"))
+                    .offset(x: 0 , y: 10 )
 
-                    .offset(x: 0 , y: -100)
+  
+                    Image("الفنجال ")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 300, height: 300)
+                                .offset(x: 0 , y: 80)
 
-
-                    Text("😁")
-                    .font(.title)
-                    .offset(x: 0 , y: -60)
-
-                    VStack(alignment: .trailing, spacing: 8) {
-
-                        TextField("اكتب الإجابه هنا", text: $answer)
-                            .multilineTextAlignment(.trailing)
-                            .foregroundColor(.brown)
-                            .padding(.vertical, 4)
-                            .frame(width: 220) // ⭐ تتحكمين بطول الخط هنا
-
-                        Rectangle()
-                            .frame(width: 290, height: 2) // ⭐ نفس العرض
-                            .foregroundColor(Color(hex: "874F35")/*.opacity(0.5)*/)
-                    }
-                    .offset(x: 0 , y: -0)
-
-
-
-//                    HStack {
-//                        Button(action: {
-//                            withAnimation(.easeInOut) {
-//                                showText.toggle()
-//                            }
-//                        }) {
-//                            if showText {
-//                                Text("شراب ")
-//                                    .font(.headline)
-//                                    .foregroundColor(Color(hex: "FCF0DD"))
-//                                    .padding(.horizontal, 28)
-//                                    .padding(.vertical, 14)
-//                            } else {
-//                                Image(systemName: "questionmark")
-//                                    .font(.system(size: 22))
-//                                    .foregroundColor(.white)
-//                                    .padding(16)
-//                            }
-//                        }
-//                        .background(Color(hex: "874F35"))
-//                        .clipShape(
-//                            showText ? AnyShape(Capsule()) : AnyShape(Circle())
-//                        )
-//                        .offset(x: -140, y: 120)
-//                    }
-
+                    
+                    
                     
                     HStack {
                         ZStack(alignment: .leading) { // نثبت النص على اليسار
@@ -139,8 +108,8 @@ struct PuzzleView2: View {
                             }) {
                                 HStack {
                                     if showText {
-                                        Text(" شراب ")
-                                            .font(.headline)
+                                        Text(" هز الجوال  ")
+                                            .font(.custom("Saudi-Regular", size: 20))
                                             .foregroundColor(Color(hex: "FCF0DD"))
                                             .padding(.horizontal, 28)
                                             .padding(.vertical, 14)
@@ -161,7 +130,7 @@ struct PuzzleView2: View {
 
                     }
                     .padding(.leading, 20)
-                    .offset(x: 0, y: 110)
+                    .offset(x: 0, y: 10)
 
                     
                     
@@ -181,6 +150,7 @@ struct PuzzleView2: View {
 
                 Button(action: {}) {
                     Text("إنهاء")
+                        .font(.custom("Saudi-Regular", size: 18))
                         .foregroundColor(Color(hex: "FCF0DD"))
                         .padding(.horizontal, 40)
                         .padding(.vertical, 12)

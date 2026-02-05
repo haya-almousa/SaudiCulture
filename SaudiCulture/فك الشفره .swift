@@ -36,46 +36,48 @@ struct PuzzleView: View {
     var body: some View {
         ZStack {
             // لون الخلفية
-            Color(hex: "FFF9F2")
+//            Color(hex: "FFF9F2")
+//                .ignoresSafeArea()
+
+            
+            
+            
+            Image("background")
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: .infinity)
                 .ignoresSafeArea()
 
-            // صورة النخلة بالخلفية
-            GeometryReader { proxy in
-                Image("background")
-                    .resizable()
-                    .scaledToFit()
-                    .opacity(0.15)
-                    .frame(maxWidth: .infinity)
-                    .position(x: proxy.size.width / 2,
-                              y: proxy.size.height * 0.75)
-            }
-            .ignoresSafeArea()
+//            // صورة النخلة بالخلفية
+//            GeometryReader { proxy in
+//                Image("background")
+//                    .resizable()
+//                    .scaledToFit()
+////                    .opacity(0.15)
+//                    .frame(maxWidth: .infinity)
+//                    .position(x: proxy.size.width / 2,
+//                              y: proxy.size.height * 0.75)
+//            }
+//            .ignoresSafeArea()
 
             VStack {
                 // Header
                 HStack {
-                    Image("home")
-                        .resizable()
-                        .frame(width: 24, height: 24)
+                        Spacer()
+                        Button(action: {}) {
+                            Text("انهاء اللعبه ")
+                                .font(.custom("Saudi-Regular", size: 14))
 
-                    Spacer()
+                                .foregroundColor(Color(hex: "FCF0DD"))
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 8)
+                                .background(Color(hex: "874F35"))
+                                .cornerRadius(25)
+                            
+                        }
                 }
                 .padding()
 
-               
-                HStack {
-                    Button(action: {
-                        
-                    }) {
-                        Image(systemName: "house")
-                            .font(.system(size: 30, weight: .medium)) // ⭐ حجم الأيقونة
-                                       .foregroundColor(Color(hex: "874F35"))
-                                       .padding(2)
-                    }
-                    .offset(x: -155, y: -50)
-                }
-                
-                
                 
                 
                 // الكرت
@@ -84,7 +86,9 @@ struct PuzzleView: View {
                     
                     
                     Text("فك الشفرة")
-                        .font(.title)
+//                        .font(.title)
+                        .font(.custom("Saudi-Regular", size: 30))
+
                         .foregroundColor(Color(hex: "874F35"))
                         .padding(.bottom, 20)
                         .offset(x: 0 , y: -100)
@@ -107,6 +111,8 @@ struct PuzzleView: View {
                     VStack(alignment: .trailing, spacing: 8) {
 
                         TextField("اكتب الإجابه هنا", text: $answer)
+                            .font(.custom("Saudi-Regular", size: 20))
+
                             .multilineTextAlignment(.trailing)
                             .foregroundColor(.brown)
                             .padding(.vertical, 4)
@@ -157,7 +163,9 @@ struct PuzzleView: View {
                                 HStack {
                                     if showText {
                                         Text(" شراب ")
-                                            .font(.headline)
+//                                            .font(.headline)
+                                            .font(.custom("Saudi-Regular", size: 20))
+
                                             .foregroundColor(Color(hex: "FCF0DD"))
                                         
                                             .padding(.horizontal, 28)
@@ -202,6 +210,8 @@ struct PuzzleView: View {
 
                 Button(action: {}) {
                     Text("إنهاء")
+                        .font(.custom("Saudi-Regular", size: 20))
+
                         .foregroundColor(Color(hex: "FCF0DD"))
                         .padding(.horizontal, 40)
                         .padding(.vertical, 12)
