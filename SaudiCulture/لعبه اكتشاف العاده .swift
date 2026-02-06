@@ -12,6 +12,7 @@ import SwiftUI
 struct PuzzleView2: View {
     @State private var answer: String = ""
     @State private var showText = false
+    @State private var showPopup = false
 
     
     
@@ -54,10 +55,10 @@ struct PuzzleView2: View {
                 }
                 .padding()
 
-//               
+//
 //                HStack {
 //                    Button(action: {
-//                        
+//
 //                    }) {
 //                        Image(systemName: "house")
 //                            .font(.system(size: 30, weight: .medium)) // ⭐ حجم الأيقونة
@@ -98,39 +99,57 @@ struct PuzzleView2: View {
 
                     
                     
-                    
                     HStack {
-                        ZStack(alignment: .leading) { // نثبت النص على اليسار
-                            Button(action: {
-                                withAnimation(.easeInOut(duration: 0.3)) {
-                                    showText.toggle()
-                                }
-                            }) {
-                                HStack {
-                                    if showText {
-                                        Text(" هز الجوال  ")
-                                            .font(.custom("Saudi-Regular", size: 20))
-                                            .foregroundColor(Color(hex: "FCF0DD"))
-                                            .padding(.horizontal, 28)
-                                            .padding(.vertical, 14)
-                                    } else {
-                                        Image(systemName: "questionmark")
-                                            .font(.system(size: 22))
-                                            .foregroundColor(.white)
-                                            .padding(16)
-                                    }
-                                }
-                                .background(Color(hex: "874F35"))
-                                .clipShape(RoundedRectangle(cornerRadius: showText ? 25 : 30)) // morph
-                                .frame(minWidth: showText ? 140 : 60, alignment: .leading) // الثبات على اليسار
+                        Button(action: {
+                            withAnimation(.easeInOut) {
+                                showPopup = true
                             }
+                        }) {
+                            Image(systemName: "questionmark")
+                                .font(.system(size: 22))
+                                .foregroundColor(.white)
+                                .padding(16)
+                                .background(Color(hex: "874F35"))
+                                .clipShape(Circle())
                         }
-                        Spacer() // يخلي الزر على اليسار
-//                        .offset(x: -140, y: 120)
 
+                        Spacer()
                     }
                     .padding(.leading, 20)
-                    .offset(x: 0, y: 10)
+
+
+                    
+//                    if showPopup {
+//                            // محتوى البوب أب
+//                            ZStack() {
+//                                VStack(spacing: 20){
+//                                    Text("هز الجوال")
+//                                        .font(.custom("Saudi-Regular", size: 22))
+//                                        .foregroundColor(Color(hex: "FCF0DD"))
+//                                    
+//                                    Text("هز الجهاز لمعرفة المعلومة")
+//                                        .font(.custom("Saudi-Regular", size: 16))
+//                                        .foregroundColor(Color(hex: "FCF0DD"))
+//                                    
+//                                    Button("إغلاق") {
+//                                        withAnimation {
+//                                            showPopup = false
+//                                        }
+//                                    }
+//                                    .padding(.horizontal, 30)
+//                                    .padding(.vertical, 10)
+//                                    .background(Color(hex: "FCF0DD"))
+//                                    .foregroundColor(Color(hex: "874F35"))
+//                                    .clipShape(Capsule())
+//                                }
+//                                .padding(24)
+//                                .background(Color(hex: "874F35"))
+//                                .cornerRadius(24)
+//                                .shadow(radius: 10)
+//                                .transition(.scale)
+//                                .offset(x:0,y:-150)
+//                            }
+//                    }
 
                     
                     
@@ -143,6 +162,47 @@ struct PuzzleView2: View {
                             RoundedRectangle(cornerRadius: 30)
                                 .fill(Color(hex: "FCF0DD"))
                         )
+                )
+                .padding()
+                .overlay(
+                    Group {
+                        if showPopup {
+                            ZStack {
+                                // لو تبغين ما يعتم الخلفية احذفي هذا
+//                                Color.black.opacity(0.3)
+//                                    .cornerRadius(30)
+//                                    .onTapGesture {
+//                                        withAnimation { showPopup = false }
+//                                    }
+
+                                VStack(spacing: 20) {
+                                    Text("هز الجوال")
+                                        .font(.custom("Saudi-Regular", size: 22))
+                                        .foregroundColor(Color(hex: "FCF0DD"))
+
+                                    Text("هز الجهاز لمعرفة المعلومة")
+                                        .font(.custom("Saudi-Regular", size: 16))
+                                        .foregroundColor(Color(hex: "FCF0DD"))
+
+                                    Button("إغلاق") {
+                                        withAnimation {
+                                            showPopup = false
+                                        }
+                                    }
+                                    .padding(.horizontal, 30)
+                                    .padding(.vertical, 10)
+                                    .background(Color(hex: "FCF0DD"))
+                                    .foregroundColor(Color(hex: "874F35"))
+                                    .clipShape(Capsule())
+                                }
+                                .padding(24)
+                                .background(Color(hex: "874F35"))
+                                .cornerRadius(24)
+                                .shadow(radius: 10)
+                                .transition(.scale)
+                            }
+                        }
+                    }
                 )
                 .padding()
 
@@ -167,3 +227,4 @@ struct PuzzleView2: View {
 #Preview {
     PuzzleView2()
 }
+
