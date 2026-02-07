@@ -210,6 +210,3 @@ struct PuzzleView: View {
     }
 }
 
-#Preview {
-    PuzzleView()
-}

@@ -7,102 +7,70 @@
 
 import SwiftUI
 
-// 1. الموديل: كل شخصية منفصلة تماماً
-struct CharacterItem: Identifiable {
-    let id = UUID()
-    let name: String
-    let imageName: String
-}
+struct CharacterPickerView: View {
 
-// 2. تنظيم البيانات في أزواج (كل زوج يمثل سطر)
-struct RegionRow: Identifiable {
-    let id = UUID()
-    let regionName: String
-    let man: CharacterItem
-    let woman: CharacterItem
-    let isLeading: Bool // تحديد الجهة (يسار أو يمين)
-}
+    let characterPairs: [[String]] = [
+        ["نجدي", "نجديه"],
+        ["جنوبي", "جنوبيه"],
+        ["شماليه", "شمالي"],
+        ["شرقاوية", "شرقاوي"],
+        ["غربيه", "غربي"],
 
-struct CharacterSelectionView: View {
-    
-    // مصفوفة البيانات مرتبة حسب طلبك
-    let regions = [
-        RegionRow(regionName: "الوسطى", man: .init(name: "نجدي", imageName: "نجدي"), woman: .init(name: "نجدية", imageName: "نجدية"), isLeading: true),
-        RegionRow(regionName: "الشرقية", man: .init(name: "شرقاوي", imageName: "شرقاوي"), woman: .init(name: "شرقية", imageName: "شرقية"), isLeading: false),
-        RegionRow(regionName: "الغربية", man: .init(name: "غربي", imageName: "غربي"), woman: .init(name: "غربية", imageName: "غربية"), isLeading: true),
-        RegionRow(regionName: "الشمالية", man: .init(name: "شمالي", imageName: "شمالي"), woman: .init(name: "شمالية", imageName: "شمالية"), isLeading: false),
-        RegionRow(regionName: "الجنوبية", man: .init(name: "جنوبي", imageName: "جنوبي"), woman: .init(name: "جنوبية", imageName: "جنوبية"), isLeading: true)
+        
+
+
     ]
-    
-    // لتخزين الـ ID الخاص بالشخصية المختارة فقط
-    @State private var selectedCharacterID: UUID? = nil
-    
+
+    @State private var selectedName: String? = nil
+
     var body: some View {
-        ZStack {
-            Color(red: 0.98, green: 0.97, blue: 0.95).ignoresSafeArea()
-            
-            VStack {
-                Text("اضغط على شخصيتك")
-                    .font(.custom("Traditional Arabic", size: 35))
-                    .padding(.top, 40)
-                
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 40) {
-                        ForEach(regions) { row in
-                            HStack(spacing: 20) {
-                                if !row.isLeading { Spacer() }
-                                
-                                // عرض الرجل والمرأة بجانب بعض في نفس السطر
-                                characterView(for: row.man)
-                                characterView(for: row.woman)
-                                
-                                if row.isLeading { Spacer() }
+        ScrollView {
+            VStack(spacing: 20) {
+                let rowCount: Int = characterPairs.count
+                ForEach(0..<rowCount, id: \.self) { rowIndex in
+                    let pair: [String] = characterPairs[rowIndex]
+
+                    HStack {
+                        if rowIndex % 2 == 0 { Spacer() }
+
+                        HStack(spacing: 0) {
+                            ForEach(pair, id: \.self) { name in
+                                Image(name)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 160, height: 200)
+                                    .opacity(selectedName == nil ? 0.4 : (selectedName == name ? 1.0 : 0.4))
+                                    .animation(.easeInOut(duration: 0.2), value: selectedName)
+                                    .onTapGesture {
+                                        selectedName = name
+                                    }
                             }
-                            .padding(.horizontal, 25)
                         }
+
+                        if rowIndex % 2 != 0 { Spacer() }
                     }
-                    .padding(.vertical, 20)
                 }
-                
-                // زر التأكيد: يظهر فقط عند اختيار شخصية
-                if selectedCharacterID != nil {
+
+                if let _ = selectedName {
                     Button(action: {
-                        print("تم التأكيد")
+                        // TODO: Handle next action, e.g., navigate or confirm selection
                     }) {
-                        Text("تأكيد")
+                        Text("التالي")
                             .font(.headline)
-                            .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
-                            .frame(height: 55)
-                            .background(Color.brown)
-                            .cornerRadius(15)
                             .padding()
+                            .background(Color.accentColor)
+                            .foregroundColor(.white)
+                            .cornerRadius(12)
                     }
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .padding(.top, 8)
                 }
             }
-        }
-    }
-    
-    // مكون الصورة المنفصلة مع منطق الشفافية
-    @ViewBuilder
-    private func characterView(for character: CharacterItem) -> some View {
-        VStack {
-            Image(character.imageName)
-                .resizable()
-                .scaledToFit()
-                .frame(height: 180)
-                // المنطق: إذا كانت مختارة وضوح كامل، غير ذلك شفافة
-                .opacity(selectedCharacterID == character.id ? 1.0 : 0.3)
-                .scaleEffect(selectedCharacterID == character.id ? 1.1 : 1.0)
-                .onTapGesture {
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
-                        selectedCharacterID = character.id
-                    }
-                }
+            .padding()
         }
     }
 }
+
 #Preview {
-    CharacterSelectionView()
+    CharacterPickerView()
 }
