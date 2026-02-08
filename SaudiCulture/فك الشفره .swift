@@ -37,9 +37,62 @@ struct PuzzleView: View {
     @State private var answer: String = ""
     @State private var showText = false
     @State private var showPopup = false
+    @State private var currentIndex = 0
+    @State private var feedback = ""
+    @State private var showSuccessEmoji = false
 
 
-    
+    let puzzles: [Puzzle] = [
+
+        Puzzle(
+            emojis: "🟢 ☕ 🏜️",
+            hint: "مشروب عربي مشهور",
+            answer: "القهوة العربية"
+        ),
+
+        Puzzle(
+            emojis: "🌴 🍯",
+            hint: "شي حلو يطلع من النخلة",
+            answer: "تمر"
+        ),
+
+        Puzzle(
+            emojis: "🔥 ☕",
+            hint: "طريقة قديمة لتحضير القهوة",
+            answer: "تحميص القهوة"
+        ),
+
+        Puzzle(
+            emojis: "🏕️ 🌌",
+            hint: "جلسة في الصحراء تحت النجوم",
+            answer: "كشتة"
+        ),
+
+        Puzzle(
+            emojis: "👘 🇸🇦",
+            hint: "لبس تقليدي للرجال",
+            answer: "ثوب"
+        ),
+
+        Puzzle(
+            emojis: "🥁 💃",
+            hint: "فن شعبي سعودي",
+            answer: "عرضة"
+        ),
+
+        Puzzle(
+            emojis: "☀️ 🏜️ 🐪",
+            hint: "وسيلة تنقل قديمة في الصحراء",
+            answer: "جمل"
+        ),
+
+        Puzzle(
+            emojis: "🏠 🪑 ☕",
+            hint: "مكان يجتمع فيه الناس للقهوة",
+            answer: "مجلس"
+        )
+    ]
+ 
     
     
     var body: some View {
@@ -85,7 +138,7 @@ struct PuzzleView: View {
 
 
                     HStack(spacing: 20) {
-                        Text("🟢 ☕ 🏜️")
+                        Text(puzzles[currentIndex].emojis)
 //                        Text("☕")
 //                        Text("🏜️")
                     }
@@ -94,7 +147,15 @@ struct PuzzleView: View {
                     .offset(x: 0 , y: -100)
 
 
-                    Text("😁")
+                    if showSuccessEmoji {
+                        Text("😁")
+                            .font(.largeTitle)
+                            .transition(.scale)
+                    }
+
+                    Text(feedback)
+                        .font(.custom("Saudi-Regular", size: 18))
+                        .foregroundColor(.brown)
                     .font(.title)
                     .offset(x: 0 , y: -60)
 
@@ -157,13 +218,13 @@ struct PuzzleView: View {
                             ZStack {
                               
                                 VStack(spacing: 20) {
-                                    Text("هز الجوال")
+                                    Text(puzzles[currentIndex].hint)
                                         .font(.custom("Saudi-Regular", size: 22))
                                         .foregroundColor(Color(hex: "FCF0DD"))
 
-                                    Text("هز الجهاز لمعرفة المعلومة")
-                                        .font(.custom("Saudi-Regular", size: 16))
-                                        .foregroundColor(Color(hex: "FCF0DD"))
+//                                    Text("هز الجهاز لمعرفة المعلومة")
+//                                        .font(.custom("Saudi-Regular", size: 16))
+//                                        .foregroundColor(Color(hex: "FCF0DD"))
 
                                     Button("إغلاق") {
                                         withAnimation {
@@ -187,8 +248,32 @@ struct PuzzleView: View {
                 )
                 .padding()
 
-                Button(action: {}) {
-                    Text("إنهاء")
+                Button(action: {
+                    
+                    let correct = puzzles[currentIndex].answer
+                     let userAnswer = answer.trimmingCharacters(in: .whitespacesAndNewlines)
+
+                     if userAnswer == correct {
+
+                         // صح
+                         showSuccessEmoji = true
+                         feedback = ""
+
+                         // بعد ثانية ينتقل للغز التالي
+                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                             currentIndex = (currentIndex + 1) % puzzles.count
+                             answer = ""
+                             showSuccessEmoji = false
+                         }
+
+                     } else {
+
+                         // غلط
+                         showSuccessEmoji = false
+                         feedback = "حاول مرة أخرى"
+                     }
+                }) {
+                    Text("التالي")
                         .font(.custom("Saudi-Regular", size: 20))
 
                         .foregroundColor(Color(hex: "FCF0DD"))
