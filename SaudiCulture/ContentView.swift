@@ -13,10 +13,8 @@ struct ContentView: View {
 }
 
 #Preview {
-<<<<<<< Updated upstream
-    الوسطى()
-=======
+
     PuzzleView()
->>>>>>> Stashed changes
+
 }
 
