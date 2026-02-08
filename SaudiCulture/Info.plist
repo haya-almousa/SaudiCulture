@@ -5,6 +5,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Saudi-Regular.otf</string>
+		<string>Saudi-Bold.otf</string>
 	</array>
 </dict>
 </plist>
