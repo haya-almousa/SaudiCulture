@@ -4,73 +4,121 @@
 //
 //  Created by Haya almousa on 04/02/2026.
 //
-
 import SwiftUI
 
+// شاشة اختيار الشخصية: تعرض أزواج صور وتمكّن المستخدم من اختيار شخصية واحدة
 struct CharacterPickerView: View {
 
+    // مصفوفة أزواج الأسماء لكل منطقة (ذكر/أنثى) مطابقة لأسماء الصور في الأصول
     let characterPairs: [[String]] = [
-        ["نجدي", "نجديه"],
-        ["جنوبي", "جنوبيه"],
-        ["شماليه", "شمالي"],
-        ["شرقاوية", "شرقاوي"],
-        ["غربيه", "غربي"],
-
-        
-
-
+        ["نجدي", "نجديه"], // المنطقة النجدية (ذكر/أنثى)
+        ["جنوبي", "جنوبيه"], // المنطقة الجنوبية (ذكر/أنثى)
+        ["شماليه", "شمالي"], // المنطقة الشمالية (أنثى/ذكر)
+        ["شرقاوية", "شرقاوي"], // المنطقة الشرقية (أنثى/ذكر)
+        ["غربيه", "غربي"], // المنطقة الغربية (أنثى/ذكر)
     ]
 
+    // الحالة التي تحتفظ بالاسم المختار حالياً (nil يعني لم يتم الاختيار بعد)
     @State private var selectedName: String? = nil
 
+    private var isNameValid: Bool { selectedName != nil }
+
+    // بناء واجهة المستخدم الخاصة باختيار الشخصية
     var body: some View {
         ScrollView {
-            VStack(spacing: 20) {
+            VStack(spacing: 10) { // مسافة رأسية بين الصفوف مشابهة للصورة، مخفضة
+                // أسماء المناطق بالترتيب الظاهر في الصورة
+                let regionTitles: [String] = [
+                    "المنطقة الوسطى",
+                    "المنطقة الشرقية",
+                    "المنطقة الغربية",
+                    "المنطقة الجنوبية",
+                    "المنطقة الشمالية"
+                ]
+
                 let rowCount: Int = characterPairs.count
+
                 ForEach(0..<rowCount, id: \.self) { rowIndex in
                     let pair: [String] = characterPairs[rowIndex]
+                    let isEvenRow: Bool = rowIndex % 2 == 0 // صف 0،2،4 ...
 
-                    HStack {
-                        if rowIndex % 2 == 0 { Spacer() }
+                    // صف واحد يحتوي على العنوان + زوج الشخصيات، مع محاذاة متبادلة
+                    HStack(alignment: .center, spacing: 8) {
+                        if isEvenRow {
+                            // العنوان على اليمين، الشخصيات على اليسار (كما في بعض صفوف الصورة)
+                            Text(regionTitles[rowIndex])
+                                .font(.custom("Saudi-Regular", size: 28))
+                                .foregroundStyle(Color("brown"))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.8)
 
-                        HStack(spacing: 0) {
-                            ForEach(pair, id: \.self) { name in
-                                Image(name)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 160, height: 200)
-                                    .opacity(selectedName == nil ? 0.4 : (selectedName == name ? 1.0 : 0.4))
-                                    .animation(.easeInOut(duration: 0.2), value: selectedName)
-                                    .onTapGesture {
-                                        selectedName = name
-                                    }
+                            Spacer(minLength: 6)
+
+                            // الزوج على يسار العنوان
+                            HStack(spacing: -64) { // تقارب واضح بين الشخصيتين مع تداخل أكبر
+                                ForEach(pair, id: \.self) { name in
+                                    Image(name)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 120, height: 140) // حجم مناسب لـ iPhone، مخفض
+                                        .opacity(selectedName == nil ? 0.6 : (selectedName == name ? 1.0 : 0.35))
+                                        .animation(.easeInOut(duration: 0.2), value: selectedName)
+                                        .onTapGesture { selectedName = name }
+                                        .zIndex(selectedName == name ? 1 : 0)
+                                }
                             }
+                            .frame(maxWidth: 240, alignment: .trailing)
+                        } else {
+                            // الصف الفردي: الشخصيات أولاً ثم العنوان على اليسار
+                            HStack(spacing: -64) { // تقارب واضح بين الشخصيتين مع تداخل أكبر
+                                ForEach(pair, id: \.self) { name in
+                                    Image(name)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 120, height: 140)
+                                        .opacity(selectedName == nil ? 0.6 : (selectedName == name ? 1.0 : 0.35))
+                                        .animation(.easeInOut(duration: 0.2), value: selectedName)
+                                        .onTapGesture { selectedName = name }
+                                        .zIndex(selectedName == name ? 1 : 0)
+                                }
+                            }
+                            .frame(maxWidth: 240, alignment: .leading)
+
+                            Spacer(minLength: 6)
+
+                            Text(regionTitles[rowIndex])
+                                .font(.custom("Saudi-Regular", size: 28))
+                                .foregroundStyle(Color("brown"))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.8)
+                                
                         }
-
-                        if rowIndex % 2 != 0 { Spacer() }
                     }
+                    .frame(maxWidth: .infinity, alignment: isEvenRow ? .trailing : .leading)
                 }
 
-                if let _ = selectedName {
-                    Button(action: {
-                        // TODO: Handle next action, e.g., navigate or confirm selection
-                    }) {
-                        Text("التالي")
-                            .font(.headline)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.accentColor)
-                            .foregroundColor(.white)
-                            .cornerRadius(12)
-                    }
-                    .padding(.top, 8)
+                // زر "التالي" بأسلوب مخصص
+                Button("التالي") {
+                    // TODO: تنفيذ الإجراء التالي (مثل الانتقال للشاشة التالية أو تأكيد الاختيار)
                 }
+                .font(.custom("Saudi-Regular", size: 20))
+                .padding(.horizontal, 40)
+                .padding(.vertical, 12)
+                .background(Color("brown"))
+                .foregroundStyle(.white)
+                .clipShape(Capsule())
+                .disabled(!isNameValid)
+                .opacity(isNameValid ? 1 : 0.4)
+                .padding(.top, 8)
             }
-            .padding()
+            .padding(.horizontal, 20) // حواف جانبية مشابهة للصورة
+            .padding(.top, 8)
+            .padding(.bottom, 24)
         }
     }
 }
 
+// معاينة الواجهة أثناء التطوير باستخدام SwiftUI Preview
 #Preview {
     CharacterPickerView()
 }
