@@ -26,39 +26,29 @@ extension Color {
 }
   
 
+struct Puzzle {
+    let emojis: String
+    let hint: String
+    let answer: String
+}
+
+
 struct PuzzleView: View {
     @State private var answer: String = ""
     @State private var showText = false
+    @State private var showPopup = false
+
 
     
     
     
     var body: some View {
         ZStack {
-            // لون الخلفية
-//            Color(hex: "FFF9F2")
-//                .ignoresSafeArea()
-
-            
-            
-            
             Image("background")
                 .resizable()
                 .scaledToFit()
                 .frame(maxWidth: .infinity)
                 .ignoresSafeArea()
-
-//            // صورة النخلة بالخلفية
-//            GeometryReader { proxy in
-//                Image("background")
-//                    .resizable()
-//                    .scaledToFit()
-////                    .opacity(0.15)
-//                    .frame(maxWidth: .infinity)
-//                    .position(x: proxy.size.width / 2,
-//                              y: proxy.size.height * 0.75)
-//            }
-//            .ignoresSafeArea()
 
             VStack {
                 // Header
@@ -126,71 +116,27 @@ struct PuzzleView: View {
 
 
 
-//                    HStack {
-//                        Button(action: {
-//                            withAnimation(.easeInOut) {
-//                                showText.toggle()
-//                            }
-//                        }) {
-//                            if showText {
-//                                Text("شراب ")
-//                                    .font(.headline)
-//                                    .foregroundColor(Color(hex: "FCF0DD"))
-//                                    .padding(.horizontal, 28)
-//                                    .padding(.vertical, 14)
-//                            } else {
-//                                Image(systemName: "questionmark")
-//                                    .font(.system(size: 22))
-//                                    .foregroundColor(.white)
-//                                    .padding(16)
-//                            }
-//                        }
-//                        .background(Color(hex: "874F35"))
-//                        .clipShape(
-//                            showText ? AnyShape(Capsule()) : AnyShape(Circle())
-//                        )
-//                        .offset(x: -140, y: 120)
-//                    }
-
                     
                     HStack {
-                        ZStack(alignment: .leading) { // نثبت النص على اليسار
-                            Button(action: {
-                                withAnimation(.easeInOut(duration: 0.3)) {
-                                    showText.toggle()
-                                }
-                            }) {
-                                HStack {
-                                    if showText {
-                                        Text(" شراب ")
-//                                            .font(.headline)
-                                            .font(.custom("Saudi-Regular", size: 20))
-
-                                            .foregroundColor(Color(hex: "FCF0DD"))
-                                        
-                                            .padding(.horizontal, 28)
-                                            .padding(.vertical, 14)
-                                        
-                                    } else {
-                                        Image(systemName: "questionmark")
-                                            .font(.system(size: 22))
-                                            .foregroundColor(.white)
-                                            .padding(16)
-                                    }
-                                }
-                                .background(Color(hex: "874F35"))
-                                .clipShape(RoundedRectangle(cornerRadius: showText ? 25 : 30)) // morph
-//                                .opacity(0.77)
-
-                                .frame(minWidth: showText ? 140 : 60, alignment: .leading) // الثبات على اليسار
+                        Button(action: {
+                            withAnimation(.easeInOut) {
+                                showPopup = true
                             }
+                        }) {
+                            Image(systemName: "questionmark")
+                                .font(.system(size: 22))
+                                .foregroundColor(.white)
+                                .padding(16)
+                                .background(Color(hex: "874F35"))
+                                .clipShape(Circle())
                         }
-                        Spacer() // يخلي الزر على اليسار
-//                        .offset(x: -140, y: 120)
 
+                        Spacer()
                     }
                     .padding(.leading, 20)
-                    .offset(x: 0, y: 110)
+                    .offset(x: 0 , y: 100)
+
+               
 
                     
                     
@@ -205,8 +151,41 @@ struct PuzzleView: View {
                         )
                 )
                 .padding()
+                .overlay(
+                    Group {
+                        if showPopup {
+                            ZStack {
+                              
+                                VStack(spacing: 20) {
+                                    Text("هز الجوال")
+                                        .font(.custom("Saudi-Regular", size: 22))
+                                        .foregroundColor(Color(hex: "FCF0DD"))
 
-//                Spacer()
+                                    Text("هز الجهاز لمعرفة المعلومة")
+                                        .font(.custom("Saudi-Regular", size: 16))
+                                        .foregroundColor(Color(hex: "FCF0DD"))
+
+                                    Button("إغلاق") {
+                                        withAnimation {
+                                            showPopup = false
+                                        }
+                                    }
+                                    .padding(.horizontal, 30)
+                                    .padding(.vertical, 10)
+                                    .background(Color(hex: "FCF0DD"))
+                                    .foregroundColor(Color(hex: "874F35"))
+                                    .clipShape(Capsule())
+                                }
+                                .padding(24)
+                                .background(Color(hex: "874F35"))
+                                .cornerRadius(24)
+                                .shadow(radius: 10)
+                                .transition(.scale)
+                            }
+                        }
+                    }
+                )
+                .padding()
 
                 Button(action: {}) {
                     Text("إنهاء")

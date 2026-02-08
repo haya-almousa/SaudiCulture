@@ -25,17 +25,7 @@ struct PuzzleView2: View {
                 .frame(maxWidth: .infinity)
                 .ignoresSafeArea()
 
-            // صورة النخلة بالخلفية
-//            GeometryReader { proxy in
-//                Image("palm_bg")
-//                    .resizable()
-//                    .scaledToFit()
-//                    .opacity(0.15)
-//                    .frame(maxWidth: .infinity)
-//                    .position(x: proxy.size.width / 2,
-//                              y: proxy.size.height * 0.75)
-//            }
-//            .ignoresSafeArea()
+
 
             VStack {
                 // Header
@@ -54,23 +44,7 @@ struct PuzzleView2: View {
                     }
                 }
                 .padding()
-
-//
-//                HStack {
-//                    Button(action: {
-//
-//                    }) {
-//                        Image(systemName: "house")
-//                            .font(.system(size: 30, weight: .medium)) // ⭐ حجم الأيقونة
-//                                       .foregroundColor(Color(hex: "874F35"))
-//                                       .padding(2)
-//                    }
-//                    .offset(x: -155, y: -50)
-//                }
-                
-                
-                
-                
+            
                 // الكرت
                 VStack(spacing: 10) {
                     
@@ -168,13 +142,7 @@ struct PuzzleView2: View {
                     Group {
                         if showPopup {
                             ZStack {
-                                // لو تبغين ما يعتم الخلفية احذفي هذا
-//                                Color.black.opacity(0.3)
-//                                    .cornerRadius(30)
-//                                    .onTapGesture {
-//                                        withAnimation { showPopup = false }
-//                                    }
-
+                              
                                 VStack(spacing: 20) {
                                     Text("هز الجوال")
                                         .font(.custom("Saudi-Regular", size: 22))
