@@ -6,12 +6,7 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		47F992402F320E0900F7638F /*  h.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F9923F2F320E0500F7638F /*  h.swift */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
-		47F9923F2F320E0500F7638F /*  h.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " h.swift"; sourceTree = "<group>"; };
 		541D10202F320CCD00E934F8 /* SaudiCulture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaudiCulture.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -52,7 +47,6 @@
 			children = (
 				541D10222F320CCD00E934F8 /* SaudiCulture */,
 				541D10212F320CCD00E934F8 /* Products */,
-				47F9923F2F320E0500F7638F /*  h.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -138,7 +132,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				47F992402F320E0900F7638F /*  h.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,7 +266,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = UYGM6CAC3M;
+				DEVELOPMENT_TEAM = 8BN79Z3XBM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SaudiCulture/Info.plist;
@@ -306,7 +299,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = UYGM6CAC3M;
+				DEVELOPMENT_TEAM = 8BN79Z3XBM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SaudiCulture/Info.plist;
