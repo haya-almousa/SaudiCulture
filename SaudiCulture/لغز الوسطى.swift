@@ -209,6 +209,8 @@ struct LevelAlwosta: View {
                 .padding(.trailing, 10)
             }
         }
+        .navigationBarBackButtonHidden(true)//wed: hidde back button 
+
         .onAppear {
             setupPuzzle()
         }
