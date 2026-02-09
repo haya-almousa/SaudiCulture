@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Name: View {
     @State private var name: String = ""
-    @State private var navigateToWelcome = false
+    @State private var navigateToCharacterPicker = false
     
     private var isNameValid: Bool {
         !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -18,7 +18,7 @@ struct Name: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 16) {
-                TextField("اكتب اسمك هنا", text: $name)
+                TextField("اكتب اسمك", text: $name)
                     .font(.custom("Saudi-Regular", size: 28))
                     .foregroundStyle(Color("brown"))
                     .multilineTextAlignment(.center)
@@ -29,7 +29,7 @@ struct Name: View {
                     .padding(.horizontal, 48)
                 
                 Button("التالي") {
-                    navigateToWelcome = true
+                    navigateToCharacterPicker = true
                 }
                 .font(.custom("Saudi-Regular", size: 20))
                 .padding(.horizontal, 40)
@@ -43,8 +43,8 @@ struct Name: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color("BackgroundMain"))
             .ignoresSafeArea()
-            .navigationDestination(isPresented: $navigateToWelcome) {
-                CharacterPickerView()
+            .navigationDestination(isPresented: $navigateToCharacterPicker) {
+                CharacterPickerView(playerName: name)
             }
         }
     }

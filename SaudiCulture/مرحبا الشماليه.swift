@@ -8,20 +8,15 @@
 import SwiftUI
 
 struct مرحباالشماليه: View {
-    // ✅ الخط (لازم يكون PostScript Name عشان يطلع نفس فيقما)
-    private let fontName = "Saudi-Regular"
+    let playerName: String  // ✅ استقبال الاسم
     
-    // ✅ مقاس تصميم فيقما (غالبًا 390x844)
+    private let fontName = "Saudi-Regular"
     private let figmaW: CGFloat = 390
     private let figmaH: CGFloat = 844
-    
-    // ✅ قياسات زر "ابدأ اللعبة" من فيقما
     private let btnX: CGFloat = 63
     private let btnY: CGFloat = 570
     private let btnW: CGFloat = 254
     private let btnH: CGFloat = 94
-    
-    // ✅ مكان العنوان (عدليه لو عندك X/Y من فيقما)
     private let titleCenterX: CGFloat = 195
     private let titleCenterY: CGFloat = 300
     
@@ -32,19 +27,16 @@ struct مرحباالشماليه: View {
             let s  = min(sx, sy)
             
             ZStack {
-                // ✅ الخلفية (صورة مدموجة)
                 Image("الشماليه")
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
                 
-                // ✅ عنوان "مرحباً هيا"
-                Text("مرحباً هيا")
+                Text("مرحباً \(playerName)")  // ✅ عرض الاسم المدخل
                     .font(.custom(fontName, size: 50 * s))
                     .foregroundColor(Color("brown"))
                     .position(x: titleCenterX * sx, y: titleCenterY * sy)
                 
-                // ✅ زر "ابدأ اللعبة" (W/H/X/Y مثل فيقما)
                 Button(action: {
                     startGame()
                 }) {
@@ -67,14 +59,16 @@ struct مرحباالشماليه: View {
                 )
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
     
     func startGame() {
-        print("اللعبة بدأت!")
-        // هنا يمكنك إضافة الكود الخاص ببداية اللعبة
+        print("اللعبة بدأت - المنطقة الشمالية - اللاعب: \(playerName)")
     }
 }
 
 #Preview {
-    مرحباالشماليه()
+    NavigationStack {
+        مرحباالشماليه(playerName: "هيا")
+    }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct مرحباالجنوبيه: View {
-    let playerName: String  // ✅ إضافة متغير لاستقبال الاسم
+    let playerName: String
     
     private let fontName = "Saudi-Regular"
     private let figmaW: CGFloat = 390
@@ -32,7 +32,6 @@ struct مرحباالجنوبيه: View {
                     .scaledToFill()
                     .ignoresSafeArea()
                 
-                // ✅ عرض اسم اللاعب
                 Text("مرحباً \(playerName)")
                     .font(.custom(fontName, size: 50 * s))
                     .foregroundColor(Color("brown"))
@@ -60,14 +59,16 @@ struct مرحباالجنوبيه: View {
                 )
             }
         }
-        .navigationBarBackButtonHidden(true)  // ✅ إخفاء زر الرجوع
+        .navigationBarBackButtonHidden(true)
     }
     
     func startGame() {
-        print("اللعبة بدأت باسم: \(playerName)")
+        print("اللعبة بدأت - اللاعب: \(playerName)")
     }
 }
 
 #Preview {
-    مرحباالجنوبيه(playerName: "هيا")
+    NavigationStack {
+        مرحباالجنوبيه(playerName: "هيا")
+    }
 }
