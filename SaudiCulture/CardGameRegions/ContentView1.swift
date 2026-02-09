@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct ContentView1: View {
     let regions = [
         "نجد",
         "الحجاز",
