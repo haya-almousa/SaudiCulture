@@ -12,9 +12,9 @@ struct CharacterPickerView: View {
     // مصفوفة أزواج الأسماء لكل منطقة (ذكر/أنثى) مطابقة لأسماء الصور في الأصول
     let characterPairs: [[String]] = [
         ["نجدي", "نجديه"], // المنطقة النجدية (ذكر/أنثى)
-        ["جنوبي", "جنوبيه"], // المنطقة الجنوبية (ذكر/أنثى)
-        ["شماليه", "شمالي"], // المنطقة الشمالية (أنثى/ذكر)
         ["شرقاوية", "شرقاوي"], // المنطقة الشرقية (أنثى/ذكر)
+        ["شماليه", "شمالي"], // المنطقة الشمالية (أنثى/ذكر)
+        ["جنوبي", "جنوبيه"], // المنطقة الجنوبية (ذكر/أنثى)
         ["غربيه", "غربي"], // المنطقة الغربية (أنثى/ذكر)
     ]
 
@@ -22,7 +22,7 @@ struct CharacterPickerView: View {
     @State private var selectedName: String? = nil
     @State private var navigateToAlwosta: Bool = false
     @State private var navigateToSharqia: Bool = false
-    //@State private var navigateToJanoub: Bool = false
+    @State private var navigateToJanoub: Bool = false
     @State private var navigateToGharbi: Bool = false
     @State private var navigateToShamal: Bool = false
 
@@ -76,8 +76,9 @@ struct CharacterPickerView: View {
                                                     navigateToAlwosta = true
                                                 } else if name == "شرقاوي" || name == "شرقاوية" {
                                                     navigateToSharqia = true
-                                               // } else if name == "جنوبي" || name == "جنوبيه" {
-                                                    //navigateToJanoub = true//
+                                               } else if name == "جنوبي" || name == "جنوبيه" {
+                                                    
+                                                   navigateToJanoub = true
                                                 } else if name == "شمالي" || name == "شماليه" {
                                                     navigateToShamal = true
                                                 }
@@ -147,23 +148,24 @@ struct CharacterPickerView: View {
                 .padding(.bottom, 24)
             }
             .navigationDestination(isPresented: $navigateToAlwosta) {
-                مرحباالوسطى()
+                مرحباالوسطى(playerName: selectedName ?? "")
             }
             .navigationDestination(isPresented: $navigateToSharqia) {
-                مرحباالشرقيه()
+                مرحباالشرقيه(playerName: selectedName ?? "")
             }
-            //.navigationDestination(isPresented: $navigateToJanoub) {
-               // مرحباالجنوبيه()//
-            //}
+            .navigationDestination(isPresented: $navigateToJanoub) {
+                مرحباالجنوبيه(playerName: selectedName ?? "")
+            }
+            }
             .navigationDestination(isPresented: $navigateToGharbi) {
-                مرحباالغربيه()
+                مرحباالغربيه(playerName: selectedName ?? "")
             }
             .navigationDestination(isPresented: $navigateToShamal) {
-                مرحباالشماليه()
+                مرحباالشماليه(playerName: selectedName ?? "")
             }
         }
     }
-}
+
 
 // معاينة الواجهة أثناء التطوير باستخدام SwiftUI Preview
 #Preview {
