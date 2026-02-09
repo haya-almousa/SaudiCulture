@@ -52,7 +52,7 @@ struct EasternView: View {
                 // Title
                 Text("لعبة الكروت - المنطقة الشرقية")
                     .foregroundStyle(Color(hex: "7A4A2E"))
-                    .font(.system(size: 28, weight: .bold, design: .rounded))
+                    .font(.custom("Saudi-Regular", size: 28))
                 
                 // Timer
                 ZStack {
@@ -67,7 +67,7 @@ struct EasternView: View {
                         .opacity(flashRed ? 0.3 : 1)
                     
                     Text("\(timeString(timeRemaining))")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .font(.custom("Saudi-Regular", size: 28))
                         .foregroundColor(Color(hex: "731112"))
                 }
                 
@@ -92,7 +92,7 @@ struct EasternView: View {
                 // Pairs Counter
                 HStack {
                     Text("مطابقات: \(viewModel.matchedPairsCount)/\(viewModel.getTotalPairs())")
-                        .font(.system(size: 18, weight: .semibold, design: .rounded))
+                        .font(.custom("Saudi-Regular", size: 28))
                         .foregroundColor(Color(hex: "7A4A2E"))
                     Spacer()
                 }
@@ -108,11 +108,11 @@ struct EasternView: View {
                 
                 VStack(spacing: 20) {
                     Text("مبروك !")
-                        .font(.system(size: 28, weight: .bold, design: .rounded))
+                        .font(.custom("Saudi-Regular", size: 28))
                         .foregroundColor(.white)
                     
                     Text("لقد نجحت في مطابقة جميع الكروت!")
-                        .font(.system(size: 20, weight: .medium, design: .rounded))
+                        .font(.custom("Saudi-Regular", size: 28))
                         .multilineTextAlignment(.center)
                         .foregroundColor(.white)
                         .padding(.horizontal, 16)
@@ -122,7 +122,7 @@ struct EasternView: View {
                         resetGame()
                     }) {
                         Text("يلا على اللعبه الي بعدها !")
-                            .font(.system(size: 18, weight: .bold))
+                            .font(.custom("Saudi-Regular", size: 28))
                             .foregroundColor(Color(hex: "731112"))
                             .padding()
                             .frame(maxWidth: .infinity)
@@ -159,11 +159,11 @@ struct EasternView: View {
                     }
                     
                     Text("انتهت اللعبه")
-                        .font(.system(size: 28, weight: .bold, design: .rounded))
+                        .font(.custom("Saudi-Regular", size: 28))
                         .foregroundColor(.white)
                     
                     Text(" العوض بالجيات")
-                        .font(.system(size: 20, weight: .medium, design: .rounded))
+                        .font(.custom("Saudi-Regular", size: 28))
                         .multilineTextAlignment(.center)
                         .foregroundColor(.white)
                         .padding(.horizontal, 16)

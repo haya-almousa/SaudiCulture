@@ -1,19 +1,18 @@
 //
 //  CardGameRegionsTests.swift
-//  SaudiCulture
+//  SaudiCultureTests
 //
-//  
+//
 //
 
-import Testing
+import XCTest
 @testable import CardGameRegions
 
-struct CardGameRegionsTests {
+final class CardGameRegionsTests: XCTestCase {
 
-    @Test func example() async throws {
-        // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+    func testExample() throws {
+        // Write your test here and use assertions like XCTAssert(...) to check expected conditions.
+        XCTAssertTrue(true)
     }
-
 }
-//
 
