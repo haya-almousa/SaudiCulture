@@ -44,7 +44,7 @@ struct Name: View {
             .background(Color("BackgroundMain"))
             .ignoresSafeArea()
             .navigationDestination(isPresented: $navigateToWelcome) {
-                مرحباالجنوبيه(playerName: name)
+                CharacterPickerView()
             }
         }
     }
