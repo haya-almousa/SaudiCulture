@@ -20,8 +20,13 @@ struct GamePopupView: View {
     
     var body: some View {
         ZStack {
+            // 1️⃣ Blur the background cards when popup appears
+                        VisualEffectBlur(blurStyle: .systemThinMaterial) // NEW
+                            .edgesIgnoringSafeArea(.all)///
+            ///
             Color.black.opacity(0.4)
                 .ignoresSafeArea()
+                      
             
             VStack(spacing: 20) {
                 
@@ -62,13 +67,21 @@ struct GamePopupView: View {
                 }
             }
             .padding()
-            .background(Color(hex: "731112").opacity(0.85))
-            .cornerRadius(24)
-            .shadow(radius: 10)
+           // .background(Color(hex: "731112").opacity(0.85))
+            .background(Color(hex: "874F35").opacity(0.95)) // 2️⃣ Updated color
+            .shadow(color: .black.opacity(0.6), radius: 15, x: 0, y: 5) // 3️⃣ Shadow added
+
+
+           .cornerRadius(24)
+            //.shadow(radius: 10)
+//            .frame(
+//                width: UIScreen.main.bounds.width * 0.85,
+//                height: UIScreen.main.bounds.height * 0.85
+//            )
             .frame(
-                width: UIScreen.main.bounds.width * 0.85,
-                height: UIScreen.main.bounds.height * 0.85
-            )
+                  width: UIScreen.main.bounds.width * 0.9,  // 4️⃣ Bigger width
+                  height: UIScreen.main.bounds.height * 0.6 // 4️⃣ Bigger height, closer to card size
+                        )
             .transition(.scale.combined(with: .opacity))
         }
     }
@@ -98,3 +111,23 @@ struct GamePopupView: View {
 }
 
 
+// 1️⃣ Blur helper view for SwiftUI
+// Only needed if you don't already have a VisualEffectBlur view in your project
+struct VisualEffectBlur: UIViewRepresentable {
+    var blurStyle: UIBlurEffect.Style
+
+    func makeUIView(context: Context) -> UIVisualEffectView {
+        UIVisualEffectView(effect: UIBlurEffect(style: blurStyle))
+    }
+
+    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {}
+}
+////
+///
+#Preview {
+    GamePopupView(
+        type: .win,                       // or .timeUp to test the other popup
+        onClose: { print("Popup closed") },
+        onPrimaryAction: { print("Primary action tapped") }
+    )
+}
