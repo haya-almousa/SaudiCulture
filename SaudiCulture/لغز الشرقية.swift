@@ -1,15 +1,14 @@
 //
-//   لغز.swift
+//  لغز الشرقية.swift
 //  SaudiCulture
 //
-//  Created by Raghad Alamoudi on 15/08/1447 AH.
+//  Created by Raghad Alamoudi on 22/08/1447 AH.
 //
-/*haya Queen of the world*/
 
 import SwiftUI
 
 // MARK: - شكل قطعة البزل (Puzzle Piece Shape)
-struct PuzzlePieceShape: Shape {
+struct PuzzlePieceShapeSharqiya: Shape {
     let row: Int
     let col: Int
     let rows: Int
@@ -101,7 +100,7 @@ struct PuzzlePieceShape: Shape {
 }
 
 // MARK: - موديل قطعة البزل
-struct PuzzlePiece: Identifiable {
+struct PuzzlePieceSharqiya: Identifiable {
     let id: Int
     let row: Int
     let col: Int
@@ -112,8 +111,8 @@ struct PuzzlePiece: Identifiable {
     }
 }
 
-// MARK: - شاشة لفل الوسطى
-struct LevelAlwosta: View {
+// MARK: - شاشة لفل الشرقية
+struct LevelAlsharqiya: View {
     // إعدادات البزل
     // ═══════════════════════════════════════════════════
     // 📝 لتعديل عدد القطع:
@@ -126,8 +125,8 @@ struct LevelAlwosta: View {
     private let puzzleSize: CGFloat = 340
     
     // حالة اللعبة
-    @State private var pieces: [PuzzlePiece] = []
-    @State private var draggingPiece: PuzzlePiece?
+    @State private var pieces: [PuzzlePieceSharqiya] = []
+    @State private var draggingPiece: PuzzlePieceSharqiya?
     @State private var dragOffset: CGSize = .zero
     @State private var isShuffled: Bool = false  // هل القطع متخلبطة؟
     @State private var isSolved: Bool = false    // هل البزل محلول؟
@@ -140,7 +139,7 @@ struct LevelAlwosta: View {
     var body: some View {
         ZStack {
             // ✅ الخلفية
-            Image("الوسطى")
+            Image("الشرقيه")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
@@ -243,7 +242,7 @@ struct LevelAlwosta: View {
     }
     
     // MARK: - عرض قطعة واحدة
-    private func makePieceView(piece: PuzzlePiece, pieceSize: CGFloat) -> some View {
+    private func makePieceView(piece: PuzzlePieceSharqiya, pieceSize: CGFloat) -> some View {
         let isDragging = draggingPiece?.id == piece.id
         let offset = isDragging ? dragOffset : .zero
         
@@ -254,16 +253,16 @@ struct LevelAlwosta: View {
         return ZStack {
             // ═══ الخلفية (الشكل الصحيح للقطعة) ═══
             if !piece.isInCorrectPosition {
-                PuzzlePieceShape(row: piece.row, col: piece.col, rows: rows, cols: cols)
+                PuzzlePieceShapeSharqiya(row: piece.row, col: piece.col, rows: rows, cols: cols)
                     .fill(Color("BackgroundMain").opacity(0.3))
                     .frame(width: pieceSize, height: pieceSize)
             }
             
             // ═══ القطعة نفسها ═══
             ZStack {
-                // الصورة (الجزء الصحيح من تراث الوسطى)
+                // الصورة (الجزء الصحيح من تراث الشرقية)
                 GeometryReader { geo in
-                    Image("تراث الوسطى")
+                    Image("تراث الشرقية")
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: puzzleSize, height: puzzleSize)
@@ -281,7 +280,7 @@ struct LevelAlwosta: View {
                     .frame(width: pieceSize, height: pieceSize)
             }
             .frame(width: pieceSize, height: pieceSize)
-            .clipShape(PuzzlePieceShape(row: piece.row, col: piece.col, rows: rows, cols: cols))
+            .clipShape(PuzzlePieceShapeSharqiya(row: piece.row, col: piece.col, rows: rows, cols: cols))
             .shadow(color: .black.opacity(isDragging ? 0.4 : 0.15), radius: isDragging ? 10 : 3)
             .scaleEffect(isDragging ? 1.05 : 1.0)
             .zIndex(isDragging ? 100 : Double(piece.id))
@@ -305,7 +304,7 @@ struct LevelAlwosta: View {
     }
     
     // MARK: - معالجة السحب والإفلات
-    private func handleDrop(piece: PuzzlePiece, translation: CGSize, pieceSize: CGFloat) {
+    private func handleDrop(piece: PuzzlePieceSharqiya, translation: CGSize, pieceSize: CGFloat) {
         let dx = Int(round(translation.width / pieceSize))
         let dy = Int(round(translation.height / pieceSize))
         
@@ -392,13 +391,13 @@ struct LevelAlwosta: View {
                     Spacer()
                     
                     // العنوان
-                    Text("الدرعية")
+                    Text("قصر إبراهيم")
                         .font(.custom("Saudi-Bold", size: 36))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                     
                     // النص التفصيلي
-                    Text("معلَم تاريخي مهم في السعودية ومهد الدولة السعودية الأولى، يتميز بعمارة طينية تعكس التراث النجدي الأصيل ورمزاً للتاريخ والهوية السعودية.")
+                    Text("معلَم تاريخي مهم في السعودية ومهد الدولةمعلَم تاريخي بارز في الأحساء، يجمع بين الطرازين العسكري والديني، ويعكس أهمية المنطقة الشرقية كمركز حضاري وتاريخي في فترات مختلفة من تاريخ المملكة.")
                         .font(.custom("Saudi-Bold", size: 18))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
@@ -444,7 +443,7 @@ struct LevelAlwosta: View {
                     .stroke(Color("brown"), lineWidth: 4)
                 
                 // الصورة الكاملة
-                Image("تراث الوسطى")
+                Image("تراث الشرقية")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .clipShape(RoundedRectangle(cornerRadius: 26))
@@ -456,13 +455,13 @@ struct LevelAlwosta: View {
     
     // MARK: - إعداد البزل
     private func setupPuzzle() {
-        var allPieces: [PuzzlePiece] = []
+        var allPieces: [PuzzlePieceSharqiya] = []
         var id = 0
         
         // إنشاء كل القطع في مكانها الصحيح (مكتملة)
         for r in 0..<rows {
             for c in 0..<cols {
-                allPieces.append(PuzzlePiece(
+                allPieces.append(PuzzlePieceSharqiya(
                     id: id,
                     row: r,
                     col: c,
@@ -498,5 +497,5 @@ struct LevelAlwosta: View {
 }
 
 #Preview {
-    LevelAlwosta()
+    LevelAlsharqiya()
 }

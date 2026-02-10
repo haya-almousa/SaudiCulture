@@ -26,18 +26,18 @@ struct SaudiMapView: View {
                     
                     // المنطقة الشمالية
                     RegionImageView(
-                        imageName: "المنطقة الشمالية",
-                        size: 200,
+                        imageName: "المنطقة الشماليه",
+                        size: 280,
                         isUnlocked: gameProgress.isRegionUnlocked(.northern)
                     )
-                    .offset(x: -70, y: -150)
+                    .offset(x: -70, y: -160)
                     .onTapGesture {
                         handleRegionTap(.northern)
                     }
                     
                     // المنطقة الشرقية
                     RegionImageView(
-                        imageName: "المنطقة الشرقية",
+                        imageName: "المنطقة الشرقيه",
                         size: 250,
                         isUnlocked: gameProgress.isRegionUnlocked(.eastern)
                     )
@@ -52,29 +52,29 @@ struct SaudiMapView: View {
                         size: 200,
                         isUnlocked: gameProgress.isRegionUnlocked(.central)
                     )
-                    .offset(x: -15, y: -20)
+                    .offset(x: -18, y: -20)
                     .onTapGesture {
                         handleRegionTap(.central)
                     }
                     
                     // المنطقة الغربية
                     RegionImageView(
-                        imageName: "المنطقة الغربية",
-                        size: 290,
+                        imageName: "المنطقة الغربيه",
+                        size: 280,
                         isUnlocked: gameProgress.isRegionUnlocked(.western)
                     )
-                    .offset(x: -115, y: -30)
+                    .offset(x: -120, y: -30)
                     .onTapGesture {
                         handleRegionTap(.western)
                     }
                     
                     // المنطقة الجنوبية
                     RegionImageView(
-                        imageName: "المنطقة الجنوبية",
-                        size: 170,
+                        imageName: "المنطقة الجنوبيه",
+                        size: 150,
                         isUnlocked: gameProgress.isRegionUnlocked(.southern)
                     )
-                    .offset(x: -15, y: 115)
+                    .offset(x: -12, y: 111)
                     .onTapGesture {
                         handleRegionTap(.southern)
                     }
