@@ -13,7 +13,7 @@ struct SaudiCultureApp: App {
         WindowGroup {
             Name()
 
-            LevelAlwosta()
+            CharacterPickerView()
         }
     }
 }
