@@ -50,6 +50,8 @@ struct StackedCirclesView: View {
                         .spring(response: 0.6, dampingFraction: 0.7),
                         value: unlockedLevel
                     )
+                    .offset(y: -40)
+
             }
             .offset(y: 60)
 
