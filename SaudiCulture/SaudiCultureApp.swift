@@ -12,8 +12,6 @@ struct SaudiCultureApp: App {
     var body: some Scene {
         WindowGroup {
             Name()
-
-            CharacterPickerView()
         }
     }
 }

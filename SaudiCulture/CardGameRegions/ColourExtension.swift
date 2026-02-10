@@ -8,8 +8,9 @@
 import SwiftUI
 
 extension Color {
-    init(hex: String) {
-        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+    /// Initializes a Color from a hex string. Renamed from `init(hex:)` to avoid redeclaration.
+    init(hexString: String) {
+        let hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int: UInt64 = 0
         Scanner(string: hex).scanHexInt64(&int)
         let a, r, g, b: UInt64
@@ -30,6 +31,10 @@ extension Color {
             blue:  Double(b) / 255,
             opacity: Double(a) / 255
         )
+    }
+
+    static func fromHex(_ hex: String) -> Color {
+        Color(hexString: hex)
     }
 }
  

@@ -6,17 +6,40 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		5473170C2F3B53E0008DCA90 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 541D10182F320CCD00E934F8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 541D101F2F320CCD00E934F8;
+			remoteInfo = SaudiCulture;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		541D10202F320CCD00E934F8 /* SaudiCulture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaudiCulture.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		547317082F3B53E0008DCA90 /* SaudiCultureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SaudiCultureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
 		541D103D2F3239B200E934F8 /* Exceptions for "SaudiCulture" folder in "SaudiCulture" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				CardGameRegionsTests/CardGameRegionsTests.swift,
+				CardGameRegionsUITests/CardGameRegionsUITests.swift,
+				CardGameRegionsUITests/CardGameRegionsUITestsLaunchTests.swift,
 				Info.plist,
 			);
 			target = 541D101F2F320CCD00E934F8 /* SaudiCulture */;
+		};
+		547317142F3B53F4008DCA90 /* Exceptions for "SaudiCulture" folder in "SaudiCultureTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				CardGameRegionsTests/CardGameRegionsTests.swift,
+				CardGameRegionsUITests/CardGameRegionsUITests.swift,
+				CardGameRegionsUITests/CardGameRegionsUITestsLaunchTests.swift,
+			);
+			target = 547317072F3B53E0008DCA90 /* SaudiCultureTests */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -25,14 +48,32 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				541D103D2F3239B200E934F8 /* Exceptions for "SaudiCulture" folder in "SaudiCulture" target */,
+				547317142F3B53F4008DCA90 /* Exceptions for "SaudiCulture" folder in "SaudiCultureTests" target */,
 			);
 			path = SaudiCulture;
+			sourceTree = "<group>";
+		};
+		547316F82F3B5340008DCA90 /* SaudiCultureTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SaudiCultureTests;
+			sourceTree = "<group>";
+		};
+		547317092F3B53E0008DCA90 /* SaudiCultureTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SaudiCultureTests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		541D101D2F320CCD00E934F8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		547317052F3B53E0008DCA90 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -46,6 +87,8 @@
 			isa = PBXGroup;
 			children = (
 				541D10222F320CCD00E934F8 /* SaudiCulture */,
+				547316F82F3B5340008DCA90 /* SaudiCultureTests */,
+				547317092F3B53E0008DCA90 /* SaudiCultureTests */,
 				541D10212F320CCD00E934F8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				541D10202F320CCD00E934F8 /* SaudiCulture.app */,
+				547317082F3B53E0008DCA90 /* SaudiCultureTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -83,6 +127,29 @@
 			productReference = 541D10202F320CCD00E934F8 /* SaudiCulture.app */;
 			productType = "com.apple.product-type.application";
 		};
+		547317072F3B53E0008DCA90 /* SaudiCultureTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5473170E2F3B53E0008DCA90 /* Build configuration list for PBXNativeTarget "SaudiCultureTests" */;
+			buildPhases = (
+				547317042F3B53E0008DCA90 /* Sources */,
+				547317052F3B53E0008DCA90 /* Frameworks */,
+				547317062F3B53E0008DCA90 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5473170D2F3B53E0008DCA90 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				547317092F3B53E0008DCA90 /* SaudiCultureTests */,
+			);
+			name = SaudiCultureTests;
+			packageProductDependencies = (
+			);
+			productName = SaudiCultureTests;
+			productReference = 547317082F3B53E0008DCA90 /* SaudiCultureTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -95,6 +162,10 @@
 				TargetAttributes = {
 					541D101F2F320CCD00E934F8 = {
 						CreatedOnToolsVersion = 26.2;
+					};
+					547317072F3B53E0008DCA90 = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = 541D101F2F320CCD00E934F8;
 					};
 				};
 			};
@@ -113,12 +184,20 @@
 			projectRoot = "";
 			targets = (
 				541D101F2F320CCD00E934F8 /* SaudiCulture */,
+				547317072F3B53E0008DCA90 /* SaudiCultureTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		541D101E2F320CCD00E934F8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		547317062F3B53E0008DCA90 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -135,7 +214,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		547317042F3B53E0008DCA90 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5473170D2F3B53E0008DCA90 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 541D101F2F320CCD00E934F8 /* SaudiCulture */;
+			targetProxy = 5473170C2F3B53E0008DCA90 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		541D10292F320CCF00E934F8 /* Debug */ = {
@@ -325,6 +419,48 @@
 			};
 			name = Release;
 		};
+		5473170F2F3B53E0008DCA90 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UYGM6CAC3M;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = h.SaudiCultureTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SaudiCulture.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SaudiCulture";
+			};
+			name = Debug;
+		};
+		547317102F3B53E0008DCA90 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UYGM6CAC3M;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = h.SaudiCultureTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SaudiCulture.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SaudiCulture";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -342,6 +478,15 @@
 			buildConfigurations = (
 				541D102C2F320CCF00E934F8 /* Debug */,
 				541D102D2F320CCF00E934F8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5473170E2F3B53E0008DCA90 /* Build configuration list for PBXNativeTarget "SaudiCultureTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5473170F2F3B53E0008DCA90 /* Debug */,
+				547317102F3B53E0008DCA90 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

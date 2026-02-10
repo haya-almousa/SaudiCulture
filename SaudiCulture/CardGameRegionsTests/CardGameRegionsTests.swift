@@ -5,7 +5,7 @@
 //
 
 import XCTest
-@testable import CardGameRegions
+@testable import SaudiCulture
 
 final class CardGameRegionsTests: XCTestCase {
     func testExample() throws {
