@@ -299,7 +299,8 @@ struct AsirView: View {
                     }
                 }
                 .padding(.horizontal, 26)
-                
+    .blur(radius: activePopup != nil ? 10 : 0) // <--- ADD THIS
+    .animation(.default, value: activePopup)   // <--- ADD THIS for smoothness
                 // Matched Pairs Counter
                 HStack {
                     Text("مطابقات: \(viewModel.matchedPairsCount)/\(viewModel.getTotalPairs())")
