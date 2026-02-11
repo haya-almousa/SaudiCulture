@@ -11,6 +11,7 @@ internal import Combine
 struct SaudiMapView: View {
     // MARK: - Properties
     @StateObject private var gameProgress = GameProgress.shared
+    @AppStorage("selectedCharacter") private var savedCharacter: String = "نجديه"  // ✅ قراءة الشخصية المحفوظة
     @State private var selectedRegion: Region?
     @State private var goToLevels = false
 
@@ -34,7 +35,6 @@ struct SaudiMapView: View {
                         )
                         .offset(x: -70, y: -160)
                         .zIndex(1)
-
                         .onTapGesture {
                             handleRegionTap(.northern)
                         }
@@ -46,23 +46,11 @@ struct SaudiMapView: View {
                             isUnlocked: gameProgress.isRegionUnlocked(.eastern)
                         )
                         .offset(x: 110, y: -10)
-
                         .onTapGesture {
                             handleRegionTap(.eastern)
                         }
                         
-                        // المنطقة الوسطى (مفتوحة)
-                        //                    RegionImageView(
-                        //                        imageName: "المنطقة الوسطى",
-                        //                        size: 200,
-                        //                        isUnlocked: gameProgress.isRegionUnlocked(.central)
-                        //                    )
-                        //                    .offset(x: -18, y: -20)
-                        //                    .onTapGesture {
-                        //                        handleRegionTap(.central)
-                        //                    }
-                        
-                        // المنطقة الوسطى  wed
+                        // المنطقة الوسطى
                         RegionImageView(
                             imageName: "المنطقة الوسطى",
                             size: 200,
@@ -71,9 +59,8 @@ struct SaudiMapView: View {
                         .offset(x: -18, y: -20)
                         .zIndex(10)
                         .onTapGesture {
-                            goToLevels = true   // 👈 هنا فقط
+                            goToLevels = true
                         }
-
                         
                         // المنطقة الغربية
                         RegionImageView(
@@ -100,20 +87,10 @@ struct SaudiMapView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
                 .navigationDestination(isPresented: $goToLevels) {
-                    StackedCirclesView()
+                    StackedCirclesView(selectedCharacter: savedCharacter)  // ✅ تمرير الشخصية المحفوظة
                 }
-                
             }
             .navigationBarBackButtonHidden(true)
-
-//            .alert(item: $selectedRegion) { region in
-//                Alert(
-//                    title: Text(region.isLocked ? "🔒 منطقة مقفلة" : region.name),
-//                    message: Text(region.isLocked ? "أكمل المنطقة السابقة لفتح هذه المنطقة!" : "اخترت \(region.name)"),
-//                    dismissButton: .default(Text("حسناً"))
-//                )
-//            }
-            //wed
             .alert(item: $selectedRegion) { region in
                 Alert(
                     title: Text(region.isLocked ? "🔒 منطقة مقفلة" : region.name),
@@ -125,28 +102,12 @@ struct SaudiMapView: View {
                     dismissButton: .default(Text("حسناً"))
                 )
             }
-
-            
         }
     }
     
     // MARK: - Functions
-//    private func handleRegionTap(_ regionType: RegionType) {
-//        let isUnlocked = gameProgress.isRegionUnlocked(regionType)
-//        
-//        selectedRegion = Region(
-//            type: regionType,
-//            name: regionType.displayName,
-//            isLocked: !isUnlocked
-//        )
-//        
-//        // هنا راح تضيف الـ Navigation لصفحة الألغاز
-//    }
-    
-    //wed
     private func handleRegionTap(_ regionType: RegionType) {
-
-        // 👑 المنطقة الوسطى: انتقال مباشر
+        // المنطقة الوسطى: انتقال مباشر
         if regionType == .central {
             goToLevels = true
             return
@@ -161,7 +122,6 @@ struct SaudiMapView: View {
             isLocked: !isUnlocked
         )
     }
-
 }
 
 // MARK: - Region Image View
@@ -223,43 +183,35 @@ class GameProgress: ObservableObject {
         loadProgress()
     }
     
-    // تحميل التقدم من UserDefaults
     private func loadProgress() {
         if let saved = UserDefaults.standard.array(forKey: userDefaultsKey) as? [String] {
             completedRegions = Set(saved)
         }
     }
     
-    // حفظ التقدم في UserDefaults
     private func saveProgress() {
         UserDefaults.standard.set(Array(completedRegions), forKey: userDefaultsKey)
     }
     
-    // التحقق من فتح المنطقة
     func isRegionUnlocked(_ region: RegionType) -> Bool {
-        // المنطقة الوسطى مفتوحة دائماً
         if region == .central {
             return true
         }
         
-        // تحقق من المنطقة السابقة
         let previousRegion = getPreviousRegion(region)
         return previousRegion == nil || isRegionCompleted(previousRegion!)
     }
     
-    // التحقق من إنجاز المنطقة
     func isRegionCompleted(_ region: RegionType) -> Bool {
         return completedRegions.contains(region.rawValue)
     }
     
-    // إنجاز منطقة (يتم استدعاؤها عند إنهاء الألغاز)
     func completeRegion(_ region: RegionType) {
         completedRegions.insert(region.rawValue)
         saveProgress()
         objectWillChange.send()
     }
     
-    // الحصول على المنطقة السابقة
     private func getPreviousRegion(_ region: RegionType) -> RegionType? {
         let allRegions = RegionType.allCases.sorted { $0.order < $1.order }
         guard let currentIndex = allRegions.firstIndex(of: region), currentIndex > 0 else {
@@ -268,7 +220,6 @@ class GameProgress: ObservableObject {
         return allRegions[currentIndex - 1]
     }
     
-    // إعادة تعيين التقدم (للتطوير/التجربة)
     func resetProgress() {
         completedRegions.removeAll()
         saveProgress()
