@@ -23,7 +23,7 @@ struct PuzzleChoicesView: View {
     @State private var feedback = ""
     @State private var showHint = false
     @State private var showSuccess = false
-
+//الوسطه
     let puzzles: [ChoicePuzzle] = [
 
         ChoicePuzzle(
@@ -73,7 +73,7 @@ struct PuzzleChoicesView: View {
     ]
     
     
-    
+    //الشماليه
     let northernPuzzles: [ChoicePuzzle] = [
         ChoicePuzzle(
             question: "أنا فن شعبي مهيب، نصف فيه صفوفاً متراصة، ونصْدِر أصواتاً تشبه زئير الأسود، وننتهي بكلمة (هلا هلا بيك يا ولد).",
@@ -108,7 +108,7 @@ struct PuzzleChoicesView: View {
     ]
     
     
-    
+    //الجنوبيه
     let southernPuzzles: [ChoicePuzzle] = [
         ChoicePuzzle(
             question: "أنا الأكلة اللي ما يكتمل الفطور أو المناسبة بدونها، أعتمد على الدقيق والفرك اليدوي، وفي وسطي (بحر) من السمن والعسل.",
@@ -143,7 +143,7 @@ struct PuzzleChoicesView: View {
     ]
 
     
-    
+    // الغربيه
     let hejazPuzzles: [ChoicePuzzle] = [
         ChoicePuzzle(
             question: "أنا فن شعبي حجازي بامتياز، نلعب بالعصا في حلقة دائرية ومسجل في اليونسكو.",
@@ -176,7 +176,7 @@ struct PuzzleChoicesView: View {
             hint: "اسمه مشتق من مدينة (ينبع)، ويُسمى (لعب البحر)."
         )
     ]
-    
+    // الشرقيه
     let easternPuzzles: [ChoicePuzzle] = [
         ChoicePuzzle(
             question: "أنا لستُ أرزاً عادياً، لوني يميل للاحمرار، وأُزرع في أرض الأحساء المباركة.",

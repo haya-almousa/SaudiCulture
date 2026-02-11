@@ -17,7 +17,8 @@ struct StackedCirclesView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject private var gameProgress = GameProgress.shared
     @State private var navigateToFashion = false
-    
+    @State private var selectedLevel: Int? = nil // المرحلة المختارة للغز
+
     
     
     var backgroundImageName: String {
@@ -58,10 +59,13 @@ struct StackedCirclesView: View {
                         // نخلي الضغط فقط على المرحلة المفتوحة الحالية
                             .onTapGesture {
                                 if index == unlockedLevel {
-                                    navigateToFashion = true
+                                    selectedLevel = index // تخزين المرحلة المختارة
                                 }
                             }
+
                     }
+                    
+                    
                     
                     // ✅ الشخصية المختارة (بدلنا "netImage" بالشخصية اللي اختارها)
                     Image(selectedCharacter)
@@ -74,6 +78,8 @@ struct StackedCirclesView: View {
                             value: unlockedLevel
                         )
                         .offset(y: -70)  // ✅ تعديل المكان
+                    
+                    
                     
                 }
                 .offset(y: 60)

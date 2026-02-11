@@ -15,8 +15,6 @@ struct SaudiMapView: View {
     @State private var selectedRegion: Region?
     @State private var goToLevels = false
     private let debugUnlockAll = true
-
-    
     @State private var selectedRegionType: RegionType?
 
     // MARK: - Body
@@ -39,13 +37,13 @@ struct SaudiMapView: View {
                         )
                         .offset(x: -70, y: -160)
                         .zIndex(1)
-//                        .onTapGesture {
-//                            handleRegionTap(.northern)
-//                        }
                         .onTapGesture {
-                            selectedRegionType = .northern
-                            goToLevels = true
+                            handleRegionTap(.northern)
                         }
+//                        .onTapGesture {
+//                            selectedRegionType = .northern
+//                            goToLevels = true
+//                        }
 
 
                         
@@ -56,16 +54,17 @@ struct SaudiMapView: View {
                             isUnlocked: gameProgress.isRegionUnlocked(.eastern)
                         )
                         .offset(x: 110, y: -10)
-//                        .onTapGesture {
-//                            handleRegionTap(.eastern)
-//                        }
                         .onTapGesture {
-                            selectedRegionType = .eastern
-                            goToLevels = true
+                            handleRegionTap(.eastern)
                         }
+//                        .onTapGesture {
+//                            selectedRegionType = .eastern
+//                            goToLevels = true
+//                        }
 
 
                         
+                        // المنطقة الوسطى
                         // المنطقة الوسطى
                         RegionImageView(
                             imageName: "المنطقة الوسطى",
@@ -74,13 +73,15 @@ struct SaudiMapView: View {
                         )
                         .offset(x: -18, y: -20)
                         .zIndex(10)
-//                        .onTapGesture {
-//                            goToLevels = true
-//                        }
                         .onTapGesture {
                             selectedRegionType = .central
                             goToLevels = true
                         }
+
+//                        .onTapGesture {
+//                            selectedRegionType = .central
+//                            goToLevels = true
+//                        }
 
 
                         
@@ -91,13 +92,13 @@ struct SaudiMapView: View {
                             isUnlocked: gameProgress.isRegionUnlocked(.western)
                         )
                         .offset(x: -120, y: -30)
-//                        .onTapGesture {
-//                            handleRegionTap(.western)
-//                        }
                         .onTapGesture {
-                            selectedRegionType = .western
-                            goToLevels = true
+                            handleRegionTap(.western)
                         }
+//                        .onTapGesture {
+//                            selectedRegionType = .western
+//                            goToLevels = true
+//                        }
 
 
                         
@@ -108,29 +109,38 @@ struct SaudiMapView: View {
                             isUnlocked: gameProgress.isRegionUnlocked(.southern)
                         )
                         .offset(x: -12, y: 111)
-//                        .onTapGesture {
-//                            handleRegionTap(.southern)
-//                        }
                         .onTapGesture {
-                            selectedRegionType = .southern
-                            goToLevels = true
+                            handleRegionTap(.southern)
                         }
+//                        .onTapGesture {
+//                            selectedRegionType = .southern
+//                            goToLevels = true
+//                        }
 
 
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-//                .navigationDestination(isPresented: $goToLevels) {
-//                    StackedCirclesView(selectedCharacter: savedCharacter)  // ✅ تمرير الشخصية المحفوظة
-//                }
                 .navigationDestination(isPresented: $goToLevels) {
                     if let region = selectedRegionType {
                         StackedCirclesView(
                             selectedCharacter: savedCharacter,
                             region: region
                         )
+                    } else {
+                        // لا شيء محدد (يمكن وضع صفحة فارغة أو رسالة)
+                        Text("اختر منطقة للمتابعة")
                     }
                 }
+
+//                .navigationDestination(isPresented: $goToLevels) {
+//                    if let region = selectedRegionType {
+//                        StackedCirclesView(
+//                            selectedCharacter: savedCharacter,
+//                            region: region
+//                        )
+//                    }
+//                }
 
             }
             .navigationBarBackButtonHidden(true)
@@ -236,20 +246,20 @@ class GameProgress: ObservableObject {
         UserDefaults.standard.set(Array(completedRegions), forKey: userDefaultsKey)
     }
     
-//    func isRegionUnlocked(_ region: RegionType) -> Bool {
-//        if region == .central {
-//            return true
-//        }
-//        
-//        let previousRegion = getPreviousRegion(region)
-//        return previousRegion == nil || isRegionCompleted(previousRegion!)
-//    }
-    
-    
-    
     func isRegionUnlocked(_ region: RegionType) -> Bool {
-        return true   // 🔓 فتح كل المناطق مؤقتًا
+        if region == .central {
+            return true
+        }
+        
+        let previousRegion = getPreviousRegion(region)
+        return previousRegion == nil || isRegionCompleted(previousRegion!)
     }
+    
+    
+//    
+//    func isRegionUnlocked(_ region: RegionType) -> Bool {
+//        return true   // 🔓 فتح كل المناطق مؤقتًا
+//    }
 
     
     func isRegionCompleted(_ region: RegionType) -> Bool {
