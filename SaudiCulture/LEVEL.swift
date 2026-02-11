@@ -12,8 +12,11 @@ struct StackedCirclesView: View {
     
     let totalLevels = 5
     @State private var unlockedLevel = 0
-    
+    @Environment(\.dismiss) var dismiss
+    @StateObject private var gameProgress = GameProgress.shared
+
     var body: some View {
+        
         ZStack {
             
             Image("background")
@@ -70,11 +73,21 @@ struct StackedCirclesView: View {
 
     
     // فتح مرحلة جديدة
+//    func nextLevel() {
+//        if unlockedLevel < totalLevels - 1 {
+//            unlockedLevel += 1
+//        }
+//    }
     func nextLevel() {
         if unlockedLevel < totalLevels - 1 {
             unlockedLevel += 1
+        } else {
+            // آخر مرحلة انخلّصت ✅
+            gameProgress.completeRegion(.central)
+            dismiss() // يرجع للخريطة
         }
     }
+
 
 }
 #Preview {
