@@ -9,8 +9,10 @@
 import SwiftUI
 
 struct الوسطى: View {
+    @State private var startNajdGame = false
     var body: some View {
-        ZStack {
+        NavigationStack{
+            ZStack {
             Color("BackgroundMain")
                 .ignoresSafeArea()
             
@@ -52,7 +54,7 @@ struct الوسطى: View {
                     Spacer()
                     
                     Button {
-                        
+                        startNajdGame = true
                     } label: {
                         Text("ابدأ اللعبة")
                             .font(.custom("Saudi-Regular", size: 34))
@@ -69,7 +71,13 @@ struct الوسطى: View {
                 x: -9 + (411 / 2),
                 y: 342 + (529 / 2)
             )
+                
         }
+            
+            .navigationDestination(isPresented: $startNajdGame) {
+                NajdView()
+            }
+    }
     }
 }
 

@@ -12,34 +12,38 @@ struct StackedCirclesView: View {
     
     let totalLevels = 5
     @State private var unlockedLevel = 0
-    
+    @Environment(\.dismiss) var dismiss
+    @StateObject private var gameProgress = GameProgress.shared
+    @State private var navigateToFashion = false
     var body: some View {
+        NavigationStack {
         ZStack {
             
-            Image("background")
+            Image("الوسطى")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
             
             ZStack {
-
+                
                 // المراحل
                 ForEach(0..<totalLevels, id: \.self) { index in
-
+                    
                     Image(index <= unlockedLevel ? "yellowCircle" : "grayCircle")
                         .resizable()
                         .scaledToFit()
                         .frame(width: index == 0 ? 110 : 90)
                         .offset(y: yPosition(for: index))
-
-                        // نخلي الضغط فقط على المرحلة المفتوحة الحالية
+                    
+                    // نخلي الضغط فقط على المرحلة المفتوحة الحالية
                         .onTapGesture {
                             if index == unlockedLevel {
-                                nextLevel()
+//                                nextLevel()
+                                navigateToFashion = true
                             }
                         }
                 }
-
+                
                 // الشخصية
                 Image("netImage")
                     .resizable()
@@ -50,13 +54,20 @@ struct StackedCirclesView: View {
                         .spring(response: 0.6, dampingFraction: 0.7),
                         value: unlockedLevel
                     )
+                    .offset(y: -40)
+                
             }
             .offset(y: 60)
-
+            
         }
-        .onTapGesture {
-            nextLevel()
-        }
+        
+        .navigationDestination(isPresented: $navigateToFashion) {
+                        الوسطى()
+                    }
+//        .onTapGesture {
+//            nextLevel()
+//        }
+    }
     }
     
     // تحريك المراحل عموديًا
@@ -68,11 +79,21 @@ struct StackedCirclesView: View {
 
     
     // فتح مرحلة جديدة
+//    func nextLevel() {
+//        if unlockedLevel < totalLevels - 1 {
+//            unlockedLevel += 1
+//        }
+//    }
     func nextLevel() {
         if unlockedLevel < totalLevels - 1 {
             unlockedLevel += 1
+        } else {
+            // آخر مرحلة انخلّصت ✅
+            gameProgress.completeRegion(.central)
+            dismiss() // يرجع للخريطة
         }
     }
+
 
 }
 #Preview {
