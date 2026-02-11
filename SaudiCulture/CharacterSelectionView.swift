@@ -9,6 +9,8 @@ import SwiftUI
 struct CharacterPickerView: View {
     let playerName: String
     
+    @AppStorage("selectedCharacter") private var savedCharacter: String = "نجديه"  // ✅ حفظ الشخصية
+    
     let characterPairs: [[String]] = [
         ["نجدي", "نجديه"],
         ["شرقاوية", "شرقاوي"],
@@ -97,6 +99,9 @@ struct CharacterPickerView: View {
                 }
 
                 Button("التالي") {
+                    if let selected = selectedName {
+                        savedCharacter = selected  // ✅ نحفظ الشخصية المختارة
+                    }
                     navigateToWelcome = true
                 }
                 .font(.custom("Saudi-Regular", size: 20))
@@ -117,32 +122,32 @@ struct CharacterPickerView: View {
         .navigationBarBackButtonHidden(true)
         .navigationDestination(isPresented: $navigateToWelcome) {
             if let selected = selectedName {
-                getWelcomeView(for: selected)
+                getWelcomeView(for: selected, selectedCharacter: selected)
             }
         }
     }
     
     @ViewBuilder
-    func getWelcomeView(for character: String) -> some View {
+    func getWelcomeView(for character: String, selectedCharacter: String) -> some View {
         switch character {
         case "نجدي", "نجديه":
-            مرحباالوسطى(playerName: playerName)
+            مرحباالوسطى(playerName: playerName, selectedCharacter: selectedCharacter)
         case "شرقاوي", "شرقاوية":
-            مرحباالشرقيه(playerName: playerName)
+            مرحباالشرقيه(playerName: playerName, selectedCharacter: selectedCharacter)
         case "جنوبي", "جنوبيه":
-            مرحباالجنوبيه(playerName: playerName)
+            مرحباالجنوبيه(playerName: playerName, selectedCharacter: selectedCharacter)
         case "شمالي", "شماليه":
-            مرحباالشماليه(playerName: playerName)
+            مرحباالشماليه(playerName: playerName, selectedCharacter: selectedCharacter)
         case "غربي", "غربيه":
-            مرحباالغربيه(playerName: playerName)
+            مرحباالغربيه(playerName: playerName, selectedCharacter: selectedCharacter)
         default:
-            مرحباالجنوبيه(playerName: playerName)
+            مرحباالجنوبيه(playerName: playerName, selectedCharacter: selectedCharacter)
         }
     }
 }
 
 #Preview {
     NavigationStack {
-        CharacterPickerView(playerName: "")
+        CharacterPickerView(playerName: "هيا")
     }
 }

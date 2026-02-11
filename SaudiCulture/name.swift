@@ -22,6 +22,7 @@ struct Name: View {
                     .font(.custom("Saudi-Regular", size: 28))
                     .foregroundStyle(Color("brown"))
                     .multilineTextAlignment(.center)
+                    
                 
                 Rectangle()
                     .frame(height: 1)

@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct مرحباالوسطى: View {
-    let playerName: String  // ✅ استقبال الاسم
+    let playerName: String
+    let selectedCharacter: String
     
     private let fontName = "Saudi-Regular"
     private let figmaW: CGFloat = 390
@@ -19,63 +20,59 @@ struct مرحباالوسطى: View {
     private let btnH: CGFloat = 94
     private let titleCenterX: CGFloat = 195
     private let titleCenterY: CGFloat = 300
-    @State private var navigateToMap = false
+    
+    @State private var navigateToMap = false  // ✅ غيرت الاسم
     
     var body: some View {
         NavigationStack {
-
-        GeometryReader { geo in
-            let sx = geo.size.width / figmaW
-            let sy = geo.size.height / figmaH
-            let s  = min(sx, sy)
-            
-            ZStack {
-                Image("الوسطى")
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
+            GeometryReader { geo in
+                let sx = geo.size.width / figmaW
+                let sy = geo.size.height / figmaH
+                let s  = min(sx, sy)
                 
-                Text("مرحباً \(playerName)")  // ✅ عرض الاسم المدخل
-                    .font(.custom(fontName, size: 50 * s))
-                    .foregroundColor(Color("brown"))
-                    .position(x: titleCenterX * sx, y: titleCenterY * sy)
-                
-                Button(action: {
-                    navigateToMap = true
-                }) {
-                    ZStack {
-                        Capsule()
-                            .fill(Color("brown"))
-                            .frame(width: btnW * sx, height: btnH * sy)
-                        
-                        Text("ابدأ اللعبة")
-                            .font(.custom(fontName, size: 50 * s))
-                            .foregroundColor(.white)
-                            .baselineOffset(-4 * sy)
+                ZStack {
+                    Image("الوسطى")
+                        .resizable()
+                        .scaledToFill()
+                        .ignoresSafeArea()
+                    
+                    Text("مرحباً \(playerName)")
+                        .font(.custom(fontName, size: 50 * s))
+                        .foregroundColor(Color("brown"))
+                        .position(x: titleCenterX * sx, y: titleCenterY * sy)
+                    
+                    Button(action: {
+                        navigateToMap = true  // ✅ روح للخريطة
+                    }) {
+                        ZStack {
+                            Capsule()
+                                .fill(Color("brown"))
+                                .frame(width: btnW * sx, height: btnH * sy)
+                            
+                            Text("ابدأ اللعبة")
+                                .font(.custom(fontName, size: 50 * s))
+                                .foregroundColor(.white)
+                                .baselineOffset(-4 * sy)
+                        }
+                        .frame(width: btnW * sx, height: btnH * sy)
                     }
-                    .frame(width: btnW * sx, height: btnH * sy)
+                    .buttonStyle(.plain)
+                    .position(
+                        x: (btnX + btnW/2) * sx,
+                        y: (btnY + btnH/2) * sy
+                    )
                 }
-                .buttonStyle(.plain)
-                .position(
-                    x: (btnX + btnW/2) * sx,
-                    y: (btnY + btnH/2) * sy
-                )
+            }
+            .navigationBarBackButtonHidden(true)
+            .navigationDestination(isPresented: $navigateToMap) {
+                SaudiMapView()  // ✅ روح للخريطة زي باقي المناطق
             }
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationDestination(isPresented: $navigateToMap) {
-            SaudiMapView()
-        }
-    }}
-    
-    func startGame() {
-        print("اللعبة بدأت - المنطقة الوسطى - اللاعب: \(playerName)")
     }
 }
 
 #Preview {
     NavigationStack {
-        مرحباالوسطى(playerName: "هيا")
+        مرحباالوسطى(playerName: "هيا", selectedCharacter: "نجديه")
     }
 }
-
