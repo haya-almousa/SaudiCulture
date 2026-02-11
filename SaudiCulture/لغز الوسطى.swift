@@ -394,7 +394,7 @@ struct LevelAlwosta: View {
                     Spacer()
                     
                     // العنوان
-                    Text("الدرعية")
+                    Text("قصر سلوى")
                         .font(.custom("Saudi-Bold", size: 36))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
