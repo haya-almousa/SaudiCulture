@@ -13,6 +13,7 @@ import SwiftUI
   
 
 struct PuzzleView3: View {
+    let region: RegionType
     @State private var answer: String = ""
     @State private var showText = false
     @State private var showPopup = false
@@ -100,7 +101,7 @@ struct PuzzleView3: View {
                 //                Spacer()
                 
                 Button(action: {
-                    LevelFlow.shared.completeLevel()
+                    LevelFlow.shared.completeLevel(region: region)  // ✅ مررنا المنطقة
                         goToMap = true
                 }) {
                     Text("انهاء  ")
@@ -125,6 +126,6 @@ struct PuzzleView3: View {
 }
 
 #Preview {
-    PuzzleView3()
+    PuzzleView3(region: .central)
 }
 

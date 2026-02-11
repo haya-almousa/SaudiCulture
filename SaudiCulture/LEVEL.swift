@@ -226,106 +226,73 @@
 import SwiftUI
 
 struct StackedCirclesView: View {
-    
-    let selectedCharacter: String  // ✅ استقبال الشخصية المختارة
-    let region: RegionType         // ✅ جديد
-    
+    let selectedCharacter: String
+    let region: RegionType
     let totalLevels = 5
     @StateObject var flow = LevelFlow.shared
     @Environment(\.dismiss) var dismiss
     @StateObject private var gameProgress = GameProgress.shared
     @State private var navigateToFashion = false
-    
+
+    var current: Int {
+        flow.currentLevel(for: region)
+    }
+
     var backgroundImageName: String {
         switch region {
-        case .central:
-            return "الوسطى"
-        case .northern:
-            return "الشماليه"
-        case .southern:
-            return "الجنوبيه"
-        case .eastern:
-            return "الشرقيه"
-        case .western:
-            return "الغربيه"
+        case .central:  return "الوسطى"
+        case .northern: return "الشماليه"
+        case .southern: return "الجنوبيه"
+        case .eastern:  return "الشرقيه"
+        case .western:  return "الغربيه"
         }
     }
 
     var body: some View {
         NavigationStack {
             ZStack {
-                
                 Image(backgroundImageName)
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
-                
+
                 ZStack {
-                    
-                    // المراحل
                     ForEach(0..<totalLevels, id: \.self) { index in
-                        
-                        Image(index <= flow.currentLevel ? "yellowCircle" : "grayCircle")
+                        Image(index <= current ? "yellowCircle" : "grayCircle")
                             .resizable()
                             .scaledToFit()
                             .frame(width: index == 0 ? 110 : 90)
                             .offset(y: yPosition(for: index))
-                        
-                        // ✅ الضغط فقط على المرحلة المفتوحة الحالية
-                        // ✅ وبس اللفل الأول يفتح صفحة الزي
                             .onTapGesture {
-                                if index == flow.currentLevel {
+                                if index == current {
                                     navigateToFashion = true
                                 }
                             }
                     }
-                    
-                    // ✅ الشخصية المختارة
+
                     Image(selectedCharacter)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 100, height: 140)  // ✅ حجم أكبر
-                        .offset(y: yPosition(for: flow.currentLevel))
-                        .animation(
-                            .spring(response: 0.6, dampingFraction: 0.7),
-                            value: flow.currentLevel
-                        )
-                        .offset(y: -70)
-                    
+                        .frame(width: 100, height: 140)
+                        .offset(y: yPosition(for: current) - 70) // استخدم current هنا
+                        .animation(.spring(), value: current)
+                        .allowsHitTesting(false)
                 }
                 .offset(y: 60)
-                
             }
             .navigationDestination(isPresented: $navigateToFashion) {
-                // ✅ هنا نربط صفحة الزي حسب المنطقة
-                switch region {
-                case .central:
-                    الوسطى()
-                case .eastern:
-                    الشرقيه()
-                case .northern:
-                    الشماليه()
-                case .western:
-                    الغربيه()
-                case .southern:
-                    الجنوبيه()
-                }
+                PuzzleView(region: region)
             }
         }
     }
-    
-    // تحريك المراحل عموديًا
+
     func yPosition(for index: Int) -> CGFloat {
         let spacing: CGFloat = 110
         let startFromBottom: CGFloat = 200
         return startFromBottom - CGFloat(index) * spacing
     }
-    
-    func nextLevel() {
-        LevelFlow.shared.completeLevel()
-    }
-
 }
+
 
 //#Preview {
 //    NavigationStack {
