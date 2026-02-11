@@ -91,6 +91,7 @@ struct PuzzlePieceJanubiya: Identifiable {
 
 // MARK: - شاشة لفل الجنوبية
 struct LevelAljanubiya: View {
+    
     private let rows = 3
     private let cols = 3
     private let puzzleSize: CGFloat = 340
@@ -104,70 +105,81 @@ struct LevelAljanubiya: View {
     @State private var showCompletionDialog: Bool = false
     @State private var showHelpDialog: Bool = false
     @State private var navigateToNext: Bool = false
+    
+    // ⭐ زر الهوم
     @State private var navigateToHome: Bool = false
     
     var body: some View {
-        ZStack {
-            Image("الجنوبيه")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
+        NavigationStack {
             
-            VStack {
-                Spacer()
-                puzzleBoard
-                Spacer()
-            }
-            .overlay(alignment: .bottom) {
-                HStack {
-                    Button(action: {
-                        showHelpDialog = true
-                    }) {
-                        ZStack {
-                            Circle()
-                                .fill(Color("brown"))
-                                .frame(width: 44, height: 44)
-                            
-                            Text("؟")
-                                .font(.custom("Saudi-Regular", size: 24))
-                                .foregroundColor(.white)
-                        }
-                    }
-                    .padding(.leading, 30)
-                    
+            ZStack {
+                Image("الجنوبيه")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+                
+                VStack {
+                    Spacer()
+                    puzzleBoard
                     Spacer()
                 }
-                .padding(.bottom, 180)
-            }
-            .overlay(alignment: .topTrailing) {
-                Button(action: {
-                    navigateToHome = true
-                }) {
-                    ZStack {
-                        Circle()
-                            .fill(Color("brown"))
-                            .frame(width: 50, height: 50)
+                .overlay(alignment: .bottom) {
+                    HStack {
                         
-                        Image(systemName: "house.fill")
-                            .font(.system(size: 24))
-                            .foregroundColor(.white)
+                        // ⭐ زر الاستفهام — مطابق للوسطى
+                        Button(action: {
+                            showHelpDialog = true
+                        }) {
+                            Image(systemName: "questionmark")
+                                .font(.system(size: 26))
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(Color("brown"))
+                                .clipShape(Circle())
+                        }
+                        .padding(.leading, 30)
+                        
+                        Spacer()
                     }
+                    .padding(.bottom, 180)
                 }
-                .padding(.top, 60)
-                .padding(.trailing, 20)
+                .overlay(alignment: .topTrailing) {
+                    
+                    // ⭐ زر الهوم — مطابق للوسطى + ربط الخريطة
+                    Button(action: {
+                        navigateToHome = true
+                    }) {
+                        Image(systemName: "house.fill")
+                            .font(.system(size: 18))
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color("brown"))
+                            .clipShape(Circle())
+                    }
+                    .padding(.top, 60)
+                    .padding(.trailing, 20)
+                }
             }
-        }
-        .onAppear {
-            setupPuzzle()
-        }
-        .overlay {
-            if showCompletionDialog {
-                completionDialogView
+            
+            // ⭐ ربط صفحة الخريطة
+            .navigationDestination(isPresented: $navigateToHome) {
+                SaudiMapView()
             }
-        }
-        .overlay {
-            if showHelpDialog {
-                helpDialogView
+            .navigationDestination(isPresented: $navigateToNext ) {
+                PuzzleChoicesView()
+            }
+            .onAppear {
+                setupPuzzle()
+            }
+            .overlay {
+                if showCompletionDialog {
+                    completionDialogView
+                }
+            }
+            .overlay {
+                if showHelpDialog {
+                    helpDialogView
+                }
             }
         }
     }
@@ -202,8 +214,9 @@ struct LevelAljanubiya: View {
         }
     }
     
-    // MARK: - عرض قطعة واحدة (معدّل مثل الشرقية)
+    // MARK: - عرض قطعة واحدة
     private func makePieceView(piece: PuzzlePieceJanubiya, pieceSize: CGFloat) -> some View {
+        
         let isDragging = draggingPiece?.id == piece.id
         let offset = isDragging ? dragOffset : .zero
         
@@ -241,12 +254,12 @@ struct LevelAljanubiya: View {
             .scaleEffect(isDragging ? 1.05 : 1.0)
             .zIndex(isDragging ? 100 : Double(piece.id))
         }
-        .frame(width: pieceSize, height: pieceSize)          // ← مضافة
-        .contentShape(Rectangle())                           // ← مضافة
+        .frame(width: pieceSize, height: pieceSize)
+        .contentShape(Rectangle())
         .offset(offset)
         .position(x: x, y: y)
         .gesture(
-            DragGesture(minimumDistance: 0)                  // ← مضافة
+            DragGesture(minimumDistance: 0)
                 .onChanged { value in
                     if draggingPiece == nil {
                         draggingPiece = piece
@@ -343,7 +356,7 @@ struct LevelAljanubiya: View {
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                     
-                    Text("قرية تراثية تاريخية تقع في جبال عسير، تشتهر بمبانيها الحجرية متعددة الأدوار ونوافذها الملوّنة، وتعكس التراث الجنوبي الأصيل والحياة الاجتماعية القديمة في المنطقة.")
+                    Text("قرية تراثية قديمة في جبال عسير، مشهورة بمبانيها الحجرية ، ونوافذها الملوّنة. وتعكس التراث الجنوبي الأصيل وأسلوب الحياة زمان في المنطقة.")
                         .font(.custom("Saudi-Bold", size: 18))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
@@ -421,7 +434,6 @@ struct LevelAljanubiya: View {
         }
     }
     
-    // MARK: - خلبطة القطع
     private func shufflePieces() {
         var positions = pieces.map { ($0.row, $0.col) }
         positions.shuffle()

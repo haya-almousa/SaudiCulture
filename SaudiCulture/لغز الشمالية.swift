@@ -19,78 +19,56 @@ struct PuzzlePieceShapeShamaliya: Shape {
         let w = rect.width
         let h = rect.height
         
-        // حجم الموجة (نسبة من حجم القطعة)
         let tabWidth = w * 0.25
         let tabHeight = h * 0.15
         
-        // البداية من الزاوية اليسرى العليا
         path.move(to: CGPoint(x: 0, y: 0))
         
-        // ═══ الحافة العلوية ═══
         if row == 0 {
-            // حافة مستقيمة
             path.addLine(to: CGPoint(x: w, y: 0))
         } else {
-            // موجة بارزة للخارج
             let midX = w / 2
             path.addLine(to: CGPoint(x: midX - tabWidth/2, y: 0))
-            
             path.addQuadCurve(
                 to: CGPoint(x: midX + tabWidth/2, y: 0),
                 control: CGPoint(x: midX, y: -tabHeight)
             )
-            
             path.addLine(to: CGPoint(x: w, y: 0))
         }
         
-        // ═══ الحافة اليمنى ═══
         if col == cols - 1 {
-            // حافة مستقيمة
             path.addLine(to: CGPoint(x: w, y: h))
         } else {
-            // موجة بارزة للخارج
             let midY = h / 2
             path.addLine(to: CGPoint(x: w, y: midY - tabWidth/2))
-            
             path.addQuadCurve(
                 to: CGPoint(x: w, y: midY + tabWidth/2),
                 control: CGPoint(x: w + tabHeight, y: midY)
             )
-            
             path.addLine(to: CGPoint(x: w, y: h))
         }
         
-        // ═══ الحافة السفلية ═══
         if row == rows - 1 {
-            // حافة مستقيمة
             path.addLine(to: CGPoint(x: 0, y: h))
         } else {
-            // موجة داخلية
             let midX = w / 2
             path.addLine(to: CGPoint(x: midX + tabWidth/2, y: h))
-            
             path.addQuadCurve(
                 to: CGPoint(x: midX - tabWidth/2, y: h),
                 control: CGPoint(x: midX, y: h + tabHeight)
             )
-            
             path.addLine(to: CGPoint(x: 0, y: h))
         }
         
-        // ═══ الحافة اليسرى ═══
         if col == 0 {
-            // حافة مستقيمة
             path.addLine(to: CGPoint(x: 0, y: 0))
         } else {
-            // موجة داخلية
             let midY = h / 2
             path.addLine(to: CGPoint(x: 0, y: midY + tabWidth/2))
-            
             path.addQuadCurve(
                 to: CGPoint(x: 0, y: midY - tabWidth/2),
                 control: CGPoint(x: -tabHeight, y: midY)
             )
-            
             path.addLine(to: CGPoint(x: 0, y: 0))
         }
         
@@ -113,12 +91,11 @@ struct PuzzlePieceShamaliya: Identifiable {
 
 // MARK: - شاشة لفل الشمالية
 struct LevelAshshamaliya: View {
-    // إعدادات البزل
+    
     private let rows = 3
     private let cols = 3
     private let puzzleSize: CGFloat = 340
     
-    // حالة اللعبة
     @State private var pieces: [PuzzlePieceShamaliya] = []
     @State private var draggingPiece: PuzzlePieceShamaliya?
     @State private var dragOffset: CGSize = .zero
@@ -128,74 +105,83 @@ struct LevelAshshamaliya: View {
     @State private var showCompletionDialog: Bool = false
     @State private var showHelpDialog: Bool = false
     @State private var navigateToNext: Bool = false
+    
+    // ⭐ زر الهوم
     @State private var navigateToHome: Bool = false
     
     var body: some View {
-        ZStack {
-            // الخلفية (تبقى "الوسطى")
-            Image("الشماليه")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
+        NavigationStack {
             
-            VStack {
-                Spacer()
+            ZStack {
+                Image("الشماليه")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
                 
-                puzzleBoard
-                
-                Spacer()
-            }
-            .overlay(alignment: .bottom) {
-                HStack {
-                    // زر المساعدة (؟)
-                    Button(action: {
-                        showHelpDialog = true
-                    }) {
-                        ZStack {
-                            Circle()
-                                .fill(Color("brown"))
-                                .frame(width: 44, height: 44)
-                            
-                            Text("؟")
-                                .font(.custom("Saudi-Regular", size: 24))
-                                .foregroundColor(.white)
-                        }
-                    }
-                    .padding(.leading, 30)
-                    
+                VStack {
+                    Spacer()
+                    puzzleBoard
                     Spacer()
                 }
-                .padding(.bottom, 180)
-            }
-            .overlay(alignment: .topTrailing) {
-                Button(action: {
-                    navigateToHome = true
-                }) {
-                    ZStack {
-                        Circle()
-                            .fill(Color("brown"))
-                            .frame(width: 50, height: 50)
+                .overlay(alignment: .bottom) {
+                    HStack {
                         
-                        Image(systemName: "house.fill")
-                            .font(.system(size: 24))
-                            .foregroundColor(.white)
+                        // ⭐ زر الاستفهام — الآن مطابق للوسطى (أيقونة + حجم 26)
+                        Button(action: {
+                            showHelpDialog = true
+                        }) {
+                            Image(systemName: "questionmark")
+                                .font(.system(size: 26))
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(Color("brown"))
+                                .clipShape(Circle())
+                        }
+                        .padding(.leading, 30)
+                        
+                        Spacer()
                     }
+                    .padding(.bottom, 180)
                 }
-                .padding(.top, 60)
-                .padding(.trailing, 20)
+                .overlay(alignment: .topTrailing) {
+                    
+                    // ⭐ زر الهوم — مطابق للوسطى + ربط الخريطة
+                    Button(action: {
+                        navigateToHome = true
+                    }) {
+                        Image(systemName: "house.fill")
+                            .font(.system(size: 18))
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color("brown"))
+                            .clipShape(Circle())
+                    }
+                    .padding(.top, 60)
+                    .padding(.trailing, 20)
+                }
             }
-        }
-        .onAppear {
-            setupPuzzle()
-        }
-        .overlay {
-            if showCompletionDialog {
-                completionDialogView
+            
+            // ⭐ ربط صفحة الخريطة
+            .navigationDestination(isPresented: $navigateToHome) {
+                SaudiMapView()
             }
-        }
-        .overlay {
-            if showHelpDialog {
-                helpDialogView
+            .navigationDestination(isPresented: $navigateToNext ) {
+                PuzzleChoicesView()
+            }
+
+            
+            .onAppear {
+                setupPuzzle()
+            }
+            .overlay {
+                if showCompletionDialog {
+                    completionDialogView
+                }
+            }
+            .overlay {
+                if showHelpDialog {
+                    helpDialogView
+                }
             }
         }
     }
@@ -232,6 +218,7 @@ struct LevelAshshamaliya: View {
     
     // MARK: - عرض قطعة واحدة
     private func makePieceView(piece: PuzzlePieceShamaliya, pieceSize: CGFloat) -> some View {
+        
         let isDragging = draggingPiece?.id == piece.id
         let offset = isDragging ? dragOffset : .zero
         
@@ -247,7 +234,6 @@ struct LevelAshshamaliya: View {
             
             ZStack {
                 GeometryReader { geo in
-                    // صورة البزل: تراث الشمالية
                     Image("تراث الشمالية")
                         .resizable()
                         .aspectRatio(contentMode: .fill)
@@ -372,7 +358,7 @@ struct LevelAshshamaliya: View {
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                     
-                    Text("قرية تراثية تاريخية تقع في جبال عسير، تشتهرموقع أثري عالمي يضم مقابر نبطية منحوتة في الصخور، ويُعد شاهدًا على حضارات قديمة ازدهرت في شمال الجزيرة العربية، وأول موقع سعودي مسجّل في قائمة التراث العالمي.")
+                    Text("موقع أثري عالمي فيه مقابر منحوتة بالصخور، ويعتبر شاهد على حضارات قديمة ازدهرت في شمال الجزيرة العربية. وهو أول موقع سعودي تسجّل في قائمة التراث العالمي.")
                         .font(.custom("Saudi-Bold", size: 18))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
@@ -400,7 +386,7 @@ struct LevelAshshamaliya: View {
         }
     }
     
-    // MARK: - نافذة المساعدة (الصورة الكاملة)
+    // MARK: - نافذة المساعدة
     private var helpDialogView: some View {
         ZStack {
             Color.black.opacity(0.3)
@@ -450,7 +436,6 @@ struct LevelAshshamaliya: View {
         }
     }
     
-    // MARK: - خلبطة القطع
     private func shufflePieces() {
         var positions = pieces.map { ($0.row, $0.col) }
         positions.shuffle()

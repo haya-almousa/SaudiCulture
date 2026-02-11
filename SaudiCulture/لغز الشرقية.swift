@@ -19,78 +19,56 @@ struct PuzzlePieceShapeSharqiya: Shape {
         let w = rect.width
         let h = rect.height
         
-        // حجم الموجة (نسبة من حجم القطعة)
         let tabWidth = w * 0.25
         let tabHeight = h * 0.15
         
-        // البداية من الزاوية اليسرى العليا
         path.move(to: CGPoint(x: 0, y: 0))
         
-        // ═══ الحافة العلوية ═══
         if row == 0 {
-            // حافة مستقيمة
             path.addLine(to: CGPoint(x: w, y: 0))
         } else {
-            // موجة بارزة للخارج
             let midX = w / 2
             path.addLine(to: CGPoint(x: midX - tabWidth/2, y: 0))
-            
             path.addQuadCurve(
                 to: CGPoint(x: midX + tabWidth/2, y: 0),
                 control: CGPoint(x: midX, y: -tabHeight)
             )
-            
             path.addLine(to: CGPoint(x: w, y: 0))
         }
         
-        // ═══ الحافة اليمنى ═══
         if col == cols - 1 {
-            // حافة مستقيمة
             path.addLine(to: CGPoint(x: w, y: h))
         } else {
-            // موجة بارزة للخارج
             let midY = h / 2
             path.addLine(to: CGPoint(x: w, y: midY - tabWidth/2))
-            
             path.addQuadCurve(
                 to: CGPoint(x: w, y: midY + tabWidth/2),
                 control: CGPoint(x: w + tabHeight, y: midY)
             )
-            
             path.addLine(to: CGPoint(x: w, y: h))
         }
         
-        // ═══ الحافة السفلية ═══
         if row == rows - 1 {
-            // حافة مستقيمة
             path.addLine(to: CGPoint(x: 0, y: h))
         } else {
-            // موجة داخلية
             let midX = w / 2
             path.addLine(to: CGPoint(x: midX + tabWidth/2, y: h))
-            
             path.addQuadCurve(
                 to: CGPoint(x: midX - tabWidth/2, y: h),
                 control: CGPoint(x: midX, y: h + tabHeight)
             )
-            
             path.addLine(to: CGPoint(x: 0, y: h))
         }
         
-        // ═══ الحافة اليسرى ═══
         if col == 0 {
-            // حافة مستقيمة
             path.addLine(to: CGPoint(x: 0, y: 0))
         } else {
-            // موجة داخلية
             let midY = h / 2
             path.addLine(to: CGPoint(x: 0, y: midY + tabWidth/2))
-            
             path.addQuadCurve(
                 to: CGPoint(x: 0, y: midY - tabWidth/2),
                 control: CGPoint(x: -tabHeight, y: midY)
             )
-            
             path.addLine(to: CGPoint(x: 0, y: 0))
         }
         
@@ -113,97 +91,96 @@ struct PuzzlePieceSharqiya: Identifiable {
 
 // MARK: - شاشة لفل الشرقية
 struct LevelAlsharqiya: View {
-    // إعدادات البزل
-    // ═══════════════════════════════════════════════════
-    // 📝 لتعديل عدد القطع:
-    //    - غيّر rows و cols (مثلاً: 3×3 أو 5×5)
-    // 📝 لتعديل حجم البزل:
-    //    - غيّر puzzleSize (مثلاً: 280 أو 360)
-    // ═══════════════════════════════════════════════════
+    
     private let rows = 3
     private let cols = 3
     private let puzzleSize: CGFloat = 340
     
-    // حالة اللعبة
     @State private var pieces: [PuzzlePieceSharqiya] = []
     @State private var draggingPiece: PuzzlePieceSharqiya?
     @State private var dragOffset: CGSize = .zero
-    @State private var isShuffled: Bool = false  // هل القطع متخلبطة؟
-    @State private var isSolved: Bool = false    // هل البزل محلول؟
-    @State private var isGlowing: Bool = false   // تأثير اللمعان
-    @State private var showCompletionDialog: Bool = false  // نافذة الإكمال
-    @State private var showHelpDialog: Bool = false  // نافذة المساعدة (الصورة الكاملة)
-    @State private var navigateToNext: Bool = false  // للانتقال للصفحة التالية
-    @State private var navigateToHome: Bool = false  // للرجوع للصفحة الرئيسية
+    @State private var isShuffled: Bool = false
+    @State private var isSolved: Bool = false
+    @State private var isGlowing: Bool = false
+    @State private var showCompletionDialog: Bool = false
+    @State private var showHelpDialog: Bool = false
+    @State private var navigateToNext: Bool = false
+    
+    // ⭐ زر الهوم
+    @State private var navigateToHome: Bool = false
     
     var body: some View {
-        ZStack {
-            // ✅ الخلفية
-            Image("الشرقيه")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
+        NavigationStack {
             
-            // ✅ المربع + البزل
-            VStack {
-                Spacer()
+            ZStack {
+                Image("الشرقيه")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
                 
-                puzzleBoard
-                
-                Spacer()
-            }
-            .overlay(alignment: .bottom) {
-                HStack {
-                    // زر المساعدة (؟) - منزّل تحت شوي
-                    Button(action: {
-                        showHelpDialog = true
-                    }) {
-                        ZStack {
-                            Circle()
-                                .fill(Color("brown"))
-                                .frame(width: 44, height: 44)
-                            
-                            Text("؟")  // علامة استفهام عربية
-                                .font(.custom("Saudi-Regular", size: 24))
-                                .foregroundColor(.white)
-                        }
-                    }
-                    .padding(.leading, 30)
-                    
+                VStack {
+                    Spacer()
+                    puzzleBoard
                     Spacer()
                 }
-                .padding(.bottom, 180)
-            }
-            .overlay(alignment: .topTrailing) {
-                // زر الهوم (بدل انهاء اللعبة)
-                Button(action: {
-                    navigateToHome = true
-                }) {
-                    ZStack {
-                        Circle()
-                            .fill(Color("brown"))
-                            .frame(width: 50, height: 50)
+                .overlay(alignment: .bottom) {
+                    HStack {
                         
-                        Image(systemName: "house.fill")
-                            .font(.system(size: 24))
-                            .foregroundColor(.white)
+                        // ⭐ زر الاستفهام — مطابق للوسطى
+                        Button(action: {
+                            showHelpDialog = true
+                        }) {
+                            Image(systemName: "questionmark")
+                                .font(.system(size: 26))
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(Color("brown"))
+                                .clipShape(Circle())
+                        }
+                        .padding(.leading, 30)
+                        
+                        Spacer()
                     }
+                    .padding(.bottom, 180)
                 }
-                .padding(.top, 60)
-                .padding(.trailing, 20)
+                .overlay(alignment: .topTrailing) {
+                    
+                    // ⭐ زر الهوم — مطابق للوسطى + ربط الخريطة
+                    Button(action: {
+                        navigateToHome = true
+                    }) {
+                        Image(systemName: "house.fill")
+                            .font(.system(size: 18))
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color("brown"))
+                            .clipShape(Circle())
+                    }
+                    .padding(.top, 60)
+                    .padding(.trailing, 20)
+                }
             }
-        }
-        .onAppear {
-            setupPuzzle()
-        }
-        .overlay {
-            if showCompletionDialog {
-                completionDialogView
+            
+            // ⭐ ربط صفحة الخريطة
+            .navigationDestination(isPresented: $navigateToHome) {
+                SaudiMapView()
             }
-        }
-        .overlay {
-            if showHelpDialog {
-                helpDialogView
+            
+            .navigationDestination(isPresented: $navigateToNext ) {
+                PuzzleChoicesView()
+            }
+            .onAppear {
+                setupPuzzle()
+            }
+            .overlay {
+                if showCompletionDialog {
+                    completionDialogView
+                }
+            }
+            .overlay {
+                if showHelpDialog {
+                    helpDialogView
+                }
             }
         }
     }
@@ -213,7 +190,6 @@ struct LevelAlsharqiya: View {
         let pieceSize = puzzleSize / CGFloat(cols)
         
         return ZStack {
-            // الإطار البني
             RoundedRectangle(cornerRadius: 20)
                 .stroke(Color("brown"), lineWidth: 4.5)
                 .background(
@@ -222,13 +198,11 @@ struct LevelAlsharqiya: View {
                 )
                 .frame(width: puzzleSize, height: puzzleSize)
             
-            // القطع
             ZStack {
                 ForEach(pieces) { piece in
                     makePieceView(piece: piece, pieceSize: pieceSize)
                 }
                 
-                // تأثير اللمعان عند الحل
                 if isGlowing {
                     RoundedRectangle(cornerRadius: 20)
                         .fill(Color.white.opacity(0.4))
@@ -243,24 +217,21 @@ struct LevelAlsharqiya: View {
     
     // MARK: - عرض قطعة واحدة
     private func makePieceView(piece: PuzzlePieceSharqiya, pieceSize: CGFloat) -> some View {
+        
         let isDragging = draggingPiece?.id == piece.id
         let offset = isDragging ? dragOffset : .zero
         
-        // الموقع الحالي في الشبكة
         let x = CGFloat(piece.currentCol) * pieceSize + pieceSize / 2
         let y = CGFloat(piece.currentRow) * pieceSize + pieceSize / 2
         
         return ZStack {
-            // ═══ الخلفية (الشكل الصحيح للقطعة) ═══
             if !piece.isInCorrectPosition {
                 PuzzlePieceShapeSharqiya(row: piece.row, col: piece.col, rows: rows, cols: cols)
                     .fill(Color("BackgroundMain").opacity(0.3))
                     .frame(width: pieceSize, height: pieceSize)
             }
             
-            // ═══ القطعة نفسها ═══
             ZStack {
-                // الصورة (الجزء الصحيح من تراث الشرقية)
                 GeometryReader { geo in
                     Image("تراث الشرقية")
                         .resizable()
@@ -274,7 +245,6 @@ struct LevelAlsharqiya: View {
                 .frame(width: pieceSize, height: pieceSize)
                 .clipped()
                 
-                // الحدود السوداء المربعة (بدون أطراف)
                 Rectangle()
                     .stroke(Color.black, lineWidth: isSolved ? 0 : 2.0)
                     .frame(width: pieceSize, height: pieceSize)
@@ -313,16 +283,13 @@ struct LevelAlsharqiya: View {
         let newCol = piece.currentCol + dx
         let newRow = piece.currentRow + dy
         
-        // تأكد من الحدود
         guard newCol >= 0, newCol < cols, newRow >= 0, newRow < rows else {
             return
         }
         
-        // ابحث عن القطعة في المكان الجديد
         if let targetIndex = pieces.firstIndex(where: { $0.currentRow == newRow && $0.currentCol == newCol }),
            let pieceIndex = pieces.firstIndex(where: { $0.id == piece.id }) {
             
-            // تبديل الأماكن
             let tempRow = pieces[targetIndex].currentRow
             let tempCol = pieces[targetIndex].currentCol
             
@@ -332,18 +299,15 @@ struct LevelAlsharqiya: View {
             pieces[pieceIndex].currentRow = tempRow
             pieces[pieceIndex].currentCol = tempCol
             
-            // تحقق إذا البزل انحل
             checkIfSolved()
         }
     }
     
     // MARK: - التحقق من الحل
     private func checkIfSolved() {
-        // شيك إذا كل القطع في مكانها الصحيح
         let allInPlace = pieces.allSatisfy { $0.isInCorrectPosition }
         
         if allInPlace && isShuffled && !isSolved {
-            // البزل انحل! 🎉
             celebrateSolve()
         }
     }
@@ -354,7 +318,6 @@ struct LevelAlsharqiya: View {
             isSolved = true
         }
         
-        // تأثير اللمعان المتكرر (مرتين فقط)
         for i in 0..<2 {
             DispatchQueue.main.asyncAfter(deadline: .now() + Double(i) * 0.5) {
                 withAnimation(.easeInOut(duration: 0.25)) {
@@ -368,7 +331,6 @@ struct LevelAlsharqiya: View {
             }
         }
         
-        // بعد انتهاء اللمعان، أظهر النافذة
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
             withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
                 showCompletionDialog = true
@@ -379,11 +341,9 @@ struct LevelAlsharqiya: View {
     // MARK: - نافذة الإكمال
     private var completionDialogView: some View {
         ZStack {
-            // خلفية شفافة داكنة
             Color.black.opacity(0.3)
                 .ignoresSafeArea()
             
-            // النافذة
             ZStack {
                 RoundedRectangle(cornerRadius: 30)
                     .fill(Color("BackgroundMain"))
@@ -392,14 +352,12 @@ struct LevelAlsharqiya: View {
                 VStack(spacing: 16) {
                     Spacer()
                     
-                    // العنوان
                     Text("قصر إبراهيم")
                         .font(.custom("Saudi-Bold", size: 36))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                     
-                    // النص التفصيلي
-                    Text("معلَم تاريخي مهم في السعودية ومهد الدولةمعلَم تاريخي بارز في الأحساء، يجمع بين الطرازين العسكري والديني، ويعكس أهمية المنطقة الشرقية كمركز حضاري وتاريخي في فترات مختلفة من تاريخ المملكة.")
+                    Text("معلَم تاريخي بارز في الأحساء، يجمع بين الطابع العسكري والديني، ويبيّن قدّ ايش المنطقة الشرقية كان لها دور مهم كمركز حضاري وتاريخي في فترات مختلفة من تاريخ المملكة.")
                         .font(.custom("Saudi-Bold", size: 18))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
@@ -408,7 +366,6 @@ struct LevelAlsharqiya: View {
                     
                     Spacer()
                     
-                    // زر التالي (داخل النافذة)
                     Button(action: {
                         navigateToNext = true
                     }) {
@@ -428,23 +385,20 @@ struct LevelAlsharqiya: View {
         }
     }
     
-    // MARK: - نافذة المساعدة (الصورة الكاملة)
+    // MARK: - نافذة المساعدة
     private var helpDialogView: some View {
         ZStack {
-            // خلفية شفافة داكنة
             Color.black.opacity(0.3)
                 .ignoresSafeArea()
                 .onTapGesture {
-                    showHelpDialog = false  // إغلاق عند الضغط على الخلفية
+                    showHelpDialog = false
                 }
             
-            // النافذة
             ZStack {
                 RoundedRectangle(cornerRadius: 30)
                     .fill(Color("BackgroundMain"))
                     .stroke(Color("brown"), lineWidth: 4)
                 
-                // الصورة الكاملة
                 Image("تراث الشرقية")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -460,14 +414,13 @@ struct LevelAlsharqiya: View {
         var allPieces: [PuzzlePieceSharqiya] = []
         var id = 0
         
-        // إنشاء كل القطع في مكانها الصحيح (مكتملة)
         for r in 0..<rows {
             for c in 0..<cols {
                 allPieces.append(PuzzlePieceSharqiya(
                     id: id,
                     row: r,
                     col: c,
-                    currentRow: r,      // نفس المكان الأصلي
+                    currentRow: r,
                     currentCol: c
                 ))
                 id += 1
@@ -477,13 +430,11 @@ struct LevelAlsharqiya: View {
         pieces = allPieces
         isShuffled = false
         
-        // بعد ثانيتين، خلبط القطع قدام المستخدم
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             shufflePieces()
         }
     }
     
-    // MARK: - خلبطة القطع (مع animation)
     private func shufflePieces() {
         var positions = pieces.map { ($0.row, $0.col) }
         positions.shuffle()

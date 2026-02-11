@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// MARK: - شكل قطعة البزل (Puzzle Piece Shape)
 struct PuzzlePieceShapeGharbiya: Shape {
     let row: Int
     let col: Int
@@ -77,7 +76,6 @@ struct PuzzlePieceShapeGharbiya: Shape {
     }
 }
 
-// MARK: - موديل قطعة البزل
 struct PuzzlePieceGharbiya: Identifiable {
     let id: Int
     let row: Int
@@ -89,7 +87,6 @@ struct PuzzlePieceGharbiya: Identifiable {
     }
 }
 
-// MARK: - شاشة لفل الغربية
 struct LevelAlgharbiya: View {
     private let rows = 3
     private let cols = 3
@@ -104,70 +101,83 @@ struct LevelAlgharbiya: View {
     @State private var showCompletionDialog: Bool = false
     @State private var showHelpDialog: Bool = false
     @State private var navigateToNext: Bool = false
+    
+    // ⭐ زر الهوم
     @State private var navigateToHome: Bool = false
     
     var body: some View {
-        ZStack {
-            Image("الغربيه")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
+        NavigationStack {
             
-            VStack {
-                Spacer()
-                puzzleBoard
-                Spacer()
-            }
-            .overlay(alignment: .bottom) {
-                HStack {
-                    Button(action: {
-                        showHelpDialog = true
-                    }) {
-                        ZStack {
-                            Circle()
-                                .fill(Color("brown"))
-                                .frame(width: 44, height: 44)
-                            
-                            Text("؟")
-                                .font(.custom("Saudi-Regular", size: 24))
-                                .foregroundColor(.white)
-                        }
-                    }
-                    .padding(.leading, 30)
-                    
+            ZStack {
+                Image("الغربيه")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+                
+                VStack {
+                    Spacer()
+                    puzzleBoard
                     Spacer()
                 }
-                .padding(.bottom, 180)
-            }
-            .overlay(alignment: .topTrailing) {
-                Button(action: {
-                    navigateToHome = true
-                }) {
-                    ZStack {
-                        Circle()
-                            .fill(Color("brown"))
-                            .frame(width: 50, height: 50)
+                .overlay(alignment: .bottom) {
+                    HStack {
                         
-                        Image(systemName: "house.fill")
-                            .font(.system(size: 24))
-                            .foregroundColor(.white)
+                        // ⭐ زر الاستفهام — الآن مطابق للوسطى (أصغر)
+                        Button(action: {
+                            showHelpDialog = true
+                        }) {
+                            Image(systemName: "questionmark")
+                                .font(.system(size: 26))   // ← نفس الوسطى
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(Color("brown"))
+                                .clipShape(Circle())
+                        }
+                        .padding(.leading, 30)
+                        
+                        Spacer()
                     }
+                    .padding(.bottom, 180)
                 }
-                .padding(.top, 60)
-                .padding(.trailing, 20)
+                .overlay(alignment: .topTrailing) {
+                    
+                    // ⭐ زر الهوم — مطابق للوسطى + ربط الخريطة
+                    Button(action: {
+                        navigateToHome = true
+                    }) {
+                        Image(systemName: "house.fill")
+                            .font(.system(size: 18))
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color("brown"))
+                            .clipShape(Circle())
+                    }
+                    .padding(.top, 60)
+                    .padding(.trailing, 20)
+                }
             }
-        }
-        .onAppear {
-            setupPuzzle()
-        }
-        .overlay {
-            if showCompletionDialog {
-                completionDialogView
+            
+            // ⭐ ربط صفحة الخريطة
+            .navigationDestination(isPresented: $navigateToHome) {
+                SaudiMapView()
             }
-        }
-        .overlay {
-            if showHelpDialog {
-                helpDialogView
+            .navigationDestination(isPresented: $navigateToNext ) {
+                PuzzleChoicesView()
+            }
+
+            
+            .onAppear {
+                setupPuzzle()
+            }
+            .overlay {
+                if showCompletionDialog {
+                    completionDialogView
+                }
+            }
+            .overlay {
+                if showHelpDialog {
+                    helpDialogView
+                }
             }
         }
     }
@@ -204,6 +214,7 @@ struct LevelAlgharbiya: View {
     
     // MARK: - عرض قطعة واحدة
     private func makePieceView(piece: PuzzlePieceGharbiya, pieceSize: CGFloat) -> some View {
+        
         let isDragging = draggingPiece?.id == piece.id
         let offset = isDragging ? dragOffset : .zero
         
@@ -261,7 +272,6 @@ struct LevelAlgharbiya: View {
         )
     }
     
-    // MARK: - معالجة السحب والإفلات
     private func handleDrop(piece: PuzzlePieceGharbiya, translation: CGSize, pieceSize: CGFloat) {
         let dx = Int(round(translation.width / pieceSize))
         let dy = Int(round(translation.height / pieceSize))
@@ -289,7 +299,6 @@ struct LevelAlgharbiya: View {
         }
     }
     
-    // MARK: - التحقق من الحل
     private func checkIfSolved() {
         let allInPlace = pieces.allSatisfy { $0.isInCorrectPosition }
         
@@ -298,7 +307,6 @@ struct LevelAlgharbiya: View {
         }
     }
     
-    // MARK: - الاحتفال بالحل
     private func celebrateSolve() {
         withAnimation(.easeInOut(duration: 0.3)) {
             isSolved = true
@@ -324,7 +332,6 @@ struct LevelAlgharbiya: View {
         }
     }
     
-    // MARK: - نافذة الإكمال
     private var completionDialogView: some View {
         ZStack {
             Color.black.opacity(0.3)
@@ -343,7 +350,7 @@ struct LevelAlgharbiya: View {
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                     
-                    Text("منطقة تاريخية عريقة كانت مركزًا تجاريًا مهمًا وبوابة للحجاج القادمين إلى مكة، وتتميز ببيوتها التراثية المبنية من الحجر والخشب وتعكس التراث الحجازي الأصيل.")
+                    Text("منطقة تاريخية عريقة، كانت زمان مركز تجاري مهم وبوابة للحجاج اللي جايين لمكة. تتميّز ببيوتها التراثية المبنية من الحجر والخشب، وتعكس التراث الحجازي الأصيل بكل تفاصيله.")
                         .font(.custom("Saudi-Bold", size: 18))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
@@ -371,7 +378,6 @@ struct LevelAlgharbiya: View {
         }
     }
     
-    // MARK: - نافذة المساعدة (الصورة الكاملة)
     private var helpDialogView: some View {
         ZStack {
             Color.black.opacity(0.3)
@@ -395,7 +401,6 @@ struct LevelAlgharbiya: View {
         }
     }
     
-    // MARK: - إعداد البزل
     private func setupPuzzle() {
         var allPieces: [PuzzlePieceGharbiya] = []
         var id = 0
@@ -421,7 +426,6 @@ struct LevelAlgharbiya: View {
         }
     }
     
-    // MARK: - خلبطة القطع
     private func shufflePieces() {
         var positions = pieces.map { ($0.row, $0.col) }
         positions.shuffle()
