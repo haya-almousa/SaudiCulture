@@ -46,7 +46,7 @@ struct مرحباالشماليه: View {
                         ZStack {
                             Capsule()
                                 .fill(Color("brown"))
-                                .frame(width: btnW * sx, height: btnH * sy)
+                                .frame(width: 260, height: 75)
                             
                             Text("ابدأ اللعبة")
                                 .font(.custom(fontName, size: 50 * s))
