@@ -286,10 +286,12 @@ struct LevelAlwosta: View {
             .scaleEffect(isDragging ? 1.05 : 1.0)
             .zIndex(isDragging ? 100 : Double(piece.id))
         }
+        .frame(width: pieceSize, height: pieceSize)
+        .contentShape(Rectangle())
         .offset(offset)
         .position(x: x, y: y)
         .gesture(
-            DragGesture()
+            DragGesture(minimumDistance: 0)
                 .onChanged { value in
                     if draggingPiece == nil {
                         draggingPiece = piece
