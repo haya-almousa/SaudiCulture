@@ -14,6 +14,10 @@ struct SaudiMapView: View {
     @AppStorage("selectedCharacter") private var savedCharacter: String = "نجديه"  // ✅ قراءة الشخصية المحفوظة
     @State private var selectedRegion: Region?
     @State private var goToLevels = false
+    private let debugUnlockAll = true
+
+    
+    @State private var selectedRegionType: RegionType?
 
     // MARK: - Body
     var body: some View {
@@ -35,9 +39,15 @@ struct SaudiMapView: View {
                         )
                         .offset(x: -70, y: -160)
                         .zIndex(1)
+//                        .onTapGesture {
+//                            handleRegionTap(.northern)
+//                        }
                         .onTapGesture {
-                            handleRegionTap(.northern)
+                            selectedRegionType = .northern
+                            goToLevels = true
                         }
+
+
                         
                         // المنطقة الشرقية
                         RegionImageView(
@@ -46,9 +56,15 @@ struct SaudiMapView: View {
                             isUnlocked: gameProgress.isRegionUnlocked(.eastern)
                         )
                         .offset(x: 110, y: -10)
+//                        .onTapGesture {
+//                            handleRegionTap(.eastern)
+//                        }
                         .onTapGesture {
-                            handleRegionTap(.eastern)
+                            selectedRegionType = .eastern
+                            goToLevels = true
                         }
+
+
                         
                         // المنطقة الوسطى
                         RegionImageView(
@@ -58,9 +74,15 @@ struct SaudiMapView: View {
                         )
                         .offset(x: -18, y: -20)
                         .zIndex(10)
+//                        .onTapGesture {
+//                            goToLevels = true
+//                        }
                         .onTapGesture {
+                            selectedRegionType = .central
                             goToLevels = true
                         }
+
+
                         
                         // المنطقة الغربية
                         RegionImageView(
@@ -69,9 +91,15 @@ struct SaudiMapView: View {
                             isUnlocked: gameProgress.isRegionUnlocked(.western)
                         )
                         .offset(x: -120, y: -30)
+//                        .onTapGesture {
+//                            handleRegionTap(.western)
+//                        }
                         .onTapGesture {
-                            handleRegionTap(.western)
+                            selectedRegionType = .western
+                            goToLevels = true
                         }
+
+
                         
                         // المنطقة الجنوبية
                         RegionImageView(
@@ -80,15 +108,30 @@ struct SaudiMapView: View {
                             isUnlocked: gameProgress.isRegionUnlocked(.southern)
                         )
                         .offset(x: -12, y: 111)
+//                        .onTapGesture {
+//                            handleRegionTap(.southern)
+//                        }
                         .onTapGesture {
-                            handleRegionTap(.southern)
+                            selectedRegionType = .southern
+                            goToLevels = true
                         }
+
+
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
+//                .navigationDestination(isPresented: $goToLevels) {
+//                    StackedCirclesView(selectedCharacter: savedCharacter)  // ✅ تمرير الشخصية المحفوظة
+//                }
                 .navigationDestination(isPresented: $goToLevels) {
-                    StackedCirclesView(selectedCharacter: savedCharacter)  // ✅ تمرير الشخصية المحفوظة
+                    if let region = selectedRegionType {
+                        StackedCirclesView(
+                            selectedCharacter: savedCharacter,
+                            region: region
+                        )
+                    }
                 }
+
             }
             .navigationBarBackButtonHidden(true)
             .alert(item: $selectedRegion) { region in
@@ -193,14 +236,21 @@ class GameProgress: ObservableObject {
         UserDefaults.standard.set(Array(completedRegions), forKey: userDefaultsKey)
     }
     
+//    func isRegionUnlocked(_ region: RegionType) -> Bool {
+//        if region == .central {
+//            return true
+//        }
+//        
+//        let previousRegion = getPreviousRegion(region)
+//        return previousRegion == nil || isRegionCompleted(previousRegion!)
+//    }
+    
+    
+    
     func isRegionUnlocked(_ region: RegionType) -> Bool {
-        if region == .central {
-            return true
-        }
-        
-        let previousRegion = getPreviousRegion(region)
-        return previousRegion == nil || isRegionCompleted(previousRegion!)
+        return true   // 🔓 فتح كل المناطق مؤقتًا
     }
+
     
     func isRegionCompleted(_ region: RegionType) -> Bool {
         return completedRegions.contains(region.rawValue)
