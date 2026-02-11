@@ -31,7 +31,7 @@ struct الشرقيه: View {
                 RoundedRectangle(cornerRadius: 40)
                     .fill(Color("brown"))
                 
-                VStack(spacing: 0) {
+                VStack(spacing: 7.5) {
                     ScrollView {
                         Text("""
                         لبس المنطقة الشرقية يتميزلباس المنطقة الشرقية معروف بالأناقة وغنى التفاصيل التراثية.
@@ -58,7 +58,7 @@ struct الشرقيه: View {
                         Text("ابدأ اللعبة")
                             .font(.custom("Saudi-Regular", size: 34))
                             .foregroundColor(Color("brown"))
-                            .frame(width: 254, height: 70)
+                            .frame(width: 240, height: 60)
                             .background(Color.white)
                             .clipShape(Capsule())
                     }
