@@ -46,9 +46,9 @@ struct PuzzleView: View {
     let puzzles: [Puzzle] = [
         
         Puzzle(
-            emojis: "🟢 ☕ 🏜️",
+            emojis: "🟢 ☕ ",
             hint: "مشروب عربي مشهور",
-            answer: "القهوة العربية"
+            answer: "لقهوه السعوديه "
         ),
         
         Puzzle(

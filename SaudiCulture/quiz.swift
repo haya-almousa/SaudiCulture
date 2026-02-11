@@ -242,7 +242,7 @@ struct PuzzleChoicesView: View {
                 VStack(spacing: 20) {
 
                     Text(puzzle.question)
-                        .font(.custom("Saudi-Regular", size: 22))
+                        .font(.custom("Saudi-Bold", size: 22))
                         .multilineTextAlignment(.center)
                         .foregroundColor(Color(hex: "874F35"))
 
@@ -386,6 +386,8 @@ struct PuzzleChoicesView: View {
             }
 
         }
+        .navigationBarBackButtonHidden(true)
+
     }
 
     // MARK: - Logic
