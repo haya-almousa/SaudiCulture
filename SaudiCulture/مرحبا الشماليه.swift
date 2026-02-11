@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct مرحباالشماليه: View {
-    let playerName: String  // ✅ استقبال الاسم
+    let playerName: String
+    let selectedCharacter: String  // ✅ إضافة
     
     private let fontName = "Saudi-Regular"
     private let figmaW: CGFloat = 390
@@ -23,51 +24,50 @@ struct مرحباالشماليه: View {
     
     var body: some View {
         NavigationStack {
-
-        GeometryReader { geo in
-            let sx = geo.size.width / figmaW
-            let sy = geo.size.height / figmaH
-            let s  = min(sx, sy)
-            
-            ZStack {
-                Image("الشماليه")
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
+            GeometryReader { geo in
+                let sx = geo.size.width / figmaW
+                let sy = geo.size.height / figmaH
+                let s  = min(sx, sy)
                 
-                Text("مرحباً \(playerName)")  // ✅ عرض الاسم المدخل
-                    .font(.custom(fontName, size: 50 * s))
-                    .foregroundColor(Color("brown"))
-                    .position(x: titleCenterX * sx, y: titleCenterY * sy)
-                
-                Button(action: {
-                    navigateToMap = true
-                }) {
-                    ZStack {
-                        Capsule()
-                            .fill(Color("brown"))
-                            .frame(width: btnW * sx, height: btnH * sy)
-                        
-                        Text("ابدأ اللعبة")
-                            .font(.custom(fontName, size: 50 * s))
-                            .foregroundColor(.white)
-                            .baselineOffset(-4 * sy)
+                ZStack {
+                    Image("الشماليه")
+                        .resizable()
+                        .scaledToFill()
+                        .ignoresSafeArea()
+                    
+                    Text("مرحباً \(playerName)")
+                        .font(.custom(fontName, size: 50 * s))
+                        .foregroundColor(Color("brown"))
+                        .position(x: titleCenterX * sx, y: titleCenterY * sy)
+                    
+                    Button(action: {
+                        navigateToMap = true
+                    }) {
+                        ZStack {
+                            Capsule()
+                                .fill(Color("brown"))
+                                .frame(width: btnW * sx, height: btnH * sy)
+                            
+                            Text("ابدأ اللعبة")
+                                .font(.custom(fontName, size: 50 * s))
+                                .foregroundColor(.white)
+                                .baselineOffset(-4 * sy)
+                        }
+                        .frame(width: btnW * sx, height: btnH * sy)
                     }
-                    .frame(width: btnW * sx, height: btnH * sy)
+                    .buttonStyle(.plain)
+                    .position(
+                        x: (btnX + btnW/2) * sx,
+                        y: (btnY + btnH/2) * sy
+                    )
                 }
-                .buttonStyle(.plain)
-                .position(
-                    x: (btnX + btnW/2) * sx,
-                    y: (btnY + btnH/2) * sy
-                )
-            
+            }
+            .navigationBarBackButtonHidden(true)
+            .navigationDestination(isPresented: $navigateToMap) {
+                SaudiMapView()
             }
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationDestination(isPresented: $navigateToMap) {
-            SaudiMapView()
-        }
-    }}
+    }
     
     func startGame() {
         print("اللعبة بدأت - المنطقة الشمالية - اللاعب: \(playerName)")
@@ -76,6 +76,6 @@ struct مرحباالشماليه: View {
 
 #Preview {
     NavigationStack {
-        مرحباالشماليه(playerName: "هيا")
+        مرحباالشماليه(playerName: "هيا", selectedCharacter: "شماليه")  // ✅ إضافة
     }
 }

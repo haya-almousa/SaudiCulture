@@ -393,6 +393,8 @@ struct PuzzleChoicesView: View {
 
             }
         }
+        .navigationBarBackButtonHidden(true)
+
     }
 
     // MARK: - Logic

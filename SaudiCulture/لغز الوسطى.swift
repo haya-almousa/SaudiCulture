@@ -138,6 +138,8 @@ struct LevelAlwosta: View {
     @State private var navigateToHome: Bool = false  // للرجوع للصفحة الرئيسية
     
     var body: some View {
+        NavigationStack {
+
         ZStack {
             // ✅ الخلفية
             Image("الوسطى")
@@ -164,7 +166,7 @@ struct LevelAlwosta: View {
                                 .fill(Color("brown"))
                                 .frame(width: 44, height: 44)
                             
-                            Text("؟")  // علامة استفهام عربية
+                            Text("?")  // علامة استفهام عربية
                                 .font(.custom("Saudi-Regular", size: 24))
                                 .foregroundColor(.white)
                         }
@@ -194,6 +196,9 @@ struct LevelAlwosta: View {
                 .padding(.trailing, 20)
             }
         }
+        .navigationDestination(isPresented: $navigateToNext) {
+            PuzzleChoicesView()
+        }
         .onAppear {
             setupPuzzle()
         }
@@ -207,6 +212,7 @@ struct LevelAlwosta: View {
                 helpDialogView
             }
         }
+    }
     }
     
     // MARK: - لوح البزل
@@ -394,7 +400,7 @@ struct LevelAlwosta: View {
                     Spacer()
                     
                     // العنوان
-                    Text("الدرعية")
+                    Text("قصر سلوى")
                         .font(.custom("Saudi-Bold", size: 36))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
