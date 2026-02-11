@@ -234,6 +234,8 @@ struct NajdView: View {
     @State private var timerRunning: Bool = true
     @State private var flashRed: Bool = false
     
+    @State private var goToNextGame = false
+
     // Cards for Najd region
     let najdCards: [Card] = [
         // Pair 1
@@ -252,13 +254,33 @@ struct NajdView: View {
         Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
     ]
     
+    @State private var goToMap = false
+
     var body: some View {
+        NavigationStack{
         ZStack {
             // Background
             Color(hex: "FFF9F2").ignoresSafeArea()
-            Image("Palm").resizable().opacity(0.3)
+            Image("الوسطى")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+            
+            HStack{
+                Button(action: {
+                    goToMap = true
+                }) {
+                    Image(systemName: "house.fill")
+                        .font(.system(size: 16))
+                        .foregroundColor(Color(hex: "FCF0DD"))
+                        .padding(12)
+                        .background(Color(hex: "874F35"))
+                        .clipShape(Circle())
+                }
+            }.offset(x:160,y:-350)
             
             VStack(spacing: 16) {
+                
                 // Title
                 Text("لعبة الكروت - نجد")
                     .foregroundStyle(Color(hex: "7A4A2E"))
@@ -310,7 +332,7 @@ struct NajdView: View {
                 
                 Spacer()
             }
-            .padding(.top, 20)
+            .padding(.top, 60)
             
             // MARK: - Popup
             if let popup = activePopup {
@@ -322,11 +344,23 @@ struct NajdView: View {
                     },
                     onPrimaryAction: popup == .win ? {
                         activePopup = nil
-                        resetGame()
+                        goToNextGame = true
+                        //                        resetGame()
                     } : nil
                 )
             }
+            
+            
         }
+        .navigationDestination(isPresented: $goToMap) {
+            SaudiMapView()
+        }
+        .navigationDestination(isPresented: $goToNextGame) {
+            PuzzleView() // ← غيري الاسم للصفحة اللي بعدها
+        }
+        
+        .navigationBarBackButtonHidden(true)
+        
         .navigationBarTitleDisplayMode(.inline)
         .onReceive(viewModel.$gameWon) { won in
             if won {
@@ -348,6 +382,7 @@ struct NajdView: View {
                 }
             }
         }
+    }
     }
     
     // MARK: - Reset Game

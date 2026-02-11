@@ -9,8 +9,10 @@
 import SwiftUI
 
 struct الوسطى: View {
+    @State private var startNajdGame = false
     var body: some View {
-        ZStack {
+        NavigationStack{
+            ZStack {
             Color("BackgroundMain")
                 .ignoresSafeArea()
             
@@ -35,11 +37,12 @@ struct الوسطى: View {
                 VStack(spacing: 0) {
                     ScrollView {
                         Text("""
-                        اللباس يُعد من لباس المنطقةلباسلباس المنطقة الوسطى (نجد) يتميز بالاحتشام والبساطة مع وضوح الهوية التراثية. 
-                        تبدأ المرأة بارتداء الثوب النجدي الواسع، الذي يزدان بتطريز ملون بارز في منطقة الصدر، ويُكمل المظهر الشيلة لتغطية الرأس، وهو لباس يعكس الذوق النجدي وطبيعة البيئة الصحراوية. 
-                        أما الرجل فيرتدي الثوب مع الغترة والعقال الزري، ويُلبس فوق ذلك الزبون والبشت في المناسبات الرسمية. ولا يزال هذا اللباس حاضرًا في المناسبات الوطنية والاجتماعية.
+                        لباس المنطقة الوسطى (نجد) معروف بالاحتشام والبساطة مع وضوح الهوية التراثية.
+                        المرأة تبدأ بلبس الثوب النجدي الواسع، اللي يكون فيه تطريز ملون وواضح في منطقة الصدر، وتكمل شكلها بـ الشيلة لتغطية الرأس، وهاللبس يعكس الذوق النجدي وطبيعة البيئة الصحراوية.
+                        أما الرجل فيلبس الثوب مع الغترة والعقال الزري، ويلبس فوقهم الزبون والبشت في المناسبات الرسمية. ولسّه هاللباس موجود في المناسبات الوطنية والاجتماعية.
                         """)
                         .font(.custom("Saudi-Regular", size: 20))
+                        .fontWeight(.bold)
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
                         .multilineTextAlignment(.trailing)
@@ -52,7 +55,7 @@ struct الوسطى: View {
                     Spacer()
                     
                     Button {
-                        
+                        startNajdGame = true
                     } label: {
                         Text("ابدأ اللعبة")
                             .font(.custom("Saudi-Regular", size: 34))
@@ -69,7 +72,13 @@ struct الوسطى: View {
                 x: -9 + (411 / 2),
                 y: 342 + (529 / 2)
             )
+                
         }
+            
+            .navigationDestination(isPresented: $startNajdGame) {
+                NajdView()
+            }
+    }
     }
 }
 
