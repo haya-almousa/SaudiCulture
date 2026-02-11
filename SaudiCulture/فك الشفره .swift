@@ -42,13 +42,13 @@ struct PuzzleView: View {
     @State private var showSuccessEmoji = false
     @State private var goToPuzzleLevel = false
 
-    
+    //الرياض
     let puzzles: [Puzzle] = [
         
         Puzzle(
             emojis: "🟢 ☕ ",
             hint: "مشروب عربي مشهور",
-            answer: "لقهوه السعوديه "
+            answer: "القهوة السعودية"
         ),
         
         Puzzle(
@@ -93,6 +93,172 @@ struct PuzzleView: View {
             answer: "مجلس"
         )
     ]
+    //الجنوب
+    
+    let southernPuzzles: [Puzzle] = [
+        
+        Puzzle(
+            emojis: "🏔️ 🌧️ ☁️",
+            hint: "مدينة الضباب والجمال في الجنوب",
+            answer: "أبها"
+        ),
+        
+        Puzzle(
+            emojis: "🥣 🍯 🧈",
+            hint: "أكلة شعبية جنوبية مشهورة تؤكل مع السمن والعسل",
+            answer: "عريكة"
+        ),
+        
+        Puzzle(
+            emojis: "🏠 🎨 ✨",
+            hint: "فن تزيين جدران المنازل في عسير",
+            answer: "القط العسيري"
+        ),
+        
+        Puzzle(
+            emojis: "🌸 👑 🧔",
+            hint: "تاج من الزهور يوضع على الرأس في جازان وعسير",
+            answer: "عصابة"
+        ),
+        
+        Puzzle(
+            emojis: "🏔️ 🛖 🧱",
+            hint: "قرية تراثية شهيرة في منطقة الباحة",
+            answer: "ذي عين"
+        ),
+        
+        Puzzle(
+            emojis: "🥣 🔥 🪵",
+            hint: "أكلة جنوبية تشبه العريكة لكن تطبخ على النار وتُفرك",
+            answer: "مشغوثة"
+        ),
+        
+        Puzzle(
+            emojis: "💃 ⚔️ 🥁",
+            hint: "رقصة شعبية حماسية تشتهر بها جازان",
+            answer: "العرضة الجيزانية"
+        ),
+        
+        Puzzle(
+            emojis: "🥭 🏝️ 🦐",
+            hint: "مدينة تشتهر بالمانجو والسمك والأجواء الدافئة",
+            answer: "جازان"
+        ),
+
+        Puzzle(
+            emojis: "⛰️ 🚠 🌫️",
+            hint: "جبل في أبها تصل إليه عبر العربات المعلقة",
+            answer: "الجبل الأخضر"
+        ),
+
+        Puzzle(
+            emojis: "🍞 🛖 🏺",
+            hint: "خبز جنوبي يخبز في التنور أو الميفا",
+            answer: "خبز ميفا"
+        )
+    ]
+    //الشرقيه
+    let easternPuzzles: [Puzzle] = [
+        
+        Puzzle(
+            emojis: "🌴 💦 ⛰️",
+            hint: "أكبر واحة نخيل في العالم وتوجد بالأحساء",
+            answer: "واحة الأحساء"
+        ),
+        
+        Puzzle(
+            emojis: "🌊 🏝️ 🌉",
+            hint: "جسر يربط المنطقة الشرقية بمملكة البحرين",
+            answer: "جسر الملك فهد"
+        ),
+        
+        Puzzle(
+            emojis: "🍚 🥘 🔴",
+            hint: "أشهر أكلة حساوية لونها أحمر",
+            answer: "أرز حساوي"
+        ),
+        
+        Puzzle(
+            emojis: "🐚 🚢 ⚓",
+            hint: "مهنة الأجداد القديمة في الخليج",
+            answer: "صيد اللؤلؤ"
+        ),
+        
+        Puzzle(
+            emojis: "⛰️ ❄️ 🧱",
+            hint: "جبل مشهور في الأحساء بارد من الداخل صيفاً",
+            answer: "جبل القارة"
+        )
+    ]
+    
+    //الشمال 
+    let northernPuzzles: [Puzzle] = [
+        
+        Puzzle(
+            emojis: "❄️ 🏔️ ⛄",
+            hint: "جبل في تبوك يغطيه الثلج في الشتاء",
+            answer: "جبل اللوز"
+        ),
+        
+        Puzzle(
+            emojis: "🍕 🥩 🪵",
+            hint: "أشهر أكلة في دومة الجندل عبارة عن خبز ولحم",
+            answer: "الجمير"
+        ),
+        
+        Puzzle(
+            emojis: "🏺 🏜️ 🧱",
+            hint: "مدينة تاريخية تقع في محافظة العلا",
+            answer: "مدائن صالح"
+        ),
+        
+        Puzzle(
+            emojis: "🫒 🌳 ",
+            hint: "منطقة تشتهر بأكبر مزارع الزيتون في المملكة",
+            answer: "الجوف"
+        ),
+        
+        Puzzle(
+            emojis: "☕ 🪵 🔥",
+            hint: "تسمية تطلق على القهوة التي تُصنع على نار الحطب في الشمال",
+            answer: "قهوة مهيلة"
+        )
+    ]
+    
+    // الحجاز
+    let westernPuzzles: [Puzzle] = [
+        
+        Puzzle(
+            emojis: "🕋 🕌 ✨",
+            hint: "أطهر بقاع الأرض وقبلة المسلمين",
+            answer: "مكة المكرمة"
+        ),
+        
+        Puzzle(
+            emojis: "🌊 🏙️ ⛲",
+            hint: "عروس البحر الأحمر وفيها نافورة الملك فهد",
+            answer: "جدة"
+        ),
+        
+        Puzzle(
+            emojis: "🏠 🪵 🪟",
+            hint: "النوافذ الخشبية المزخرفة في بيوت جدة القديمة",
+            answer: "الرواشين"
+        ),
+        
+        Puzzle(
+            emojis: "🍵 🥖 🔴 🧊",
+            hint: "مشروب حجازي بارد ومشهور لونه أبيض",
+            answer: "سوبيا"
+        ),
+        
+        Puzzle(
+            emojis: "🍚 🥩 🏺",
+            hint: "أكلة حجازية أصيلة تطبخ في وعاء فخاري تحت الأرض",
+            answer: "المندي"
+        )
+    ]
+    
     
     @State private var goToMap = false
 

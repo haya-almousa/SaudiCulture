@@ -34,7 +34,7 @@ struct الوسطى: View {
                 RoundedRectangle(cornerRadius: 40)
                     .fill(Color("brown"))
                 
-                VStack(spacing: 0) {
+                VStack(spacing: 7.5) {
                     ScrollView {
                         Text("""
                         لباس المنطقة الوسطى (نجد) معروف بالاحتشام والبساطة مع وضوح الهوية التراثية.
@@ -60,7 +60,7 @@ struct الوسطى: View {
                         Text("ابدأ اللعبة")
                             .font(.custom("Saudi-Regular", size: 34))
                             .foregroundColor(Color("brown"))
-                            .frame(width: 254, height: 70)
+                            .frame(width: 240, height: 60)
                             .background(Color.white)
                             .clipShape(Capsule())
                     }
@@ -74,6 +74,8 @@ struct الوسطى: View {
             )
                 
         }
+            .navigationBarBackButtonHidden(true)
+
             
             .navigationDestination(isPresented: $startNajdGame) {
                 NajdView()

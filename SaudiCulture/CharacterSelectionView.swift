@@ -11,6 +11,7 @@ struct CharacterPickerView: View {
     let playerName: String
     
     @AppStorage("selectedCharacter") private var savedCharacter: String = "نجديه"  // ✅ حفظ الشخصية
+    @AppStorage("hasChosenCharacter") private var hasChosenCharacter: Bool = false // ✅ هل اختار فعليًا؟
     
     let characterPairs: [[String]] = [
         ["نجدي", "نجديه"],
@@ -102,6 +103,7 @@ struct CharacterPickerView: View {
                 Button("التالي") {
                     if let selected = selectedName {
                         savedCharacter = selected  // ✅ نحفظ الشخصية المختارة
+                        hasChosenCharacter = true  // ✅ تم الاختيار
                     }
                     navigateToWelcome = true
                 }
@@ -121,6 +123,13 @@ struct CharacterPickerView: View {
         }
         .background(Color("BackgroundMain"))
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            // ✅ إذا سبق اختار شخصية: لا نعرض الاختيار مره ثانية، وندخله على الترحيب
+            if hasChosenCharacter {
+                selectedName = savedCharacter
+                navigateToWelcome = true
+            }
+        }
         .navigationDestination(isPresented: $navigateToWelcome) {
             if let selected = selectedName {
                 getWelcomeView(for: selected, selectedCharacter: selected)

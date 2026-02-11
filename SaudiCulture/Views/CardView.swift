@@ -12,13 +12,14 @@ struct CardView: View {
     var imageName: String?
     var isFaceUp: Bool
     var borderColor: Color = Color(hex: "731112")
-    var backImageName: String = "Palms"
+    var backImageName: String = "نخله"
 
     var body: some View {
         ZStack {
             // CARD BASE
             RoundedRectangle(cornerRadius: 20)
                 .fill(Color.white)
+//                .font(.custom("Saudi-Regular", size: 28))
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
                         .stroke(borderColor, lineWidth: 4)
@@ -40,6 +41,7 @@ struct CardView: View {
                         lineWidth: 3
                     )
                     .padding(8) // Creates space between outer and inner border
+
             }
 
             // BACK SIDE
@@ -49,6 +51,7 @@ struct CardView: View {
                     .scaledToFit()
                     .frame(maxWidth: 90, maxHeight: 90)
                     .opacity(0.9)
+                
             }
 
             // FRONT SIDE
@@ -68,9 +71,11 @@ struct CardView: View {
                         if let text = text {
                             Text(text)
                                 .foregroundStyle(Color(hex: "7A4A2E"))
-                                .font(.system(size: 20, weight: .bold, design: .rounded))
+        // .font(.system(size: 20, weight: .bold, design: .rounded))
                                 .multilineTextAlignment(.center)
                                 .padding(.horizontal, 8)
+                            .font(.custom("Saudi-Bold", size: 20))
+
                         }
                     }
                     Spacer() // Push content up
@@ -95,3 +100,4 @@ struct CardView: View {
     }
     .padding()
 }
+

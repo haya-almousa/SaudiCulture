@@ -233,16 +233,18 @@ struct GamePopupView: View {
     private var title: String {
         switch type {
         case .win:
-            return "مبروك !"
+           // return "مبروك !"
+            return "كفو عليك! "
         case .timeUp:
-            return "انتهت اللعبة"
+            return "خلصت اللعبة"
         }
     }
     
     private var message: String {
         switch type {
         case .win:
-            return "لقد نجحت في مطابقة جميع الكروت!"
+            //return "لقد نجحت في مطابقة جميع الكروت!"
+            return  "خلّصت اللعبة وطابقتهم كلهم"
         case .timeUp:
             return "العوض بالجايات"
         }

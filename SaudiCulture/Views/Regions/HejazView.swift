@@ -298,6 +298,9 @@ struct HejazView: View {
                     }
                 }
                 .padding(.horizontal, 26)
+                .blur(radius: activePopup != nil ? 10 : 0)
+                .animation(.default, value: activePopup)
+
                 
                 // Matched Pairs Counter
                 HStack {

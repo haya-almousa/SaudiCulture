@@ -17,19 +17,22 @@ struct PuzzleView3: View {
     @State private var showText = false
     @State private var showPopup = false
 
-    
+    @State private var goToMap = false
+
     
     
     var body: some View {
+        NavigationStack {
+
         ZStack {
             Image("background")
                 .resizable()
                 .scaledToFit()
                 .frame(maxWidth: .infinity)
                 .ignoresSafeArea()
-
-
-
+            
+            
+            
             VStack {
                 // Header
                 HStack {
@@ -37,7 +40,7 @@ struct PuzzleView3: View {
                     Button(action: {}) {
                         Text("انهاء اللعبه ")
                             .font(.custom("Saudi-Regular", size: 14))
-
+                        
                             .foregroundColor(Color(hex: "FCF0DD"))
                             .padding(.horizontal, 20)
                             .padding(.vertical, 8)
@@ -47,7 +50,7 @@ struct PuzzleView3: View {
                     }
                 }
                 .padding()
-            
+                
                 // الكرت
                 VStack(spacing: 10) {
                     
@@ -58,8 +61,8 @@ struct PuzzleView3: View {
                         .foregroundColor(Color(hex: "874F35"))
                         .padding(.bottom, 20)
                         .offset(x: 0 , y: 70)
-
-
+                    
+                    
                     HStack(spacing: 20) {
                         (
                             Text("من عادات أهل نجد في القهوة تقديم القهوة العربية للضيف كرمز للكرم والاحترام؛ حيث تُقدَّم باليد اليمنى، ويبدأ المضيف بكبير السن أو مكانة، ولا يُعاد ملء الفنجال إلا إذا أشار الضيف برغبته، وعند الانتهاء ")
@@ -75,11 +78,11 @@ struct PuzzleView3: View {
                         .multilineTextAlignment(.center)
                         .frame(width: 355, height: 520, alignment: .center)
                         .padding(20)                    }
-//                    .font(.custom("Saudi-Regular", size: 30))
-//                    .foregroundColor(Color(hex: "874F35"))
+                    //                    .font(.custom("Saudi-Regular", size: 30))
+                    //                    .foregroundColor(Color(hex: "874F35"))
                     .offset(x: 0 , y: 10 )
-
- 
+                    
+                    
                     
                 }
                 .frame(width: 355, height: 520) // ← هنا التحكم بالحجم
@@ -92,11 +95,13 @@ struct PuzzleView3: View {
                         )
                 )
                 .padding()
-    
-
-//                Spacer()
-
-                Button(action: {}) {
+                
+                
+                //                Spacer()
+                
+                Button(action: {
+                    goToMap = true
+                }) {
                     Text("انهاء  ")
                         .font(.custom("Saudi-Regular", size: 18))
                         .foregroundColor(Color(hex: "FCF0DD"))
@@ -105,10 +110,14 @@ struct PuzzleView3: View {
                         .background(Color(hex: "874F35"))
                         .cornerRadius(25)
                 }
-
+                
                 Spacer()
             }
         }
+        .navigationDestination(isPresented: $goToMap) {
+            SaudiMapView()
+        } 
+    }
     }
 }
 

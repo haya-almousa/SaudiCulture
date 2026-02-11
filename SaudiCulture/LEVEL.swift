@@ -11,18 +11,35 @@ import SwiftUI
 struct StackedCirclesView: View {
     
     let selectedCharacter: String  // ✅ استقبال الشخصية المختارة
-    
+        let region: RegionType   // ✅ جديد
     let totalLevels = 5
     @State private var unlockedLevel = 0
     @Environment(\.dismiss) var dismiss
     @StateObject private var gameProgress = GameProgress.shared
     @State private var navigateToFashion = false
     
+    
+    
+    var backgroundImageName: String {
+        switch region {
+        case .central:
+            return "الوسطى"
+        case .northern:
+            return "الشماليه"
+        case .southern:
+            return "الجنوبيه"
+        case .eastern:
+            return "الشرقيه"
+        case .western:
+            return "الغربيه"
+        }
+    }
+
     var body: some View {
         NavigationStack {
             ZStack {
                 
-                Image("الوسطى")
+                Image(backgroundImageName)
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
@@ -56,7 +73,7 @@ struct StackedCirclesView: View {
                             .spring(response: 0.6, dampingFraction: 0.7),
                             value: unlockedLevel
                         )
-                        .offset(y: -50)  // ✅ تعديل المكان
+                        .offset(y: -70)  // ✅ تعديل المكان
                     
                 }
                 .offset(y: 60)
@@ -86,8 +103,17 @@ struct StackedCirclesView: View {
     }
 }
 
+//#Preview {
+//    NavigationStack {
+//        StackedCirclesView(selectedCharacter: "نجديه")  // ✅ مؤقت للتجربة
+//    }
+//}
+
 #Preview {
     NavigationStack {
-        StackedCirclesView(selectedCharacter: "نجديه")  // ✅ مؤقت للتجربة
+        StackedCirclesView(
+            selectedCharacter: "نجديه",
+            region: .central
+        )
     }
 }
