@@ -74,6 +74,8 @@ struct الوسطى: View {
             )
                 
         }
+            .navigationBarBackButtonHidden(true)
+
             
             .navigationDestination(isPresented: $startNajdGame) {
                 NajdView()
