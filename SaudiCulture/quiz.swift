@@ -23,6 +23,7 @@ struct PuzzleChoicesView: View {
     @State private var feedback = ""
     @State private var showHint = false
     @State private var showSuccess = false
+    @State private var goToCustomsGame = false
 
     let puzzles: [ChoicePuzzle] = [
 
@@ -212,179 +213,185 @@ struct PuzzleChoicesView: View {
     
     
     var body: some View {
+        NavigationStack {
+            ZStack {
 
-        ZStack {
+                Image("الوسطى")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
 
-            Image("الوسطى")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
+                VStack {
 
-            VStack {
+                    NavigationLink(destination: AdatTaqaleedView(), isActive: $goToCustomsGame) {
+                        EmptyView()
+                    }
+                    .hidden()
 
-                // زر إنهاء
-                HStack {
-                    Spacer()
-                    Text("إنهاء اللعبة")
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 8)
-                        .background(Color(hex: "874F35"))
-                        .foregroundColor(Color(hex: "FCF0DD"))
-                        .cornerRadius(25)
-                }
-                .padding()
-
-                Spacer()
-
-                let puzzle = puzzles[currentIndex]
-
-                // الكرت
-                VStack(spacing: 20) {
-
-                    Text(puzzle.question)
-                        .font(.custom("Saudi-Regular", size: 22))
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(Color(hex: "874F35"))
-
-                    
-
-                    Text(feedback)
-                        .foregroundColor(.brown)
-
-                    // زر تلميح
+                    // زر إنهاء
                     HStack {
-                        Button {
-                            showHint.toggle()
-                        } label: {
-                            Image(systemName: "questionmark")
-                                .foregroundColor(.white)
-                                .padding()
-                                .background(Color(hex: "874F35"))
-                                .clipShape(Circle())
-                        }
-
                         Spacer()
-                    }
-
-                }
-                .padding()
-                .frame(width: 360)
-                .background(
-                    RoundedRectangle(cornerRadius: 30)
-                        .fill(Color(hex: "FCF0DD"))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 30)
-                                .stroke(Color(hex: "874F35"), lineWidth: 4)
-                        )
-                )
-
-                // الخيارات خارج الكرت
-                HStack(spacing: 15) {
-
-                    ForEach(puzzle.choices.indices, id: \.self) { i in
-
-                        Button {
-
-                            if selectedIndex == nil {
-                                selectedIndex = i
-                                checkAnswer()
-                            }
-
-                        } label: {
-
-                            Text(puzzle.choices[i])
-                                .font(.custom("Saudi-Regular", size: 18))
-                                .foregroundColor(Color(hex: "874F35"))
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 12)
-                                .background(
-
-                                    RoundedRectangle(cornerRadius: 25)
-                                        .fill(optionFillColor(i))
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 25)
-                                                .stroke(Color(hex: "874F35"), lineWidth: 3)
-                                        )
-
-                                )
-                        }
-                        .disabled(selectedIndex != nil)
-
-                        
-                    }
-                }
-                .padding(.top, 10)
-
-                Spacer()
-
-                // التالي
-                // التالي يظهر بعد الاختيار فقط
-                if selectedIndex != nil {
-
-                    Button {
-
-                        nextPuzzle()
-
-                    } label: {
-
-                        Text("التالي")
-                            .font(.custom("Saudi-Regular", size: 20))
-                            .foregroundColor(Color(hex: "FCF0DD"))
-                            .padding(.horizontal, 40)
-                            .padding(.vertical, 12)
+                        Text("إنهاء اللعبة")
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 8)
                             .background(Color(hex: "874F35"))
+                            .foregroundColor(Color(hex: "FCF0DD"))
                             .cornerRadius(25)
                     }
-                    .transition(.scale)
-                }
+                    .padding()
 
+                    Spacer()
 
-            }
+                    let puzzle = puzzles[currentIndex]
 
-            // نافذة التلميح
-            .overlay {
-                if showHint {
+                    // الكرت
+                    VStack(spacing: 20) {
 
-                    ZStack {
-
-                        // خلفية شفافة
-                        Color.black.opacity(0.25)
-                            .ignoresSafeArea()
-                            .onTapGesture {
-                                withAnimation {
-                                    showHint = false
-                                }
-                            }
-
-                        // البوب اب
-                        VStack(spacing: 20) {
-
-                            Text(puzzles[currentIndex].hint)
-                                .font(.custom("Saudi-Regular", size: 22))
-                                .foregroundColor(Color(hex: "FCF0DD"))
-                                .multilineTextAlignment(.center)
-
-                            Button("إغلاق") {
-                                withAnimation {
-                                    showHint = false
-                                }
-                            }
-                            .padding(.horizontal, 30)
-                            .padding(.vertical, 10)
-                            .background(Color(hex: "FCF0DD"))
+                        Text(puzzle.question)
+                            .font(.custom("Saudi-Regular", size: 22))
+                            .multilineTextAlignment(.center)
                             .foregroundColor(Color(hex: "874F35"))
-                            .clipShape(Capsule())
+
+
+
+                        Text(feedback)
+                            .foregroundColor(.brown)
+
+                        // زر تلميح
+                        HStack {
+                            Button {
+                                showHint.toggle()
+                            } label: {
+                                Image(systemName: "questionmark")
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(Color(hex: "874F35"))
+                                    .clipShape(Circle())
+                            }
+
+                            Spacer()
+                        }
+
+                    }
+                    .padding()
+                    .frame(width: 360)
+                    .background(
+                        RoundedRectangle(cornerRadius: 30)
+                            .fill(Color(hex: "FCF0DD"))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 30)
+                                    .stroke(Color(hex: "874F35"), lineWidth: 4)
+                            )
+                    )
+
+                    // الخيارات خارج الكرت
+                    HStack(spacing: 15) {
+
+                        ForEach(puzzle.choices.indices, id: \.self) { i in
+
+                            Button {
+
+                                if selectedIndex == nil {
+                                    selectedIndex = i
+                                    checkAnswer()
+                                }
+
+                            } label: {
+
+                                Text(puzzle.choices[i])
+                                    .font(.custom("Saudi-Regular", size: 18))
+                                    .foregroundColor(Color(hex: "874F35"))
+                                    .padding(.horizontal, 20)
+                                    .padding(.vertical, 12)
+                                    .background(
+
+                                        RoundedRectangle(cornerRadius: 25)
+                                            .fill(optionFillColor(i))
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 25)
+                                                    .stroke(Color(hex: "874F35"), lineWidth: 3)
+                                            )
+
+                                    )
+                            }
+                            .disabled(selectedIndex != nil)
+
 
                         }
-                        .padding(24)
-                        .background(Color(hex: "874F35"))
-                        .cornerRadius(24)
-                        .shadow(radius: 10)
+                    }
+                    .padding(.top, 10)
+
+                    Spacer()
+
+                    // التالي
+                    // التالي يظهر بعد الاختيار فقط
+                    if selectedIndex != nil {
+
+                        Button {
+
+                            nextPuzzle()
+
+                        } label: {
+
+                            Text("التالي")
+                                .font(.custom("Saudi-Regular", size: 20))
+                                .foregroundColor(Color(hex: "FCF0DD"))
+                                .padding(.horizontal, 40)
+                                .padding(.vertical, 12)
+                                .background(Color(hex: "874F35"))
+                                .cornerRadius(25)
+                        }
                         .transition(.scale)
                     }
-                }
-            }
 
+
+                }
+
+                // نافذة التلميح
+                .overlay {
+                    if showHint {
+
+                        ZStack {
+
+                            // خلفية شفافة
+                            Color.black.opacity(0.25)
+                                .ignoresSafeArea()
+                                .onTapGesture {
+                                    withAnimation {
+                                        showHint = false
+                                    }
+                                }
+
+                            // البوب اب
+                            VStack(spacing: 20) {
+
+                                Text(puzzles[currentIndex].hint)
+                                    .font(.custom("Saudi-Regular", size: 22))
+                                    .foregroundColor(Color(hex: "FCF0DD"))
+                                    .multilineTextAlignment(.center)
+
+                                Button("إغلاق") {
+                                    withAnimation {
+                                        showHint = false
+                                    }
+                                }
+                                .padding(.horizontal, 30)
+                                .padding(.vertical, 10)
+                                .background(Color(hex: "FCF0DD"))
+                                .foregroundColor(Color(hex: "874F35"))
+                                .clipShape(Capsule())
+
+                            }
+                            .padding(24)
+                            .background(Color(hex: "874F35"))
+                            .cornerRadius(24)
+                            .shadow(radius: 10)
+                            .transition(.scale)
+                        }
+                    }
+                }
+
+            }
         }
     }
 
@@ -395,12 +402,19 @@ struct PuzzleChoicesView: View {
         guard let selected = selectedIndex else { return }
 
         if selected == puzzles[currentIndex].correctIndex {
-
             feedback = "إجابة صحيحة!"
             showSuccess = true
 
-        } else {
+            // إذا كان السؤال الحالي هو سؤال الكبسة، انتقل مباشرة للعبة العادات والتقاليد
+            let currentQuestion = puzzles[currentIndex].question.trimmingCharacters(in: .whitespacesAndNewlines)
+            let kabsaPrefix = "أنا ملك المائدة في نجد خصوصاً في الغداء"
+            if currentQuestion.hasPrefix(kabsaPrefix) {
+                // فعّل الانتقال
+                goToCustomsGame = true
+                return
+            }
 
+        } else {
             feedback = "حاول مرة أخرى"
             showSuccess = false
         }
@@ -453,3 +467,4 @@ struct PuzzleChoicesView: View {
 #Preview {
     PuzzleChoicesView()
 }
+
