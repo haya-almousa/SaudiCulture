@@ -11,6 +11,9 @@ struct Name: View {
     @State private var name: String = ""
     @State private var navigateToCharacterPicker = false
     
+    @AppStorage("playerName") private var savedName: String = ""               // ✅ حفظ الاسم
+    @AppStorage("hasChosenCharacter") private var hasChosenCharacter: Bool = false // ✅ هل اختار شخصية؟
+    
     private var isNameValid: Bool {
         !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
@@ -30,6 +33,7 @@ struct Name: View {
                     .padding(.horizontal, 48)
                 
                 Button("التالي") {
+                    savedName = name.trimmingCharacters(in: .whitespacesAndNewlines) // ✅ حفظ الاسم
                     navigateToCharacterPicker = true
                 }
                 .font(.custom("Saudi-Regular", size: 20))
@@ -44,8 +48,19 @@ struct Name: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color("BackgroundMain"))
             .ignoresSafeArea()
+            .onAppear {
+                // ✅ إذا الاسم محفوظ: لا نعيد كتابته
+                if !savedName.isEmpty {
+                    name = savedName
+                }
+                // ✅ إذا الاسم محفوظ + سبق اختار شخصية: ندخله على نفس مسار التنقّل (CharacterPickerView)
+                // و CharacterPickerView بتسوّي Skip تلقائيًا للترحيب
+                if !savedName.isEmpty, hasChosenCharacter {
+                    navigateToCharacterPicker = true
+                }
+            }
             .navigationDestination(isPresented: $navigateToCharacterPicker) {
-                CharacterPickerView(playerName: name)
+                CharacterPickerView(playerName: savedName.isEmpty ? name : savedName)
             }
         }
     }
