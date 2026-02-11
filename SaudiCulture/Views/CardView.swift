@@ -74,7 +74,7 @@ struct CardView: View {
         // .font(.system(size: 20, weight: .bold, design: .rounded))
                                 .multilineTextAlignment(.center)
                                 .padding(.horizontal, 8)
-                            .font(.custom("Saudi-Bold", size: 23))
+                            .font(.custom("Saudi-Bold", size: 20))
 
                         }
                     }
