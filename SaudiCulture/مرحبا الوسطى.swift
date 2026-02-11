@@ -9,7 +9,7 @@ import SwiftUI
 
 struct مرحباالوسطى: View {
     let playerName: String
-    let selectedCharacter: String  // ✅ إضافة هذا السطر
+    let selectedCharacter: String
     
     private let fontName = "Saudi-Regular"
     private let figmaW: CGFloat = 390
@@ -21,56 +21,58 @@ struct مرحباالوسطى: View {
     private let titleCenterX: CGFloat = 195
     private let titleCenterY: CGFloat = 300
     
-    @State private var navigateToLevel = false
+    @State private var navigateToMap = false  // ✅ غيرت الاسم
     
     var body: some View {
-        GeometryReader { geo in
-            let sx = geo.size.width / figmaW
-            let sy = geo.size.height / figmaH
-            let s  = min(sx, sy)
-            
-            ZStack {
-                Image("الوسطى")
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
+        NavigationStack {
+            GeometryReader { geo in
+                let sx = geo.size.width / figmaW
+                let sy = geo.size.height / figmaH
+                let s  = min(sx, sy)
                 
-                Text("مرحباً \(playerName)")
-                    .font(.custom(fontName, size: 50 * s))
-                    .foregroundColor(Color("brown"))
-                    .position(x: titleCenterX * sx, y: titleCenterY * sy)
-                
-                Button(action: {
-                    navigateToLevel = true
-                }) {
-                    ZStack {
-                        Capsule()
-                            .fill(Color("brown"))
-                            .frame(width: btnW * sx, height: btnH * sy)
-                        
-                        Text("ابدأ اللعبة")
-                            .font(.custom(fontName, size: 50 * s))
-                            .foregroundColor(.white)
-                            .baselineOffset(-4 * sy)
+                ZStack {
+                    Image("الوسطى")
+                        .resizable()
+                        .scaledToFill()
+                        .ignoresSafeArea()
+                    
+                    Text("مرحباً \(playerName)")
+                        .font(.custom(fontName, size: 50 * s))
+                        .foregroundColor(Color("brown"))
+                        .position(x: titleCenterX * sx, y: titleCenterY * sy)
+                    
+                    Button(action: {
+                        navigateToMap = true  // ✅ روح للخريطة
+                    }) {
+                        ZStack {
+                            Capsule()
+                                .fill(Color("brown"))
+                                .frame(width: btnW * sx, height: btnH * sy)
+                            
+                            Text("ابدأ اللعبة")
+                                .font(.custom(fontName, size: 50 * s))
+                                .foregroundColor(.white)
+                                .baselineOffset(-4 * sy)
+                        }
+                        .frame(width: btnW * sx, height: btnH * sy)
                     }
-                    .frame(width: btnW * sx, height: btnH * sy)
+                    .buttonStyle(.plain)
+                    .position(
+                        x: (btnX + btnW/2) * sx,
+                        y: (btnY + btnH/2) * sy
+                    )
                 }
-                .buttonStyle(.plain)
-                .position(
-                    x: (btnX + btnW/2) * sx,
-                    y: (btnY + btnH/2) * sy
-                )
             }
-        }
-        .navigationBarBackButtonHidden(true)
-        .navigationDestination(isPresented: $navigateToLevel) {
-            StackedCirclesView(selectedCharacter: selectedCharacter)  // ✅ تمرير الشخصية
+            .navigationBarBackButtonHidden(true)
+            .navigationDestination(isPresented: $navigateToMap) {
+                SaudiMapView()  // ✅ روح للخريطة زي باقي المناطق
+            }
         }
     }
 }
 
 #Preview {
     NavigationStack {
-        مرحباالوسطى(playerName: "هيا", selectedCharacter: "نجديه")  // ✅ إضافة selectedCharacter
+        مرحباالوسطى(playerName: "هيا", selectedCharacter: "نجديه")
     }
 }
