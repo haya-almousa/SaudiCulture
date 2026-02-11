@@ -163,9 +163,13 @@ struct LevelAlwosta: View {
             .navigationDestination(isPresented: $navigateToHome) {
                 SaudiMapView()
             }
+//            .navigationDestination(isPresented: $navigateToNext) {
+//                PuzzleChoicesView()
+//            }\
             .navigationDestination(isPresented: $navigateToNext) {
-                PuzzleChoicesView()
+                PuzzleChoicesView(region: .central)
             }
+
             .onAppear {
                 setupPuzzle()
             }

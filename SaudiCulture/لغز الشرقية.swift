@@ -166,9 +166,13 @@ struct LevelAlsharqiya: View {
                 SaudiMapView()
             }
             
+//            .navigationDestination(isPresented: $navigateToNext ) {
+//                PuzzleChoicesView()
+//            }
             .navigationDestination(isPresented: $navigateToNext ) {
-                PuzzleChoicesView()
+                PuzzleChoicesView(region: .eastern)
             }
+
             .onAppear {
                 setupPuzzle()
             }

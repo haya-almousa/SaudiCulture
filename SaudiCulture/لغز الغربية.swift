@@ -161,8 +161,11 @@ struct LevelAlgharbiya: View {
             .navigationDestination(isPresented: $navigateToHome) {
                 SaudiMapView()
             }
-            .navigationDestination(isPresented: $navigateToNext ) {
-                PuzzleChoicesView()
+//            .navigationDestination(isPresented: $navigateToNext ) {
+//                PuzzleChoicesView()
+//            }
+            .navigationDestination(isPresented: $navigateToNext) {
+                PuzzleChoicesView(region: .western)
             }
 
             

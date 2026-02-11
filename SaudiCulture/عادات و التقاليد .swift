@@ -100,7 +100,8 @@ struct PuzzleView3: View {
                 //                Spacer()
                 
                 Button(action: {
-                    goToMap = true
+                    LevelFlow.shared.completeLevel()
+                        goToMap = true
                 }) {
                     Text("انهاء  ")
                         .font(.custom("Saudi-Regular", size: 18))
@@ -114,6 +115,8 @@ struct PuzzleView3: View {
                 Spacer()
             }
         }
+        .navigationBarBackButtonHidden(true)
+
         .navigationDestination(isPresented: $goToMap) {
             SaudiMapView()
         } 

@@ -230,7 +230,7 @@ struct StackedCirclesView: View {
     let selectedCharacter: String  // ✅ استقبال الشخصية المختارة
         let region: RegionType   // ✅ جديد
     let totalLevels = 5
-    @State private var unlockedLevel = 0
+    @StateObject var flow = LevelFlow.shared
     @Environment(\.dismiss) var dismiss
     @StateObject private var gameProgress = GameProgress.shared
     @State private var navigateToFashion = false
@@ -266,7 +266,7 @@ struct StackedCirclesView: View {
                     // المراحل
                     ForEach(0..<totalLevels, id: \.self) { index in
                         
-                        Image(index <= unlockedLevel ? "yellowCircle" : "grayCircle")
+                        Image(index <= flow.currentLevel ? "yellowCircle" : "grayCircle")
                             .resizable()
                             .scaledToFit()
                             .frame(width: index == 0 ? 110 : 90)
@@ -274,7 +274,7 @@ struct StackedCirclesView: View {
                         
                         // نخلي الضغط فقط على المرحلة المفتوحة الحالية
                             .onTapGesture {
-                                if index == unlockedLevel {
+                                if index == flow.currentLevel {
                                     navigateToFashion = true
                                 }
                             }
@@ -285,10 +285,10 @@ struct StackedCirclesView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 100, height: 140)  // ✅ حجم أكبر
-                        .offset(y: yPosition(for: unlockedLevel))
+                        .offset(y: yPosition(for: flow.currentLevel))
                         .animation(
                             .spring(response: 0.6, dampingFraction: 0.7),
-                            value: unlockedLevel
+                            value: flow.currentLevel
                         )
                         .offset(y: -70)  // ✅ تعديل المكان
                     
@@ -311,13 +311,9 @@ struct StackedCirclesView: View {
     }
     
     func nextLevel() {
-        if unlockedLevel < totalLevels - 1 {
-            unlockedLevel += 1
-        } else {
-            gameProgress.completeRegion(.central)
-            dismiss()
-        }
+        LevelFlow.shared.completeLevel()
     }
+
 }
 
 //#Preview {
