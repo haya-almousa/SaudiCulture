@@ -73,7 +73,7 @@ struct StackedCirclesView: View {
                             .spring(response: 0.6, dampingFraction: 0.7),
                             value: unlockedLevel
                         )
-                        .offset(y: -50)  // ✅ تعديل المكان
+                        .offset(y: -70)  // ✅ تعديل المكان
                     
                 }
                 .offset(y: 60)
