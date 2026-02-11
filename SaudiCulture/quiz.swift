@@ -215,9 +215,9 @@ struct PuzzleChoicesView: View {
 
         ZStack {
 
-            Image("background")
+            Image("الوسطى")
                 .resizable()
-                .scaledToFit()
+                .scaledToFill()
                 .ignoresSafeArea()
 
             VStack {

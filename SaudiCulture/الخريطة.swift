@@ -104,6 +104,8 @@ struct SaudiMapView: View {
                 }
                 
             }
+            .navigationBarBackButtonHidden(true)
+
 //            .alert(item: $selectedRegion) { region in
 //                Alert(
 //                    title: Text(region.isLocked ? "🔒 منطقة مقفلة" : region.name),

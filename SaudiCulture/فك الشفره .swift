@@ -94,35 +94,43 @@ struct PuzzleView: View {
         )
     ]
     
-    
+    @State private var goToMap = false
+
     
     var body: some View {
+        
         NavigationStack {
             
             ZStack {
-                Image("background")
+//                Image("background")
+//                    .resizable()
+//                    .scaledToFit()
+//                    .frame(maxWidth: .infinity)
+//                    .ignoresSafeArea()
+                Image("الوسطى")
                     .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: .infinity)
+                    .scaledToFill()
                     .ignoresSafeArea()
                 
                 VStack {
                     // Header
                     HStack {
                         Spacer()
-                        Button(action: {}) {
-                            Text("انهاء اللعبه ")
-                                .font(.custom("Saudi-Regular", size: 14))
-                            
+                        Button(action: {
+                            goToMap = true
+                        }) {
+                            Image(systemName: "house.fill")
+                                .font(.system(size: 16))
                                 .foregroundColor(Color(hex: "FCF0DD"))
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 8)
+                                .padding(12)
                                 .background(Color(hex: "874F35"))
-                                .cornerRadius(25)
-                            
+                                .clipShape(Circle())
                         }
+
                     }
                     .padding()
+                    .offset(x:-15,y:70)
+
                     
                     
                     
@@ -215,6 +223,7 @@ struct PuzzleView: View {
                             )
                     )
                     .padding()
+                    .offset(x:0,y:70)
                     .overlay(
                         Group {
                             if showPopup {
@@ -287,9 +296,17 @@ struct PuzzleView: View {
                             .cornerRadius(25)
                     }
                     
+                    .offset(x:0,y:70)
+
                     Spacer()
                 }
             }
+            .navigationDestination(isPresented: $goToMap) {
+                SaudiMapView()
+            }
+
+            .navigationBarBackButtonHidden(true)
+            
             .navigationDestination(isPresented: $goToPuzzleLevel) {
                 LevelAlwosta()
             }

@@ -14,35 +14,36 @@ struct StackedCirclesView: View {
     @State private var unlockedLevel = 0
     @Environment(\.dismiss) var dismiss
     @StateObject private var gameProgress = GameProgress.shared
-
+    @State private var navigateToFashion = false
     var body: some View {
-        
+        NavigationStack {
         ZStack {
             
-            Image("background")
+            Image("الوسطى")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
             
             ZStack {
-
+                
                 // المراحل
                 ForEach(0..<totalLevels, id: \.self) { index in
-
+                    
                     Image(index <= unlockedLevel ? "yellowCircle" : "grayCircle")
                         .resizable()
                         .scaledToFit()
                         .frame(width: index == 0 ? 110 : 90)
                         .offset(y: yPosition(for: index))
-
-                        // نخلي الضغط فقط على المرحلة المفتوحة الحالية
+                    
+                    // نخلي الضغط فقط على المرحلة المفتوحة الحالية
                         .onTapGesture {
                             if index == unlockedLevel {
-                                nextLevel()
+//                                nextLevel()
+                                navigateToFashion = true
                             }
                         }
                 }
-
+                
                 // الشخصية
                 Image("netImage")
                     .resizable()
@@ -54,14 +55,19 @@ struct StackedCirclesView: View {
                         value: unlockedLevel
                     )
                     .offset(y: -40)
-
+                
             }
             .offset(y: 60)
-
+            
         }
-        .onTapGesture {
-            nextLevel()
-        }
+        
+        .navigationDestination(isPresented: $navigateToFashion) {
+                        الوسطى()
+                    }
+//        .onTapGesture {
+//            nextLevel()
+//        }
+    }
     }
     
     // تحريك المراحل عموديًا

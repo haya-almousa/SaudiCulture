@@ -19,8 +19,11 @@ struct مرحباالغربيه: View {
     private let btnH: CGFloat = 94
     private let titleCenterX: CGFloat = 195
     private let titleCenterY: CGFloat = 300
+    @State private var navigateToMap = false
     
     var body: some View {
+        NavigationStack {
+
         GeometryReader { geo in
             let sx = geo.size.width / figmaW
             let sy = geo.size.height / figmaH
@@ -38,7 +41,7 @@ struct مرحباالغربيه: View {
                     .position(x: titleCenterX * sx, y: titleCenterY * sy)
                 
                 Button(action: {
-                    startGame()
+                    navigateToMap = true
                 }) {
                     ZStack {
                         Capsule()
@@ -57,10 +60,14 @@ struct مرحباالغربيه: View {
                     x: (btnX + btnW/2) * sx,
                     y: (btnY + btnH/2) * sy
                 )
+             
             }
         }
         .navigationBarBackButtonHidden(true)
-    }
+        .navigationDestination(isPresented: $navigateToMap) {
+            SaudiMapView()
+        }
+    }}
     
     func startGame() {
         print("اللعبة بدأت - المنطقة الغربية - اللاعب: \(playerName)")
