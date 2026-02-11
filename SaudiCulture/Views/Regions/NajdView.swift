@@ -136,20 +136,12 @@ struct NajdView: View {
         .navigationDestination(isPresented: $goToMap) {
             SaudiMapView()
         }
-//        .navigationDestination(isPresented: $goToNextGame) {
-//            PuzzleChoicesView(
-//                startIndex: LevelFlow.shared.puzzleIndex
-//            )
-//        }
 
+        // ✅ ربط الكروت بالبزل مباشرة (زي الشرقيه)
         .navigationDestination(isPresented: $goToNextGame) {
-            PuzzleChoicesView(
-                region: .central
-            )
-            
+            LevelAlwosta()
         }
 
-        
         .navigationBarBackButtonHidden(true)
         
         .navigationBarTitleDisplayMode(.inline)

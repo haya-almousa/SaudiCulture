@@ -136,7 +136,7 @@ struct LevelAlwosta: View {
                                 .background(Color("brown"))
                                 .clipShape(Circle())
                         }
-                        .padding(.leading, 30)
+                        .padding(.leading, 3)
                         
                         Spacer()
                     }
@@ -149,14 +149,14 @@ struct LevelAlwosta: View {
                         navigateToHome = true
                     }) {
                         Image(systemName: "house.fill")
-                            .font(.system(size: 18))
+                            .font(.system(size: 25))
                             .foregroundColor(.white)
-                            .padding()
+                            .padding(12)
                             .background(Color("brown"))
                             .clipShape(Circle())
                     }
-                    .padding(.top, 60)
-                    .padding(.trailing, 20)
+                    .padding(.top, 29)
+                    .padding(.trailing, 0.1)
                 }
             }
             
