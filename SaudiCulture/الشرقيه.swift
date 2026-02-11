@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct الشرقيه: View {
+    @State private var goToCards = false
+    
     var body: some View {
         ZStack {
             Color("BackgroundMain")
@@ -37,7 +39,6 @@ struct الشرقيه: View {
                         لبس المنطقة الشرقية يتميزلباس المنطقة الشرقية معروف بالأناقة وغنى التفاصيل التراثية.
                         المرأة تبدأ بلبس ثوب النشل، وهو ثوب تقليدي معروف بتطريزه الذهبي وقماشه الخفيف، وغالبًا ينلبس في المناسبات والاحتفالات، وتكمل شكلها بـ الدراعة اللي تنلبس فوقه عشان تعكس الاحتشام والهوية المحلية.
                         أما الرجل فيلبس ثوب مردون، ويحط الغترة مع العقال المقصب، ويكمل لبسه بـ الدقلة، وكلها تفاصيل تعبّر عن الطابع التراثي والمكانة الاجتماعية في المنطقة الشرق
-
                         """)
                         .font(.custom("Saudi-Regular", size: 20))
                         .fontWeight(.bold)
@@ -48,12 +49,12 @@ struct الشرقيه: View {
                         .padding(.horizontal, 30)
                         .padding(.top, 70)
                     }
-                    .scrollIndicators(.hidden) // لإخفاء الـ scroll bar
+                    .scrollIndicators(.hidden)
                     
                     Spacer()
                     
                     Button {
-                        
+                        goToCards = true
                     } label: {
                         Text("ابدأ اللعبة")
                             .font(.custom("Saudi-Regular", size: 34))
@@ -70,6 +71,11 @@ struct الشرقيه: View {
                 x: -9 + (411 / 2),
                 y: 342 + (529 / 2)
             )
+        }
+        .navigationBarBackButtonHidden(true)
+        
+        .navigationDestination(isPresented: $goToCards) {
+            EasternView()
         }
     }
 }

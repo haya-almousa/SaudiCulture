@@ -228,14 +228,13 @@ import SwiftUI
 struct StackedCirclesView: View {
     
     let selectedCharacter: String  // ✅ استقبال الشخصية المختارة
-        let region: RegionType   // ✅ جديد
+    let region: RegionType         // ✅ جديد
+    
     let totalLevels = 5
     @StateObject var flow = LevelFlow.shared
     @Environment(\.dismiss) var dismiss
     @StateObject private var gameProgress = GameProgress.shared
     @State private var navigateToFashion = false
-    
-    
     
     var backgroundImageName: String {
         switch region {
@@ -272,7 +271,8 @@ struct StackedCirclesView: View {
                             .frame(width: index == 0 ? 110 : 90)
                             .offset(y: yPosition(for: index))
                         
-                        // نخلي الضغط فقط على المرحلة المفتوحة الحالية
+                        // ✅ الضغط فقط على المرحلة المفتوحة الحالية
+                        // ✅ وبس اللفل الأول يفتح صفحة الزي
                             .onTapGesture {
                                 if index == flow.currentLevel {
                                     navigateToFashion = true
@@ -280,7 +280,7 @@ struct StackedCirclesView: View {
                             }
                     }
                     
-                    // ✅ الشخصية المختارة (بدلنا "netImage" بالشخصية اللي اختارها)
+                    // ✅ الشخصية المختارة
                     Image(selectedCharacter)
                         .resizable()
                         .scaledToFit()
@@ -290,15 +290,26 @@ struct StackedCirclesView: View {
                             .spring(response: 0.6, dampingFraction: 0.7),
                             value: flow.currentLevel
                         )
-                        .offset(y: -70)  // ✅ تعديل المكان
+                        .offset(y: -70)
                     
                 }
                 .offset(y: 60)
                 
             }
-            
             .navigationDestination(isPresented: $navigateToFashion) {
-                الوسطى()
+                // ✅ هنا نربط صفحة الزي حسب المنطقة
+                switch region {
+                case .central:
+                    الوسطى()
+                case .eastern:
+                    الشرقيه()
+                case .northern:
+                    الشماليه()
+                case .western:
+                    الغربيه()
+                case .southern:
+                    الجنوبيه()
+                }
             }
         }
     }

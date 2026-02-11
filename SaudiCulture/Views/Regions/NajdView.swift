@@ -49,13 +49,13 @@ struct NajdView: View {
                     goToMap = true
                 }) {
                     Image(systemName: "house.fill")
-                        .font(.system(size: 16))
+                        .font(.system(size: 25))
                         .foregroundColor(Color(hex: "FCF0DD"))
                         .padding(12)
                         .background(Color(hex: "874F35"))
                         .clipShape(Circle())
                 }
-            }.offset(x:160,y:-350)
+            }.offset(x:150,y:-390)
             
             VStack(spacing: 16) {
                 

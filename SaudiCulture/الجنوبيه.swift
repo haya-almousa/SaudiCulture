@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct الجنوبيه: View {
+    @State private var goToCards = false
+    
     var body: some View {
         ZStack {
             Color("BackgroundMain")
@@ -47,12 +49,12 @@ struct الجنوبيه: View {
                         .padding(.horizontal, 30)
                         .padding(.top, 70)
                     }
-                    .scrollIndicators(.hidden) // لإخفاء الـ scroll bar
+                    .scrollIndicators(.hidden)
                     
                     Spacer()
                     
                     Button {
-                        
+                        goToCards = true
                     } label: {
                         Text("ابدأ اللعبة")
                             .font(.custom("Saudi-Regular", size: 34))
@@ -69,6 +71,11 @@ struct الجنوبيه: View {
                 x: -9 + (411 / 2),
                 y: 342 + (529 / 2)
             )
+        }
+        .navigationBarBackButtonHidden(true)
+        
+        .navigationDestination(isPresented: $goToCards) {
+            AsirView()
         }
     }
 }

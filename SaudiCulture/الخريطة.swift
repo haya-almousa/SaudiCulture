@@ -160,20 +160,20 @@ struct SaudiMapView: View {
     
     // MARK: - Functions
     private func handleRegionTap(_ regionType: RegionType) {
-        // المنطقة الوسطى: انتقال مباشر
-        if regionType == .central {
-            goToLevels = true
-            return
-        }
-
-        // باقي المناطق فقط
+        // ✅ فتح كل المناطق مؤقتًا، فهنا إذا مفتوحة نروح للّفل مباشرة
         let isUnlocked = gameProgress.isRegionUnlocked(regionType)
 
-        selectedRegion = Region(
-            type: regionType,
-            name: regionType.displayName,
-            isLocked: !isUnlocked
-        )
+        if isUnlocked {
+            selectedRegionType = regionType
+            goToLevels = true
+        } else {
+            // إذا مقفلة نطلع التنبيه مثل قبل
+            selectedRegion = Region(
+                type: regionType,
+                name: regionType.displayName,
+                isLocked: true
+            )
+        }
     }
 }
 

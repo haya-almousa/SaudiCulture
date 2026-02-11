@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct الغربيه: View {
+    @State private var goToCards = false
+    
     var body: some View {
         ZStack {
             Color("BackgroundMain")
@@ -51,7 +53,7 @@ struct الغربيه: View {
                     Spacer()
                     
                     Button {
-                        
+                        goToCards = true
                     } label: {
                         Text("ابدأ اللعبة")
                             .font(.custom("Saudi-Regular", size: 34))
@@ -69,10 +71,15 @@ struct الغربيه: View {
                 y: 342 + (529 / 2)
             )
         }
-    }
+        .navigationBarBackButtonHidden(true)
         
-
-
+        .navigationDestination(isPresented: $goToCards) {
+            HejazView()
+        }
+    }
+    
+    
+    
 }
 #Preview {
     الغربيه()
