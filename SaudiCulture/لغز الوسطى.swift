@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-// MARK: - شكل قطعة البزل (Puzzle Piece Shape)
 struct PuzzlePieceShape: Shape {
     let row: Int
     let col: Int
@@ -78,7 +77,6 @@ struct PuzzlePieceShape: Shape {
     }
 }
 
-// MARK: - موديل قطعة البزل
 struct PuzzlePiece: Identifiable {
     let id: Int
     let row: Int
@@ -90,7 +88,6 @@ struct PuzzlePiece: Identifiable {
     }
 }
 
-// MARK: - شاشة لفل الوسطى
 struct LevelAlwosta: View {
     
     private let rows = 3
@@ -107,7 +104,6 @@ struct LevelAlwosta: View {
     @State private var showHelpDialog: Bool = false
     @State private var navigateToNext: Bool = false
     
-    // ⭐ أضفناه
     @State private var navigateToHome: Bool = false
     
     var body: some View {
@@ -129,10 +125,12 @@ struct LevelAlwosta: View {
                 .overlay(alignment: .bottom) {
                     HStack {
                         
+                        // ⭐ زر الاستفهام (معدّل)
                         Button(action: {
                             showHelpDialog = true
                         }) {
                             Image(systemName: "questionmark")
+                                .font(.system(size: 26))
                                 .foregroundColor(.white)
                                 .padding()
                                 .background(Color("brown"))
@@ -146,10 +144,12 @@ struct LevelAlwosta: View {
                 }
                 .overlay(alignment: .topTrailing) {
                     
+                    // ⭐ زر الهوم (معدّل)
                     Button(action: {
-                        navigateToHome = true   // ⭐ هنا الربط
+                        navigateToHome = true
                     }) {
                         Image(systemName: "house.fill")
+                            .font(.system(size: 18))
                             .foregroundColor(.white)
                             .padding()
                             .background(Color("brown"))
@@ -160,7 +160,6 @@ struct LevelAlwosta: View {
                 }
             }
             
-            // ⭐ هنا صفحة الخريطة
             .navigationDestination(isPresented: $navigateToHome) {
                 SaudiMapView()
             }
@@ -183,7 +182,7 @@ struct LevelAlwosta: View {
         }
     }
     
-    // باقي الكود كما هو بدون أي تغيير…
+    // باقي الكود بدون تغيير…
     
     private var puzzleBoard: some View {
         let pieceSize = puzzleSize / CGFloat(cols)
