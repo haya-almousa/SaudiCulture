@@ -101,8 +101,7 @@ struct PuzzleView3: View {
                 //                Spacer()
                 
                 Button(action: {
-                    LevelFlow.shared.completeLevel(region: region)  // ✅ مررنا المنطقة
-                        goToMap = true
+                    goToMap = true
                 }) {
                     Text("انهاء  ")
                         .font(.custom("Saudi-Regular", size: 18))
