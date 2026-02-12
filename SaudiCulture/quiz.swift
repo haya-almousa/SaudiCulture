@@ -312,7 +312,7 @@ struct PuzzleChoicesView: View {
 
                     if selectedIndex == puzzle.correctIndex {
                         Button {
-                            flow.completeLevel(region: region)
+//                            flow.completeLevel(region: region)
                             gotonextpage = true
                         } label: {
                             Text("التالي")

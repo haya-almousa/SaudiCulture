@@ -408,16 +408,24 @@ struct SaudiMapView: View {
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
+                
+                
+//                .navigationDestination(isPresented: $goToLevels) {
+//                    if let region = selectedRegionType {
+//                        StackedCirclesView(
+//                            selectedCharacter: savedCharacter,
+//                            region: region
+//                        )
+//                    } else {
+//                        Text("اختر منطقة للمتابعة")
+//                    }
+//                }
                 .navigationDestination(isPresented: $goToLevels) {
                     if let region = selectedRegionType {
-                        StackedCirclesView(
-                            selectedCharacter: savedCharacter,
-                            region: region
-                        )
-                    } else {
-                        Text("اختر منطقة للمتابعة")
+                        StackedCirclesView(selectedCharacter: savedCharacter, region: region)
                     }
                 }
+
 
             }
             .navigationBarBackButtonHidden(true)

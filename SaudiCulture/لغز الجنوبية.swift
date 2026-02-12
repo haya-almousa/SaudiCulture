@@ -170,7 +170,7 @@ struct LevelAljanubiya: View {
 //                PuzzleChoicesView()
 //            }
             .navigationDestination(isPresented: $navigateToNext ) {
-                PuzzleChoicesView(region: .southern)
+                PuzzleView(region: .southern)
             }
 
             .onAppear {

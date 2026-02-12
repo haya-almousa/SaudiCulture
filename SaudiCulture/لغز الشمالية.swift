@@ -170,7 +170,7 @@ struct LevelAshshamaliya: View {
 //            }
 
             .navigationDestination(isPresented: $navigateToNext) {
-                PuzzleChoicesView(region: .northern)
+                PuzzleView(region: .northern)
             }
 
             .onAppear {

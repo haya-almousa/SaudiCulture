@@ -165,7 +165,7 @@ struct LevelAlgharbiya: View {
 //                PuzzleChoicesView()
 //            }
             .navigationDestination(isPresented: $navigateToNext) {
-                PuzzleChoicesView(region: .western)
+                PuzzleView(region: .western)
             }
 
             

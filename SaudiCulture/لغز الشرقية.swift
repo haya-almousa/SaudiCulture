@@ -170,7 +170,7 @@ struct LevelAlsharqiya: View {
 //                PuzzleChoicesView()
 //            }
             .navigationDestination(isPresented: $navigateToNext ) {
-                PuzzleChoicesView(region: .eastern)
+                PuzzleView(region: .eastern)
             }
 
             .onAppear {

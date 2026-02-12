@@ -317,6 +317,7 @@ struct StackedCirclesView: View {
     @Environment(\.dismiss) var dismiss
     @StateObject private var gameProgress = GameProgress.shared
     @State private var navigateToPuzzle = false
+    @State private var navigateToFashion = false
 
     // ✅ هذه تحسب المرحلة الحالية مع التأكد أنها لا تتجاوز آخر مستوى
     var current: Int {
@@ -332,6 +333,7 @@ struct StackedCirclesView: View {
         case .western:  return "الغربيه"
         }
     }
+    
 
     var body: some View {
         NavigationStack {
@@ -352,8 +354,7 @@ struct StackedCirclesView: View {
                             .onTapGesture {
                                 // ✅ فقط المرحلة الحالية يمكن الضغط عليها
                                 if index == current {
-                                    navigateToPuzzle = true
-                                }
+                                    navigateToFashion = true                                }
                             }
                     }
 
@@ -370,9 +371,19 @@ struct StackedCirclesView: View {
             }
             .navigationBarBackButtonHidden(true)
 
-            .navigationDestination(isPresented: $navigateToPuzzle) {
-                PuzzleView3(region: region) // توجه للسؤال الحالي
+//            .navigationDestination(isPresented: $navigateToPuzzle) {
+//                PuzzleView3(region: region) // توجه للسؤال الحالي
+//            }
+            .navigationDestination(isPresented: $navigateToFashion) {
+                switch region {
+                case .central: الوسطى()
+                case .northern: الشماليه()
+                case .southern: الجنوبيه()
+                case .eastern: الشرقيه()
+                case .western: الغربيه()
+                }
             }
+
         }
     }
 

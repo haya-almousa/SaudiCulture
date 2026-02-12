@@ -167,7 +167,7 @@ struct LevelAlwosta: View {
 //                PuzzleChoicesView()
 //            }\
             .navigationDestination(isPresented: $navigateToNext) {
-                PuzzleChoicesView(region: .central)
+                PuzzleView(region: .central)
             }
 
             .onAppear {

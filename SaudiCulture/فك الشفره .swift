@@ -66,7 +66,7 @@ struct PuzzleView: View {
         Puzzle(
             emojis: "🟢 ☕ ",
             hint: "مشروب عربي مشهور",
-            answer: "القهوة السعودية"
+            answer: /*"القهوة السعودية"*/"bb"
         ),
         
         Puzzle(
@@ -468,7 +468,7 @@ struct PuzzleView: View {
             .navigationBarBackButtonHidden(true)
             
             .navigationDestination(isPresented: $goToPuzzleLevel) {
-                LevelAlwosta()
+                PuzzleChoicesView(region: .central)
             }
 
         }
