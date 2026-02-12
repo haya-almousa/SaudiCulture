@@ -21,7 +21,7 @@ struct Name: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 16) {
-                TextField("اكتب اسمك", text: $name)
+                TextField("أكتب اسمك", text: $name)
                     .font(.custom("Saudi-Regular", size: 28))
                     .foregroundStyle(Color("brown"))
                     .multilineTextAlignment(.center)
