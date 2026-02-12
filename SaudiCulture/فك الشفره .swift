@@ -66,7 +66,7 @@ struct PuzzleView: View {
         Puzzle(
             emojis: "🟢 ☕ ",
             hint: "مشروب عربي مشهور",
-            answer: /*"القهوة السعودية"*/"bb"
+            answer: "القهوة السعودية"
         ),
         
         Puzzle(
