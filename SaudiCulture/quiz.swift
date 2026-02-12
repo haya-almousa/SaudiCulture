@@ -217,8 +217,15 @@ struct PuzzleChoicesView: View {
         case .eastern: return "الشرقية"
         }
     }
+    @State private var goToMap = false
 
+
+    
+    
     var body: some View {
+        
+        
+        
         ZStack {
             // الخلفية تتغير ديناميكياً
             Image(backgroundName)
@@ -228,18 +235,19 @@ struct PuzzleChoicesView: View {
 
             VStack {
                 // زر إنهاء
-                HStack {
-                    Spacer()
-                    Button { dismiss() } label: {
-                        Text("إنهاء اللعبة")
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 8)
-                            .background(Color(hex: "874F35"))
+                HStack{
+                    Button(action: {
+                        goToMap = true
+                    }) {
+                        Image(systemName: "house.fill")
+                            .font(.system(size: 25))
                             .foregroundColor(Color(hex: "FCF0DD"))
-                            .cornerRadius(25)
+                            .padding(12)
+                            .background(Color(hex: "874F35"))
+                            .clipShape(Circle())
                     }
                 }
-                .padding()
+                .offset(x:150,y:-300)
 
                 Spacer()
 

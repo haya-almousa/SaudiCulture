@@ -1,7 +1,16 @@
 import SwiftUI
 
 struct NajdView: View {
-    
+    var region: RegionType
+    var backgroundImageName: String {
+            switch region {
+            case .central:  return "الوسطى"
+            case .northern: return "الشماليه"
+            case .southern: return "الجنوبيه"
+            case .eastern:  return "الشرقيه"
+            case .western:  return "الغربيه"
+            }
+        }
     let columns = Array(repeating: GridItem(.flexible(), spacing: 12), count: 3)
     
     @StateObject private var viewModel = GameLogic()
@@ -39,10 +48,11 @@ struct NajdView: View {
         ZStack {
             // Background
             Color(hex: "FFF9F2").ignoresSafeArea()
-            Image("الوسطى")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
+            Image(backgroundImageName)
+                           .resizable()
+                           .scaledToFill()
+                           .ignoresSafeArea()
+            
             
             HStack{
                 Button(action: {
@@ -55,8 +65,9 @@ struct NajdView: View {
                         .background(Color(hex: "874F35"))
                         .clipShape(Circle())
                 }
-            }.offset(x:150,y:-390)
-            
+            }
+            .offset(x:150,y:-300)
+
             VStack(spacing: 16) {
                 
                 // Title
@@ -185,5 +196,5 @@ struct NajdView: View {
 }
 
 #Preview {
-    NajdView()
+    NajdView(region: .central)
 }

@@ -223,7 +223,16 @@
 import SwiftUI
 
 struct NorthView: View {
-    
+    var region: RegionType
+    var backgroundImageName: String {
+            switch region {
+            case .central:  return "الوسطى"
+            case .northern: return "الشماليه"
+            case .southern: return "الجنوبيه"
+            case .eastern:  return "الشرقيه"
+            case .western:  return "الغربيه"
+            }
+        }
     let columns = Array(repeating: GridItem(.flexible(), spacing: 12), count: 3)
     
     @StateObject private var viewModel = GameLogic()
@@ -258,10 +267,14 @@ struct NorthView: View {
             ZStack {
                 // Background
                 Color(hex: "FFF9F2").ignoresSafeArea()
-                Image("Palm").resizable().opacity(0.3)
+                Image(backgroundImageName)
+                               .resizable()
+                               .scaledToFill()
+                               .ignoresSafeArea()
+                
                 
                 // 🔥 زر الهوم
-                HStack {
+                HStack{
                     Button(action: {
                         goToMap = true
                     }) {
@@ -273,8 +286,8 @@ struct NorthView: View {
                             .clipShape(Circle())
                     }
                 }
-                .offset(x: 150, y: -390)
-                
+                .offset(x:150,y:-300)
+
                 VStack(spacing: 16) {
                     
                     // Title
@@ -397,5 +410,5 @@ struct NorthView: View {
 }
 
 #Preview {
-    NorthView()
+    NorthView(region: .central)
 }

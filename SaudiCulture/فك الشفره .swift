@@ -272,22 +272,19 @@ struct PuzzleView: View {
                 
                 VStack {
                     // Header
-                    HStack {
-                        Spacer()
+                    HStack{
                         Button(action: {
                             goToMap = true
                         }) {
                             Image(systemName: "house.fill")
-                                .font(.system(size: 16))
+                                .font(.system(size: 25))
                                 .foregroundColor(Color(hex: "FCF0DD"))
                                 .padding(12)
                                 .background(Color(hex: "874F35"))
                                 .clipShape(Circle())
                         }
-
                     }
-                    .padding()
-                    .offset(x:-15,y:70)
+                    .offset(x:150,y:-300)
 
                     
                     

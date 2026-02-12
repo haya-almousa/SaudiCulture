@@ -45,11 +45,11 @@ struct ContentView1: View {
     @ViewBuilder
     func destinationView(for index: Int) -> some View {
         switch index {
-        case 0: NajdView()
-        case 1: HejazView()
-        case 2: EasternView()
-        case 3: AsirView()
-        case 4: NorthView()
+        case 0: NajdView(region: .central)
+        case 1: HejazView(region: .central)
+        case 2: EasternView(region: .central)
+        case 3: AsirView(region: .central)
+        case 4: NorthView(region: .central)
         default: EmptyView()
         }
     }

@@ -376,11 +376,11 @@ struct StackedCirclesView: View {
 //            }
             .navigationDestination(isPresented: $navigateToFashion) {
                 switch region {
-                case .central: الوسطى()
-                case .northern: الشماليه()
-                case .southern: الجنوبيه()
-                case .eastern: الشرقيه()
-                case .western: الغربيه()
+                case .central: الوسطى(region: region)
+                case .northern: الشماليه(region: region)
+                case .southern: الجنوبيه(region: region)
+                case .eastern: الشرقيه(region: region)
+                case .western: الغربيه(region: region)
                 }
             }
 

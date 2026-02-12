@@ -1,4 +1,4 @@
-//
+
 //  HejazView.swift
 //  SaudiCulture
 //
@@ -8,52 +8,52 @@
 //import SwiftUI
 //
 //struct HejazView: View {
-//    
+//
 //    let columns = Array(repeating: GridItem(.flexible(), spacing: 12), count: 3)
-//    
+//
 //    @StateObject private var viewModel = GameLogic()
 //    @State private var showWinPopup = false
 //    @State private var showTimeUpPopup = false
-//    
+//
 //    // Timer
 //    @State private var timeRemaining: Int = 90
 //    @State private var timerRunning: Bool = true
 //    @State private var flashRed: Bool = false
-//    
+//
 //    // Cards for Hejaz region
 //    let hejazCards: [Card] = [
 //        // Pair 1
 //        Card(text: nil, imageName: "غربي", borderColor: Color(hex: "731112"), pairID: 1),
 //        Card(text: "عمامه، ثوب و شاية", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
-//        
+//
 //        // Pair 2
 //        Card(text: nil, imageName: "غربيه", borderColor: Color(hex: "731112"), pairID: 2),
 //        Card(text: "ثوب الصدرة و مسفع ", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
-//        
+//
 //        // Pair 3
 //        Card(text: nil, imageName: "HejazG", borderColor: Color(hex: "731112"), pairID: 3),
 //        Card(text: " ثوب داير و منثورو زبون", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
-//        
+//
 //        // Single pair
 //        Card(text: nil, imageName: "HejazB", borderColor: Color(hex: "731112"), pairID: 4),
 //        Card(text: "غتره، بشت و ثوب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-//        
+//
 //        // Lonely card
 //        Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
 //    ]
-//    
+//
 //    var body: some View {
 //        ZStack {
 //            // Background
 //            Color(hex: "FFF9F2").ignoresSafeArea()
 //            Image("Palm").resizable().opacity(0.3)
-//            
+//
 //            VStack(spacing: 16) {
 //                // Title
 //                Text("لعبة الكروت - الحجاز")
 //                    .foregroundStyle(Color(hex: "7A4A2E"))
 //                    .font(.custom("Saudi-Bold", size: 28))
-//                
+//
 //                // Timer
 //                ZStack {
 //                    RoundedRectangle(cornerRadius: 12)
@@ -65,12 +65,12 @@
 //                        )
 //                        .shadow(radius: 3)
 //                        .opacity(flashRed ? 0.3 : 1)
-//                    
+//
 //                    Text("\(timeString(timeRemaining))")
 //                        .font(.custom("Saudi-Bold", size: 28))
 //                        .foregroundColor(Color(hex: "731112"))
 //                }
-//                
+//
 //                // Cards Grid
 //                LazyVGrid(columns: columns, spacing: 16) {
 //                    ForEach(Array(viewModel.cards.enumerated()), id: \.element.id) { index, card in
@@ -88,7 +88,7 @@
 //                    }
 //                }
 //                .padding(.horizontal, 26)
-//                
+//
 //                // Matched Pairs Counter
 //                HStack {
 //                    Text("مطابقات: \(viewModel.matchedPairsCount)/\(viewModel.getTotalPairs())")
@@ -97,26 +97,26 @@
 //                    Spacer()
 //                }
 //                .padding(.horizontal, 26)
-//                
+//
 //                Spacer()
 //            }
 //            .padding(.top, 20)
-//            
+//
 //            // Win Popup
 //            if showWinPopup {
 //                Color.black.opacity(0.4).edgesIgnoringSafeArea(.all)
-//                
+//
 //                VStack(spacing: 20) {
 //                    Text("مبروك !")
 //                        .font(.custom("Saudi-Bold", size: 28))
 //                        .foregroundColor(.white)
-//                    
+//
 //                    Text("لقد نجحت في مطابقة جميع الكروت!")
 //                        .font(.custom("Saudi-Bold", size: 28))
 //                        .multilineTextAlignment(.center)
 //                        .foregroundColor(.white)
 //                        .padding(.horizontal, 16)
-//                    
+//
 //                    Button(action: {
 //                        showWinPopup = false
 //                        resetGame()
@@ -139,11 +139,11 @@
 //                .transition(.scale.combined(with: .opacity))
 //                .animation(.easeInOut, value: showWinPopup)
 //            }
-//            
+//
 //            // Time-Up Popup
 //            if showTimeUpPopup {
 //                Color.black.opacity(0.4).edgesIgnoringSafeArea(.all)
-//                
+//
 //                VStack(spacing: 20) {
 //                    HStack {
 //                        Button(action: {
@@ -157,17 +157,17 @@
 //                        }
 //                        Spacer()
 //                    }
-//                    
+//
 //                    Text("انتهت اللعبه")
 //                        .font(.custom("Saudi-Bold", size: 28))
 //                        .foregroundColor(.white)
-//                    
+//
 //                    Text(" العوض بالجيات")
 //                        .font(.custom("Saudi-Bold", size: 28))
 //                        .multilineTextAlignment(.center)
 //                        .foregroundColor(.white)
 //                        .padding(.horizontal, 16)
-//                    
+//
 //                }
 //                .padding()
 //                .background(Color(hex: "731112").opacity(0.85))
@@ -187,7 +187,7 @@
 //        }
 //        .onAppear {
 //            viewModel.setupCards(cardPairs: hejazCards)
-//            
+//
 //            Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
 //                if timerRunning && timeRemaining > 0 {
 //                    timeRemaining -= 1
@@ -200,7 +200,7 @@
 //            }
 //        }
 //    }
-//    
+//
 //    // Reset Game
 //    func resetGame() {
 //        timeRemaining = 90
@@ -208,7 +208,7 @@
 //        flashRed = false
 //        viewModel.setupCards(cardPairs: hejazCards)
 //    }
-//    
+//
 //    // Format seconds to mm:ss
 //    func timeString(_ seconds: Int) -> String {
 //        let minutes = seconds / 60
@@ -223,7 +223,16 @@
 import SwiftUI
 
 struct HejazView: View {
-    
+    var region: RegionType
+    var backgroundImageName: String {
+            switch region {
+            case .central:  return "الوسطى"
+            case .northern: return "الشماليه"
+            case .southern: return "الجنوبيه"
+            case .eastern:  return "الشرقيه"
+            case .western:  return "الغربيه"
+            }
+        }
     let columns = Array(repeating: GridItem(.flexible(), spacing: 12), count: 3)
     
     @StateObject private var viewModel = GameLogic()
@@ -263,7 +272,11 @@ struct HejazView: View {
             ZStack {
                 // Background
                 Color(hex: "FFF9F2").ignoresSafeArea()
-                Image("Palm").resizable().opacity(0.3)
+                Image(backgroundImageName)
+                               .resizable()
+                               .scaledToFill()
+                               .ignoresSafeArea()
+                
                 
                 // 🔥 زر الهوم
                 HStack{
@@ -278,8 +291,8 @@ struct HejazView: View {
                             .clipShape(Circle())
                     }
                 }
-                .offset(x:150,y:-390)
-                
+                .offset(x:150,y:-300)
+
                 VStack(spacing: 16) {
                     // Title
                     Text("لعبة الكروت - الحجاز")
@@ -401,5 +414,5 @@ struct HejazView: View {
 }
 
 #Preview {
-    HejazView()
+    HejazView(region: .central)
 }

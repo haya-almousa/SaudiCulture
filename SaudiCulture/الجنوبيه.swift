@@ -9,7 +9,8 @@ import SwiftUI
 
 struct الجنوبيه: View {
     @State private var goToCards = false
-    
+    var region: RegionType
+
     var body: some View {
         ZStack {
             Color("BackgroundMain")
@@ -75,11 +76,11 @@ struct الجنوبيه: View {
         .navigationBarBackButtonHidden(true)
         
         .navigationDestination(isPresented: $goToCards) {
-            AsirView()
+            AsirView(region: region)
         }
     }
 }
 
 #Preview {
-    الجنوبيه()
+    الجنوبيه(region: .central)
 }

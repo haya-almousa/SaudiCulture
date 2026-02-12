@@ -10,6 +10,8 @@ import SwiftUI
 
 struct الوسطى: View {
     @State private var startNajdGame = false
+    var region: RegionType
+
     var body: some View {
         NavigationStack{
             ZStack {
@@ -78,12 +80,12 @@ struct الوسطى: View {
 
             
             .navigationDestination(isPresented: $startNajdGame) {
-                NajdView()
+                NajdView(region: region)
             }
     }
     }
 }
 
 #Preview {
-    الوسطى()
+    الوسطى(region: .central)
 }
