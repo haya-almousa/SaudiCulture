@@ -223,19 +223,104 @@
 //        }
 //    }
 //}
+//import SwiftUI
+//
+//struct StackedCirclesView: View {
+//    let selectedCharacter: String
+//    let region: RegionType
+//    let totalLevels = 5
+//    @StateObject var flow = LevelFlow.shared
+//    @Environment(\.dismiss) var dismiss
+//    @StateObject private var gameProgress = GameProgress.shared
+//    @State private var navigateToFashion = false
+//
+////    var current: Int {
+////        flow.currentLevel(for: region)
+////    }
+//    var current: Int {
+//        min(flow.currentLevel(for: region), totalLevels - 1)
+//    }
+//
+//
+//    var backgroundImageName: String {
+//        switch region {
+//        case .central:  return "الوسطى"
+//        case .northern: return "الشماليه"
+//        case .southern: return "الجنوبيه"
+//        case .eastern:  return "الشرقيه"
+//        case .western:  return "الغربيه"
+//        }
+//    }
+//
+//    var body: some View {
+//        NavigationStack {
+//            ZStack {
+//                Image(backgroundImageName)
+//                    .resizable()
+//                    .scaledToFill()
+//                    .ignoresSafeArea()
+//
+//                ZStack {
+//                    ForEach(0..<totalLevels, id: \.self) { index in
+//                        Image(index <= current ? "yellowCircle" : "grayCircle")
+//                            .resizable()
+//                            .scaledToFit()
+//                            .frame(width: index == 0 ? 110 : 90)
+//                            .offset(y: yPosition(for: index))
+//                            .onTapGesture {
+//                                if index == current {
+//                                    navigateToFashion = true
+//                                }
+//                            }
+//                    }
+//
+//                    Image(selectedCharacter)
+//                        .resizable()
+//                        .scaledToFit()
+//                        .frame(width: 100, height: 140)
+//                        .offset(y: yPosition(for: current) - 70) // استخدم current هنا
+//                        .animation(.spring(), value: current)
+//                        .allowsHitTesting(false)
+//                }
+//                .offset(y: 60)
+//            }
+//            .navigationDestination(isPresented: $navigateToFashion) {
+//                PuzzleView(region: region)
+//            }
+//        }
+//    }
+//
+//    func yPosition(for index: Int) -> CGFloat {
+//        let spacing: CGFloat = 110
+//        let startFromBottom: CGFloat = 200
+//        return startFromBottom - CGFloat(index) * spacing
+//    }
+//}
+//
+//
+////#Preview {
+////    NavigationStack {
+////        StackedCirclesView(selectedCharacter: "نجديه")  // ✅ مؤقت للتجربة
+////    }
+////}
+
+
+
 import SwiftUI
 
 struct StackedCirclesView: View {
     let selectedCharacter: String
     let region: RegionType
     let totalLevels = 5
+    
     @StateObject var flow = LevelFlow.shared
     @Environment(\.dismiss) var dismiss
     @StateObject private var gameProgress = GameProgress.shared
-    @State private var navigateToFashion = false
+    @State private var navigateToPuzzle = false
 
+    // ✅ هذه تحسب المرحلة الحالية مع التأكد أنها لا تتجاوز آخر مستوى
     var current: Int {
-        flow.currentLevel(for: region)
+        min(flow.currentLevel(for: region), totalLevels - 1)
     }
 
     var backgroundImageName: String {
@@ -257,6 +342,7 @@ struct StackedCirclesView: View {
                     .ignoresSafeArea()
 
                 ZStack {
+                    // رسم المراحل
                     ForEach(0..<totalLevels, id: \.self) { index in
                         Image(index <= current ? "yellowCircle" : "grayCircle")
                             .resizable()
@@ -264,24 +350,28 @@ struct StackedCirclesView: View {
                             .frame(width: index == 0 ? 110 : 90)
                             .offset(y: yPosition(for: index))
                             .onTapGesture {
+                                // ✅ فقط المرحلة الحالية يمكن الضغط عليها
                                 if index == current {
-                                    navigateToFashion = true
+                                    navigateToPuzzle = true
                                 }
                             }
                     }
 
+                    // الشخصية تتحرك فوق المرحلة الحالية
                     Image(selectedCharacter)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 100, height: 140)
-                        .offset(y: yPosition(for: current) - 70) // استخدم current هنا
-                        .animation(.spring(), value: current)
+                        .offset(y: yPosition(for: current) - 70)
+                        .animation(.spring(response: 0.6, dampingFraction: 0.7), value: current)
                         .allowsHitTesting(false)
                 }
                 .offset(y: 60)
             }
-            .navigationDestination(isPresented: $navigateToFashion) {
-                PuzzleView(region: region)
+            .navigationBarBackButtonHidden(true)
+
+            .navigationDestination(isPresented: $navigateToPuzzle) {
+                PuzzleView3(region: region) // توجه للسؤال الحالي
             }
         }
     }
@@ -292,13 +382,6 @@ struct StackedCirclesView: View {
         return startFromBottom - CGFloat(index) * spacing
     }
 }
-
-
-//#Preview {
-//    NavigationStack {
-//        StackedCirclesView(selectedCharacter: "نجديه")  // ✅ مؤقت للتجربة
-//    }
-//}
 
 #Preview {
     NavigationStack {

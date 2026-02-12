@@ -22,31 +22,25 @@ internal import Combine
 //
 
 class LevelFlow: ObservableObject {
-
     static let shared = LevelFlow()
 
-    // 🔹 المرحلة الحالية لكل منطقة
-    @Published var currentLevelByRegion: [RegionType: Int] = [
-        .central: 0,
-        .northern: 0,
-        .southern: 0,
-        .eastern: 0,
-        .western: 0
-    ]
+    @Published var progress: [RegionType: Int] = [:]
+    @Published var selectedRegion: RegionType? = nil
 
-    // 🔹 قراءة المرحلة الحالية
     func currentLevel(for region: RegionType) -> Int {
-        currentLevelByRegion[region] ?? 0
+        progress[region] ?? 0
     }
 
-    // 🔹 إنهاء مرحلة واحدة
     func completeLevel(region: RegionType) {
-        let next = currentLevel(for: region) + 1
-        currentLevelByRegion[region] = next
-    }
-
-    // 🔹 تصفير المنطقة (اختياري)
-    func reset(region: RegionType) {
-        currentLevelByRegion[region] = 0
+        let current = currentLevel(for: region)
+        let maxLevel = 4 // لأن المراحل 0..4 (5 مراحل)
+        if current < maxLevel {
+            progress[region] = current + 1
+        }
     }
 }
+
+
+
+
+
