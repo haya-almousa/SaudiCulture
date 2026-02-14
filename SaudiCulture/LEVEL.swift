@@ -369,7 +369,7 @@ struct StackedCirclesView: View {
                 }
                 .offset(y: 60)
             }
-            .navigationBarBackButtonHidden(true)
+//            .navigationBarBackButtonHidden(true)
 
 //            .navigationDestination(isPresented: $navigateToPuzzle) {
 //                PuzzleView3(region: region) // توجه للسؤال الحالي

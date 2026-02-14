@@ -60,7 +60,7 @@ struct PuzzleView3: View {
                     
                     
                     HStack(spacing: 7) {
-                        (
+                        
                             Text(descriptionText)
                                 .font(.custom("Saudi-Regular", size: 25))
                                 .foregroundColor(Color(hex: "874F35"))
@@ -68,7 +68,7 @@ struct PuzzleView3: View {
                                 .frame(width: 355, height: 520)
                                 .padding(20)
 
-                        )
+                        
                         .foregroundColor(Color(hex: "874F35"))
                         .multilineTextAlignment(.center)
                         .frame(width: 355, height: 520, alignment: .center)

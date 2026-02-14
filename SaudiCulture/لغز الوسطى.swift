@@ -106,6 +106,33 @@ struct LevelAlwosta: View {
     
     @State private var navigateToHome: Bool = false
     
+    
+    
+    
+    @ObservedObject var flow = LevelFlow.shared
+
+    let puzzleImages = [
+        "تراث الوسطى",
+        "قرية",
+        "قصر المربع",
+        "قصر المصمك",
+        "قصر صاهود"
+    ]
+    
+    private var centralLandmarks: [(name: String, info: String)] = [
+        ("قصر سلوى", "الدولة السعودية الأولى تتميّز بعمارة طينية تعكس التراث النجدي الأصيل، وتعتبر رمز قوي لتاريخنا وهويتنا السعودية."), // ← أولاً
+        ("قرية أشيقر التراثية", "قرية تحافظ على التراث والمعمار النجدي القديم."),
+        ("قصر المربع", "من أبرز معالم الرياض التاريخية، يعكس العمارة التراثية في الدولة السعودية الأولى."),
+        ("قصر المصمك", "قلعة تاريخية من الطين كانت مركزاً للمعارك والاستراتيجيات."),
+        ("قصر صاهود", "يمثل جزءاً من التراث النجدي الأصيل.")
+    ]
+
+
+    var currentPuzzleImage: String {
+        let level = flow.currentLevel(for: .central)
+        return puzzleImages[min(level, puzzleImages.count - 1)]
+    }
+
     var body: some View {
         NavigationStack {
             
@@ -236,7 +263,8 @@ struct LevelAlwosta: View {
             
             ZStack {
                 GeometryReader { geo in
-                    Image("تراث الوسطى")
+                    Image(currentPuzzleImage)
+
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: puzzleSize, height: puzzleSize)
@@ -340,7 +368,10 @@ struct LevelAlwosta: View {
     }
     
     private var completionDialogView: some View {
-        ZStack {
+        
+        let level = flow.currentLevel(for: .central)
+        let landmark = centralLandmarks[min(level, centralLandmarks.count - 1)]
+        return ZStack {
             Color.black.opacity(0.3)
                 .ignoresSafeArea()
             
@@ -352,12 +383,12 @@ struct LevelAlwosta: View {
                 VStack(spacing: 16) {
                     Spacer()
                     
-                    Text("قصر سلوى")
+                    Text(landmark.name)
                         .font(.custom("Saudi-Bold", size: 36))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                     
-                    Text("الدولة السعودية الأولى تتميّز بعمارة طينية تعكس التراث النجدي الأصيل، وتعتبر رمز قوي لتاريخنا وهويتنا السعودية.")
+                    Text(landmark.info)
                         .font(.custom("Saudi-Bold", size: 18))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
@@ -398,7 +429,7 @@ struct LevelAlwosta: View {
                     .fill(Color("BackgroundMain"))
                     .stroke(Color("brown"), lineWidth: 4)
                 
-                Image("تراث الوسطى")
+                Image(currentPuzzleImage)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .clipShape(RoundedRectangle(cornerRadius: 26))
@@ -446,6 +477,8 @@ struct LevelAlwosta: View {
         }
     }
 }
+
+
 
 #Preview {
     LevelAlwosta()

@@ -109,6 +109,35 @@ struct LevelAshshamaliya: View {
     // ⭐ زر الهوم
     @State private var navigateToHome: Bool = false
     
+    
+    @StateObject private var flow = LevelFlow.shared
+
+    
+    // ⭐ قائمة صور البزل لكل مستوى
+    let puzzleImages = [
+        "تراث الشمالية",
+        "آثار الشويحطية",
+        "دومة الجندل",
+        "قلعة زعبل",
+        "مسجد عمر بن الخطاب"
+    ]
+
+    // ⭐ بيانات المعالم لكل مستوى
+    private var northernLandmarks: [(name: String, info: String)] = [
+        ("مدائن صالح", "مدينة أثرية تقع في منطقة الحجر، وتعتبر أول موقع سعودي يُدرج ضمن قائمة التراث العالمي لليونسكو. تحتوي على نقوش صخرية وقبور محفورة في الصخر."),
+        ("آثار الشويحطية", "موقع أثري قديم يعكس حضارة شمال الجزيرة العربية، يحتوي على بقايا مبانٍ وأدوات أثرية توضح نمط حياة السكان الأوائل."),
+        ("دومة الجندل", "مدينة تاريخية تحتوي على العديد من المباني القديمة والقلاع مثل قلعة الشيخ سلوان، وتعتبر مركزًا تجاريًا قديمًا على طريق التجارة شمال الجزيرة."),
+        ("قلعة زعبل", "قلعة قديمة تحكي قصص المعارك والحصون في المنطقة، بنيت للدفاع عن المنطقة الشمالية ضد الغزوات."),
+        ("مسجد عمر بن الخطاب", "مسجد تاريخي مهم في المنطقة الشمالية، يعكس العمارة القديمة ويعتبر من المعالم الدينية البارزة.")
+    ]
+
+
+    // ⭐ دالة لحساب الصورة الحالية لكل مستوى
+    var currentPuzzleImage: String {
+        let level = flow.currentLevel(for: .northern)
+        return puzzleImages[min(level, puzzleImages.count - 1)]
+    }
+
     var body: some View {
         NavigationStack {
             
@@ -238,7 +267,7 @@ struct LevelAshshamaliya: View {
             
             ZStack {
                 GeometryReader { geo in
-                    Image("تراث الشمالية")
+                    Image(currentPuzzleImage)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: puzzleSize, height: puzzleSize)
@@ -356,13 +385,16 @@ struct LevelAshshamaliya: View {
                 
                 VStack(spacing: 16) {
                     Spacer()
-                    
-                    Text("مدائن صالح")
+                    let level = flow.currentLevel(for: .northern)
+                    let landmark = northernLandmarks[min(level, northernLandmarks.count - 1)]
+
+                    Text(landmark.name)    // اسم المعلم
                         .font(.custom("Saudi-Bold", size: 36))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                     
-                    Text("موقع أثري عالمي فيه مقابر منحوتة بالصخور، ويعتبر شاهد على حضارات قديمة ازدهرت في شمال الجزيرة العربية. وهو أول موقع سعودي تسجّل في قائمة التراث العالمي.")
+                    Text(landmark.info)    // المعلومة
+
                         .font(.custom("Saudi-Bold", size: 18))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)

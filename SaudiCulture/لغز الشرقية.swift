@@ -109,6 +109,39 @@ struct LevelAlsharqiya: View {
     // ⭐ زر الهوم
     @State private var navigateToHome: Bool = false
     
+    
+    
+    // ⭐ قائمة صور البزل لكل مستوى
+    let puzzleImages = [
+        "تراث الشرقية",
+        "مسجد جواثا",
+        "سوق القيصرية",
+        "ميناء العقير",
+        "واحة الأحساء"
+    ]
+
+    // ⭐ بيانات المعالم لكل مستوى
+    private var easternLandmarks: [(name: String, info: String)] = [
+        ("قصر إبراهيم", "معلَم تاريخي بارز في الأحساء، يجمع بين الطابع العسكري والديني، ويبيّن دور المنطقة الشرقية كمركز حضاري وتاريخي."),
+        ("مسجد جواثا", "أحد أقدم المساجد في المنطقة الشرقية، يمتاز بالعمارة التقليدية ويعكس الطابع الديني والثقافي للأحساء."),
+        ("سوق القيصرية", "سوق تقليدي مشهور في الأحساء، يجمع بين التجارة القديمة والحرف التقليدية ويبرز الثقافة المحلية."),
+        ("ميناء العقير", "مرفأ قديم كان مركزًا تجاريًا هامًا على ساحل الخليج العربي، يشير لأهمية المنطقة في التجارة البحرية."),
+        ("واحة الأحساء", "واحة خضراء كبيرة تزخر بالينابيع والنخيل، تعكس غنى البيئة الطبيعية والثقافية في شرق المملكة.")
+    ]
+    @StateObject private var flow = LevelFlow.shared
+
+    // ⭐ دالة لحساب الصورة الحالية لكل مستوى
+    var currentPuzzleImage: String {
+        let level = flow.currentLevel(for: .eastern)
+        return puzzleImages[min(level, puzzleImages.count - 1)]
+    }
+
+    // ⭐ دالة لحساب المعلم والمعلومة الحالية
+    var currentLandmark: (name: String, info: String) {
+        let level = flow.currentLevel(for: .eastern)
+        return easternLandmarks[min(level, easternLandmarks.count - 1)]
+    }
+
     var body: some View {
         NavigationStack {
             
@@ -238,7 +271,7 @@ struct LevelAlsharqiya: View {
             
             ZStack {
                 GeometryReader { geo in
-                    Image("تراث الشرقية")
+                    Image(currentPuzzleImage) // ✅ استخدم المتغير الديناميكي
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: puzzleSize, height: puzzleSize)
@@ -357,12 +390,13 @@ struct LevelAlsharqiya: View {
                 VStack(spacing: 16) {
                     Spacer()
                     
-                    Text("قصر إبراهيم")
+                    Text(currentLandmark.name)
                         .font(.custom("Saudi-Bold", size: 36))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                     
-                    Text("معلَم تاريخي بارز في الأحساء، يجمع بين الطابع العسكري والديني، ويبيّن قدّ ايش المنطقة الشرقية كان لها دور مهم كمركز حضاري وتاريخي في فترات مختلفة من تاريخ المملكة.")
+                    Text(currentLandmark.info)
+
                         .font(.custom("Saudi-Bold", size: 18))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
@@ -404,8 +438,7 @@ struct LevelAlsharqiya: View {
                     .fill(Color("BackgroundMain"))
                     .stroke(Color("brown"), lineWidth: 4)
                 
-                Image("تراث الشرقية")
-                    .resizable()
+                Image(currentPuzzleImage)                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .clipShape(RoundedRectangle(cornerRadius: 26))
                     .padding(20)
