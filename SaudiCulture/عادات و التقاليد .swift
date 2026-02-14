@@ -14,6 +14,7 @@ import SwiftUI
 
 struct PuzzleView3: View {
     let region: RegionType
+    let descriptionText: String
     @State private var answer: String = ""
     @State private var showText = false
     @State private var showPopup = false
@@ -22,35 +23,29 @@ struct PuzzleView3: View {
 
     
     
+    var backgroundImageName: String {
+        switch region {
+        case .central:  return "الوسطى"
+        case .northern: return "الشماليه"
+        case .southern: return "الجنوبيه"
+        case .eastern:  return "الشرقيه"
+        case .western:  return "الغربيه"
+        }
+    }
+    
     var body: some View {
         NavigationStack {
 
         ZStack {
-            Image("background")
+            Image(backgroundImageName)
                 .resizable()
-                .scaledToFit()
-                .frame(maxWidth: .infinity)
+                .scaledToFill()
                 .ignoresSafeArea()
             
             
-            
             VStack {
-                // Header
-                HStack {
-                    Spacer()
-                    Button(action: {}) {
-                        Text("انهاء اللعبه ")
-                            .font(.custom("Saudi-Regular", size: 14))
-                        
-                            .foregroundColor(Color(hex: "FCF0DD"))
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 8)
-                            .background(Color(hex: "874F35"))
-                            .cornerRadius(25)
-                        
-                    }
-                }
-                .padding()
+                Spacer()
+
                 
                 // الكرت
                 VStack(spacing: 10) {
@@ -64,16 +59,15 @@ struct PuzzleView3: View {
                         .offset(x: 0 , y: 70)
                     
                     
-                    HStack(spacing: 20) {
+                    HStack(spacing: 7) {
                         (
-                            Text("من عادات أهل نجد في القهوة تقديم القهوة العربية للضيف كرمز للكرم والاحترام؛ حيث تُقدَّم باليد اليمنى، ويبدأ المضيف بكبير السن أو مكانة، ولا يُعاد ملء الفنجال إلا إذا أشار الضيف برغبته، وعند الانتهاء ")
+                            Text(descriptionText)
                                 .font(.custom("Saudi-Regular", size: 25))
-                            +
-                            Text("يهز الفنجال")
-                                .font(.custom("Saudi-Bold", size: 28)) // ← بولد هنا
-                            +
-                            Text(" دلالة على الاكتفاء.")
-                                .font(.custom("Saudi-Regular", size: 25))
+                                .foregroundColor(Color(hex: "874F35"))
+                                .multilineTextAlignment(.center)
+                                .frame(width: 355, height: 520)
+                                .padding(20)
+
                         )
                         .foregroundColor(Color(hex: "874F35"))
                         .multilineTextAlignment(.center)
@@ -125,6 +119,6 @@ struct PuzzleView3: View {
 }
 
 #Preview {
-    PuzzleView3(region: .central)
+    PuzzleView3(region: .central, descriptionText: "hi")
 }
 

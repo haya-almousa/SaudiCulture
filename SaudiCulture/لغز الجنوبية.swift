@@ -162,6 +162,8 @@ struct LevelAljanubiya: View {
                 }
             }
             
+            .navigationBarBackButtonHidden(true)
+
             // ⭐ ربط صفحة الخريطة
             .navigationDestination(isPresented: $navigateToHome) {
                 SaudiMapView()

@@ -60,6 +60,15 @@ struct PuzzleView: View {
         }
     }
 
+    var backgroundImageName: String {
+        switch region {
+        case .central:  return "الوسطى"
+        case .northern: return "الشماليه"
+        case .southern: return "الجنوبيه"
+        case .eastern:  return "الشرقيه"
+        case .western:  return "الغربيه"
+        }
+    }
     //الرياض
     let puzzles: [Puzzle] = [
         
@@ -265,7 +274,7 @@ struct PuzzleView: View {
 //                    .scaledToFit()
 //                    .frame(maxWidth: .infinity)
 //                    .ignoresSafeArea()
-                Image(backgroundName)
+                Image(backgroundImageName)
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
@@ -462,12 +471,10 @@ struct PuzzleView: View {
             .navigationDestination(isPresented: $goToMap) {
                 SaudiMapView()
             }
-
-            .navigationBarBackButtonHidden(true)
-            
             .navigationDestination(isPresented: $goToPuzzleLevel) {
-                PuzzleChoicesView(region: .central)
+                PuzzleChoicesView(region: region)
             }
+            .navigationBarBackButtonHidden(true)
 
         }
     }

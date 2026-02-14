@@ -156,7 +156,8 @@ struct LevelAlgharbiya: View {
                     .padding(.trailing, 0.1)
                 }
             }
-            
+            .navigationBarBackButtonHidden(true)
+
             // ⭐ ربط صفحة الخريطة
             .navigationDestination(isPresented: $navigateToHome) {
                 SaudiMapView()

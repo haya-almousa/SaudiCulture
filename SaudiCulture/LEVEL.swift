@@ -383,6 +383,9 @@ struct StackedCirclesView: View {
                 case .western: الغربيه(region: region)
                 }
             }
+//            .navigationDestination(isPresented: $navigateToFashion) {
+//                PuzzleChoicesView(region: .central)
+//            }
 
         }
     }

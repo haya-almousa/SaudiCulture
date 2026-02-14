@@ -159,7 +159,8 @@ struct LevelAlwosta: View {
                     .padding(.trailing, 0.1)
                 }
             }
-            
+            .navigationBarBackButtonHidden(true)
+
             .navigationDestination(isPresented: $navigateToHome) {
                 SaudiMapView()
             }
