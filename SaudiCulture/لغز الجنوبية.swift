@@ -109,6 +109,48 @@ struct LevelAljanubiya: View {
     // ⭐ زر الهوم
     @State private var navigateToHome: Bool = false
     
+    
+    
+    @StateObject private var flow = LevelFlow.shared
+
+    // ⭐ صور الجنوبية
+    let puzzleImages = [
+        "تراث الجنوبية",
+        "قصر شدا",
+        "قرية ذي العين",
+        "قنا",
+        "قلعة شمسان"
+    ]
+ 
+    private let southernLandmarks: [(name: String, info: String)] = [
+        (
+            "رجال ألمع",
+"                    قرية تراثية قديمة في جبال عسير، مشهورة بمبانيها الحجرية ، ونوافذها الملوّنة. وتعكس التراث الجنوبي الأصيل وأسلوب الحياة زمان في المنطقة."
+        ),
+        (
+            "قصر شدا",
+"قصر تاريخي في أبها كان مقرًا للحكم في العصور القديمة، اليوم يحوي متحفًا يعرض الحياة العسيرية والديكور التقليدي للمباني."
+        ),
+        (
+            "قرية ذي العين",
+"قرية حجرية في الباحة تشتهر بمنازلها البيضاء المبنية من الرخام الطبيعي، وتقع بجوار عين ماء دائمة، مما يضفي جمالًا فريدًا على المكان."
+        ),
+        (
+            "قنا",
+"منطقة تاريخية في عسير تحتوي على قرى ومنازل أثرية، وتعرف بأسلوب البناء التقليدي للعسير والجبال المحيطة بها، وتعتبر شاهدًا على تراث المنطقة."
+        ),
+        (
+            "قلعة شمسان",
+"قلعة دفاعية قديمة في أبها، بنيت لحماية المدينة من الهجمات، وتتميز بموقعها الاستراتيجي وإطلالتها على المنطقة المحيطة، وهي اليوم من أبرز المعالم التاريخية."
+        )
+    ]
+
+    
+    var currentPuzzleImage: String {
+        let level = flow.currentLevel(for: .southern)
+        return puzzleImages[min(level, puzzleImages.count - 1)]
+    }
+
     var body: some View {
         NavigationStack {
             
@@ -239,7 +281,7 @@ struct LevelAljanubiya: View {
             
             ZStack {
                 GeometryReader { geo in
-                    Image("تراث الجنوبية")
+                    Image(currentPuzzleImage)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: puzzleSize, height: puzzleSize)
@@ -358,12 +400,15 @@ struct LevelAljanubiya: View {
                 VStack(spacing: 16) {
                     Spacer()
                     
-                    Text("رجال ألمع")
+                    let level = flow.currentLevel(for: .southern)
+                    let landmark = southernLandmarks[min(level, southernLandmarks.count - 1)]
+                    Text(landmark.name)
                         .font(.custom("Saudi-Bold", size: 36))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                     
-                    Text("قرية تراثية قديمة في جبال عسير، مشهورة بمبانيها الحجرية ، ونوافذها الملوّنة. وتعكس التراث الجنوبي الأصيل وأسلوب الحياة زمان في المنطقة.")
+                    Text(landmark.info)
+
                         .font(.custom("Saudi-Bold", size: 18))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
@@ -405,7 +450,7 @@ struct LevelAljanubiya: View {
                     .fill(Color("BackgroundMain"))
                     .stroke(Color("brown"), lineWidth: 4)
                 
-                Image("تراث الجنوبية")
+                Image(currentPuzzleImage)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .clipShape(RoundedRectangle(cornerRadius: 26))

@@ -287,16 +287,14 @@ struct PuzzleView: View {
                         }) {
                             Image(systemName: "house.fill")
                                 .font(.system(size: 25))
-                                .foregroundColor(Color(hex: "FCF0DD"))
+                                .foregroundColor(.white)
                                 .padding(12)
-                                .background(Color(hex: "874F35"))
+                                .background(Color("brown"))
                                 .clipShape(Circle())
                         }
+                        .offset(x:140,y:80)
+                        
                     }
-                    .offset(x:150,y:-300)
-
-                    
-                    
                     
                     // الكرت
                     VStack(spacing: 10) {

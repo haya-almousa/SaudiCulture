@@ -376,13 +376,13 @@ struct PuzzleChoicesView: View {
 //    }
 
     // دالة لاختيار الخلفية بناءً على المنطقة
-    var backgroundName: String {
+    var backgroundImageName: String {
         switch region {
-        case .central: return "الوسطى"
-        case .northern: return "الشمالية" // تأكدي من مطابقة الأسماء للي عندك في الـ Assets
-        case .southern: return "الجنوبية"
-        case .western: return "الغربية"
-        case .eastern: return "الشرقية"
+        case .central:  return "الوسطى"
+        case .northern: return "الشماليه"
+        case .southern: return "الجنوبيه"
+        case .eastern:  return "الشرقيه"
+        case .western:  return "الغربيه"
         }
     }
     @State private var goToMap = false
@@ -396,7 +396,7 @@ struct PuzzleChoicesView: View {
         
         ZStack {
             // الخلفية تتغير ديناميكياً
-            Image(backgroundName)
+            Image(backgroundImageName)
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
@@ -560,3 +560,6 @@ struct PuzzleChoicesView: View {
     }
 }
 
+#Preview {
+    PuzzleChoicesView(region: .southern)
+}

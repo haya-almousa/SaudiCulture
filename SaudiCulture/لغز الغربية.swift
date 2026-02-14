@@ -105,6 +105,49 @@ struct LevelAlgharbiya: View {
     // ⭐ زر الهوم
     @State private var navigateToHome: Bool = false
     
+    
+    
+    @StateObject private var flow = LevelFlow.shared
+ 
+    // ⭐ صور البزل لمستويات الغربية
+    let puzzleImages = [
+        "تراث الغربية",
+        "بيت نصيف",
+        "سوق عكاظ",
+        "قلعة الاجياد",
+        "قصر السقاف"
+    ]
+
+    
+    // ⭐ معالم المنطقة الغربية
+    private let westernLandmarks: [(name: String, info: String)] = [
+        (
+            "البلد",
+            "منطقة تاريخية عريقة في جدة، كانت مركزًا تجاريًا مهمًا وبوابة للحجاج القادمين إلى مكة، وتتميز ببيوتها المبنية من الحجر والخشب."
+        ),
+        (
+            "بيت نصيف",
+            "من أشهر البيوت التاريخية في جدة، استُخدم لاستقبال الضيوف وكبار الشخصيات، ويعكس العمارة الحجازية التقليدية."
+        ),
+        (
+            "سوق عكاظ",
+            "سوق تاريخي شهير في الطائف، كان ملتقى ثقافيًا وتجاريًا في العصر الجاهلي، واشتهر بالشعر والأدب."
+        ),
+        (
+            "قلعة الجياد",
+            "قلعة تاريخية كانت تستخدم لأغراض دفاعية، وتُعد من الشواهد على العمارة العسكرية القديمة."
+        ),
+        (
+            "قصر السقاف",
+            "قصر تاريخي يعكس أسلوب البناء الحجازي القديم، ويُعد من المعالم الثقافية المهمة في المنطقة الغربية."
+        )
+    ]
+    var currentPuzzleImage: String {
+        let level = flow.currentLevel(for: .western)
+        return puzzleImages[min(level, puzzleImages.count - 1)]
+    }
+
+    
     var body: some View {
         NavigationStack {
             
@@ -234,7 +277,7 @@ struct LevelAlgharbiya: View {
             
             ZStack {
                 GeometryReader { geo in
-                    Image("تراث الغربية")
+                    Image(currentPuzzleImage)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: puzzleSize, height: puzzleSize)
@@ -349,12 +392,15 @@ struct LevelAlgharbiya: View {
                 VStack(spacing: 16) {
                     Spacer()
                     
-                    Text("البلد")
+                    let level = flow.currentLevel(for: .western)
+                    let landmark = westernLandmarks[min(level, westernLandmarks.count - 1)]
+                    Text(landmark.name)
                         .font(.custom("Saudi-Bold", size: 36))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                     
-                    Text("منطقة تاريخية عريقة، كانت زمان مركز تجاري مهم وبوابة للحجاج اللي جايين لمكة. تتميّز ببيوتها التراثية المبنية من الحجر والخشب، وتعكس التراث الحجازي الأصيل بكل تفاصيله.")
+                    Text(landmark.info)
+
                         .font(.custom("Saudi-Bold", size: 18))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
@@ -395,7 +441,7 @@ struct LevelAlgharbiya: View {
                     .fill(Color("BackgroundMain"))
                     .stroke(Color("brown"), lineWidth: 4)
                 
-                Image("تراث الغربية")
+                Image(currentPuzzleImage)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .clipShape(RoundedRectangle(cornerRadius: 26))

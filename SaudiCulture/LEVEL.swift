@@ -318,6 +318,7 @@ struct StackedCirclesView: View {
     @StateObject private var gameProgress = GameProgress.shared
     @State private var navigateToPuzzle = false
     @State private var navigateToFashion = false
+    @State private var goToMap = false
 
     // ✅ هذه تحسب المرحلة الحالية مع التأكد أنها لا تتجاوز آخر مستوى
     var current: Int {
@@ -343,6 +344,21 @@ struct StackedCirclesView: View {
                     .scaledToFill()
                     .ignoresSafeArea()
 
+                
+                HStack{
+                    Button(action: {
+                        goToMap = true
+                    }) {
+                        Image(systemName: "house.fill")
+                            .font(.system(size: 25))
+                            .foregroundColor(.white)
+                            .padding(12)
+                            .background(Color("brown"))
+                            .clipShape(Circle())
+                    }
+                    .offset(x:150,y:-300)
+                    
+                }
                 ZStack {
                     // رسم المراحل
                     ForEach(0..<totalLevels, id: \.self) { index in
@@ -369,7 +385,10 @@ struct StackedCirclesView: View {
                 }
                 .offset(y: 60)
             }
-//            .navigationBarBackButtonHidden(true)
+            .navigationDestination(isPresented: $goToMap) {
+                SaudiMapView()
+            }
+            .navigationBarBackButtonHidden(true)
 
 //            .navigationDestination(isPresented: $navigateToPuzzle) {
 //                PuzzleView3(region: region) // توجه للسؤال الحالي
