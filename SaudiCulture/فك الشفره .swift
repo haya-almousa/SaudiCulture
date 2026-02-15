@@ -429,7 +429,7 @@ struct PuzzleView: View {
                         let correct = activePuzzles[currentIndex].answer
                         let userAnswer = answer.trimmingCharacters(in: .whitespacesAndNewlines)
                         
-                        if userAnswer == correct {
+                         if userAnswer.isSimilar(to: correct)  {
                             
                             // صح
                             showSuccessEmoji = true
@@ -477,6 +477,60 @@ struct PuzzleView: View {
         }
     }
 }
+extension String {
+    
+    func normalizedArabic() -> String {
+        var text = self
+        
+        // إزالة التشكيل
+        let diacritics = "[\\u064B-\\u0652]"
+        text = text.replacingOccurrences(
+            of: diacritics,
+            with: "",
+            options: .regularExpression
+        )
+        
+        // توحيد الحروف
+        text = text
+            .replacingOccurrences(of: "أ", with: "ا")
+            .replacingOccurrences(of: "إ", with: "ا")
+            .replacingOccurrences(of: "آ", with: "ا")
+            .replacingOccurrences(of: "ة", with: "ه")
+            .replacingOccurrences(of: "ى", with: "ي")
+        
+        // إزالة (ال)
+        text = text.replacingOccurrences(of: "ال", with: "")
+        
+        // إزالة المسافات
+        text = text.replacingOccurrences(of: " ", with: "")
+        
+        return text
+    }
+    
+    func isSimilar(to other: String) -> Bool {
+        
+        let a = self.normalizedArabic()
+        let b = other.normalizedArabic()
+        
+        // مقارنة مباشرة
+        if a == b { return true }
+        
+        // مقارنة بعد حذف "ال" من الطرفين (حتى لو واحد كتبها والثاني لا)
+        let aNoAl = a.replacingOccurrences(of: "ال", with: "")
+        let bNoAl = b.replacingOccurrences(of: "ال", with: "")
+        
+        if aNoAl == bNoAl { return true }
+        
+        // احتواء (مرونة إضافية)
+        if aNoAl.contains(bNoAl) || bNoAl.contains(aNoAl) {
+            return true
+        }
+        
+        return false
+    }
+
+}
+
 
 #Preview("PuzzleView") {
     PuzzleView(region: .central)

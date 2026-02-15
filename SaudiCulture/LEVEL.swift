@@ -345,7 +345,20 @@ struct StackedCirclesView: View {
                     .ignoresSafeArea()
 
                 
-                HStack{
+                VStack{
+                    
+                    
+                    HStack{
+                        Text("اضغط على المرحله ")
+                        .font(.custom("Saudi-Regular", size: 30))
+                        .fontWeight(.bold)
+                        .foregroundColor(Color("brown"))
+                        .multilineTextAlignment(.center)
+                        .offset(/*x:-30,*/y:-280)
+                    }
+                    
+                 
+                    HStack{
                     Button(action: {
                         goToMap = true
                     }) {
@@ -356,7 +369,11 @@ struct StackedCirclesView: View {
                             .background(Color("brown"))
                             .clipShape(Circle())
                     }
-                    .offset(x:150,y:-300)
+                    .offset(x:150,y:-320)
+                    
+                }
+                    
+                       
                     
                 }
                 ZStack {

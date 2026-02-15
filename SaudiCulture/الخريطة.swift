@@ -346,6 +346,16 @@ struct SaudiMapView: View {
                     Color("BackgroundMain")
                         .ignoresSafeArea()
 
+                    
+                    HStack{
+                        Text("اختار المنطقة ")
+                        .font(.custom("Saudi-Regular", size: 40))
+                        .fontWeight(.bold)
+                        .foregroundColor(Color("brown"))
+                        .multilineTextAlignment(.center)
+                    
+                    }
+                    .offset(y:-300)
                     // Map Container
                     ZStack(alignment: .center) {
 
