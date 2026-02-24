@@ -319,6 +319,9 @@ struct StackedCirclesView: View {
     @State private var navigateToPuzzle = false
     @State private var navigateToFashion = false
     @State private var goToMap = false
+    
+    // ✅ جديد: رقم الليفل اللي بينفتح في صفحة اللبس
+    @State private var selectedLevelNumber: Int = 1
 
     // ✅ هذه تحسب المرحلة الحالية مع التأكد أنها لا تتجاوز آخر مستوى
     var current: Int {
@@ -334,7 +337,6 @@ struct StackedCirclesView: View {
         case .western:  return "الغربيه"
         }
     }
-    
 
     var body: some View {
         NavigationStack {
@@ -344,38 +346,31 @@ struct StackedCirclesView: View {
                     .scaledToFill()
                     .ignoresSafeArea()
 
-                
-                VStack{
-                    
-                    
-                    HStack{
+                VStack {
+                    HStack {
                         Text("اضغط على المرحله ")
-                        .font(.custom("Saudi-Regular", size: 30))
-                        .fontWeight(.bold)
-                        .foregroundColor(Color("brown"))
-                        .multilineTextAlignment(.center)
-                        .offset(/*x:-30,*/y:-280)
+                            .font(.custom("Saudi-Regular", size: 30))
+                            .fontWeight(.bold)
+                            .foregroundColor(Color("brown"))
+                            .multilineTextAlignment(.center)
+                            .offset(y: -280)
                     }
-                    
-                 
-                    HStack{
-                    Button(action: {
-                        goToMap = true
-                    }) {
-                        Image(systemName: "house.fill")
-                            .font(.system(size: 25))
-                            .foregroundColor(.white)
-                            .padding(12)
-                            .background(Color("brown"))
-                            .clipShape(Circle())
+
+                    HStack {
+                        Button(action: {
+                            goToMap = true
+                        }) {
+                            Image(systemName: "house.fill")
+                                .font(.system(size: 25))
+                                .foregroundColor(.white)
+                                .padding(12)
+                                .background(Color("brown"))
+                                .clipShape(Circle())
+                        }
+                        .offset(x: 150, y: -320)
                     }
-                    .offset(x:150,y:-320)
-                    
                 }
-                    
-                       
-                    
-                }
+
                 ZStack {
                     // رسم المراحل
                     ForEach(0..<totalLevels, id: \.self) { index in
@@ -387,7 +382,10 @@ struct StackedCirclesView: View {
                             .onTapGesture {
                                 // ✅ فقط المرحلة الحالية يمكن الضغط عليها
                                 if index == current {
-                                    navigateToFashion = true                                }
+                                    // ✅ الجديد: احفظ رقم الليفل
+                                    selectedLevelNumber = index + 1
+                                    navigateToFashion = true
+                                }
                             }
                     }
 
@@ -407,22 +405,25 @@ struct StackedCirclesView: View {
             }
             .navigationBarBackButtonHidden(true)
 
-//            .navigationDestination(isPresented: $navigateToPuzzle) {
-//                PuzzleView3(region: region) // توجه للسؤال الحالي
-//            }
             .navigationDestination(isPresented: $navigateToFashion) {
                 switch region {
-                case .central: الوسطى(region: region)
-                case .northern: الشماليه(region: region)
-                case .southern: الجنوبيه(region: region)
-                case .eastern: الشرقيه(region: region)
-                case .western: الغربيه(region: region)
+                case .central:
+                    // ✅ الوسطى فقط: نمرر levelNumber
+                    الوسطى(region: region, levelNumber: selectedLevelNumber)
+
+                case .northern:
+                    الشماليه(region: region, levelNumber: selectedLevelNumber)
+
+                case .southern:
+                    الجنوبيه(region: region, levelNumber: selectedLevelNumber)
+
+                case .eastern:
+                    الشرقيه(region: region, levelNumber: selectedLevelNumber)
+
+                case .western:
+                    الغربيه(region: region, levelNumber: selectedLevelNumber)
                 }
             }
-//            .navigationDestination(isPresented: $navigateToFashion) {
-//                PuzzleChoicesView(region: .central)
-//            }
-
         }
     }
 
@@ -441,6 +442,7 @@ struct StackedCirclesView: View {
         )
     }
 }
+
 
 //#Preview {
 //    NavigationStack {
