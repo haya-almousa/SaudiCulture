@@ -27,83 +27,57 @@ struct CharacterPickerView: View {
     private var isNameValid: Bool { selectedName != nil }
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 10) {
+        ZStack {
+            Color("BackgroundMain").ignoresSafeArea()
+
+            VStack(spacing: 16) {
                 Text("اضغط على شخصيتك")
                     .font(.custom("Saudi-Regular", size: 32))
                     .foregroundStyle(Color("brown"))
-                    .padding(.top, 20)
-                
-                let regionTitles: [String] = [
-                    "المنطقة الوسطى",
-                    "المنطقة الشرقية",
-                    "المنطقة الشمالية",
-                    "المنطقة الجنوبية",
-                    "المنطقة الغربية"
-                ]
+                    .padding(.top, 0)
+                    .offset(y: 40)
 
-                ForEach(0..<characterPairs.count, id: \.self) { rowIndex in
-                    let pair = characterPairs[rowIndex]
-                    let isEvenRow = rowIndex % 2 == 0
-
-                    HStack(alignment: .center, spacing: 8) {
-                        if isEvenRow {
-                            Text(regionTitles[rowIndex])
-                                .font(.custom("Saudi-Regular", size: 28))
-                                .foregroundStyle(Color("brown"))
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.8)
-
-                            Spacer(minLength: 6)
-
-                            HStack(spacing: -64) {
-                                ForEach(pair, id: \.self) { name in
+                // Horizontal, centered, side-by-side characters with horizontal scroll
+                VStack {
+                    ScrollView(.horizontal, showsIndicators: true) {
+                        HStack(spacing: 5) {
+                            // Flatten characterPairs preserving order
+                            ForEach(Array(characterPairs.joined()), id: \.self) { name in
+                                VStack(spacing: 8) {
                                     Image(name)
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(width: 120, height: 140)
-                                        .opacity(selectedName == nil ? 0.6 : (selectedName == name ? 1.0 : 0.35))
+                                        .frame(width: 240, height: 360)
+                                        .opacity(selectedName == nil ? 1.0 : (selectedName == name ? 1.0 : 0.35))
                                         .animation(.easeInOut(duration: 0.2), value: selectedName)
                                         .onTapGesture {
                                             selectedName = name
                                         }
                                         .zIndex(selectedName == name ? 1 : 0)
-                                }
-                            }
-                            .frame(maxWidth: 240, alignment: .trailing)
-                        } else {
-                            HStack(spacing: -64) {
-                                ForEach(pair, id: \.self) { name in
-                                    Image(name)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 120, height: 140)
-                                        .opacity(selectedName == nil ? 0.6 : (selectedName == name ? 1.0 : 0.35))
-                                        .animation(.easeInOut(duration: 0.2), value: selectedName)
-                                        .onTapGesture {
-                                            selectedName = name
-                                        }
-                                        .zIndex(selectedName == name ? 1 : 0)
-                                }
-                            }
-                            .frame(maxWidth: 240, alignment: .leading)
 
-                            Spacer(minLength: 6)
-
-                            Text(regionTitles[rowIndex])
-                                .font(.custom("Saudi-Regular", size: 28))
-                                .foregroundStyle(Color("brown"))
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.8)
+                                    Text(name)
+                                        .font(.custom("Saudi-Regular", size: 18))
+                                        .foregroundStyle(Color("brown"))
+                                }
+                                .padding(8)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(selectedName == name ? Color("brown").opacity(0.08) : .clear)
+                                )
+                            }
                         }
+                        .padding(.horizontal, 20)
+                        .frame(maxWidth: .infinity, alignment: .center)
                     }
-                    .frame(maxWidth: .infinity, alignment: isEvenRow ? .trailing : .leading)
+                    .background(Color.clear)
+                    .scrollIndicators(.visible)
                 }
+                .frame(maxHeight: .infinity, alignment: .center)
 
                 Button("التالي") {
                     if let selected = selectedName {
-                        savedCharacter = selected  // ✅ نحفظ الشخصية المختارة
-                        hasChosenCharacter = true  // ✅ تم الاختيار
+                        savedCharacter = selected
+                        hasChosenCharacter = true
                     }
                     navigateToWelcome = true
                 }
@@ -115,13 +89,10 @@ struct CharacterPickerView: View {
                 .clipShape(Capsule())
                 .disabled(!isNameValid)
                 .opacity(isNameValid ? 1 : 0.4)
-                .padding(.top, 8)
+                .padding(.bottom, 16)
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 8)
-            .padding(.bottom, 24)
+            .padding(.bottom, 40)
         }
-        .background(Color("BackgroundMain"))
         .navigationBarBackButtonHidden(true)
         .onAppear {
             // ✅ إذا سبق اختار شخصية: لا نعرض الاختيار مره ثانية، وندخله على الترحيب
@@ -157,7 +128,5 @@ struct CharacterPickerView: View {
 }
 
 #Preview {
-    NavigationStack {
         CharacterPickerView(playerName: "هيا")
-    }
 }
