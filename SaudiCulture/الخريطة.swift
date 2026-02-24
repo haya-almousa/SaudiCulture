@@ -342,110 +342,81 @@ struct SaudiMapView: View {
         NavigationStack {
             GeometryReader { geometry in
                 ZStack {
-                    // Background
                     Color("BackgroundMain")
                         .ignoresSafeArea()
-
                     
-                    HStack{
+                    HStack {
                         Text("اختار المنطقة ")
-                        .font(.custom("Saudi-Regular", size: 40))
-                        .fontWeight(.bold)
-                        .foregroundColor(Color("brown"))
-                        .multilineTextAlignment(.center)
-                    
+                            .font(.custom("Saudi-Regular", size: 40))
+                            .fontWeight(.bold)
+                            .foregroundColor(Color("brown"))
+                            .multilineTextAlignment(.center)
                     }
-                    .offset(y:-300)
-                    // Map Container
+                    .offset(y: -300)
+                    
                     ZStack(alignment: .center) {
-
-                        // المنطقة الشمالية
-                        RegionImageView(
+                        
+                        ClickableRegionView(
                             imageName: "المنطقة الشماليه",
                             size: 280,
-                            isUnlocked: gameProgress.isRegionUnlocked(.northern)
+                            isUnlocked: gameProgress.isRegionUnlocked(.northern),
+                            action: { handleRegionTap(.northern) }
                         )
                         .offset(x: -70, y: -160)
                         .zIndex(1)
-                        .onTapGesture {
-                            handleRegionTap(.northern)
-                        }
-
-                        // المنطقة الشرقية
-                        RegionImageView(
+                        
+                        ClickableRegionView(
+                            imageName: "المنطقة الغربيه",
+                            size: 280,
+                            isUnlocked: gameProgress.isRegionUnlocked(.western),
+                            action: { handleRegionTap(.western) }
+                        )
+                        .offset(x: -120, y: -30)
+                        .zIndex(3)
+                        
+                        ClickableRegionView(
                             imageName: "المنطقة الشرقيه",
                             size: 250,
-                            isUnlocked: gameProgress.isRegionUnlocked(.eastern)
+                            isUnlocked: gameProgress.isRegionUnlocked(.eastern),
+                            action: { handleRegionTap(.eastern) }
                         )
                         .offset(x: 110, y: -10)
-                        .onTapGesture {
-                            handleRegionTap(.eastern)
-                        }
-
-                        // المنطقة الوسطى
-                        RegionImageView(
+                        .zIndex(2)
+                        
+                        ClickableRegionView(
                             imageName: "المنطقة الوسطى",
                             size: 200,
-                            isUnlocked: true
+                            isUnlocked: true,
+                            action: { handleRegionTap(.central) }
                         )
                         .offset(x: -18, y: -20)
                         .zIndex(10)
-                        .onTapGesture {
-                            handleRegionTap(.central)
-                        }
-
-                        // المنطقة الغربية
-                        RegionImageView(
-                            imageName: "المنطقة الغربيه",
-                            size: 280,
-                            isUnlocked: gameProgress.isRegionUnlocked(.western)
-                        )
-                        .offset(x: -120, y: -30)
-                        .onTapGesture {
-                            handleRegionTap(.western)
-                        }
-
-                        // المنطقة الجنوبية
-                        RegionImageView(
+                        
+                        ClickableRegionView(
                             imageName: "المنطقة الجنوبيه",
                             size: 150,
-                            isUnlocked: gameProgress.isRegionUnlocked(.southern)
+                            isUnlocked: gameProgress.isRegionUnlocked(.southern),
+                            action: { handleRegionTap(.southern) }
                         )
                         .offset(x: -12, y: 111)
-                        .onTapGesture {
-                            handleRegionTap(.southern)
-                        }
+                        .zIndex(4)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-                
-                
-//                .navigationDestination(isPresented: $goToLevels) {
-//                    if let region = selectedRegionType {
-//                        StackedCirclesView(
-//                            selectedCharacter: savedCharacter,
-//                            region: region
-//                        )
-//                    } else {
-//                        Text("اختر منطقة للمتابعة")
-//                    }
-//                }
                 .navigationDestination(isPresented: $goToLevels) {
                     if let region = selectedRegionType {
                         StackedCirclesView(selectedCharacter: savedCharacter, region: region)
                     }
                 }
-
-
             }
             .navigationBarBackButtonHidden(true)
             .alert(item: $selectedRegion) { region in
                 Alert(
                     title: Text(region.isLocked ? "🔒 منطقة مقفلة" : region.name),
                     message: Text(region.isLocked
-                        ? "أكمل المنطقة السابقة لفتح هذه المنطقة!"
-                        : "اخترت \(region.name)"
-                    ),
+                                  ? "أكمل المنطقة السابقة لفتح هذه المنطقة!"
+                                  : "اخترت \(region.name)"
+                                 ),
                     dismissButton: .default(Text("حسناً"))
                 )
             }
@@ -470,19 +441,86 @@ struct SaudiMapView: View {
     }
 }
 
-// MARK: - Region Image View
-struct RegionImageView: View {
+// MARK: - Clickable Region View
+struct ClickableRegionView: View {
     let imageName: String
     let size: CGFloat
     let isUnlocked: Bool
-
+    let action: () -> Void
+    
     var body: some View {
-        Image(imageName)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(width: size, height: size)
-            .grayscale(isUnlocked ? 0 : 0.85)
-            .opacity(isUnlocked ? 1.0 : 0.4)
+        let image = Image(imageName)
+        
+        Button(action: action) {
+            image
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: size, height: size)
+                .grayscale(isUnlocked ? 0 : 0.85)
+                .opacity(isUnlocked ? 1.0 : 0.4)
+        }
+        .buttonStyle(TransparentButtonStyle())
+        .contentShape(RegionImageShape(imageName: imageName))
+    }
+}
+
+// MARK: - Shape Based on PNG Alpha
+struct RegionImageShape: Shape {
+    let imageName: String
+
+    func path(in rect: CGRect) -> Path {
+        guard let uiImage = UIImage(named: imageName),
+              let cgImage = uiImage.cgImage else {
+            return Path(rect)
+        }
+
+        let width = cgImage.width
+        let height = cgImage.height
+        let bytesPerPixel = 4
+        let bytesPerRow = bytesPerPixel * width
+        let bitsPerComponent = 8
+
+        guard let context = CGContext(
+            data: nil,
+            width: width,
+            height: height,
+            bitsPerComponent: bitsPerComponent,
+            bytesPerRow: bytesPerRow,
+            space: CGColorSpaceCreateDeviceRGB(),
+            bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+        ) else {
+            return Path(rect)
+        }
+
+        context.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
+
+        guard let pixelData = context.data else { return Path(rect) }
+
+        var path = Path()
+
+        for y in 0..<height {
+            for x in 0..<width {
+                let pixelIndex = (y * width + x) * bytesPerPixel
+                let alpha = pixelData.load(fromByteOffset: pixelIndex + 3, as: UInt8.self)
+
+                if alpha > 10 {
+                    let px = CGFloat(x) / CGFloat(width) * rect.width
+                    let py = CGFloat(y) / CGFloat(height) * rect.height
+                    path.addRect(CGRect(x: px, y: py, width: 1, height: 1))
+                }
+            }
+        }
+
+        return path
+    }
+}
+
+// MARK: - Transparent Button Style
+struct TransparentButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
     }
 }
 
@@ -535,7 +573,7 @@ class GameProgress: ObservableObject {
     }
 
     func isRegionUnlocked(_ region: RegionType) -> Bool {
-        return true // فتح كل المناطق مؤقتًا
+        return true
     }
 
     func isRegionCompleted(_ region: RegionType) -> Bool {
