@@ -8,24 +8,19 @@
 
 import SwiftUI
 
-// موديل بسيط للبس
 struct CentralOutfitLevel {
-    let images: [String]      // صورة أو صورتين
+    let images: [String]
     let description: String
 }
 
 struct الوسطى: View {
     @State private var startNajdGame = false
-    
+    @Environment(\.dismiss) var dismiss
+
     var region: RegionType
-    
-    // ✅ رقم الليفل (قيمة افتراضية عشان ما ينكسر أي استدعاء قديم)
     var levelNumber: Int = 1
-    
-    // ✅ مستويات اللبس (4 فقط)
+
     private let levels: [CentralOutfitLevel] = [
-        
-        // لفل 1 — نجدي
         CentralOutfitLevel(
             images: ["نجدي"],
             description: """
@@ -37,8 +32,6 @@ struct الوسطى: View {
             هاللبس يعكس بساطة أهل نجد واهتمامهم بالهيبة والاحتشام.
             """
         ),
-        
-        // لفل 2 — نجديه
         CentralOutfitLevel(
             images: ["نجديه"],
             description: """
@@ -48,23 +41,21 @@ struct الوسطى: View {
             اللبس بشكل عام بسيط ومرتب، ويعكس الذوق النجدي المحافظ، بدون تعقيد أو مبالغة، مع المحافظة على الهوية التراثية للمنطقة.
             """
         ),
-        
-        // لفل 3 — طفل نجدي
         CentralOutfitLevel(
             images: ["طفل نجدي"],
             description: """
-            لباس الطفل – المنطقة الوسطى (نجد)                                                       لباس الطفل النجدي يشبه لباس الرجال لكن يناسب عمره.
+            لباس الطفل – المنطقة الوسطى (نجد)
+            لباس الطفل النجدي يشبه لباس الرجال لكن يناسب عمره.
             يلبس ثوب مردون، واللي يكون عملي ومريح.
             يغطي رأسه بـ الغترة، وتثبت باستخدام العقال.
             اللبس يعطي الطفل مظهر مرتب ويعوّده من صغره على اللباس التراثي لأهل نجد.
             """
         ),
-        
-        // لفل 4 — طفله نجديه
         CentralOutfitLevel(
             images: ["طفله نجديه"],
             description: """
-             لباس الطفلة – المنطقة الوسطى (نجد)                      لباس الطفلة في المنطقة الوسطى يكون بسيط ومناسب لعمرها.
+            لباس الطفلة – المنطقة الوسطى (نجد)
+            لباس الطفلة في المنطقة الوسطى يكون بسيط ومناسب لعمرها.
             تلبس مقطع أو دراعة، وهو اللبس الأساسي لها.
             وتضع على رأسها قبع، واللي يكمل اللبس ويعطيه طابع تراثي.
             لبس الطفلة يعكس الهوية النجدية بأسلوب خفيف وناعم يناسب الأطفال.
@@ -73,79 +64,89 @@ struct الوسطى: View {
     ]
     
     var body: some View {
-        // ✅ حماية من أي رقم خارج النطاق
         let idx = max(0, min(levelNumber - 1, levels.count - 1))
         let level = levels[idx]
         
-        NavigationStack {
-            ZStack {
-                Color("BackgroundMain")
-                    .ignoresSafeArea()
-                
-                // الصور (حسب الليفل)
-                HStack(spacing: 20) {
-                    ForEach(level.images, id: \.self) { img in
-                        Image(img)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 360)
-                    }
-                }
-                .position(x: UIScreen.main.bounds.width / 2, y: 160)
-                
-                ZStack {
-                    RoundedRectangle(cornerRadius: 40)
-                        .fill(Color("brown"))
-                    
-                    VStack(spacing: 7.5) {
-                        ScrollView {
-                            Text(level.description)
-                                .font(.custom("Saudi-Regular", size: 20))
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
-                                .multilineTextAlignment(.center)   // ✅ صار بالوسط
-                                .lineSpacing(5)
-                                .padding(.horizontal, 30)
-                                .padding(.top, 70)
+        ZStack {
+            Color("BackgroundMain")
+                .ignoresSafeArea()
 
-                        }
-                        .scrollIndicators(.hidden)
-                        
-                        Spacer()
-                        
-                        // ✅ نفس ربطك للألعاب — ما تغيّر
-                        Button {
-                            startNajdGame = true
-                        } label: {
-                            Text("ابدأ اللعبة")
-                                .font(.custom("Saudi-Regular", size: 34))
-                                .foregroundColor(Color("brown"))
-                                .frame(width: 240, height: 60)
-                                .background(Color.white)
-                                .clipShape(Capsule())
-                        }
-                        .padding(.bottom, 125)
+            // ✅ زر الباك
+            VStack {
+                HStack {
+                    Button(action: { dismiss() }) {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 25, weight: .bold))
+                            .foregroundColor(.white)
+                            .padding(12)
+                            .background(Color("brown"))
+                            .clipShape(Circle())
                     }
+                    .padding(.leading, 20)
+                    .padding(.top, -15)
+                    Spacer()
                 }
-                .frame(width: 411, height: 580)
-                .position(
-                    x: -9 + (411 / 2),
-                    y: 342 + (529 / 2)
-                )
+                Spacer()
             }
-            .navigationBarBackButtonHidden(true)
+            .zIndex(1)
             
-            // ✅ نفس ربطك للألعاب — ما تغيّر
-            .navigationDestination(isPresented: $startNajdGame) {
-                NajdView(region: region)
+            HStack(spacing: 20) {
+                ForEach(level.images, id: \.self) { img in
+                    Image(img)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 360)
+                }
             }
+            .position(x: UIScreen.main.bounds.width / 2, y: 160)
+            
+            ZStack {
+                RoundedRectangle(cornerRadius: 40)
+                    .fill(Color("brown"))
+                
+                VStack(spacing: 7.5) {
+                    ScrollView {
+                        Text(level.description)
+                            .font(.custom("Saudi-Regular", size: 20))
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .multilineTextAlignment(.center)
+                            .lineSpacing(5)
+                            .padding(.horizontal, 30)
+                            .padding(.top, 70)
+                    }
+                    .scrollIndicators(.hidden)
+                    
+                    Spacer()
+                    
+                    Button {
+                        startNajdGame = true
+                    } label: {
+                        Text("ابدأ اللعبة")
+                            .font(.custom("Saudi-Regular", size: 34))
+                            .foregroundColor(Color("brown"))
+                            .frame(width: 240, height: 60)
+                            .background(Color.white)
+                            .clipShape(Capsule())
+                    }
+                    .padding(.bottom, 125)
+                }
+            }
+            .frame(width: 411, height: 580)
+            .position(
+                x: -9 + (411 / 2),
+                y: 342 + (529 / 2)
+            )
+        }
+        .navigationBarBackButtonHidden(true)
+        .navigationDestination(isPresented: $startNajdGame) {
+            NajdView(region: region)
         }
     }
 }
 
 #Preview {
-    // تشتغل بدون levelNumber (يطلع لفل 1)
-    الوسطى(region: .central)
-    // مثال لمعاينة لفل 2:
-    // الوسطى(region: .central, levelNumber: 2)
+    NavigationStack {
+        الوسطى(region: .central)
+    }
 }

@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// موديل بسيط للبس (نفس الوسطى)
 struct SouthernOutfitLevel {
     let images: [String]
     let description: String
@@ -15,16 +14,12 @@ struct SouthernOutfitLevel {
 
 struct الجنوبيه: View {
     @State private var goToCards = false
-    
+    @Environment(\.dismiss) var dismiss
+
     var region: RegionType
-    
-    // ✅ رقم الليفل (قيمة افتراضية عشان ما ينكسر أي ربط قديم)
     var levelNumber: Int = 1
 
-    // ✅ مستويات الجنوب (4)
     private let levels: [SouthernOutfitLevel] = [
-        
-//         لفل 1 — جنوبي
         SouthernOutfitLevel(
             images: ["جنوبي"],
             description: """
@@ -35,8 +30,6 @@ struct الجنوبيه: View {
             هذا اللباس يبرز الاعتزاز بالعادات والتقاليد الجنوبية، ويظهر غالبًا في المناسبات والفعاليات التراثية.
             """
         ),
-        
-        // لفل 2 — جنوبيه
         SouthernOutfitLevel(
             images: ["جنوبيه"],
             description: """
@@ -47,8 +40,6 @@ struct الجنوبيه: View {
             هذا الزي يعبر عن هوية المرأة الجنوبية ويظهر في المناسبات الشعبية والاحتفالات التراثية.
             """
         ),
-        
-        // لفل 3 — طفل جنوبي
         SouthernOutfitLevel(
             images: ["طفل جنوبي"],
             description: """
@@ -59,8 +50,6 @@ struct الجنوبيه: View {
             هذا اللباس يربط الطفل بالتراث منذ الصغر بأسلوب عملي ومريح.
             """
         ),
-        
-        // لفل 4 — طفله جنوبيه
         SouthernOutfitLevel(
             images: ["طفله جنوبيه"],
             description: """
@@ -72,26 +61,34 @@ struct الجنوبيه: View {
             """
         )
     ]
-    // حجم الصورة حسب الليفل
-//    var imageHeight: CGFloat {
-//        switch levelNumber {
-//        case 3, 4:   // طفل / طفله
-//            return 420   // 👈 أكبر
-//        default:      // جنوبي / جنوبيه
-//            return 360   // 👈 الحجم الحالي
-//        }
-//    }
 
     var body: some View {
-        // ✅ حماية من أي رقم خارج النطاق
         let idx = max(0, min(levelNumber - 1, levels.count - 1))
         let level = levels[idx]
 
         ZStack {
             Color("BackgroundMain")
                 .ignoresSafeArea()
+
+            // ✅ زر الباك
+            VStack {
+                HStack {
+                    Button(action: { dismiss() }) {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 25, weight: .bold))
+                            .foregroundColor(.white)
+                            .padding(12)
+                            .background(Color("brown"))
+                            .clipShape(Circle())
+                    }
+                    .padding(.leading, 20)
+                    .padding(.top, -15)
+                    Spacer()
+                }
+                Spacer()
+            }
+            .zIndex(1)
             
-            // الصور (حسب الليفل)
             HStack(spacing: 20) {
                 ForEach(level.images, id: \.self) { img in
                     Image(img)
@@ -99,10 +96,9 @@ struct الجنوبيه: View {
                         .scaledToFit()
                         .frame(
                             height: (img == "طفل جنوبي" || img == "طفله جنوبيه")
-                            ? 480    // 👈 حجم الطفل/الطفلة
-                            : 360    // 👈 باقي الصور
+                            ? 480
+                            : 360
                         )
-                
                 }
             }
             .position(x: UIScreen.main.bounds.width / 2, y: 160)
@@ -126,7 +122,6 @@ struct الجنوبيه: View {
                     
                     Spacer()
                     
-                    // ✅ نفس ربطك — ما تغيّر
                     Button {
                         goToCards = true
                     } label: {
@@ -147,8 +142,6 @@ struct الجنوبيه: View {
             )
         }
         .navigationBarBackButtonHidden(true)
-        
-        // ✅ نفس الربط للألعاب
         .navigationDestination(isPresented: $goToCards) {
             AsirView(region: region)
         }
@@ -156,9 +149,7 @@ struct الجنوبيه: View {
 }
 
 #Preview {
-    // افتراضي يطلع لفل 1 (جنوبي)
-    الجنوبيه(region: .southern)
-    
-    // لمعاينة لفل معين:
-    // الجنوبيه(region: .southern, levelNumber: 3)
+    NavigationStack {
+        الجنوبيه(region: .southern, levelNumber: 1)
+    }
 }

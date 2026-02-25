@@ -9,21 +9,17 @@ import SwiftUI
 
 struct الشماليه: View {
     @State private var goToCards = false
+    @Environment(\.dismiss) var dismiss
+
     var region: RegionType
-    
-    // رقم الليفل (قيمة افتراضية عشان ما ينكسر أي استدعاء قديم)
     var levelNumber: Int = 1
     
-    // موديل بسيط داخلي (بدون تغيير اسم الملف)
     struct OutfitLevel {
         let images: [String]
         let description: String
     }
     
-    // مستويات المنطقة الشمالية
     private let levels: [OutfitLevel] = [
-        
-        // لفل 1 — شمالي
         OutfitLevel(
             images: ["شمالي"],
             description: """
@@ -34,8 +30,6 @@ struct الشماليه: View {
             هذا اللبس يبان كثير في المناسبات والفعاليات التراثية في المنطقة.
             """
         ),
-        
-        // لفل 2 — شماليه
         OutfitLevel(
             images: ["شماليه"],
             description: """
@@ -46,8 +40,6 @@ struct الشماليه: View {
             هاللبس يعكس هوية المنطقة الشمالية ويظهر غالبًا في المناسبات التراثية.
             """
         ),
-        
-        // لفل 3 — طفل شمالي
         OutfitLevel(
             images: ["طفل شمالي"],
             description: """
@@ -56,11 +48,8 @@ struct الشماليه: View {
             يلبس الطفل ثوب مردون كقطعة أساسية، ويضع الغترة وتثبت بـ العقال.
             وفي المناسبات يلبس البشت ويعطيه شكل مرتب وتراثي مثل الكبار.
             هذا اللبس يربط الطفل بتراث المنطقة من وهو صغير، خصوصًا في المناسبات الشعبية.
-
             """
         ),
-        
-        // لفل 4 — طفله شماليه
         OutfitLevel(
             images: ["طفله شماليه"],
             description: """
@@ -80,8 +69,26 @@ struct الشماليه: View {
         ZStack {
             Color("BackgroundMain")
                 .ignoresSafeArea()
+
+            // ✅ زر الباك
+            VStack {
+                HStack {
+                    Button(action: { dismiss() }) {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 25, weight: .bold))
+                            .foregroundColor(.white)
+                            .padding(12)
+                            .background(Color("brown"))
+                            .clipShape(Circle())
+                    }
+                    .padding(.leading, 20)
+                    .padding(.top, -15)
+                    Spacer()
+                }
+                Spacer()
+            }
+            .zIndex(1)
             
-            // الصور حسب الليفل
             HStack(spacing: 0) {
                 ForEach(level.images, id: \.self) { img in
                     let clean = img.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -90,7 +97,7 @@ struct الشماليه: View {
                     Image(clean)
                         .resizable()
                         .scaledToFit()
-                        .frame(height: isChild ? 420 : 360) // تكبير الطفل/الطفلة فقط
+                        .frame(height: isChild ? 420 : 360)
                         .offset(y: isChild ? -10 : 0)
                 }
             }
@@ -115,7 +122,6 @@ struct الشماليه: View {
                     
                     Spacer()
                     
-                    // نفس الزر – نفس الربط
                     Button {
                         goToCards = true
                     } label: {
@@ -136,8 +142,6 @@ struct الشماليه: View {
             )
         }
         .navigationBarBackButtonHidden(true)
-        
-        // نفس وجهة الربط
         .navigationDestination(isPresented: $goToCards) {
             NorthView(region: region)
         }
@@ -145,7 +149,7 @@ struct الشماليه: View {
 }
 
 #Preview {
-//    الشماليه(region: .central)
-    // لمعاينة لفل معين:
-     الشماليه(region: .central, levelNumber: 4)
+    NavigationStack {
+        الشماليه(region: .northern, levelNumber: 1)
+    }
 }

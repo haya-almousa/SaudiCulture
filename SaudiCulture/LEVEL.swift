@@ -320,10 +320,8 @@ struct StackedCirclesView: View {
     @State private var navigateToFashion = false
     @State private var goToMap = false
     
-    // ✅ جديد: رقم الليفل اللي بينفتح في صفحة اللبس
     @State private var selectedLevelNumber: Int = 1
 
-    // ✅ هذه تحسب المرحلة الحالية مع التأكد أنها لا تتجاوز آخر مستوى
     var current: Int {
         min(flow.currentLevel(for: region), totalLevels - 1)
     }
@@ -339,90 +337,78 @@ struct StackedCirclesView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Image(backgroundImageName)
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
+        ZStack {
+            Image(backgroundImageName)
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
 
-                VStack {
-                    HStack {
-                        Text("اضغط على المرحله ")
-                            .font(.custom("Saudi-Regular", size: 30))
-                            .fontWeight(.bold)
-                            .foregroundColor(Color("brown"))
-                            .multilineTextAlignment(.center)
-                            .offset(y: -280)
-                    }
-
-                    HStack {
-                        Button(action: {
-                            goToMap = true
-                        }) {
-                            Image(systemName: "house.fill")
-                                .font(.system(size: 25))
-                                .foregroundColor(.white)
-                                .padding(12)
-                                .background(Color("brown"))
-                                .clipShape(Circle())
-                        }
-                        .offset(x: 150, y: -320)
-                    }
+            VStack {
+                HStack {
+                    Text("اضغط على المرحله ")
+                        .font(.custom("Saudi-Regular", size: 30))
+                        .fontWeight(.bold)
+                        .foregroundColor(Color("brown"))
+                        .multilineTextAlignment(.center)
+                        .offset(y: -280)
                 }
 
-                ZStack {
-                    // رسم المراحل
-                    ForEach(0..<totalLevels, id: \.self) { index in
-                        Image(index <= current ? "yellowCircle" : "grayCircle")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: index == 0 ? 110 : 90)
-                            .offset(y: yPosition(for: index))
-                            .onTapGesture {
-                                // ✅ فقط المرحلة الحالية يمكن الضغط عليها
-                                if index == current {
-                                    // ✅ الجديد: احفظ رقم الليفل
-                                    selectedLevelNumber = index + 1
-                                    navigateToFashion = true
-                                }
-                            }
+                HStack {
+                    Button(action: {
+                        goToMap = true
+                    }) {
+                        Image(systemName: "house.fill")
+                            .font(.system(size: 25))
+                            .foregroundColor(.white)
+                            .padding(12)
+                            .background(Color("brown"))
+                            .clipShape(Circle())
                     }
+                    .offset(x: 140, y: -413)
+                }
+            }
 
-                    // الشخصية تتحرك فوق المرحلة الحالية
-                    Image(selectedCharacter)
+            ZStack {
+                ForEach(0..<totalLevels, id: \.self) { index in
+                    Image(index <= current ? "yellowCircle" : "grayCircle")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 100, height: 140)
-                        .offset(y: yPosition(for: current) - 70)
-                        .animation(.spring(response: 0.6, dampingFraction: 0.7), value: current)
-                        .allowsHitTesting(false)
+                        .frame(width: index == 0 ? 110 : 90)
+                        .offset(y: yPosition(for: index))
+                        .onTapGesture {
+                            if index == current {
+                                selectedLevelNumber = index + 1
+                                navigateToFashion = true
+                            }
+                        }
                 }
-                .offset(y: 60)
+
+                Image(selectedCharacter)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100, height: 140)
+                    .offset(y: yPosition(for: current) - 70)
+                    .animation(.spring(response: 0.6, dampingFraction: 0.7), value: current)
+                    .allowsHitTesting(false)
             }
-            .navigationDestination(isPresented: $goToMap) {
-                SaudiMapView()
-            }
-            .navigationBarBackButtonHidden(true)
-
-            .navigationDestination(isPresented: $navigateToFashion) {
-                switch region {
-                case .central:
-                    // ✅ الوسطى فقط: نمرر levelNumber
-                    الوسطى(region: region, levelNumber: selectedLevelNumber)
-
-                case .northern:
-                    الشماليه(region: region, levelNumber: selectedLevelNumber)
-
-                case .southern:
-                    الجنوبيه(region: region, levelNumber: selectedLevelNumber)
-
-                case .eastern:
-                    الشرقيه(region: region, levelNumber: selectedLevelNumber)
-
-                case .western:
-                    الغربيه(region: region, levelNumber: selectedLevelNumber)
-                }
+            .offset(y: 60)
+        }
+        .navigationBarBackButtonHidden(true)
+        .navigationDestination(isPresented: $goToMap) {
+            SaudiMapView()
+        }
+        .navigationDestination(isPresented: $navigateToFashion) {
+            switch region {
+            case .central:
+                الوسطى(region: region, levelNumber: selectedLevelNumber)
+            case .northern:
+                الشماليه(region: region, levelNumber: selectedLevelNumber)
+            case .southern:
+                الجنوبيه(region: region, levelNumber: selectedLevelNumber)
+            case .eastern:
+                الشرقيه(region: region, levelNumber: selectedLevelNumber)
+            case .western:
+                الغربيه(region: region, levelNumber: selectedLevelNumber)
             }
         }
     }
@@ -442,8 +428,6 @@ struct StackedCirclesView: View {
         )
     }
 }
-
-
 //#Preview {
 //    NavigationStack {
 //        StackedCirclesView(

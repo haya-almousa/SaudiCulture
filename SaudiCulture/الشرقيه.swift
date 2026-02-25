@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// موديل بسيط للبس (نفس الوسطى والجنوبيه)
 struct EasternOutfitLevel {
     let images: [String]
     let description: String
@@ -15,16 +14,12 @@ struct EasternOutfitLevel {
 
 struct الشرقيه: View {
     @State private var goToCards = false
-    
+    @Environment(\.dismiss) var dismiss
+
     var region: RegionType
-    
-    // ✅ رقم الليفل (قيمة افتراضية عشان ما ينكسر أي استدعاء قديم)
     var levelNumber: Int = 1
 
-    // ✅ مستويات المنطقة الشرقية (4)
     private let levels: [EasternOutfitLevel] = [
-        
-        // لفل 1 — شرقاوي
         EasternOutfitLevel(
             images: ["شرقاوي"],
             description: """
@@ -36,20 +31,16 @@ struct الشرقيه: View {
             هذا الزي معروف في الشرقية ويبان كثير في الاحتفالات والمناسبات الشعبية.
             """
         ),
-        
-//         لفل 2 — شرقاوية
         EasternOutfitLevel(
             images: ["شرقاوية"],
             description: """
-    لباس المرأة – المنطقة الشرقية
-لباس المرأة في المنطقة الشرقية معروف بأناقته وبالتفاصيل اللي تعكس تراث المنطقة.
-تبدأ بلبس ثوب النشل، وهو من الأزياء المشهورة في الشرقية ويكون ملفت بتطريزه.
-وتلبس معه الدراعة، وتكمل فيها المظهر بطابع محتشم ومرتب يناسب اللبس التراثي.
-هذا اللبس يبين عادة في المناسبات والاحتفالات، ويعطي هوية واضحة للزي الشرقي.
-"""
+            لباس المرأة – المنطقة الشرقية
+            لباس المرأة في المنطقة الشرقية معروف بأناقته وبالتفاصيل اللي تعكس تراث المنطقة.
+            تبدأ بلبس ثوب النشل، وهو من الأزياء المشهورة في الشرقية ويكون ملفت بتطريزه.
+            وتلبس معه الدراعة، وتكمل فيها المظهر بطابع محتشم ومرتب يناسب اللبس التراثي.
+            هذا اللبس يبين عادة في المناسبات والاحتفالات، ويعطي هوية واضحة للزي الشرقي.
+            """
         ),
-        
-//         لفل 3 — طفل شرقاوي
         EasternOutfitLevel(
             images: ["طفل شرقاوي"],
             description: """
@@ -58,11 +49,8 @@ struct الشرقيه: View {
             يلبس الطفل الثوب كقطعة أساسية، وفوقه يلبس الصدرية اللي تعطيه شكل أجمل وتوضح الزي الشعبي.
             وعلى الرأس يضع الغترة، وتثبت بـ العقال ليكتمل مظهره مثل لبس الكبار لكن بطريقة أبسط.
             هذا الزي يبان كثير في المناسبات الشعبية ويعوّد الطفل على لبس المنطقة من وهو صغير.
-
             """
         ),
-        
-        // لفل 4 — طفله شرقاوية
         EasternOutfitLevel(
             images: ["طفله شرقاويه"],
             description: """
@@ -71,21 +59,37 @@ struct الشرقيه: View {
             تلبس الطفلة الدراعة، وتكون مناسبة لعمرها وتعطيها مظهر مرتب وناعم.
             وتكمل اللبس بـ البخنق على الرأس، وهو جزء معروف في لبس البنات ويعطي الزي شكل تراثي واضح.
             هذا اللبس يظهر غالبًا في المناسبات والفعاليات التراثية ويعكس هوية المنطقة الشرقية.
-
             """
         )
     ]
 
     var body: some View {
-        // ✅ حماية من أي رقم خارج النطاق
         let idx = max(0, min(levelNumber - 1, levels.count - 1))
         let level = levels[idx]
 
         ZStack {
             Color("BackgroundMain")
                 .ignoresSafeArea()
+
+            // ✅ زر الباك
+            VStack {
+                HStack {
+                    Button(action: { dismiss() }) {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 25, weight: .bold))
+                            .foregroundColor(.white)
+                            .padding(12)
+                            .background(Color("brown"))
+                            .clipShape(Circle())
+                    }
+                    .padding(.leading, 20)
+                    .padding(.top, -15)
+                    Spacer()
+                }
+                Spacer()
+            }
+            .zIndex(1)
             
-            // الصور (حسب الليفل)
             HStack(spacing: 0) {
                 ForEach(level.images, id: \.self) { img in
                     let clean = img.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -95,7 +99,7 @@ struct الشرقيه: View {
                         .resizable()
                         .scaledToFit()
                         .frame(height: isChild ? 410 : 410)
-                        .offset(y: isChild ? -1 : 0)       // رفع بسيط
+                        .offset(y: isChild ? -1 : 0)
                 }
             }
             .position(x: UIScreen.main.bounds.width / 2, y: 160)
@@ -119,7 +123,6 @@ struct الشرقيه: View {
                     
                     Spacer()
                     
-                    // ✅ نفس ربطك — ما تغيّر
                     Button {
                         goToCards = true
                     } label: {
@@ -140,8 +143,6 @@ struct الشرقيه: View {
             )
         }
         .navigationBarBackButtonHidden(true)
-        
-        // ✅ نفس الربط للألعاب
         .navigationDestination(isPresented: $goToCards) {
             EasternView(region: region)
         }
@@ -149,9 +150,7 @@ struct الشرقيه: View {
 }
 
 #Preview {
-    // افتراضي: لفل 1 (شرقاوي)
-    الشرقيه(region: .eastern)
-    
-    // لمعاينة لفل معين:
-    // الشرقيه(region: .eastern, levelNumber: 3)
+    NavigationStack {
+        الشرقيه(region: .eastern, levelNumber: 1)
+    }
 }

@@ -9,21 +9,17 @@ import SwiftUI
 
 struct الغربيه: View {
     @State private var goToCards = false
+    @Environment(\.dismiss) var dismiss
+
     var region: RegionType
-    
-    // ✅ رقم الليفل (قيمة افتراضية عشان ما ينكسر أي استدعاء قديم)
     var levelNumber: Int = 1
     
-    // موديل بسيط داخلي
     struct OutfitLevel {
         let images: [String]
         let description: String
     }
     
-    // ✅ مستويات المنطقة الغربية (4)
     private let levels: [OutfitLevel] = [
-        
-        // لفل 1 — غربي
         OutfitLevel(
             images: ["غربي"],
             description: """
@@ -32,11 +28,8 @@ struct الغربيه: View {
             يرتدي الرجل الثوب كلباس أساسي، ويضع الغترة على الرأس وتثبت بـ العقال.
             وفي المناسبات يكمل مظهره بـ البشت، ويعطي الزي شكل رسمي وتراثي واضح.
             هذا اللبس يبين كثير في المناسبات والفعاليات التراثية في الحجاز.
-
             """
         ),
-        
-        // لفل 2 — غربيه
         OutfitLevel(
             images: ["غربيه"],
             description: """
@@ -47,8 +40,6 @@ struct الغربيه: View {
             هذا اللبس يعكس هوية الحجاز ويظهر غالبًا في المناسبات التراثية.
             """
         ),
-        
-        // لفل 3 — طفل غربي
         OutfitLevel(
             images: ["طفل غربي"],
             description: """
@@ -59,8 +50,6 @@ struct الغربيه: View {
             هذا اللبس يظهر كثير في المناسبات والاحتفالات التراثية.
             """
         ),
-        
-        // لفل 4 — طفله غربيه
         OutfitLevel(
             images: ["طفله غربيه"],
             description: """
@@ -80,8 +69,26 @@ struct الغربيه: View {
         ZStack {
             Color("BackgroundMain")
                 .ignoresSafeArea()
+
+            // ✅ زر الباك
+            VStack {
+                HStack {
+                    Button(action: { dismiss() }) {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 25, weight: .bold))
+                            .foregroundColor(.white)
+                            .padding(12)
+                            .background(Color("brown"))
+                            .clipShape(Circle())
+                    }
+                    .padding(.leading, 20)
+                    .padding(.top, -15)
+                    Spacer()
+                }
+                Spacer()
+            }
+            .zIndex(1)
             
-            // ✅ الصور حسب الليفل
             HStack(spacing: 1) {
                 ForEach(level.images, id: \.self) { img in
                     let clean = img.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -90,7 +97,6 @@ struct الغربيه: View {
                     Image(clean)
                         .resizable()
                         .scaledToFit()
-                        // 👇 حافظت على منطق اختلاف الأحجام عندك، وكبرت الطفل/الطفلة
                         .frame(height: isChild ? 350 : (clean.contains("غربيه") ? 400 : 400))
                         .offset(y: isChild ? -12 : 0)
                 }
@@ -116,7 +122,6 @@ struct الغربيه: View {
                     
                     Spacer()
                     
-                    // ✅ نفس الربط — ما تغيّر
                     Button {
                         goToCards = true
                     } label: {
@@ -137,8 +142,6 @@ struct الغربيه: View {
             )
         }
         .navigationBarBackButtonHidden(true)
-        
-        // ✅ نفس وجهة الربط — ما تغيّر
         .navigationDestination(isPresented: $goToCards) {
             HejazView(region: region)
         }
@@ -146,7 +149,7 @@ struct الغربيه: View {
 }
 
 #Preview {
-//    الغربيه(region: .central)
-    // لمعاينة لفل معين:
-     الغربيه(region: .central, levelNumber: 4)
+    NavigationStack {
+        الغربيه(region: .western, levelNumber: 1)
+    }
 }
