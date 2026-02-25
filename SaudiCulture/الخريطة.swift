@@ -428,6 +428,7 @@ struct SaudiMapView: View {
         let isUnlocked = gameProgress.isRegionUnlocked(regionType)
 
         if isUnlocked {
+//  old one           LevelFlow.shared.selectedRegion = regionType
             LevelFlow.shared.selectedRegion = regionType
             selectedRegionType = regionType
             goToLevels = true
@@ -525,7 +526,7 @@ struct TransparentButtonStyle: ButtonStyle {
 }
 
 // MARK: - Region Type Enum
-enum RegionType: String, CaseIterable {
+enum RegionType: String, CaseIterable,Codable {
     case central = "المنطقة الوسطى"
     case eastern = "المنطقة الشرقية"
     case northern = "المنطقة الشمالية"
