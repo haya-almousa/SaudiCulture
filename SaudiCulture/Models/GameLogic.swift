@@ -108,7 +108,15 @@ class GameLogic: ObservableObject {
             }
         }
     }
-    
+    //////new
+    func revealAllCards() {
+        for i in cards.indices {
+            flippedIndices.insert(i)
+        }
+    }
+    /////
+    ///
+
     // Check if card is flipped
     func isFlipped(at index: Int) -> Bool {
         let card = cards[index]

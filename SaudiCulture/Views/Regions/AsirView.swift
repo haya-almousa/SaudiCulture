@@ -378,12 +378,30 @@ struct AsirView: View {
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarTitleDisplayMode(.inline)
+            
+            ////
+//            .onReceive(viewModel.$gameWon) { won in
+//                if won {
+//                    activePopup = .win
+//                    timerRunning = false
+//                }
+//            }
             .onReceive(viewModel.$gameWon) { won in
                 if won {
-                    activePopup = .win
                     timerRunning = false
+                    viewModel.revealAllCards() // 👈 flips the lonely card
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { // 👈 1 sec delay
+                        withAnimation(.easeInOut) {
+                            activePopup = .win
+                        }
+                    }
                 }
             }
+            
+            //////
+            
+            
+            
             .onAppear {
                 viewModel.setupCards(cardPairs: asirCards)
                 
