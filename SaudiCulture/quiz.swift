@@ -518,7 +518,7 @@ struct PuzzleChoicesView: View {
     // MARK: - Logic (نفس منطقك)
     func checkAnswer(puzzle: ChoicePuzzle) {
         if selectedIndex == puzzle.correctIndex {
-            feedback = "إجابة صحيحة!"
+            feedback = "😁"
         } else {
             feedback = "حاول مرة أخرى"
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {

@@ -95,6 +95,7 @@ struct PuzzleView3: View {
                 //                Spacer()
                 
                 Button(action: {
+                    LevelFlow.shared.completeLevel(region: region)
                     goToMap = true
                 }) {
                     Text("انهاء  ")

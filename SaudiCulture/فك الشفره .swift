@@ -438,7 +438,7 @@ struct PuzzleView: View {
                             // بعد ثانية ينتقل للغز التالي
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                                 // تقدم المرحلة يتم هنا فقط بعد الإجابة الصحيحة (أزيل من PuzzleView3)
-                                flow.completeLevel(region: region)
+//                                flow.completeLevel(region: region)
                                 answer = ""
                                 showSuccessEmoji = false
                                 goToPuzzleLevel = true
