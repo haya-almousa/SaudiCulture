@@ -264,16 +264,22 @@ struct EasternView: View {
 
                 // Home Button
                 HStack {
-                    Button(action: { goToMap = true }) {
-                        Image(systemName: "house.fill")
-                            .font(.system(size: 25))
-                            .foregroundColor(Color(hex: "FCF0DD"))
-                            .padding(12)
-                            .background(Color(hex: "874F35"))
-                            .clipShape(Circle())
+                    Button(action: {
+                        goToMap = true
+                    }) {
+                        ZStack {
+                            Circle()
+                                .fill(Color("brown"))
+                                .frame(width: 60, height: 60)
+                            
+                            Image("saudiMap")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 35, height: 35)
+                        }
                     }
                 }
-                .offset(x: 150, y: -300)
+                .offset(x: 150, y: -310)
 
                 VStack(spacing: 16) {
                     // Title

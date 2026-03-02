@@ -57,14 +57,18 @@ struct StackedCirclesView: View {
                     Button(action: {
                         goToMap = true
                     }) {
-                        Image(systemName: "house.fill")
-                            .font(.system(size: 25))
-                            .foregroundColor(.white)
-                            .padding(12)
-                            .background(Color("brown"))
-                            .clipShape(Circle())
+                        ZStack {
+                            Circle()
+                                .fill(Color("brown"))
+                                .frame(width: 60, height: 60)
+                            
+                            Image("saudiMap")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 35, height: 35)
+                        }
                     }
-                    .offset(x: 140, y: -413)
+                    .offset(x: 140, y: -400)
                 }
             }
 

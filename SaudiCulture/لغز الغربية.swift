@@ -185,18 +185,24 @@ struct LevelAlgharbiya: View {
                 .overlay(alignment: .topTrailing) {
                     
                     // ⭐ زر الهوم — مطابق للوسطى + ربط الخريطة
-                    Button(action: {
-                        navigateToHome = true
-                    }) {
-                        Image(systemName: "house.fill")
-                            .font(.system(size: 25))
-                            .foregroundColor(.white)
-                            .padding(12)
-                            .background(Color("brown"))
-                            .clipShape(Circle())
+                    HStack {
+                        Button(action: {
+                            navigateToHome = true
+                        }) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color("brown"))
+                                    .frame(width: 60, height: 60)
+                                
+                                Image("saudiMap") // تأكد الاسم مطابق في Assets
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 35, height: 35)
+                            }
+                        }
+                        .padding(.top, 60)
+                        .padding(.trailing, 0.1)
                     }
-                    .padding(.top, 29)
-                    .padding(.trailing, 0.1)
                 }
             }
             .navigationBarBackButtonHidden(true)
