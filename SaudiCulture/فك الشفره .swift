@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+internal import Combine
 
 extension Color {
     init(hex: String) {
@@ -262,6 +263,11 @@ struct PuzzleView: View {
         case .western: return "الغربية"
         }
     }
+    
+    @State private var showHint = false
+    @State private var shake = false
+    @State private var stopShaking = false
+    let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
 
     
     var body: some View {
@@ -362,6 +368,8 @@ struct PuzzleView: View {
                                 withAnimation(.easeInOut) {
                                     showPopup = true
                                 }
+                                stopShaking = true
+
                             }) {
                                 Text( "💡")
                                     .font(.system(size: 28))
@@ -369,10 +377,29 @@ struct PuzzleView: View {
                                     .padding(10)
                                     .background(Color(hex: "874F35"))
                                     .clipShape(Circle())
+                                    .offset(x: shake ? -2 : 2, y: shake ? 1 : -1)
+                                    .rotationEffect(.degrees(shake ? 3 : -3))
+
+                                    .animation(
+                                            shake ?
+                                            Animation.easeInOut(duration: 0.08)
+                                            .repeatCount(6, autoreverses: true)
+                                            : .default,
+                                            value: shake
+                                        )
                             }
                             
                             Spacer()
                         }
+                        .onReceive(timer) { _ in
+                            if !stopShaking {
+                                shake = true
+                            }
+                                 // نرجعه طبيعي بعد الاهتزاز
+                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                                     shake = false
+                                 }
+                             }
                         .padding(.leading, 20)
                         .offset(x: 0 , y: 100)
                         

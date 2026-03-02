@@ -1,4 +1,5 @@
 import SwiftUI
+internal import Combine
 
 // Model for a multiple-choice puzzle
 struct ChoicePuzzle {
@@ -388,7 +389,9 @@ struct PuzzleChoicesView: View {
     @State private var goToMap = false
 
 
-    
+    @State private var shake = false
+    @State private var stopShaking = false
+    let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
     
     var body: some View {
         
@@ -439,15 +442,38 @@ struct PuzzleChoicesView: View {
                             .foregroundColor(.brown)
 
                         HStack {
-                            Button { withAnimation { showHint.toggle() } } label: {
-                                Text( "💡")
+                            // ⭐ زر الاستفهام — مطابق للوسطى
+                            Button(action: {
+                                showHint = true
+                                    stopShaking = true
+                            }) {
+                                Text("💡")
                                     .font(.system(size: 28))
                                     .foregroundColor(.white)
                                     .padding(10)
                                     .background(Color(hex: "874F35"))
                                     .clipShape(Circle())
+                                    .offset(x: shake ? -2 : 2, y: shake ? 1 : -1)        // حركة خفيفة يمين/يسار + فوق/تحت
+                                    .rotationEffect(.degrees(shake ? 3 : -3))             // يميل يمين/يسار
+                                    .scaleEffect(shake ? 1.05 : 0.95)                     // نبض خفيف
+                                    .animation(
+                                        shake ?
+                                        Animation.easeInOut(duration: 0.15).repeatCount(4, autoreverses: true)
+                                        : .default,
+                                        value: shake
+                                    )
                             }
+                            .padding(.leading, 3)
+                            
                             Spacer()
+                        }
+                        .onReceive(timer) { _ in
+                            if !stopShaking {
+                                shake = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                                    shake = false
+                                }
+                            }
                         }
                     }
                     .padding()

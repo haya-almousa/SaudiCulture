@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+internal import Combine
 // MARK: - شكل قطعة البزل (Puzzle Piece Shape)
 struct PuzzlePieceShapeJanubiya: Shape {
     let row: Int
@@ -151,6 +151,11 @@ struct LevelAljanubiya: View {
         return puzzleImages[min(level, puzzleImages.count - 1)]
     }
 
+//    @State private var showHintDialog = false
+    @State private var shake = false
+    @State private var stopShaking = false
+    let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
+    
     var body: some View {
         NavigationStack {
             
@@ -166,22 +171,40 @@ struct LevelAljanubiya: View {
                     Spacer()
                 }
                 .overlay(alignment: .bottom) {
+                    
                     HStack {
-                        
                         // ⭐ زر الاستفهام — مطابق للوسطى
                         Button(action: {
                             showHelpDialog = true
+                                stopShaking = true
                         }) {
-                            Text( "💡")
+                            Text("💡")
                                 .font(.system(size: 28))
                                 .foregroundColor(.white)
                                 .padding(10)
                                 .background(Color(hex: "874F35"))
                                 .clipShape(Circle())
+                                .offset(x: shake ? -2 : 2, y: shake ? 1 : -1)        // حركة خفيفة يمين/يسار + فوق/تحت
+                                .rotationEffect(.degrees(shake ? 3 : -3))             // يميل يمين/يسار
+                                .scaleEffect(shake ? 1.05 : 0.95)                     // نبض خفيف
+                                .animation(
+                                    shake ?
+                                    Animation.easeInOut(duration: 0.15).repeatCount(4, autoreverses: true)
+                                    : .default,
+                                    value: shake
+                                )
                         }
                         .padding(.leading, 3)
                         
                         Spacer()
+                    }
+                    .onReceive(timer) { _ in
+                        if !stopShaking {
+                            shake = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                                shake = false
+                            }
+                        }
                     }
                     .padding(.bottom, 180)
                 }
