@@ -363,10 +363,10 @@ struct PuzzleView: View {
                                     showPopup = true
                                 }
                             }) {
-                                Image(systemName: "questionmark")
-                                    .font(.system(size: 22))
+                                Text( "💡")
+                                    .font(.system(size: 28))
                                     .foregroundColor(.white)
-                                    .padding(16)
+                                    .padding(10)
                                     .background(Color(hex: "874F35"))
                                     .clipShape(Circle())
                             }

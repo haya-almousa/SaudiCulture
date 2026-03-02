@@ -156,11 +156,11 @@ struct LevelAlwosta: View {
                         Button(action: {
                             showHelpDialog = true
                         }) {
-                            Image(systemName: "questionmark")
-                                .font(.system(size: 26))
+                            Text( "💡")
+                                .font(.system(size: 28))
                                 .foregroundColor(.white)
-                                .padding()
-                                .background(Color("brown"))
+                                .padding(10)
+                                .background(Color(hex: "874F35"))
                                 .clipShape(Circle())
                         }
                         .padding(.leading, 3)

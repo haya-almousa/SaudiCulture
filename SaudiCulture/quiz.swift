@@ -440,9 +440,10 @@ struct PuzzleChoicesView: View {
 
                         HStack {
                             Button { withAnimation { showHint.toggle() } } label: {
-                                Image(systemName: "questionmark")
+                                Text( "💡")
+                                    .font(.system(size: 28))
                                     .foregroundColor(.white)
-                                    .padding()
+                                    .padding(10)
                                     .background(Color(hex: "874F35"))
                                     .clipShape(Circle())
                             }
