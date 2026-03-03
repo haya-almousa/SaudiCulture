@@ -31,6 +31,7 @@ struct Puzzle {
     let emojis: String
     let hint: String
     let answer: String
+    let secondAnswer: String?
 }
 
 
@@ -74,27 +75,31 @@ struct PuzzleView: View {
     let puzzles: [Puzzle] = [
         
         Puzzle(
-            emojis: "🟢 ☕ ",
-            hint: "مشروب عربي مشهور",
-            answer: "القهوة السعودية"
+            emojis: "🇸🇦 ☕ ",
+            hint: "مشروب سعودي مشهور",
+            answer: "القهوة السعودية",
+            secondAnswer: nil
         ),
         
         Puzzle(
             emojis: "🌴 🍯",
             hint: "شي حلو يطلع من النخلة",
-            answer: "تمر"
+            answer: "تمر",
+            secondAnswer: nil
         ),
         
         Puzzle(
             emojis: "🔥 ☕",
             hint: "طريقة قديمة لتحضير القهوة",
-            answer: "تحميص القهوة"
+            answer: "تحميص القهوة",
+            secondAnswer: nil
         ),
         
         Puzzle(
             emojis: "🏕️ 🌌",
             hint: "جلسة في الصحراء تحت النجوم",
-            answer: "كشتة"
+            answer: "كشتة",
+            secondAnswer: nil
         ),
         
      
@@ -102,15 +107,17 @@ struct PuzzleView: View {
         Puzzle(
             emojis: "🥁 💃",
             hint: "فن شعبي سعودي",
-            answer: "عرضة"
+            answer: "عرضة",
+            secondAnswer: nil
         ),
         
        
         
         Puzzle(
             emojis: "🏠 🪑 ☕",
-            hint: "مكان يجتمع فيه الناس للقهوة",
-            answer: "مجلس"
+            hint: "مكان يجتمع فيه الناس و الضيوف ",
+            answer: "مجلس",
+            secondAnswer: nil
         )
     ]
     //الجنوب
@@ -123,30 +130,37 @@ struct PuzzleView: View {
             emojis: "🥣 🍯 🧈",
             hint: "أكلة شعبية جنوبية مشهورة تؤكل مع السمن والعسل",
             answer: "عريكة"
+        
+            , secondAnswer: nil
         ),
         
         Puzzle(
             emojis: "🏠 🎨 ✨",
             hint: "فن تزيين جدران المنازل في عسير",
             answer: "القط العسيري"
+            , secondAnswer: nil
         ),
         
         Puzzle(
             emojis: "🌸 👑 🧔",
             hint: "تاج من الزهور يوضع على الرأس في جازان وعسير",
             answer: "عصابة"
+            , secondAnswer: nil
         ),
 
         Puzzle(
             emojis: "⛰️ 🚠 🌫️",
             hint: "جبل في أبها تصل إليه عبر العربات المعلقة",
-            answer: "الجبل الأخضر"
+            answer:"جبل السودة",
+            secondAnswer: "جبل السودة"
         ),
 
         Puzzle(
             emojis: "🍞 🛖 🏺",
             hint: "خبز جنوبي يخبز في التنور أو الميفا",
             answer: "خبز ميفا"
+            , secondAnswer: nil
+
         )
     ]
     //الشرقيه
@@ -156,30 +170,39 @@ struct PuzzleView: View {
             emojis: "🌴 💦 ⛰️",
             hint: "أكبر واحة نخيل في العالم وتوجد بالأحساء",
             answer: "واحة الأحساء"
+            , secondAnswer: nil
+
         ),
         
         Puzzle(
             emojis: "🌊 🏝️ 🌉",
             hint: "جسر يربط المنطقة الشرقية بمملكة البحرين",
             answer: "جسر الملك فهد"
+            , secondAnswer: nil
+
         ),
         
         Puzzle(
             emojis: "🍚 🥘 🔴",
             hint: "أشهر أكلة حساوية لونها أحمر",
             answer: "أرز حساوي"
+            , secondAnswer: "المكبوس الأحمر"
+
         ),
         
         Puzzle(
-            emojis: "🐚 🚢 ⚓",
+            emojis: "🐚 🚢 ⚓ 🤿",
             hint: "مهنة الأجداد القديمة في الخليج",
             answer: "صيد اللؤلؤ"
+            , secondAnswer: "الغوص على اللؤلؤ"
         ),
         
         Puzzle(
             emojis: "⛰️ ❄️ 🧱",
             hint: "جبل مشهور في الأحساء بارد من الداخل صيفاً",
             answer: "جبل القارة"
+            , secondAnswer: nil
+
         )
     ]
     
@@ -190,30 +213,41 @@ struct PuzzleView: View {
             emojis: "❄️ 🏔️ ⛄",
             hint: "جبل في تبوك يغطيه الثلج في الشتاء",
             answer: "جبل اللوز"
+            , secondAnswer: nil
+
+            
         ),
         
         Puzzle(
             emojis: "🍕 🥩 🪵",
             hint: "أشهر أكلة في دومة الجندل عبارة عن خبز ولحم",
             answer: "الجمير"
+            , secondAnswer: "المليحية"
+
         ),
         
         Puzzle(
-            emojis: "🏺 🏜️ 🧱",
+            emojis: "🏺🪨🏜️",
             hint: "مدينة تاريخية تقع في محافظة العلا",
             answer: "مدائن صالح"
+            , secondAnswer: nil
+
         ),
         
         Puzzle(
             emojis: "🫒 🌳 ",
             hint: "منطقة تشتهر بأكبر مزارع الزيتون في المملكة",
             answer: "الجوف"
+            , secondAnswer: "عنيزة"
+
         ),
         
         Puzzle(
-            emojis: "☕ 🪵 🔥",
+            emojis: "☕ 🪵 🔥 🌿",
             hint: "تسمية تطلق على القهوة التي تُصنع على نار الحطب في الشمال",
             answer: "قهوة مهيلة"
+            , secondAnswer: nil
+
         )
     ]
     
@@ -224,30 +258,40 @@ struct PuzzleView: View {
             emojis: "🕋 🕌 ✨",
             hint: "أطهر بقاع الأرض وقبلة المسلمين",
             answer: "مكة المكرمة"
+            , secondAnswer: "الكعبه "
+
         ),
         
         Puzzle(
             emojis: "🌊 🏙️ ⛲",
             hint: "عروس البحر الأحمر وفيها نافورة الملك فهد",
             answer: "جدة"
+            , secondAnswer: nil
+
         ),
         
         Puzzle(
             emojis: "🏠 🪵 🪟",
             hint: "النوافذ الخشبية المزخرفة في بيوت جدة القديمة",
             answer: "الرواشين"
+            , secondAnswer: "الشميسية"
+
         ),
         
         Puzzle(
-            emojis: "🍵 🥖 🔴 🧊",
+            emojis: "🥛❄️✨",
             hint: "مشروب حجازي بارد ومشهور لونه أبيض",
             answer: "سوبيا"
+            , secondAnswer: nil
+
         ),
         
         Puzzle(
             emojis: "🍚 🥩 🏺",
             hint: "أكلة حجازية أصيلة تطبخ في وعاء فخاري تحت الأرض",
             answer: "المندي"
+            , secondAnswer: nil
+
         )
     ]
     
@@ -318,7 +362,13 @@ struct PuzzleView: View {
                             .foregroundColor(Color(hex: "874F35"))
                             .padding(.bottom, 20)
                             .offset(x: 0 , y: -100)
+                        Text(" فك الشفرات  باستخدام الرموز والتلميحات و اكتب الاجابه .")
+                        //                        .font(.title)
+                            .font(.custom("Saudi-Regular", size: 14))
                         
+                            .foregroundColor(Color(hex: "874F35"))
+                            .padding(.bottom, 20)
+                            .offset(x: 0 , y: -100)
                         
                         HStack(spacing: 20) {
 //                            Text(puzzles[currentIndex].emojis)
@@ -401,7 +451,7 @@ struct PuzzleView: View {
                                  }
                              }
                         .padding(.leading, 20)
-                        .offset(x: 0 , y: 100)
+                        .offset(x: 0 , y: 90)
                         
                         
                         

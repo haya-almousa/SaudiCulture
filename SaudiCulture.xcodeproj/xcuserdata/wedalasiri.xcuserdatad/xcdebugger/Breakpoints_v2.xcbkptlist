@@ -16,7 +16,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "38"
             endingLineNumber = "38"
-            landmarkName = "body"
+            landmarkName = "levels"
             landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
@@ -47,7 +47,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "38"
-            endingLineNumber = "38">
+            endingLineNumber = "38"
+            landmarkName = "levels"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
