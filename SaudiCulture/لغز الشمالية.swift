@@ -123,9 +123,9 @@ struct LevelAshshamaliya: View {
     let puzzleImages = [
         "تراث الشمالية",
         "آثار الشويحطية",
-        "دومة الجندل",
+        "دومة الجندل ",
         "قلعة زعبل",
-        "مسجد عمر بن الخطاب",
+       "مسجد عمر بن الخطاب",
         "تراث الشمالية"
     ]
 
@@ -543,5 +543,5 @@ struct LevelAshshamaliya: View {
 }
 //
 #Preview {
-    LevelAshshamaliya(levelNumber: 5)
+    LevelAshshamaliya(levelNumber: 1)
 }

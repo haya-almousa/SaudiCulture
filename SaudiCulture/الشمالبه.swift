@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct الشماليه: View {
+struct NorthernView: View {
     @State private var goToCards = false
     @Environment(\.dismiss) var dismiss
 
@@ -208,6 +208,6 @@ struct الشماليه: View {
 
 #Preview {
     NavigationStack {
-        الشماليه(region: .northern, levelNumber: 5)
+        NorthernView(region: .northern, levelNumber: 5)
     }
 }

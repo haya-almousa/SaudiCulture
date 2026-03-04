@@ -106,7 +106,7 @@ struct StackedCirclesView: View {
             case .central:
                 الوسطى(region: region, levelNumber: selectedLevelNumber)
             case .northern:
-                الشماليه(region: region, levelNumber: selectedLevelNumber)
+                NorthernView(region: region, levelNumber: selectedLevelNumber)
             case .southern:
                 الجنوبيه(region: region, levelNumber: selectedLevelNumber)
             case .eastern:
