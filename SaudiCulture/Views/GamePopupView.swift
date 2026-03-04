@@ -254,6 +254,9 @@ struct GamePopupView: View {
         "يلا على اللعبة اللي بعدها !"
     }
 }
+
+
+
 #Preview {
     GamePopupView(
         type: .win,        // or .timeUp to test the other popup

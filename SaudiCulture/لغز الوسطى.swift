@@ -7,6 +7,7 @@
 /*haya Queen of the world*/
 
 import SwiftUI
+internal import Combine
 
 struct PuzzlePieceShape: Shape {
     let row: Int
@@ -89,7 +90,12 @@ struct PuzzlePiece: Identifiable {
 }
 
 struct LevelAlwosta: View {
-    
+    let levelNumber: Int
+
+       init(levelNumber: Int) {
+           self.levelNumber = levelNumber
+       }
+
     private let rows = 3
     private let cols = 3
     private let puzzleSize: CGFloat = 340
@@ -116,22 +122,34 @@ struct LevelAlwosta: View {
         "قرية",
         "قصر المربع",
         "قصر المصمك",
-        "قصر صاهود"
+        "قصر صاهود",
+        "تراث الوسطى"
     ]
     
     private var centralLandmarks: [(name: String, info: String)] = [
-        ("قصر سلوى", "الدولة السعودية الأولى تتميّز بعمارة طينية تعكس التراث النجدي الأصيل، وتعتبر رمز قوي لتاريخنا وهويتنا السعودية."), // ← أولاً
-        ("قرية أشيقر التراثية", "قرية تحافظ على التراث والمعمار النجدي القديم."),
-        ("قصر المربع", "من أبرز معالم الرياض التاريخية، يعكس العمارة التراثية في الدولة السعودية الأولى."),
-        ("قصر المصمك", "قلعة تاريخية من الطين كانت مركزاً للمعارك والاستراتيجيات."),
-        ("قصر صاهود", "يمثل جزءاً من التراث النجدي الأصيل.")
+        ("قصر سلوى", "قصر سلوى يُعد رمزًا للدولة السعودية الأولى ويظهر العمارة الطينية التقليدية للمنطقة الوسطى. قليل من الناس يعرف أن القصر كان يحتوي على ممرات داخلية مخفية وغرف لتخزين المؤن والأسلحة، مما جعله مركزًا مهمًا للقيادة والدفاع في ذلك العصر."), // ← أولاً
+        
+        ("قرية أشيقر التراثية","قرية أشيقر تحافظ على التراث النجدي القديم من خلال بيوتها الطينية وأزقتها الضيقة. بعض الزوار لا يعرفون أن القرية كانت مركزًا زراعيًا وتجاريًا صغيرًا يربط القرى المجاورة بالرياض منذ مئات السنين."),
+        
+        ("قصر المربع", " قصر المربع في الرياض يُظهر العمارة التراثية للدولة السعودية الأولى، ويشتهر بفناءه الواسع والجدران الطينية السميكة. قليلون يعرفون أن القصر كان مقرًا لحفظ السجلات الرسمية وجلسات اتخاذ القرارات المهمة."),
+        
+        ("قصر المصمك", "قصر المصمك قلعة تاريخية من الطين لعبت دورًا رئيسيًا في المعارك، ويمثل مركزًا استراتيجيًا قديمًا للرياض. كما يحتوي القصر على أبراج مراقبة وغرف سرية استخدمت للتخطيط العسكري والدفاع عن المدينة."),
+        
+        ("قصر صاهود", "قصر صاهود يعكس التراث النجدي الأصيل في التصميم والبناء الطيني. قليل من الزوار يعرفون أن القصر كان جزءًا من شبكة قصور وحصون صغيرة حول الرياض لحماية المدينة وتنظيم الحياة الاجتماعية والسياسية."),
+        
+        ("قصر سلوى", "قصر سلوى يُعد رمزًا للدولة السعودية الأولى ويظهر العمارة الطينية التقليدية للمنطقة الوسطى. قليل من الناس يعرف أن القصر كان يحتوي على ممرات داخلية مخفية وغرف لتخزين المؤن والأسلحة، مما جعله مركزًا مهمًا للقيادة والدفاع في ذلك العصر.")
     ]
 
 
     var currentPuzzleImage: String {
-        let level = flow.currentLevel(for: .central)
-        return puzzleImages[min(level, puzzleImages.count - 1)]
+//        let level = flow.currentLevel(for: .central)
+//        return puzzleImages[min(level, puzzleImages.count - 1)]
+        return puzzleImages[min(levelNumber, puzzleImages.count - 1)]
+
     }
+    @State private var shake = false
+    @State private var stopShaking = false
+    let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
 
     var body: some View {
         NavigationStack {
@@ -142,48 +160,84 @@ struct LevelAlwosta: View {
                     .scaledToFill()
                     .ignoresSafeArea()
                 
-                VStack {
+                VStack(spacing: -20) {
+
                     Spacer()
-                    
-                    puzzleBoard
-                    
+
+                    ZStack {
+
+                        puzzleBoard
+
+                        // ⭐ العنوان يطلع من البوكس
+                        Text("ركّب الصورة")
+                            .font(.custom("Saudi-Bold", size: 28))
+                            .foregroundColor(Color("brown"))
+                            .font(.custom("Saudi-Bold", size: 30))
+                            .multilineTextAlignment(.center)
+                            .offset(x: 3 ,y: -250)
+                    }
+
                     Spacer()
                 }
                 .overlay(alignment: .bottom) {
                     HStack {
-                        
-                        // ⭐ زر الاستفهام (معدّل)
+                        // ⭐ زر الاستفهام — مطابق للوسطى
                         Button(action: {
                             showHelpDialog = true
+                                stopShaking = true
                         }) {
-                            Image(systemName: "questionmark")
-                                .font(.system(size: 26))
+                            Text("💡")
+                                .font(.system(size: 28))
                                 .foregroundColor(.white)
-                                .padding()
-                                .background(Color("brown"))
+                                .padding(10)
+                                .background(Color(hex: "874F35"))
                                 .clipShape(Circle())
+                                .offset(x: shake ? -2 : 2, y: shake ? 1 : -1)        // حركة خفيفة يمين/يسار + فوق/تحت
+                                .rotationEffect(.degrees(shake ? 3 : -3))             // يميل يمين/يسار
+                                .scaleEffect(shake ? 1.05 : 0.95)                     // نبض خفيف
+                                .animation(
+                                    shake ?
+                                    Animation.easeInOut(duration: 0.15).repeatCount(4, autoreverses: true)
+                                    : .default,
+                                    value: shake
+                                )
                         }
                         .padding(.leading, 3)
                         
                         Spacer()
+                    }
+                    .onReceive(timer) { _ in
+                        if !stopShaking {
+                            shake = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                                shake = false
+                            }
+                        }
                     }
                     .padding(.bottom, 180)
                 }
                 .overlay(alignment: .topTrailing) {
                     
                     // ⭐ زر الهوم (معدّل)
-                    Button(action: {
-                        navigateToHome = true
-                    }) {
-                        Image(systemName: "house.fill")
-                            .font(.system(size: 25))
-                            .foregroundColor(.white)
-                            .padding(12)
-                            .background(Color("brown"))
-                            .clipShape(Circle())
+                    HStack {
+                        Button(action: {
+                            navigateToHome = true
+                        }) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color("brown"))
+                                    .frame(width: 60, height: 60)
+                                
+                                Image("saudiMap") // تأكد الاسم مطابق في Assets
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 35, height: 35)
+                            }
+                        }
+                        .padding(.top, 60)
+                        .padding(.trailing, 0.1)
                     }
-                    .padding(.top, 29)
-                    .padding(.trailing, 0.1)
+                    .offset(x:15,y:1)
                 }
             }
             .navigationBarBackButtonHidden(true)
@@ -195,7 +249,7 @@ struct LevelAlwosta: View {
 //                PuzzleChoicesView()
 //            }\
             .navigationDestination(isPresented: $navigateToNext) {
-                PuzzleView(region: .central)
+                PuzzleView(region: .central , levelNumber: levelNumber)
             }
 
             .onAppear {
@@ -368,9 +422,11 @@ struct LevelAlwosta: View {
     }
     
     private var completionDialogView: some View {
-        
-        let level = flow.currentLevel(for: .central)
-        let landmark = centralLandmarks[min(level, centralLandmarks.count - 1)]
+//        
+//        let level = flow.currentLevel(for: .central)
+//        let landmark = centralLandmarks[min(level, centralLandmarks.count - 1)]
+        let landmark = centralLandmarks[min(levelNumber, centralLandmarks.count - 1)]
+
         return ZStack {
             Color.black.opacity(0.3)
                 .ignoresSafeArea()
@@ -435,7 +491,7 @@ struct LevelAlwosta: View {
                     .clipShape(RoundedRectangle(cornerRadius: 26))
                     .padding(20)
             }
-            .frame(width: 340, height: 520)
+            .frame(width: 340, height: 420)
         }
     }
     
@@ -481,5 +537,5 @@ struct LevelAlwosta: View {
 
 
 #Preview {
-    LevelAlwosta()
+    LevelAlwosta( levelNumber: 0)
 }

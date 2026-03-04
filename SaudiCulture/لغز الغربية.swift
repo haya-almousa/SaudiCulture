@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+internal import Combine
 
 struct PuzzlePieceShapeGharbiya: Shape {
     let row: Int
@@ -88,6 +89,8 @@ struct PuzzlePieceGharbiya: Identifiable {
 }
 
 struct LevelAlgharbiya: View {
+    let levelNumber: Int
+
     private let rows = 3
     private let cols = 3
     private let puzzleSize: CGFloat = 340
@@ -115,7 +118,8 @@ struct LevelAlgharbiya: View {
         "بيت نصيف",
         "سوق عكاظ",
         "قلعة الاجياد",
-        "قصر السقاف"
+        "قصر السقاف",
+        "تراث الغربية"
     ]
 
     
@@ -123,31 +127,40 @@ struct LevelAlgharbiya: View {
     private let westernLandmarks: [(name: String, info: String)] = [
         (
             "البلد",
-            "منطقة تاريخية عريقة في جدة، كانت مركزًا تجاريًا مهمًا وبوابة للحجاج القادمين إلى مكة، وتتميز ببيوتها المبنية من الحجر والخشب."
+            "منطقة البلد في جدة لم تكن مجرد مركز تجاري وبوابة للحجاج، بل تحتوي على أزقة ضيقة وممرات سرية كانت تُستخدم لتسهيل حركة القوافل والحجاج. بيوتها المبنية من الحجر والخشب تحمل زخارف فريدة لا تزال تُظهر الطابع الحجازي التقليدي القديم."
         ),
         (
             "بيت نصيف",
-            "من أشهر البيوت التاريخية في جدة، استُخدم لاستقبال الضيوف وكبار الشخصيات، ويعكس العمارة الحجازية التقليدية."
+            "بيت نصيف لم يكن مجرد منزل لاستقبال الضيوف، بل يحتوي على غرف سرية ومخازن للمؤن والأموال كما كان يُستخدم كمقر اجتماعات مهمة. العمارة تعكس حرفية الحجازيين في تصميم المنازل مع التهوية الطبيعية والخشب المزخرف."
         ),
         (
             "سوق عكاظ",
-            "سوق تاريخي شهير في الطائف، كان ملتقى ثقافيًا وتجاريًا في العصر الجاهلي، واشتهر بالشعر والأدب."
+            "سوق تاريخي شهير في الطائف، كان ملتقى ثقافيًا وتجاريًا في العصر الجاهلي، واشتهر بالشعر والأدبسوق عكاظ في الطائف لم يكن مجرد سوق تجاري، بل كان ملتقى للشعراء والخطباء لمناقشة الأدب والسياسة في العصر الجاهلي. بعض الزوار قليلون يعرفون أن الموقع يحتوي على بقايا حجرية تشير إلى أماكن عرض الشعر والنقاشات العامة."
         ),
         (
             "قلعة الجياد",
-            "قلعة تاريخية كانت تستخدم لأغراض دفاعية، وتُعد من الشواهد على العمارة العسكرية القديمة."
+            "قلعة الجياد لم تُستخدم فقط للدفاع، بل كان فيها أبراج مراقبة وغرف سرية لتخزين الأسلحة والمؤن. تصميمها العسكري يعكس خبرة قديمة في حماية المدن الساحلية من الغزوات البحرية والداخلية."
         ),
         (
             "قصر السقاف",
-            "قصر تاريخي يعكس أسلوب البناء الحجازي القديم، ويُعد من المعالم الثقافية المهمة في المنطقة الغربية."
+            "قصر السقاف في جدة يعكس أسلوب البناء الحجازي التقليدي، لكنه يحتوي أيضًا على أفنية داخلية مخفية ونوافذ خشبية معقدة للتظليل والخصوصية. القصر كان نقطة تجمع اجتماعي وثقافي للمسؤولين وأعيان المنطقة."
+        ),
+        (
+            "البلد",
+            "منطقة البلد في جدة لم تكن مجرد مركز تجاري وبوابة للحجاج، بل تحتوي على أزقة ضيقة وممرات سرية كانت تُستخدم لتسهيل حركة القوافل والحجاج. بيوتها المبنية من الحجر والخشب تحمل زخارف فريدة لا تزال تُظهر الطابع الحجازي التقليدي القديم."
         )
     ]
     var currentPuzzleImage: String {
-        let level = flow.currentLevel(for: .western)
-        return puzzleImages[min(level, puzzleImages.count - 1)]
+//        let level = flow.currentLevel(for: .western)
+//        return puzzleImages[min(level, puzzleImages.count - 1)]
+        return puzzleImages[min(levelNumber, puzzleImages.count - 1)]
+
     }
 
-    
+    @State private var shake = false
+    @State private var stopShaking = false
+    let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
+
     var body: some View {
         NavigationStack {
             
@@ -157,46 +170,84 @@ struct LevelAlgharbiya: View {
                     .scaledToFill()
                     .ignoresSafeArea()
                 
-                VStack {
+                VStack(spacing: -20) {
+
                     Spacer()
-                    puzzleBoard
+
+                    ZStack {
+
+                        puzzleBoard
+
+                        // ⭐ العنوان يطلع من البوكس
+                        Text("ركّب الصورة")
+                            .font(.custom("Saudi-Bold", size: 28))
+                            .foregroundColor(Color("brown"))
+                            .font(.custom("Saudi-Bold", size: 30))
+                            .multilineTextAlignment(.center)
+                            .offset(x: 3 ,y: -250)
+                    }
+
                     Spacer()
                 }
                 .overlay(alignment: .bottom) {
                     HStack {
-                        
-                        // ⭐ زر الاستفهام — الآن مطابق للوسطى (أصغر)
+                        // ⭐ زر الاستفهام — مطابق للوسطى
                         Button(action: {
                             showHelpDialog = true
+                                stopShaking = true
                         }) {
-                            Image(systemName: "questionmark")
-                                .font(.system(size: 26))   // ← نفس الوسطى
+                            Text("💡")
+                                .font(.system(size: 28))
                                 .foregroundColor(.white)
-                                .padding()
-                                .background(Color("brown"))
+                                .padding(10)
+                                .background(Color(hex: "874F35"))
                                 .clipShape(Circle())
+                                .offset(x: shake ? -2 : 2, y: shake ? 1 : -1)        // حركة خفيفة يمين/يسار + فوق/تحت
+                                .rotationEffect(.degrees(shake ? 3 : -3))             // يميل يمين/يسار
+                                .scaleEffect(shake ? 1.05 : 0.95)                     // نبض خفيف
+                                .animation(
+                                    shake ?
+                                    Animation.easeInOut(duration: 0.15).repeatCount(4, autoreverses: true)
+                                    : .default,
+                                    value: shake
+                                )
                         }
                         .padding(.leading, 3)
                         
                         Spacer()
+                    }
+                    .onReceive(timer) { _ in
+                        if !stopShaking {
+                            shake = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                                shake = false
+                            }
+                        }
                     }
                     .padding(.bottom, 180)
                 }
                 .overlay(alignment: .topTrailing) {
                     
                     // ⭐ زر الهوم — مطابق للوسطى + ربط الخريطة
-                    Button(action: {
-                        navigateToHome = true
-                    }) {
-                        Image(systemName: "house.fill")
-                            .font(.system(size: 25))
-                            .foregroundColor(.white)
-                            .padding(12)
-                            .background(Color("brown"))
-                            .clipShape(Circle())
+                    HStack {
+                        Button(action: {
+                            navigateToHome = true
+                        }) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color("brown"))
+                                    .frame(width: 60, height: 60)
+                                
+                                Image("saudiMap") // تأكد الاسم مطابق في Assets
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 35, height: 35)
+                            }
+                        }
+                        .padding(.top, 60)
+                        .padding(.trailing, 0.1)
                     }
-                    .padding(.top, 29)
-                    .padding(.trailing, 0.1)
+                    .offset(x:15,y:1)
                 }
             }
             .navigationBarBackButtonHidden(true)
@@ -209,7 +260,7 @@ struct LevelAlgharbiya: View {
 //                PuzzleChoicesView()
 //            }
             .navigationDestination(isPresented: $navigateToNext) {
-                PuzzleView(region: .western)
+                PuzzleView(region: .western , levelNumber: levelNumber)
             }
 
             
@@ -392,8 +443,10 @@ struct LevelAlgharbiya: View {
                 VStack(spacing: 16) {
                     Spacer()
                     
-                    let level = flow.currentLevel(for: .western)
-                    let landmark = westernLandmarks[min(level, westernLandmarks.count - 1)]
+//                    let level = flow.currentLevel(for: .western)
+//                    let landmark = westernLandmarks[min(level, westernLandmarks.count - 1)]
+                    let landmark = westernLandmarks[min(levelNumber, westernLandmarks.count - 1)]
+
                     Text(landmark.name)
                         .font(.custom("Saudi-Bold", size: 36))
                         .foregroundColor(.black)
@@ -447,7 +500,7 @@ struct LevelAlgharbiya: View {
                     .clipShape(RoundedRectangle(cornerRadius: 26))
                     .padding(20)
             }
-            .frame(width: 340, height: 520)
+            .frame(width: 340, height: 420)
         }
     }
     
@@ -491,5 +544,5 @@ struct LevelAlgharbiya: View {
 }
 
 #Preview {
-    LevelAlgharbiya()
+    LevelAlgharbiya( levelNumber: 0)
 }

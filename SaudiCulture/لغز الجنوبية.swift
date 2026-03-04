@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+internal import Combine
 // MARK: - شكل قطعة البزل (Puzzle Piece Shape)
 struct PuzzlePieceShapeJanubiya: Shape {
     let row: Int
@@ -91,7 +91,7 @@ struct PuzzlePieceJanubiya: Identifiable {
 
 // MARK: - شاشة لفل الجنوبية
 struct LevelAljanubiya: View {
-    
+    let levelNumber: Int
     private let rows = 3
     private let cols = 3
     private let puzzleSize: CGFloat = 340
@@ -119,38 +119,50 @@ struct LevelAljanubiya: View {
         "قصر شدا",
         "قرية ذي العين",
         "قنا",
-        "قلعة شمسان"
+        "قلعة شمسان",
+        "تراث الجنوبية",
     ]
  
     private let southernLandmarks: [(name: String, info: String)] = [
         (
             "رجال ألمع",
-"                    قرية تراثية قديمة في جبال عسير، مشهورة بمبانيها الحجرية ، ونوافذها الملوّنة. وتعكس التراث الجنوبي الأصيل وأسلوب الحياة زمان في المنطقة."
+"رجال ألمع قرية تراثية قديمة في جبال عسير، تشتهر بمبانيها الحجرية ونوافذها الملونة. قليل من الناس يعرف أن تصميم البيوت كان يهدف لتوفير التهوية والحماية من الأمطار والبرد في الجبال، مما يعكس أسلوب الحياة التقليدي للأهالي."
         ),
         (
             "قصر شدا",
-"قصر تاريخي في أبها كان مقرًا للحكم في العصور القديمة، اليوم يحوي متحفًا يعرض الحياة العسيرية والديكور التقليدي للمباني."
+"قصر شدا في أبها كان مقرًا للحكم في العصور القديمة ويعكس العمارة العسيرية التقليدية. القليل يعرف أن القصر احتوى على أقسام خاصة للمخازن وغرف للخطط الإدارية، ما يوضح دوره كمركز سياسي واجتماعي في المنطقة."
         ),
         (
             "قرية ذي العين",
-"قرية حجرية في الباحة تشتهر بمنازلها البيضاء المبنية من الرخام الطبيعي، وتقع بجوار عين ماء دائمة، مما يضفي جمالًا فريدًا على المكان."
+"قرية ذي العين في الباحة مبنية من الرخام الطبيعي وتحيط بها عين ماء دائمة، ما أضفى جمالًا طبيعيًا فريدًا على المكان. كما تشير بعض الدراسات إلى أن تصميم المنازل كان مهيأً لمواجهة الأمطار وحماية العائلات وفق تقاليد البناء القديمة."
         ),
         (
             "قنا",
-"منطقة تاريخية في عسير تحتوي على قرى ومنازل أثرية، وتعرف بأسلوب البناء التقليدي للعسير والجبال المحيطة بها، وتعتبر شاهدًا على تراث المنطقة."
+"قنا منطقة تاريخية في عسير تحتوي على قرى ومنازل أثرية، وتتميز بأسلوب البناء التقليدي للجبال المحيطة. قليل من الناس يعرف أن القرى القديمة كانت تستخدم سلالم حجرية وشرفات مخفية لتسهيل التنقل وحماية السكان."
         ),
         (
             "قلعة شمسان",
-"قلعة دفاعية قديمة في أبها، بنيت لحماية المدينة من الهجمات، وتتميز بموقعها الاستراتيجي وإطلالتها على المنطقة المحيطة، وهي اليوم من أبرز المعالم التاريخية."
+"قلعة شمسان كانت قلعة دفاعية في أبها لحماية المدينة من الهجمات، وتتميز بموقع استراتيجي وإطلالة واسعة على الجبال. القليل يعرف أن القلعة كانت تحتوي على أبراج مراقبة وغرف سرية لتخزين المؤن والأسلحة."
+        ),
+        (
+            "رجال ألمع",
+"رجال ألمع قرية تراثية قديمة في جبال عسير، تشتهر بمبانيها الحجرية ونوافذها الملونة. قليل من الناس يعرف أن تصميم البيوت كان يهدف لتوفير التهوية والحماية من الأمطار والبرد في الجبال، مما يعكس أسلوب الحياة التقليدي للأهالي."
         )
     ]
 
     
     var currentPuzzleImage: String {
-        let level = flow.currentLevel(for: .southern)
-        return puzzleImages[min(level, puzzleImages.count - 1)]
+//        let level = flow.currentLevel(for: .southern)
+//        return puzzleImages[min(level, puzzleImages.count - 1)]
+        return puzzleImages[min(levelNumber, puzzleImages.count - 1)]
+
     }
 
+//    @State private var showHintDialog = false
+    @State private var shake = false
+    @State private var stopShaking = false
+    let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
+    
     var body: some View {
         NavigationStack {
             
@@ -160,47 +172,85 @@ struct LevelAljanubiya: View {
                     .scaledToFill()
                     .ignoresSafeArea()
                 
-                VStack {
+                VStack(spacing: -20) {
+
                     Spacer()
-                    puzzleBoard
+
+                    ZStack {
+
+                        puzzleBoard
+
+                        // ⭐ العنوان يطلع من البوكس
+                        Text("ركّب الصورة")
+                            .font(.custom("Saudi-Bold", size: 28))
+                            .foregroundColor(Color("brown"))
+                            .font(.custom("Saudi-Bold", size: 30))
+                            .multilineTextAlignment(.center)
+                            .offset(x: 3 ,y: -250)
+                    }
+
                     Spacer()
                 }
                 .overlay(alignment: .bottom) {
+                    
                     HStack {
-                        
                         // ⭐ زر الاستفهام — مطابق للوسطى
                         Button(action: {
                             showHelpDialog = true
+                                stopShaking = true
                         }) {
-                            Image(systemName: "questionmark")
-                                .font(.system(size: 26))
+                            Text("💡")
+                                .font(.system(size: 28))
                                 .foregroundColor(.white)
-                                .padding()
-                                .background(Color("brown"))
+                                .padding(10)
+                                .background(Color(hex: "874F35"))
                                 .clipShape(Circle())
+                                .offset(x: shake ? -2 : 2, y: shake ? 1 : -1)        // حركة خفيفة يمين/يسار + فوق/تحت
+                                .rotationEffect(.degrees(shake ? 3 : -3))             // يميل يمين/يسار
+                                .scaleEffect(shake ? 1.05 : 0.95)                     // نبض خفيف
+                                .animation(
+                                    shake ?
+                                    Animation.easeInOut(duration: 0.15).repeatCount(4, autoreverses: true)
+                                    : .default,
+                                    value: shake
+                                )
                         }
                         .padding(.leading, 3)
                         
                         Spacer()
+                    }
+                    .onReceive(timer) { _ in
+                        if !stopShaking {
+                            shake = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                                shake = false
+                            }
+                        }
                     }
                     .padding(.bottom, 180)
                 }
                 .overlay(alignment: .topTrailing) {
                     
                     // ⭐ زر الهوم — مطابق للوسطى + ربط الخريطة
-                    Button(action: {
-                        navigateToHome = true
-                    }) {
-                        Image(systemName: "house.fill")
-                            .font(.system(size: 25))
-                            .foregroundColor(.white)
-                            .padding(12)
-                            .background(Color("brown"))
-                            .clipShape(Circle())
+                    HStack {
+                        Button(action: {
+                            navigateToHome = true
+                        }) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color("brown"))
+                                    .frame(width: 60, height: 60)
+                                
+                                Image("saudiMap") // تأكد الاسم مطابق في Assets
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 35, height: 35)
+                            }
+                        }
+                        .padding(.top, 60)
+                        .padding(.trailing, 0.1)
                     }
-                    .padding(.top, 29)
-                    .padding(.trailing, 0.1)
-                    
+                    .offset(x:15,y:1)
                 }
             }
             
@@ -214,7 +264,7 @@ struct LevelAljanubiya: View {
 //                PuzzleChoicesView()
 //            }
             .navigationDestination(isPresented: $navigateToNext ) {
-                PuzzleView(region: .southern)
+                PuzzleView(region: .southern, levelNumber: levelNumber)
             }
 
             .onAppear {
@@ -400,8 +450,9 @@ struct LevelAljanubiya: View {
                 VStack(spacing: 16) {
                     Spacer()
                     
-                    let level = flow.currentLevel(for: .southern)
-                    let landmark = southernLandmarks[min(level, southernLandmarks.count - 1)]
+//                    let level = flow.currentLevel(for: .southern)
+//                    let landmark = southernLandmarks[min(level, southernLandmarks.count - 1)]
+                    let landmark = southernLandmarks[min(levelNumber, southernLandmarks.count - 1)]
                     Text(landmark.name)
                         .font(.custom("Saudi-Bold", size: 36))
                         .foregroundColor(.black)
@@ -456,7 +507,7 @@ struct LevelAljanubiya: View {
                     .clipShape(RoundedRectangle(cornerRadius: 26))
                     .padding(20)
             }
-            .frame(width: 340, height: 520)
+            .frame(width: 340, height: 420)
         }
     }
     
@@ -501,5 +552,5 @@ struct LevelAljanubiya: View {
 }
 
 #Preview {
-    LevelAljanubiya()
+    LevelAljanubiya(levelNumber: 0)
 }

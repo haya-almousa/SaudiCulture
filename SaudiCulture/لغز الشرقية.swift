@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+internal import Combine
 
 // MARK: - شكل قطعة البزل (Puzzle Piece Shape)
 struct PuzzlePieceShapeSharqiya: Shape {
@@ -91,7 +92,12 @@ struct PuzzlePieceSharqiya: Identifiable {
 
 // MARK: - شاشة لفل الشرقية
 struct LevelAlsharqiya: View {
+    let levelNumber: Int
+
     
+    init(levelNumber: Int) {
+            self.levelNumber = levelNumber
+        }
     private let rows = 3
     private let cols = 3
     private let puzzleSize: CGFloat = 340
@@ -117,30 +123,46 @@ struct LevelAlsharqiya: View {
         "مسجد جواثا",
         "سوق القيصرية",
         "ميناء العقير",
-        "واحة الأحساء"
+        "واحة الأحساء",
+        "تراث الشرقية"
     ]
 
     // ⭐ بيانات المعالم لكل مستوى
     private var easternLandmarks: [(name: String, info: String)] = [
-        ("قصر إبراهيم", "معلَم تاريخي بارز في الأحساء، يجمع بين الطابع العسكري والديني، ويبيّن دور المنطقة الشرقية كمركز حضاري وتاريخي."),
-        ("مسجد جواثا", "أحد أقدم المساجد في المنطقة الشرقية، يمتاز بالعمارة التقليدية ويعكس الطابع الديني والثقافي للأحساء."),
-        ("سوق القيصرية", "سوق تقليدي مشهور في الأحساء، يجمع بين التجارة القديمة والحرف التقليدية ويبرز الثقافة المحلية."),
-        ("ميناء العقير", "مرفأ قديم كان مركزًا تجاريًا هامًا على ساحل الخليج العربي، يشير لأهمية المنطقة في التجارة البحرية."),
-        ("واحة الأحساء", "واحة خضراء كبيرة تزخر بالينابيع والنخيل، تعكس غنى البيئة الطبيعية والثقافية في شرق المملكة.")
+        ("قصر إبراهيم", "قصر إبراهيم في الهفوف بالأحساء يُظهر مزيج العمارة العسكرية والدينية، ويعود للقرن التاسع عشر. القصر يحتوي على أبراج دفاعية وغرف للعبادة، ويُقال أن له ممرات سرية تحت الأرض استخدمت للحماية والهروب. اليوم يُعد موقعًا سياحيًا وتراثيًا هامًا في المنطقة الشرقية."),
+        
+        ("مسجد جواثا", "مسجد جواثا من أقدم مساجد الأحساء، ويعود تاريخه لأكثر من 1200 سنة. يتميز ببنائه التقليدي من الحجر والطين واحتوائه على بئر قديمة. كان المسجد مركزًا لحفظ القرآن وتعليم الدين قبل المدارس الحديثة، وما زال شاهدًا على التراث الديني والثقافي."),
+        
+        
+        ("سوق القيصرية", "سوق القيصرية سوق تاريخي في الأحساء كان مركزًا للتجارة بين البدو والحضر. يحوي أزقة ضيقة ومحلات حجرية تقليدية، ويشتهر بالحرف اليدوية مثل صناعة النحاس والفخار. اليوم يُقام فيه مهرجان سنوي للحرف التراثية ويستقطب الزوار المهتمين بالثقافة المحلية.."),
+        
+        ("ميناء العقير", "ميناء العقير على ساحل الخليج العربي كان بوابة تجارية مهمة بين الخليج والهند وشرق إفريقيا. يحتوي على بقايا أرصفة وأبراج قديمة، وكان يُستخدم لتصدير اللؤلؤ والتوابل. اليوم يُعتبر موقعًا أثريًا ودراسة تاريخية لهواة التراث."),
+        
+        ("واحة الأحساء", "واحة الأحساء واحدة من أكبر الواحات في العالم، تضم ملايين النخيل ومئات الينابيع. كانت مركزًا زراعيًا متقدمًا منذ العصر الإسلامي الأول باستخدام أنظمة ري متطورة. اليوم تمثل الواحة مزيجًا من الطبيعة والتراث مع مزارع ومناظر سياحية جميلة."),
+        
+        ("قصر إبراهيم", "قصر إبراهيم في الهفوف بالأحساء يُظهر مزيج العمارة العسكرية والدينية، ويعود للقرن التاسع عشر. القصر يحتوي على أبراج دفاعية وغرف للعبادة، ويُقال أن له ممرات سرية تحت الأرض استخدمت للحماية والهروب. اليوم يُعد موقعًا سياحيًا وتراثيًا هامًا في المنطقة الشرقية.")
     ]
     @StateObject private var flow = LevelFlow.shared
 
     // ⭐ دالة لحساب الصورة الحالية لكل مستوى
     var currentPuzzleImage: String {
-        let level = flow.currentLevel(for: .eastern)
-        return puzzleImages[min(level, puzzleImages.count - 1)]
+//        let level = flow.currentLevel(for: .eastern)
+//        return puzzleImages[min(level, puzzleImages.count - 1)]
+        return puzzleImages[min(levelNumber, puzzleImages.count - 1)]
+
     }
 
     // ⭐ دالة لحساب المعلم والمعلومة الحالية
     var currentLandmark: (name: String, info: String) {
-        let level = flow.currentLevel(for: .eastern)
-        return easternLandmarks[min(level, easternLandmarks.count - 1)]
+//        let level = flow.currentLevel(for: .eastern)
+//        return easternLandmarks[min(level, easternLandmarks.count - 1)]
+        return easternLandmarks[min(levelNumber, easternLandmarks.count - 1)]
+
     }
+    
+        @State private var shake = false
+        @State private var stopShaking = false
+        let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
 
     var body: some View {
         NavigationStack {
@@ -151,46 +173,84 @@ struct LevelAlsharqiya: View {
                     .scaledToFill()
                     .ignoresSafeArea()
                 
-                VStack {
+                VStack(spacing: -20) {
+
                     Spacer()
-                    puzzleBoard
+
+                    ZStack {
+
+                        puzzleBoard
+
+                        // ⭐ العنوان يطلع من البوكس
+                        Text("ركّب الصورة")
+                            .font(.custom("Saudi-Bold", size: 28))
+                            .foregroundColor(Color("brown"))
+                            .font(.custom("Saudi-Bold", size: 30))
+                            .multilineTextAlignment(.center)
+                            .offset(x: 3 ,y:-250)
+                    }
+
                     Spacer()
                 }
                 .overlay(alignment: .bottom) {
                     HStack {
-                        
                         // ⭐ زر الاستفهام — مطابق للوسطى
                         Button(action: {
                             showHelpDialog = true
+                                stopShaking = true
                         }) {
-                            Image(systemName: "questionmark")
-                                .font(.system(size: 26))
+                            Text("💡")
+                                .font(.system(size: 28))
                                 .foregroundColor(.white)
-                                .padding()
-                                .background(Color("brown"))
+                                .padding(10)
+                                .background(Color(hex: "874F35"))
                                 .clipShape(Circle())
+                                .offset(x: shake ? -2 : 2, y: shake ? 1 : -1)        // حركة خفيفة يمين/يسار + فوق/تحت
+                                .rotationEffect(.degrees(shake ? 3 : -3))             // يميل يمين/يسار
+                                .scaleEffect(shake ? 1.05 : 0.95)                     // نبض خفيف
+                                .animation(
+                                    shake ?
+                                    Animation.easeInOut(duration: 0.15).repeatCount(4, autoreverses: true)
+                                    : .default,
+                                    value: shake
+                                )
                         }
                         .padding(.leading, 3)
                         
                         Spacer()
+                    }
+                    .onReceive(timer) { _ in
+                        if !stopShaking {
+                            shake = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                                shake = false
+                            }
+                        }
                     }
                     .padding(.bottom, 180)
                 }
                 .overlay(alignment: .topTrailing) {
                     
                     // ⭐ زر الهوم — مطابق للوسطى + ربط الخريطة
-                    Button(action: {
-                        navigateToHome = true
-                    }) {
-                        Image(systemName: "house.fill")
-                            .font(.system(size: 25))
-                            .foregroundColor(.white)
-                            .padding(12)
-                            .background(Color("brown"))
-                            .clipShape(Circle())
+                    HStack {
+                        Button(action: {
+                            navigateToHome = true
+                        }) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color("brown"))
+                                    .frame(width: 60, height: 60)
+                                
+                                Image("saudiMap") // تأكد الاسم مطابق في Assets
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 35, height: 35)
+                            }
+                        }
+                        .padding(.top, 60)
+                        .padding(.trailing, 0.1)
                     }
-                    .padding(.top, 29)
-                    .padding(.trailing, 0.1)
+                    .offset(x:15,y:1)
                 }
             }
             .navigationBarBackButtonHidden(true)
@@ -204,7 +264,7 @@ struct LevelAlsharqiya: View {
 //                PuzzleChoicesView()
 //            }
             .navigationDestination(isPresented: $navigateToNext ) {
-                PuzzleView(region: .eastern)
+                PuzzleView(region: .eastern , levelNumber: levelNumber)
             }
 
             .onAppear {
@@ -443,7 +503,7 @@ struct LevelAlsharqiya: View {
                     .clipShape(RoundedRectangle(cornerRadius: 26))
                     .padding(20)
             }
-            .frame(width: 340, height: 520)
+            .frame(width: 340, height: 420)
         }
     }
     
@@ -488,5 +548,5 @@ struct LevelAlsharqiya: View {
 }
 
 #Preview {
-    LevelAlsharqiya()
+    LevelAlsharqiya( levelNumber: 0)
 }

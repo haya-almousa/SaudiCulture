@@ -1,201 +1,187 @@
-//
-//  NorthView.swift
-//  SaudiCulture
-//
-//  Created by Rawan Algarny on 21/08/1447 AH.
-//
-//
+////
 //import SwiftUI
 //
 //struct NorthView: View {
-//    
+//    var region: RegionType
+//    var backgroundImageName: String {
+//            switch region {
+//            case .central:  return "الوسطى"
+//            case .northern: return "الشماليه"
+//            case .southern: return "الجنوبيه"
+//            case .eastern:  return "الشرقيه"
+//            case .western:  return "الغربيه"
+//            }
+//        }
 //    let columns = Array(repeating: GridItem(.flexible(), spacing: 12), count: 3)
 //    
 //    @StateObject private var viewModel = GameLogic()
-//    @State private var showWinPopup = false
-//    @State private var showTimeUpPopup = false
+//    @State private var activePopup: GamePopupType? = nil
 //    
 //    // Timer
 //    @State private var timeRemaining: Int = 90
 //    @State private var timerRunning: Bool = true
 //    @State private var flashRed: Bool = false
 //    
+//    // 🔥 زر الرجوع للخريطة
+//    @State private var goToMap = false
+//    
+//    // ✅ ربط الفوز بالبزل (نفس الشرقيه)
+//    @State private var goToNextGame = false
+//    
 //    // Cards for North region
 //    let northCards: [Card] = [
-//        // Pair 1
 //        Card(text: nil, imageName: "شمالي", borderColor: Color(hex: "731112"), pairID: 1),
 //        Card(text: "ثوب مرودن", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
-//        
-//        // Pair 2
 //        Card(text: nil, imageName: "شماليه", borderColor: Color(hex: "731112"), pairID: 2),
 //        Card(text: "محوثل و المقرونة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
-//        
-//        // Pair 3
 //        Card(text: nil, imageName: "NorthG", borderColor: Color(hex: "731112"), pairID: 3),
 //        Card(text: "بخنق و دراعه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
-//        
-//        // Pair 4
 //        Card(text: nil, imageName: "NorthB", borderColor: Color(hex: "731112"), pairID: 4),
 //        Card(text: "ثوب مرودن", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-//        
-//        // Lonely card
 //        Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
 //    ]
 //    
 //    var body: some View {
-//        ZStack {
-//            // Background
-//            Color(hex: "FFF9F2").ignoresSafeArea()
-//            Image("Palm").resizable().opacity(0.3)
-//            
-//            VStack(spacing: 16) {
-//                // Title
-//                Text("لعبة الكروت - الشمالية")
-//                    .foregroundStyle(Color(hex: "7A4A2E"))
-//                    .font(.system(size: 28, weight: .bold, design: .rounded))
+//        NavigationStack {
+//            ZStack {
+//                // Background
+//                Color(hex: "FFF9F2").ignoresSafeArea()
+//                Image(backgroundImageName)
+//                               .resizable()
+//                               .scaledToFill()
+//                               .ignoresSafeArea()
 //                
-//                // Timer
-//                ZStack {
-//                    RoundedRectangle(cornerRadius: 12)
-//                        .fill(Color.white.opacity(0.3))
-//                        .frame(width: 100, height: 40)
-//                        .overlay(
-//                            RoundedRectangle(cornerRadius: 12)
-//                                .stroke(Color(hex: "7A4A2E").opacity(0.5), lineWidth: 2)
-//                        )
-//                        .shadow(radius: 3)
-//                        .opacity(flashRed ? 0.3 : 1)
-//                    
-//                    Text("\(timeString(timeRemaining))")
-//                        .font(.system(size: 20, weight: .bold, design: .rounded))
-//                        .foregroundColor(Color(hex: "731112"))
-//                }
 //                
-//                // Cards Grid
-//                LazyVGrid(columns: columns, spacing: 16) {
-//                    ForEach(Array(viewModel.cards.enumerated()), id: \.element.id) { index, card in
-//                        CardView(
-//                            text: card.text,
-//                            imageName: card.imageName,
-//                            isFaceUp: viewModel.isFlipped(at: index),
-//                            borderColor: card.borderColor
-//                        )
-//                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                        .contentShape(Rectangle())
-//                        .onTapGesture {
-//                            viewModel.cardTapped(at: index)
-//                        }
-//                    }
-//                }
-//                .padding(.horizontal, 26)
-//                
-//                // Matched Pairs Counter
-//                HStack {
-//                    Text("مطابقات: \(viewModel.matchedPairsCount)/\(viewModel.getTotalPairs())")
-//                        .font(.system(size: 18, weight: .semibold, design: .rounded))
-//                        .foregroundColor(Color(hex: "7A4A2E"))
-//                    Spacer()
-//                }
-//                .padding(.horizontal, 26)
-//                
-//                Spacer()
-//            }
-//            .padding(.top, 20)
-//            
-//            // Win Popup
-//            if showWinPopup {
-//                Color.black.opacity(0.4).edgesIgnoringSafeArea(.all)
-//                
-//                VStack(spacing: 20) {
-//                    Text("مبروك !")
-//                        .font(.system(size: 28, weight: .bold, design: .rounded))
-//                        .foregroundColor(.white)
-//                    
-//                    Text("لقد نجحت في مطابقة جميع الكروت!")
-//                        .font(.system(size: 20, weight: .medium, design: .rounded))
-//                        .multilineTextAlignment(.center)
-//                        .foregroundColor(.white)
-//                        .padding(.horizontal, 16)
-//                    
+//                // 🔥 زر الهوم
+//                HStack{
 //                    Button(action: {
-//                        showWinPopup = false
-//                        resetGame()
+//                        goToMap = true
 //                    }) {
-//                        Text("يلا على اللعبه الي بعدها !")
-//                            .font(.system(size: 18, weight: .bold))
-//                            .foregroundColor(Color(hex: "731112"))
-//                            .padding()
-//                            .frame(maxWidth: .infinity)
-//                            .background(Color(hex: "FFEFD8"))
-//                            .cornerRadius(16)
-//                            .padding(.horizontal, 40)
+//                        Image(systemName: "house.fill")
+//                            .font(.system(size: 25))
+//                            .foregroundColor(Color(hex: "FCF0DD"))
+//                            .padding(12)
+//                            .background(Color(hex: "874F35"))
+//                            .clipShape(Circle())
 //                    }
 //                }
-//                .padding()
-//                .background(Color(hex: "731112").opacity(0.85))
-//                .cornerRadius(24)
-//                .shadow(radius: 10)
-//                .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                .transition(.scale.combined(with: .opacity))
-//                .animation(.easeInOut, value: showWinPopup)
-//            }
-//            
-//            // Time-Up Popup
-//            if showTimeUpPopup {
-//                Color.black.opacity(0.4).edgesIgnoringSafeArea(.all)
-//                
-//                VStack(spacing: 20) {
-//                    HStack {
-//                        Button(action: {
-//                            showTimeUpPopup = false
-//                            resetGame()
-//                        }) {
-//                            Image(systemName: "xmark")
-//                                .foregroundColor(.white)
-//                                .padding()
-//                                .font(.system(size: 22, weight: .bold))
+//                .offset(x:150,y:-300)
+//
+//                VStack(spacing: 16) {
+//                    
+//                    // Title
+//                    Text("لعبة الكروت - الشمالية")
+//                        .foregroundStyle(Color(hex: "7A4A2E"))
+//                        .font(.system(size: 28, weight: .bold, design: .rounded))
+//                    
+//                    // Timer
+//                    ZStack {
+//                        RoundedRectangle(cornerRadius: 12)
+//                            .fill(Color.white.opacity(0.3))
+//                            .frame(width: 100, height: 40)
+//                            .overlay(
+//                                RoundedRectangle(cornerRadius: 12)
+//                                    .stroke(Color(hex: "7A4A2E").opacity(0.5), lineWidth: 2)
+//                            )
+//                            .shadow(radius: 3)
+//                            .opacity(flashRed ? 0.3 : 1)
+//                        
+//                        Text("\(timeString(timeRemaining))")
+//                            .font(.system(size: 20, weight: .bold, design: .rounded))
+//                            .foregroundColor(Color(hex: "731112"))
+//                    }
+//                    
+//                    // Cards Grid
+//                    LazyVGrid(columns: columns, spacing: 16) {
+//                        ForEach(Array(viewModel.cards.enumerated()), id: \.element.id) { index, card in
+//                            CardView(
+//                                text: card.text,
+//                                imageName: card.imageName,
+//                                isFaceUp: viewModel.isFlipped(at: index),
+//                                borderColor: card.borderColor
+//                            )
+//                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                            .contentShape(Rectangle())
+//                            .onTapGesture {
+//                                viewModel.cardTapped(at: index)
+//                            }
 //                        }
+//                    }
+//                    .padding(.horizontal, 26)
+//                    .blur(radius: activePopup != nil ? 10 : 0)
+//                    .animation(.default, value: activePopup)
+//
+//                    
+//                    // Matched Pairs Counter
+//                    HStack {
+//                        Text("مطابقات: \(viewModel.matchedPairsCount)/\(viewModel.getTotalPairs())")
+//                            .font(.system(size: 18, weight: .semibold, design: .rounded))
+//                            .foregroundColor(Color(hex: "7A4A2E"))
 //                        Spacer()
 //                    }
+//                    .padding(.horizontal, 26)
 //                    
-//                    Text("انتهت اللعبه")
-//                        .font(.system(size: 28, weight: .bold, design: .rounded))
-//                        .foregroundColor(.white)
-//                    
-//                    Text(" العوض بالجيات")
-//                        .font(.system(size: 20, weight: .medium, design: .rounded))
-//                        .multilineTextAlignment(.center)
-//                        .foregroundColor(.white)
-//                        .padding(.horizontal, 16)
-//                    
+//                    Spacer()
 //                }
-//                .padding()
-//                .background(Color(hex: "731112").opacity(0.85))
-//                .cornerRadius(24)
-//                .shadow(radius: 10)
-//                .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                .transition(.scale.combined(with: .opacity))
-//                .animation(.easeInOut, value: showTimeUpPopup)
+//                .padding(.top, 60)
+//                
+//                // Popup
+//                if let popup = activePopup {
+//                    GamePopupView(
+//                        type: popup,
+//                        onClose: {
+//                            activePopup = nil
+//                            resetGame()
+//                        },
+//                        // ✅ نفس الشرقيه: عند الفوز يروح للبزل
+//                        onPrimaryAction: popup == .win ? {
+//                            activePopup = nil
+//                            goToNextGame = true
+//                        } : nil
+//                    )
+//                }
 //            }
-//        }
-//        .navigationBarTitleDisplayMode(.inline)
-//        .onReceive(viewModel.$gameWon) { won in
-//            if won {
-//                showWinPopup = true
-//                timerRunning = false
+//            .navigationDestination(isPresented: $goToMap) {
+//                SaudiMapView()
 //            }
-//        }
-//        .onAppear {
-//            viewModel.setupCards(cardPairs: northCards)
-//            
-//            Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-//                if timerRunning && timeRemaining > 0 {
-//                    timeRemaining -= 1
-//                    flashRed = timeRemaining <= 15 && timeRemaining > 0
-//                } else if timeRemaining == 0 {
-//                    timer.invalidate()
-//                    showTimeUpPopup = true
+//            // ✅ ربط الكروت بالبزل (الشمالية)
+//            .navigationDestination(isPresented: $goToNextGame) {
+//                LevelAshshamaliya()
+//            }
+//            .navigationBarBackButtonHidden(true)
+//            .navigationBarTitleDisplayMode(.inline)
+//            /////
+////            .onReceive(viewModel.$gameWon) { won in
+////                if won {
+////                    activePopup = .win
+////                    timerRunning = false
+////                }
+////            }
+//        ////
+//            .onReceive(viewModel.$gameWon) { won in
+//                if won {
 //                    timerRunning = false
+//                    viewModel.revealAllCards() // 👈 flips the lonely card
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { // 👈 1 sec delay
+//                        withAnimation(.easeInOut) {
+//                            activePopup = .win
+//                        }
+//                    }
+//                }
+//            }
+//            
+//            .onAppear {
+//                viewModel.setupCards(cardPairs: northCards)
+//                
+//                Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+//                    if timerRunning && timeRemaining > 0 {
+//                        timeRemaining -= 1
+//                        flashRed = timeRemaining <= 15 && timeRemaining > 0
+//                    } else if timeRemaining == 0 {
+//                        timer.invalidate()
+//                        activePopup = .timeUp
+//                        timerRunning = false
+//                    }
 //                }
 //            }
 //        }
@@ -209,7 +195,6 @@
 //        viewModel.setupCards(cardPairs: northCards)
 //    }
 //    
-//    // Format seconds to mm:ss
 //    func timeString(_ seconds: Int) -> String {
 //        let minutes = seconds / 60
 //        let secs = seconds % 60
@@ -218,37 +203,40 @@
 //}
 //
 //#Preview {
-//    NorthView()
+//    NorthView(region: .central)
 //}
 import SwiftUI
 
 struct NorthView: View {
     var region: RegionType
+    var levelNumber: Int
+
     var backgroundImageName: String {
-            switch region {
-            case .central:  return "الوسطى"
-            case .northern: return "الشماليه"
-            case .southern: return "الجنوبيه"
-            case .eastern:  return "الشرقيه"
-            case .western:  return "الغربيه"
-            }
+        switch region {
+        case .central:  return "الوسطى"
+        case .northern: return "الشماليه"
+        case .southern: return "الجنوبيه"
+        case .eastern:  return "الشرقيه"
+        case .western:  return "الغربيه"
         }
+    }
+
     let columns = Array(repeating: GridItem(.flexible(), spacing: 12), count: 3)
-    
     @StateObject private var viewModel = GameLogic()
     @State private var activePopup: GamePopupType? = nil
-    
+
     // Timer
     @State private var timeRemaining: Int = 90
     @State private var timerRunning: Bool = true
     @State private var flashRed: Bool = false
-    
-    // 🔥 زر الرجوع للخريطة
+
+    // Navigation
     @State private var goToMap = false
-    
-    // ✅ ربط الفوز بالبزل (نفس الشرقيه)
     @State private var goToNextGame = false
-    
+
+    // 👇 Preview mode for shuffle animation
+    @State private var isPreviewMode: Bool = true
+
     // Cards for North region
     let northCards: [Card] = [
         Card(text: nil, imageName: "شمالي", borderColor: Color(hex: "731112"), pairID: 1),
@@ -261,40 +249,43 @@ struct NorthView: View {
         Card(text: "ثوب مرودن", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
         Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
     ]
-    
+
     var body: some View {
         NavigationStack {
             ZStack {
                 // Background
                 Color(hex: "FFF9F2").ignoresSafeArea()
                 Image(backgroundImageName)
-                               .resizable()
-                               .scaledToFill()
-                               .ignoresSafeArea()
-                
-                
-                // 🔥 زر الهوم
-                HStack{
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+
+                // Home Button
+                HStack {
                     Button(action: {
                         goToMap = true
                     }) {
-                        Image(systemName: "house.fill")
-                            .font(.system(size: 25))
-                            .foregroundColor(Color(hex: "FCF0DD"))
-                            .padding(12)
-                            .background(Color(hex: "874F35"))
-                            .clipShape(Circle())
+                        ZStack {
+                            Circle()
+                                .fill(Color("brown"))
+                                .frame(width: 60, height: 60)
+                            
+                            Image("saudiMap")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 35, height: 35)
+                        }
                     }
                 }
-                .offset(x:150,y:-300)
+                .offset(x: 153, y: -344)
 
                 VStack(spacing: 16) {
-                    
                     // Title
                     Text("لعبة الكروت - الشمالية")
-                        .foregroundStyle(Color(hex: "7A4A2E"))
-                        .font(.system(size: 28, weight: .bold, design: .rounded))
-                    
+                         .foregroundColor(Color("brown"))
+                        .font(.custom("Saudi-Bold", size: 30))
+                        .multilineTextAlignment(.center)
+                        .offset(x: -9 ,y: -20)
                     // Timer
                     ZStack {
                         RoundedRectangle(cornerRadius: 12)
@@ -306,25 +297,27 @@ struct NorthView: View {
                             )
                             .shadow(radius: 3)
                             .opacity(flashRed ? 0.3 : 1)
-                        
+
                         Text("\(timeString(timeRemaining))")
                             .font(.system(size: 20, weight: .bold, design: .rounded))
                             .foregroundColor(Color(hex: "731112"))
                     }
-                    
+
                     // Cards Grid
                     LazyVGrid(columns: columns, spacing: 16) {
                         ForEach(Array(viewModel.cards.enumerated()), id: \.element.id) { index, card in
                             CardView(
                                 text: card.text,
                                 imageName: card.imageName,
-                                isFaceUp: viewModel.isFlipped(at: index),
+                                isFaceUp: isPreviewMode ? true : viewModel.isFlipped(at: index),
                                 borderColor: card.borderColor
                             )
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .contentShape(Rectangle())
                             .onTapGesture {
-                                viewModel.cardTapped(at: index)
+                                if !isPreviewMode {
+                                    viewModel.cardTapped(at: index)
+                                }
                             }
                         }
                     }
@@ -332,7 +325,6 @@ struct NorthView: View {
                     .blur(radius: activePopup != nil ? 10 : 0)
                     .animation(.default, value: activePopup)
 
-                    
                     // Matched Pairs Counter
                     HStack {
                         Text("مطابقات: \(viewModel.matchedPairsCount)/\(viewModel.getTotalPairs())")
@@ -341,12 +333,12 @@ struct NorthView: View {
                         Spacer()
                     }
                     .padding(.horizontal, 26)
-                    
+
                     Spacer()
                 }
                 .padding(.top, 60)
-                
-                // Popup
+
+                // MARK: - Popup
                 if let popup = activePopup {
                     GamePopupView(
                         type: popup,
@@ -354,7 +346,6 @@ struct NorthView: View {
                             activePopup = nil
                             resetGame()
                         },
-                        // ✅ نفس الشرقيه: عند الفوز يروح للبزل
                         onPrimaryAction: popup == .win ? {
                             activePopup = nil
                             goToNextGame = true
@@ -365,21 +356,39 @@ struct NorthView: View {
             .navigationDestination(isPresented: $goToMap) {
                 SaudiMapView()
             }
-            // ✅ ربط الكروت بالبزل (الشمالية)
             .navigationDestination(isPresented: $goToNextGame) {
-                LevelAshshamaliya()
+                LevelAshshamaliya(levelNumber: levelNumber)
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarTitleDisplayMode(.inline)
+
             .onReceive(viewModel.$gameWon) { won in
                 if won {
-                    activePopup = .win
                     timerRunning = false
+                    viewModel.revealAllCards()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        withAnimation(.easeInOut) {
+                            activePopup = .win
+                        }
+                    }
                 }
             }
+
             .onAppear {
                 viewModel.setupCards(cardPairs: northCards)
-                
+                isPreviewMode = true
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    withAnimation(.easeInOut(duration: 0.4)) {
+                        isPreviewMode = false
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        withAnimation(.spring(response: 0.6, dampingFraction: 0.7)) {
+                            viewModel.shuffleCards()
+                        }
+                    }
+                }
+
                 Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
                     if timerRunning && timeRemaining > 0 {
                         timeRemaining -= 1
@@ -393,15 +402,27 @@ struct NorthView: View {
             }
         }
     }
-    
-    // Reset Game
+
+    // MARK: - Reset Game
     func resetGame() {
         timeRemaining = 90
         timerRunning = true
         flashRed = false
+        isPreviewMode = true
         viewModel.setupCards(cardPairs: northCards)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            withAnimation(.easeInOut(duration: 0.4)) {
+                isPreviewMode = false
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                withAnimation(.spring(response: 0.6, dampingFraction: 0.7)) {
+                    viewModel.shuffleCards()
+                }
+            }
+        }
     }
-    
+
     func timeString(_ seconds: Int) -> String {
         let minutes = seconds / 60
         let secs = seconds % 60
@@ -410,5 +431,5 @@ struct NorthView: View {
 }
 
 #Preview {
-    NorthView(region: .central)
+    NorthView(region: .central, levelNumber: 1)
 }

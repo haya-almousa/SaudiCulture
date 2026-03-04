@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+internal import Combine
 
 // MARK: - شكل قطعة البزل (Puzzle Piece Shape)
 struct PuzzlePieceShapeShamaliya: Shape {
@@ -91,7 +92,12 @@ struct PuzzlePieceShamaliya: Identifiable {
 
 // MARK: - شاشة لفل الشمالية
 struct LevelAshshamaliya: View {
-    
+    let levelNumber: Int
+
+       init(levelNumber: Int) {
+           self.levelNumber = levelNumber
+       }
+
     private let rows = 3
     private let cols = 3
     private let puzzleSize: CGFloat = 340
@@ -117,26 +123,37 @@ struct LevelAshshamaliya: View {
     let puzzleImages = [
         "تراث الشمالية",
         "آثار الشويحطية",
-        "دومة الجندل",
+        "دومة الجندل ",
         "قلعة زعبل",
-        "مسجد عمر بن الخطاب"
+       "مسجد عمر بن الخطاب",
+        "تراث الشمالية"
     ]
 
     // ⭐ بيانات المعالم لكل مستوى
     private var northernLandmarks: [(name: String, info: String)] = [
-        ("مدائن صالح", "مدينة أثرية تقع في منطقة الحجر، وتعتبر أول موقع سعودي يُدرج ضمن قائمة التراث العالمي لليونسكو. تحتوي على نقوش صخرية وقبور محفورة في الصخر."),
-        ("آثار الشويحطية", "موقع أثري قديم يعكس حضارة شمال الجزيرة العربية، يحتوي على بقايا مبانٍ وأدوات أثرية توضح نمط حياة السكان الأوائل."),
-        ("دومة الجندل", "مدينة تاريخية تحتوي على العديد من المباني القديمة والقلاع مثل قلعة الشيخ سلوان، وتعتبر مركزًا تجاريًا قديمًا على طريق التجارة شمال الجزيرة."),
-        ("قلعة زعبل", "قلعة قديمة تحكي قصص المعارك والحصون في المنطقة، بنيت للدفاع عن المنطقة الشمالية ضد الغزوات."),
-        ("مسجد عمر بن الخطاب", "مسجد تاريخي مهم في المنطقة الشمالية، يعكس العمارة القديمة ويعتبر من المعالم الدينية البارزة.")
+        ("مدائن صالح", "مدائن صالح في منطقة الحجر هي أول موقع سعودي يُدرج ضمن التراث العالمي لليونسكو. المدينة الأثرية تحتوي على نقوش صخرية وقبور محفورة في الصخر، وتُظهر براعة الحضارات القديمة في المنطقة. تعتبر اليوم مقصدًا سياحيًا وبحثيًا يروي تاريخ شمال الجزيرة العربية."),
+        
+        ("آثار الشويحطية", "آثار الشويحطية تعكس حضارة قديمة شمال الجزيرة العربية، وتضم بقايا مبانٍ وأدوات أثرية. تكشف هذه البقايا عن نمط حياة السكان الأوائل وأسلوبهم في البناء والزراعة. الموقع يقدم لمحة عن تاريخ المنطقة قبل آلاف السنين."),
+        
+        ("دومة الجندل", "دومة الجندل مدينة تاريخية شمال المملكة، تحتوي على مبانٍ قديمة وقلاع مثل قلعة الشيخ سلوان. كانت المدينة مركزًا تجاريًا مهمًا على طريق التجارة القديم، وما زالت تحتفظ بأثرها التاريخي والديني."),
+        
+        ("قلعة زعبل", "قلعة زعبل تحكي قصص المعارك والحصون في شمال المملكة، بنيت للدفاع عن المنطقة ضد الغزوات. القلعة القديمة تظهر المهارة الهندسية والتخطيط العسكري لأهل المنطقة في العصور الماضية."),
+        
+        ("مسجد عمر بن الخطاب", "مسجد عمر بن الخطاب يعد من المعالم الدينية البارزة في المنطقة الشمالية، ويعكس العمارة الإسلامية التقليدية. المسجد التاريخي يمثل مكانًا للعبادة والتعليم، ويحتفظ بأهمية دينية وثقافية منذ القدم."),
+        ("مدائن صالح", "مدائن صالح في منطقة الحجر هي أول موقع سعودي يُدرج ضمن التراث العالمي لليونسكو. المدينة الأثرية تحتوي على نقوش صخرية وقبور محفورة في الصخر، وتُظهر براعة الحضارات القديمة في المنطقة. تعتبر اليوم مقصدًا سياحيًا وبحثيًا يروي تاريخ شمال الجزيرة العربية.")
     ]
 
 
     // ⭐ دالة لحساب الصورة الحالية لكل مستوى
     var currentPuzzleImage: String {
-        let level = flow.currentLevel(for: .northern)
-        return puzzleImages[min(level, puzzleImages.count - 1)]
+//        let level = flow.currentLevel(for: .northern)
+//        return puzzleImages[min(level, puzzleImages.count - 1)]
+        return puzzleImages[min(levelNumber, puzzleImages.count - 1)]
+
     }
+    @State private var shake = false
+    @State private var stopShaking = false
+    let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
 
     var body: some View {
         NavigationStack {
@@ -147,46 +164,84 @@ struct LevelAshshamaliya: View {
                     .scaledToFill()
                     .ignoresSafeArea()
                 
-                VStack {
+                VStack(spacing: -20) {
+
                     Spacer()
-                    puzzleBoard
+
+                    ZStack {
+
+                        puzzleBoard
+
+                        // ⭐ العنوان يطلع من البوكس
+                        Text("ركّب الصورة")
+                            .font(.custom("Saudi-Bold", size: 28))
+                            .foregroundColor(Color("brown"))
+                            .font(.custom("Saudi-Bold", size: 30))
+                            .multilineTextAlignment(.center)
+                            .offset(x: 3 ,y:-250)
+                    }
+
                     Spacer()
                 }
                 .overlay(alignment: .bottom) {
                     HStack {
-                        
-                        // ⭐ زر الاستفهام — الآن مطابق للوسطى (أيقونة + حجم 26)
+                        // ⭐ زر الاستفهام — مطابق للوسطى
                         Button(action: {
                             showHelpDialog = true
+                                stopShaking = true
                         }) {
-                            Image(systemName: "questionmark")
-                                .font(.system(size: 26))
+                            Text("💡")
+                                .font(.system(size: 28))
                                 .foregroundColor(.white)
-                                .padding()
-                                .background(Color("brown"))
+                                .padding(10)
+                                .background(Color(hex: "874F35"))
                                 .clipShape(Circle())
+                                .offset(x: shake ? -2 : 2, y: shake ? 1 : -1)        // حركة خفيفة يمين/يسار + فوق/تحت
+                                .rotationEffect(.degrees(shake ? 3 : -3))             // يميل يمين/يسار
+                                .scaleEffect(shake ? 1.05 : 0.95)                     // نبض خفيف
+                                .animation(
+                                    shake ?
+                                    Animation.easeInOut(duration: 0.15).repeatCount(4, autoreverses: true)
+                                    : .default,
+                                    value: shake
+                                )
                         }
                         .padding(.leading, 3)
                         
                         Spacer()
+                    }
+                    .onReceive(timer) { _ in
+                        if !stopShaking {
+                            shake = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                                shake = false
+                            }
+                        }
                     }
                     .padding(.bottom, 180)
                 }
                 .overlay(alignment: .topTrailing) {
                     
                     // ⭐ زر الهوم — مطابق للوسطى + ربط الخريطة
-                    Button(action: {
-                        navigateToHome = true
-                    }) {
-                        Image(systemName: "house.fill")
-                            .font(.system(size: 25))
-                            .foregroundColor(.white)
-                            .padding(12)
-                            .background(Color("brown"))
-                            .clipShape(Circle())
+                    HStack {
+                        Button(action: {
+                            navigateToHome = true
+                        }) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color("brown"))
+                                    .frame(width: 60, height: 60)
+                                
+                                Image("saudiMap") // تأكد الاسم مطابق في Assets
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 35, height: 35)
+                            }
+                        }
+                        .padding(.top, 60)
+                        .padding(.trailing, 0.1)
                     }
-                    .padding(.top, 29)
-                    .padding(.trailing, 0.1)
+                    .offset(x:15,y:1)
                 }
             }
             .navigationBarBackButtonHidden(true)
@@ -200,7 +255,7 @@ struct LevelAshshamaliya: View {
 //            }
 
             .navigationDestination(isPresented: $navigateToNext) {
-                PuzzleView(region: .northern)
+                PuzzleView(region: .northern , levelNumber: levelNumber)
             }
 
             .onAppear {
@@ -385,9 +440,10 @@ struct LevelAshshamaliya: View {
                 
                 VStack(spacing: 16) {
                     Spacer()
-                    let level = flow.currentLevel(for: .northern)
-                    let landmark = northernLandmarks[min(level, northernLandmarks.count - 1)]
+//                    let level = flow.currentLevel(for: .northern)
+//                    let landmark = northernLandmarks[min(level, northernLandmarks.count - 1)]
 
+                    let landmark = northernLandmarks[min(levelNumber, northernLandmarks.count - 1)]
                     Text(landmark.name)    // اسم المعلم
                         .font(.custom("Saudi-Bold", size: 36))
                         .foregroundColor(.black)
@@ -436,13 +492,13 @@ struct LevelAshshamaliya: View {
                     .fill(Color("BackgroundMain"))
                     .stroke(Color("brown"), lineWidth: 4)
                 
-                Image("تراث الشمالية")
+                Image(currentPuzzleImage)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .clipShape(RoundedRectangle(cornerRadius: 26))
                     .padding(20)
             }
-            .frame(width: 340, height: 520)
+            .frame(width: 340, height: 420)
         }
     }
     
@@ -485,7 +541,7 @@ struct LevelAshshamaliya: View {
         }
     }
 }
-
+//
 #Preview {
-    LevelAshshamaliya()
+    LevelAshshamaliya(levelNumber: 1)
 }

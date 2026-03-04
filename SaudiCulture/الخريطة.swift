@@ -1,8 +1,6 @@
-
+//
 //  الخريطة.swift
 //  SaudiCulture
-//
-//  Created by Raghad Alamoudi on 22/08/1447 AH.
 //
 
 import SwiftUI
@@ -14,8 +12,9 @@ struct SaudiMapView: View {
     @AppStorage("selectedCharacter") private var savedCharacter: String = "نجديه"
     @State private var selectedRegion: Region?
     @State private var goToLevels = false
-    private let debugUnlockAll = true
+    private let debugUnlockAll = false
     @State private var selectedRegionType: RegionType?
+    @State private var showLockedDialog = false  // ✅ جديد
 
     // MARK: - Body
     var body: some View {
@@ -31,8 +30,9 @@ struct SaudiMapView: View {
                             .fontWeight(.bold)
                             .foregroundColor(Color("brown"))
                             .multilineTextAlignment(.center)
+                            .offset(x:0,y:40)
                     }
-                    .offset(y: -300)
+                    .offset(y: -370)
                     
                     ZStack(alignment: .center) {
                         
@@ -66,7 +66,7 @@ struct SaudiMapView: View {
                         ClickableRegionView(
                             imageName: "المنطقة الوسطى",
                             size: 220,
-                            isUnlocked: true,
+                            isUnlocked: gameProgress.isRegionUnlocked(.central),
                             action: { handleRegionTap(.central) }
                         )
                         .offset(x: -19, y: -20)
@@ -82,6 +82,11 @@ struct SaudiMapView: View {
                         .zIndex(4)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    
+                    // ✅ Custom Dialog للمنطقة المقفلة
+                    if showLockedDialog {
+                        lockedRegionDialog
+                    }
                 }
                 .navigationDestination(isPresented: $goToLevels) {
                     if let region = selectedRegionType {
@@ -90,16 +95,58 @@ struct SaudiMapView: View {
                 }
             }
             .navigationBarBackButtonHidden(true)
-            .alert(item: $selectedRegion) { region in
-                Alert(
-                    title: Text(region.isLocked ? "🔒 منطقة مقفلة" : region.name),
-                    message: Text(region.isLocked
-                                  ? "أكمل المنطقة السابقة لفتح هذه المنطقة!"
-                                  : "اخترت \(region.name)"
-                                 ),
-                    dismissButton: .default(Text("حسناً"))
-                )
+        }
+    }
+
+    // MARK: - Custom Dialog للمنطقة المقفلة
+    private var lockedRegionDialog: some View {
+        ZStack {
+            // خلفية شفافة داكنة
+            Color.black.opacity(0.3)
+                .ignoresSafeArea()
+                .onTapGesture {
+                    showLockedDialog = false
+                }
+            
+            // النافذة
+            VStack(spacing: 20) {
+                Spacer()
+                
+                Text("منطقة مغلقة")
+                    .font(.custom("Saudi-Bold", size: 30))
+                    .foregroundColor(Color("brown"))
+                    .padding(.top, 40)
+                
+                Text("أكمل المنطقة السابقة لفتح هذه المنطقة!")
+                    .font(.custom("Saudi-Regular", size: 22))
+                    .foregroundColor(Color("brown"))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 30)
+                
+                Spacer()
+                
+                Button(action: {
+                    showLockedDialog = false
+                }) {
+                    Text("حسناً")
+                        .font(.custom("Saudi-Bold", size: 20))
+                        .foregroundColor(Color("BackgroundMain"))
+                        .padding(.horizontal, 50)
+                        .padding(.vertical, 12)
+                        .background(Color("brown"))
+                        .cornerRadius(25)
+                }
+                .padding(.bottom, 40)
             }
+            .frame(width: 355, height: 350)
+            .background(
+                RoundedRectangle(cornerRadius: 30)
+                    .stroke(Color("brown"), lineWidth: 4)
+                    .background(
+                        RoundedRectangle(cornerRadius: 30)
+                            .fill(Color("BackgroundMain"))
+                    )
+            )
         }
     }
 
@@ -108,7 +155,6 @@ struct SaudiMapView: View {
         let isUnlocked = gameProgress.isRegionUnlocked(regionType)
 
         if isUnlocked {
-//  old one           LevelFlow.shared.selectedRegion = regionType
             LevelFlow.shared.selectedRegion = regionType
             selectedRegionType = regionType
             goToLevels = true
@@ -118,6 +164,7 @@ struct SaudiMapView: View {
                 name: regionType.displayName,
                 isLocked: true
             )
+            showLockedDialog = true  // ✅ أظهر النافذة المخصصة
         }
     }
 }
@@ -206,7 +253,7 @@ struct TransparentButtonStyle: ButtonStyle {
 }
 
 // MARK: - Region Type Enum
-enum RegionType: String, CaseIterable,Codable {
+enum RegionType: String, CaseIterable, Codable {
     case central = "المنطقة الوسطى"
     case eastern = "المنطقة الشرقية"
     case northern = "المنطقة الشمالية"
@@ -253,8 +300,22 @@ class GameProgress: ObservableObject {
         UserDefaults.standard.set(Array(completedRegions), forKey: userDefaultsKey)
     }
 
+    // ✅ المنطق الصحيح: المنطقة تفتح بعد إنهاء 5 مراحل من المنطقة السابقة
     func isRegionUnlocked(_ region: RegionType) -> Bool {
-        return true
+        // المنطقة الوسطى دائماً مفتوحة
+        if region == .central {
+            return true
+        }
+        
+        // جيب المنطقة اللي قبلها حسب الترتيب
+        guard let previousRegion = RegionType.allCases
+            .first(where: { $0.order == region.order - 1 }) else {
+            return false
+        }
+        
+        // تحقق إن المنطقة السابقة خلصت 5 مراحل (المرحلة 4 هي آخر مرحلة)
+        let previousLevelCompleted = LevelFlow.shared.currentLevel(for: previousRegion)
+        return previousLevelCompleted > 4  // أكبر من 4 يعني خلص المرحلة 5
     }
 
     func isRegionCompleted(_ region: RegionType) -> Bool {

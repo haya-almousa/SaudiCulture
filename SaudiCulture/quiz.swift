@@ -1,4 +1,5 @@
 import SwiftUI
+internal import Combine
 
 // Model for a multiple-choice puzzle
 struct ChoicePuzzle {
@@ -13,10 +14,13 @@ struct ChoicePuzzle {
 
 struct PuzzleChoicesView: View {
     let region: RegionType
+    let levelNumber: Int
 
-    init(region: RegionType) {
+    init(region: RegionType, levelNumber: Int) {
         self.region = region
+        self.levelNumber = levelNumber
     }
+
 
 
     @ObservedObject var flow = LevelFlow.shared
@@ -92,6 +96,17 @@ struct PuzzleChoicesView: View {
     يعتمد على إيقاع الدفوف، وتُلقى خلاله قصائد وجدانية تعبّر عن المشاعر والحنين.
     ويعكس هذا الفن الترابط الاجتماعي والحياة الثقافية في المجتمع النجدي.
     """
+        ),
+        ChoicePuzzle(
+            question: "أنا ملك المائدة في نجد خصوصاً في الغداء، أتكون من أرز ولحم، والسر في طعمي هو الكشنة اللي فوقي، واسمي صار عالمي.",
+            choices: ["السليق", "الكبسة (المكبوس)", "العصيدة"],
+            correctIndex: 1,
+            hint: "تبدأ بحرف (ك)، وإذا كانت اللحمة مدفونة تحت الرز تسمى أحياناً مضغوط.",
+            description: """
+    الكبسة من أشهر الأطباق التقليدية في نجد وفي السعودية عموماً، وتُقدَّم غالباً في وجبة الغداء.
+    تتكوّن من الأرز المتبّل بالبهارات مع اللحم أو الدجاج، وتتميّز بالكشنة التي تُضاف على الوجه.
+    وتُعد رمزاً للكرم والضيافة في المجتمع السعودي، وانتشرت عالمياً كطبق سعودي أصيل.
+    """
         )
     ]
 
@@ -156,6 +171,17 @@ struct PuzzleChoicesView: View {
     البدع أو مغائر شعيب موقع تاريخي في منطقة تبوك.
     تضم جبالاً منحوتة وآثاراً قديمة تُنسب لحضارة مدين.
     وتُعد من أهم المواقع الأثرية في شمال غرب المملكة.
+    """
+        ),
+        ChoicePuzzle(
+            question: "أنا فن شعبي مهيب، نصف فيه صفوفاً متراصة، ونصْدِر أصواتاً تشبه زئير الأسود، وننتهي بكلمة (هلا هلا بيك يا ولد).",
+            choices: ["الدحة", "الخطوة", "السامري"],
+            correctIndex: 0,
+            hint: "يلقبونها بـ (أنفاس الأسود)، وكانت تُؤدى لإرهاب الأعداء.",
+            description: """
+    الدحة فن شعبي اشتهرت به مناطق شمال المملكة.
+    يؤدَّى على شكل صفوف متراصة مع أصوات جماعية قوية تشبه زئير الأسود.
+    كان يُستخدم قديماً لبث الحماسة وإرهاب الخصوم، ويُؤدّى اليوم في المناسبات والاحتفالات.
     """
         )
     ]
@@ -222,6 +248,17 @@ struct PuzzleChoicesView: View {
     تُزيَّن من الداخل بفن القط العسيري الملون.
     وتعكس التكيّف مع طبيعة الجبال والبيئة المحيطة.
     """
+        ),
+        ChoicePuzzle(
+            question: "أنا الأكلة اللي ما يكتمل الفطور أو المناسبة بدونها، أعتمد على الدقيق والفرك اليدوي، وفي وسطي (بحر) من السمن والعسل.",
+            choices: ["الكبسة", "العريكة", "المندي"],
+            correctIndex: 1,
+            hint: "اسمي مشتق من عملية (العرك) باليد.",
+            description: """
+    العريكة من أشهر الأكلات الشعبية في جنوب المملكة.
+    تُحضَّر من الدقيق وتُعرك باليد ثم يُضاف إليها السمن والعسل.
+    تُقدَّم في الفطور والمناسبات، وترمز للكرم والاحتفاء بالضيف.
+    """
         )
     ]
 
@@ -286,6 +323,17 @@ struct PuzzleChoicesView: View {
     الينبعاوي فن غنائي شعبي مرتبط بسواحل الحجاز.
     يُؤدّى باستخدام آلة السمسمية.
     ويعكس ارتباط أهل الساحل بالبحر وحياتهم اليومية.
+    """
+        ),
+        ChoicePuzzle(
+            question: "أنا فن شعبي حجازي بامتياز، نلعب بالعصا في حلقة دائرية ومسجل في اليونسكو.",
+            choices: ["المزمار", "العرضة", "الدحة"],
+            correctIndex: 0,
+            hint: "رقصة تعبر عن القوة والولاء للحارة.",
+            description: """
+    المزمار فن شعبي اشتهر في منطقة الحجاز.
+    يؤدَّى بالعصي في حلقة دائرية وسط إيقاعات حماسية.
+    سُجّل ضمن التراث الثقافي غير المادي لما يحمله من قيمة اجتماعية.
     """
         )
     ]
@@ -352,6 +400,17 @@ struct PuzzleChoicesView: View {
     يتميّز بلونه ونكهته الخاصة.
     ويُعد جزءاً من المائدة التراثية في المنطقة الشرقية.
     """
+        ),
+        ChoicePuzzle(
+            question: "أنا لستُ أرزاً عادياً، لوني يميل للاحمرار.",
+            choices: ["أرز بسمتي", "الأرز الحساوي", "الأرز الأمريكي"],
+            correctIndex: 1,
+            hint: "يحتاج حرارة عالية لزراعته.",
+            description: """
+    الأرز الحساوي محصول زراعي تشتهر به الأحساء.
+    يتميّز بلونه المائل للاحمرار وقيمته الغذائية العالية.
+    ويُعد جزءاً من التراث الزراعي في المنطقة الشرقية.
+    """
         )
     ]
 
@@ -388,6 +447,10 @@ struct PuzzleChoicesView: View {
     @State private var goToMap = false
 
 
+    @State private var shake = false
+    @State private var stopShaking = false
+    let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
+    
     
     
     var body: some View {
@@ -407,25 +470,39 @@ struct PuzzleChoicesView: View {
                     Button(action: {
                         goToMap = true
                     }) {
-                        Image(systemName: "house.fill")
-                            .font(.system(size: 25))
-                            .foregroundColor(Color(hex: "FCF0DD"))
-                            .padding(12)
-                            .background(Color(hex: "874F35"))
-                            .clipShape(Circle())
+                        ZStack {
+                            Circle()
+                                .fill(Color("brown"))
+                                .frame(width: 60, height: 60)
+                            
+                            Image("saudiMap")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 35, height: 35)
+                        }
                     }
                 }
                 .offset(x:150,y:-300)
 
                 Spacer()
 
-                let level = flow.currentLevel(for: region)
+//                let level = flow.currentLevel(for: region)
 
-                if level < activePuzzles.count {
-                    let puzzle = activePuzzles[level]
-
-                    // الكرت (نفس ديزاينك)
-                    VStack(spacing: 20) {
+//                if level < activePuzzles.count {
+//                    let puzzle = activePuzzles[levelNumber]
+                if levelNumber < activePuzzles.count {
+                    let puzzle = activePuzzles[levelNumber]
+                    // الكرت + عنوان فوقه
+                    ZStack {
+                        
+                        Text("اختار الإجابة الصحيحة")
+                         .font(.custom("Saudi-Regular", size: 26))
+                            .fontWeight(.bold)
+                            .foregroundColor(Color("brown"))
+                            .multilineTextAlignment(.center)
+                            .offset(x: -1 ,y: -15)
+                    }
+                        VStack(spacing: 20) {
                         Text(puzzle.question)
                             .font(.custom("Saudi-Bold", size: 22))
                             .multilineTextAlignment(.center)
@@ -435,14 +512,38 @@ struct PuzzleChoicesView: View {
                             .foregroundColor(.brown)
 
                         HStack {
-                            Button { withAnimation { showHint.toggle() } } label: {
-                                Image(systemName: "questionmark")
+                            // ⭐ زر الاستفهام — مطابق للوسطى
+                            Button(action: {
+                                showHint = true
+                                    stopShaking = true
+                            }) {
+                                Text("💡")
+                                    .font(.system(size: 28))
                                     .foregroundColor(.white)
-                                    .padding()
+                                    .padding(10)
                                     .background(Color(hex: "874F35"))
                                     .clipShape(Circle())
+                                    .offset(x: shake ? -2 : 2, y: shake ? 1 : -1)        // حركة خفيفة يمين/يسار + فوق/تحت
+                                    .rotationEffect(.degrees(shake ? 3 : -3))             // يميل يمين/يسار
+                                    .scaleEffect(shake ? 1.05 : 0.95)                     // نبض خفيف
+                                    .animation(
+                                        shake ?
+                                        Animation.easeInOut(duration: 0.15).repeatCount(4, autoreverses: true)
+                                        : .default,
+                                        value: shake
+                                    )
                             }
+                            .padding(.leading, 3)
+                            
                             Spacer()
+                        }
+                        .onReceive(timer) { _ in
+                            if !stopShaking {
+                                shake = true
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                                    shake = false
+                                }
+                            }
                         }
                     }
                     .padding()
@@ -489,6 +590,8 @@ struct PuzzleChoicesView: View {
                     if selectedIndex == puzzle.correctIndex {
                         Button {
                             selectedDescription = puzzle.description
+                            flow.completeLevel(region: region, levelNumber: levelNumber)
+
                             gotonextpage = true
                         } label: {
                             Text("التالي")
@@ -511,14 +614,15 @@ struct PuzzleChoicesView: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationDestination(isPresented: $gotonextpage) {
-            PuzzleView3(region: region, descriptionText: selectedDescription)
+            PuzzleView3(region: region, descriptionText: selectedDescription , levelNumber: levelNumber)
+                        
         }
     }
 
     // MARK: - Logic (نفس منطقك)
     func checkAnswer(puzzle: ChoicePuzzle) {
         if selectedIndex == puzzle.correctIndex {
-            feedback = "إجابة صحيحة!"
+            feedback = "😁"
         } else {
             feedback = "حاول مرة أخرى"
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -541,7 +645,8 @@ struct PuzzleChoicesView: View {
                 .onTapGesture { withAnimation { showHint = false } }
             
             VStack(spacing: 20) {
-                Text(activePuzzles[flow.currentLevel(for: region)].hint)
+//                Text(activePuzzles[flow.currentLevel(for: region)].hint)
+                Text(activePuzzles[levelNumber].hint)
                     .font(.custom("Saudi-Regular", size: 22))
                     .foregroundColor(Color(hex: "FCF0DD"))
                     .multilineTextAlignment(.center)
@@ -561,5 +666,5 @@ struct PuzzleChoicesView: View {
 }
 
 #Preview {
-    PuzzleChoicesView(region: .southern)
+    PuzzleChoicesView(region: .southern , levelNumber: 1 )
 }

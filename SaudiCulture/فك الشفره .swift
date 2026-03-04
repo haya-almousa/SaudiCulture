@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+internal import Combine
 
 extension Color {
     init(hex: String) {
@@ -30,18 +31,28 @@ struct Puzzle {
     let emojis: String
     let hint: String
     let answer: String
+    let secondAnswer: String?
 }
 
 
 struct PuzzleView: View {
     let region: RegionType
+    let levelNumber: Int
+    
+    
+    
+    init(region: RegionType, levelNumber: Int) {
+            self.region = region
+            self.levelNumber = levelNumber
+        }
     @ObservedObject var flow = LevelFlow.shared
 
     @State private var answer: String = ""
     @State private var showText = false
     @State private var showPopup = false
     var currentIndex: Int {
-        flow.currentLevel(for: region)
+//        flow.currentLevel(for: region)
+        return levelNumber
     }
 
 
@@ -73,27 +84,31 @@ struct PuzzleView: View {
     let puzzles: [Puzzle] = [
         
         Puzzle(
-            emojis: "🟢 ☕ ",
-            hint: "مشروب عربي مشهور",
-            answer: "القهوة السعودية"
+            emojis: "🇸🇦 ☕ ",
+            hint: "مشروب سعودي مشهور",
+            answer: "القهوة السعودية",
+            secondAnswer: nil
         ),
         
         Puzzle(
             emojis: "🌴 🍯",
             hint: "شي حلو يطلع من النخلة",
-            answer: "تمر"
+            answer: "تمر",
+            secondAnswer: nil
         ),
         
         Puzzle(
             emojis: "🔥 ☕",
             hint: "طريقة قديمة لتحضير القهوة",
-            answer: "تحميص القهوة"
+            answer: "تحميص القهوة",
+            secondAnswer: nil
         ),
         
         Puzzle(
             emojis: "🏕️ 🌌",
             hint: "جلسة في الصحراء تحت النجوم",
-            answer: "كشتة"
+            answer: "كشتة",
+            secondAnswer: nil
         ),
         
      
@@ -101,15 +116,23 @@ struct PuzzleView: View {
         Puzzle(
             emojis: "🥁 💃",
             hint: "فن شعبي سعودي",
-            answer: "عرضة"
+            answer: "عرضة",
+            secondAnswer: nil
         ),
         
        
         
         Puzzle(
             emojis: "🏠 🪑 ☕",
-            hint: "مكان يجتمع فيه الناس للقهوة",
-            answer: "مجلس"
+            hint: "مكان يجتمع فيه الناس و الضيوف ",
+            answer: "مجلس",
+            secondAnswer: nil
+        ),
+        Puzzle(
+            emojis: "🇸🇦 ☕ ",
+            hint: "مشروب سعودي مشهور",
+            answer: "القهوة السعودية",
+            secondAnswer: nil
         )
     ]
     //الجنوب
@@ -122,30 +145,44 @@ struct PuzzleView: View {
             emojis: "🥣 🍯 🧈",
             hint: "أكلة شعبية جنوبية مشهورة تؤكل مع السمن والعسل",
             answer: "عريكة"
+        
+            , secondAnswer: nil
         ),
         
         Puzzle(
             emojis: "🏠 🎨 ✨",
             hint: "فن تزيين جدران المنازل في عسير",
             answer: "القط العسيري"
+            , secondAnswer: nil
         ),
         
         Puzzle(
             emojis: "🌸 👑 🧔",
             hint: "تاج من الزهور يوضع على الرأس في جازان وعسير",
             answer: "عصابة"
+            , secondAnswer: nil
         ),
 
         Puzzle(
             emojis: "⛰️ 🚠 🌫️",
             hint: "جبل في أبها تصل إليه عبر العربات المعلقة",
-            answer: "الجبل الأخضر"
+            answer:"جبل السودة",
+            secondAnswer: "جبل السودة"
         ),
 
         Puzzle(
             emojis: "🍞 🛖 🏺",
             hint: "خبز جنوبي يخبز في التنور أو الميفا",
             answer: "خبز ميفا"
+            , secondAnswer: nil
+
+        ),
+        Puzzle(
+            emojis: "🥣 🍯 🧈",
+            hint: "أكلة شعبية جنوبية مشهورة تؤكل مع السمن والعسل",
+            answer: "عريكة"
+        
+            , secondAnswer: nil
         )
     ]
     //الشرقيه
@@ -155,30 +192,46 @@ struct PuzzleView: View {
             emojis: "🌴 💦 ⛰️",
             hint: "أكبر واحة نخيل في العالم وتوجد بالأحساء",
             answer: "واحة الأحساء"
+            , secondAnswer: nil
+
         ),
         
         Puzzle(
             emojis: "🌊 🏝️ 🌉",
             hint: "جسر يربط المنطقة الشرقية بمملكة البحرين",
             answer: "جسر الملك فهد"
+            , secondAnswer: nil
+
         ),
         
         Puzzle(
             emojis: "🍚 🥘 🔴",
             hint: "أشهر أكلة حساوية لونها أحمر",
             answer: "أرز حساوي"
+            , secondAnswer: "المكبوس الأحمر"
+
         ),
         
         Puzzle(
-            emojis: "🐚 🚢 ⚓",
+            emojis: "🐚 🚢 ⚓ 🤿",
             hint: "مهنة الأجداد القديمة في الخليج",
             answer: "صيد اللؤلؤ"
+            , secondAnswer: "الغوص على اللؤلؤ"
         ),
         
         Puzzle(
             emojis: "⛰️ ❄️ 🧱",
             hint: "جبل مشهور في الأحساء بارد من الداخل صيفاً",
             answer: "جبل القارة"
+            , secondAnswer: nil
+
+        ),
+        Puzzle(
+            emojis: "🌴 💦 ⛰️",
+            hint: "أكبر واحة نخيل في العالم وتوجد بالأحساء",
+            answer: "واحة الأحساء"
+            , secondAnswer: nil
+
         )
     ]
     
@@ -189,30 +242,50 @@ struct PuzzleView: View {
             emojis: "❄️ 🏔️ ⛄",
             hint: "جبل في تبوك يغطيه الثلج في الشتاء",
             answer: "جبل اللوز"
+            , secondAnswer: nil
+
+            
         ),
         
         Puzzle(
-            emojis: "🍕 🥩 🪵",
+            emojis: "🥖 🥩 🪵",
             hint: "أشهر أكلة في دومة الجندل عبارة عن خبز ولحم",
+            
             answer: "الجمير"
+            , secondAnswer: "المليحية"
+
         ),
         
         Puzzle(
-            emojis: "🏺 🏜️ 🧱",
+            emojis: "🏺🪨🏜️",
             hint: "مدينة تاريخية تقع في محافظة العلا",
             answer: "مدائن صالح"
+            , secondAnswer: nil
+
         ),
         
         Puzzle(
             emojis: "🫒 🌳 ",
             hint: "منطقة تشتهر بأكبر مزارع الزيتون في المملكة",
             answer: "الجوف"
+            , secondAnswer: "عنيزة"
+
         ),
         
         Puzzle(
-            emojis: "☕ 🪵 🔥",
+            emojis: "☕ 🪵 🔥 🌿",
             hint: "تسمية تطلق على القهوة التي تُصنع على نار الحطب في الشمال",
             answer: "قهوة مهيلة"
+            , secondAnswer: nil
+
+        ),
+        Puzzle(
+            emojis: "❄️ 🏔️ ⛄",
+            hint: "جبل في تبوك يغطيه الثلج في الشتاء",
+            answer: "جبل اللوز"
+            , secondAnswer: nil
+
+            
         )
     ]
     
@@ -223,30 +296,47 @@ struct PuzzleView: View {
             emojis: "🕋 🕌 ✨",
             hint: "أطهر بقاع الأرض وقبلة المسلمين",
             answer: "مكة المكرمة"
+            , secondAnswer: "الكعبه "
+
         ),
         
         Puzzle(
             emojis: "🌊 🏙️ ⛲",
             hint: "عروس البحر الأحمر وفيها نافورة الملك فهد",
             answer: "جدة"
+            , secondAnswer: nil
+
         ),
         
         Puzzle(
             emojis: "🏠 🪵 🪟",
             hint: "النوافذ الخشبية المزخرفة في بيوت جدة القديمة",
             answer: "الرواشين"
+            , secondAnswer: "الشميسية"
+
         ),
         
         Puzzle(
-            emojis: "🍵 🥖 🔴 🧊",
+            emojis: "🥛❄️✨",
             hint: "مشروب حجازي بارد ومشهور لونه أبيض",
             answer: "سوبيا"
+            , secondAnswer: nil
+
         ),
         
         Puzzle(
             emojis: "🍚 🥩 🏺",
             hint: "أكلة حجازية أصيلة تطبخ في وعاء فخاري تحت الأرض",
             answer: "المندي"
+            , secondAnswer: nil
+
+        ),
+        Puzzle(
+            emojis: "🕋 🕌 ✨",
+            hint: "أطهر بقاع الأرض وقبلة المسلمين",
+            answer: "مكة المكرمة"
+            , secondAnswer: "الكعبه "
+
         )
     ]
     
@@ -262,6 +352,11 @@ struct PuzzleView: View {
         case .western: return "الغربية"
         }
     }
+    
+    @State private var showHint = false
+    @State private var shake = false
+    @State private var stopShaking = false
+    let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
 
     
     var body: some View {
@@ -285,30 +380,48 @@ struct PuzzleView: View {
                         Button(action: {
                             goToMap = true
                         }) {
-                            Image(systemName: "house.fill")
-                                .font(.system(size: 25))
-                                .foregroundColor(.white)
-                                .padding(12)
-                                .background(Color("brown"))
-                                .clipShape(Circle())
+                            ZStack {
+                                Circle()
+                                    .fill(Color("brown"))
+                                    .frame(width: 60, height: 60)
+                                
+                                Image("saudiMap")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 35, height: 35)
+                            }
                         }
-                        .offset(x:140,y:80)
+                        .offset(x:153,y:80)
                         
                     }
-                    
+                    VStack {
+                        Text("فك الشفرة")
+                        //                        .font(.title)
+                            .font(.custom("Saudi-Bold", size: 30))
+                        
+                            .foregroundColor(Color("brown"))
+                            .padding(.bottom, 20)
+                            .offset(x: 0 , y: 79)
+                    }
                     // الكرت
                     VStack(spacing: 10) {
                         
                         
                         
-                        Text("فك الشفرة")
+//                        Text("فك الشفرة")
+//                        //                        .font(.title)
+//                            .font(.custom("Saudi-Regular", size: 30))
+//                        
+//                            .foregroundColor(Color(hex: "874F35"))
+//                            .padding(.bottom, 20)
+//                            .offset(x: 0 , y: -100)
+                        Text(" فك الشفرات  باستخدام الرموز والتلميحات و اكتب الاجابه .")
                         //                        .font(.title)
-                            .font(.custom("Saudi-Regular", size: 30))
+                            .font(.custom("Saudi-Bold", size: 14))
                         
                             .foregroundColor(Color(hex: "874F35"))
                             .padding(.bottom, 20)
-                            .offset(x: 0 , y: -100)
-                        
+                            .offset(x: 0 , y: -80)
                         
                         HStack(spacing: 20) {
 //                            Text(puzzles[currentIndex].emojis)
@@ -319,7 +432,7 @@ struct PuzzleView: View {
                         }
                         .font(.title)
                         
-                        .offset(x: 0 , y: -100)
+                        .offset(x: 0 , y: -60)
                         
                         
                         if showSuccessEmoji {
@@ -358,26 +471,47 @@ struct PuzzleView: View {
                                 withAnimation(.easeInOut) {
                                     showPopup = true
                                 }
+                                stopShaking = true
+
                             }) {
-                                Image(systemName: "questionmark")
-                                    .font(.system(size: 22))
+                                Text( "💡")
+                                    .font(.system(size: 28))
                                     .foregroundColor(.white)
-                                    .padding(16)
+                                    .padding(10)
                                     .background(Color(hex: "874F35"))
                                     .clipShape(Circle())
+                                    .offset(x: shake ? -2 : 2, y: shake ? 1 : -1)
+                                    .rotationEffect(.degrees(shake ? 3 : -3))
+
+                                    .animation(
+                                            shake ?
+                                            Animation.easeInOut(duration: 0.08)
+                                            .repeatCount(6, autoreverses: true)
+                                            : .default,
+                                            value: shake
+                                        )
                             }
                             
                             Spacer()
                         }
+                        .onReceive(timer) { _ in
+                            if !stopShaking {
+                                shake = true
+                            }
+                                 // نرجعه طبيعي بعد الاهتزاز
+                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                                     shake = false
+                                 }
+                             }
                         .padding(.leading, 20)
-                        .offset(x: 0 , y: 100)
+                        .offset(x: 0 , y: 90)
                         
                         
                         
                         
                         
                     }
-                    .frame(width: 355, height: 520) // ← هنا التحكم بالحجم
+                    .frame(width: 355, height: 450) // ← هنا التحكم بالحجم
                     .background(
                         RoundedRectangle(cornerRadius: 30)
                             .stroke(Color(hex: "874F35"), lineWidth: 4)
@@ -438,7 +572,7 @@ struct PuzzleView: View {
                             // بعد ثانية ينتقل للغز التالي
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                                 // تقدم المرحلة يتم هنا فقط بعد الإجابة الصحيحة (أزيل من PuzzleView3)
-                                flow.completeLevel(region: region)
+//                                flow.completeLevel(region: region)
                                 answer = ""
                                 showSuccessEmoji = false
                                 goToPuzzleLevel = true
@@ -470,7 +604,7 @@ struct PuzzleView: View {
                 SaudiMapView()
             }
             .navigationDestination(isPresented: $goToPuzzleLevel) {
-                PuzzleChoicesView(region: region)
+                PuzzleChoicesView(region: region , levelNumber: levelNumber)
             }
             .navigationBarBackButtonHidden(true)
 
@@ -533,6 +667,6 @@ extension String {
 
 
 #Preview("PuzzleView") {
-    PuzzleView(region: .central)
+    PuzzleView(region: .central , levelNumber: 1)
 }
 

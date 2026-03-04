@@ -32,10 +32,10 @@ struct CharacterPickerView: View {
 
             VStack(spacing: 16) {
                 Text("اضغط على شخصيتك")
-                    .font(.custom("Saudi-Regular", size: 32))
+                    .font(.custom("Saudi-Bold", size: 32))
                     .foregroundStyle(Color("brown"))
                     .padding(.top, 0)
-                    .offset(y: 40)
+                    .offset(y: 4)
 
                 // Horizontal, centered, side-by-side characters with horizontal scroll
                 VStack {
