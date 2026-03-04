@@ -437,9 +437,17 @@ struct PuzzleChoicesView: View {
 //                    let puzzle = activePuzzles[levelNumber]
                 if levelNumber < activePuzzles.count {
                     let puzzle = activePuzzles[levelNumber]
-                    
-                    // الكرت (نفس ديزاينك)
-                    VStack(spacing: 20) {
+                    // الكرت + عنوان فوقه
+                    ZStack {
+                        
+                        Text("اختاري الإجابة الصحيحة")
+                         .font(.custom("Saudi-Regular", size: 26))
+                            .fontWeight(.bold)
+                            .foregroundColor(Color("brown"))
+                            .multilineTextAlignment(.center)
+                            .offset(x: -1 ,y: -155)
+                    }
+                        VStack(spacing: 20) {
                         Text(puzzle.question)
                             .font(.custom("Saudi-Bold", size: 22))
                             .multilineTextAlignment(.center)
