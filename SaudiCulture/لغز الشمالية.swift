@@ -492,13 +492,13 @@ struct LevelAshshamaliya: View {
                     .fill(Color("BackgroundMain"))
                     .stroke(Color("brown"), lineWidth: 4)
                 
-                Image("تراث الشمالية")
+                Image(currentPuzzleImage)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .clipShape(RoundedRectangle(cornerRadius: 26))
                     .padding(20)
             }
-            .frame(width: 340, height: 520)
+            .frame(width: 340, height: 420)
         }
     }
     
@@ -543,5 +543,5 @@ struct LevelAshshamaliya: View {
 }
 //
 #Preview {
-    LevelAshshamaliya(levelNumber: 0)
+    LevelAshshamaliya(levelNumber: 5)
 }

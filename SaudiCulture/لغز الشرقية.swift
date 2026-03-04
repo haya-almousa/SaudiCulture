@@ -503,7 +503,7 @@ struct LevelAlsharqiya: View {
                     .clipShape(RoundedRectangle(cornerRadius: 26))
                     .padding(20)
             }
-            .frame(width: 340, height: 520)
+            .frame(width: 340, height: 420)
         }
     }
     
@@ -548,5 +548,5 @@ struct LevelAlsharqiya: View {
 }
 
 #Preview {
-    LevelAlsharqiya( levelNumber: 3)
+    LevelAlsharqiya( levelNumber: 0)
 }

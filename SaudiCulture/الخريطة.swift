@@ -30,6 +30,7 @@ struct SaudiMapView: View {
                             .fontWeight(.bold)
                             .foregroundColor(Color("brown"))
                             .multilineTextAlignment(.center)
+                            .offset(x:0,y:40)
                     }
                     .offset(y: -370)
                     
