@@ -445,8 +445,9 @@ struct LevelAljanubiya: View {
                 VStack(spacing: 16) {
                     Spacer()
                     
-                    let level = flow.currentLevel(for: .southern)
-                    let landmark = southernLandmarks[min(level, southernLandmarks.count - 1)]
+//                    let level = flow.currentLevel(for: .southern)
+//                    let landmark = southernLandmarks[min(level, southernLandmarks.count - 1)]
+                    let landmark = southernLandmarks[min(levelNumber, southernLandmarks.count - 1)]
                     Text(landmark.name)
                         .font(.custom("Saudi-Bold", size: 36))
                         .foregroundColor(.black)

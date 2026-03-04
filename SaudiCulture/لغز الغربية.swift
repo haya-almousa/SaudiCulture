@@ -438,8 +438,10 @@ struct LevelAlgharbiya: View {
                 VStack(spacing: 16) {
                     Spacer()
                     
-                    let level = flow.currentLevel(for: .western)
-                    let landmark = westernLandmarks[min(level, westernLandmarks.count - 1)]
+//                    let level = flow.currentLevel(for: .western)
+//                    let landmark = westernLandmarks[min(level, westernLandmarks.count - 1)]
+                    let landmark = westernLandmarks[min(levelNumber, westernLandmarks.count - 1)]
+
                     Text(landmark.name)
                         .font(.custom("Saudi-Bold", size: 36))
                         .foregroundColor(.black)

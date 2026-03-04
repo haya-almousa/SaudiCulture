@@ -419,9 +419,11 @@ struct LevelAlwosta: View {
     }
     
     private var completionDialogView: some View {
-        
-        let level = flow.currentLevel(for: .central)
-        let landmark = centralLandmarks[min(level, centralLandmarks.count - 1)]
+//        
+//        let level = flow.currentLevel(for: .central)
+//        let landmark = centralLandmarks[min(level, centralLandmarks.count - 1)]
+        let landmark = centralLandmarks[min(levelNumber, centralLandmarks.count - 1)]
+
         return ZStack {
             Color.black.opacity(0.3)
                 .ignoresSafeArea()

@@ -151,8 +151,10 @@ struct LevelAlsharqiya: View {
 
     // ⭐ دالة لحساب المعلم والمعلومة الحالية
     var currentLandmark: (name: String, info: String) {
-        let level = flow.currentLevel(for: .eastern)
-        return easternLandmarks[min(level, easternLandmarks.count - 1)]
+//        let level = flow.currentLevel(for: .eastern)
+//        return easternLandmarks[min(level, easternLandmarks.count - 1)]
+        return easternLandmarks[min(levelNumber, easternLandmarks.count - 1)]
+
     }
     
         @State private var shake = false

@@ -438,9 +438,10 @@ struct LevelAshshamaliya: View {
                 
                 VStack(spacing: 16) {
                     Spacer()
-                    let level = flow.currentLevel(for: .northern)
-                    let landmark = northernLandmarks[min(level, northernLandmarks.count - 1)]
+//                    let level = flow.currentLevel(for: .northern)
+//                    let landmark = northernLandmarks[min(level, northernLandmarks.count - 1)]
 
+                    let landmark = northernLandmarks[min(levelNumber, northernLandmarks.count - 1)]
                     Text(landmark.name)    // اسم المعلم
                         .font(.custom("Saudi-Bold", size: 36))
                         .foregroundColor(.black)
