@@ -70,14 +70,16 @@ struct AsirView: View {
                         }
                     }
                 }
-                .offset(x: 150, y: -310)
+                .offset(x: 150, y: -344)
 
                 VStack(spacing: 16) {
                     // Title
                     Text("لعبة الكروت - عسير")
-                        .foregroundStyle(Color(hex: "7A4A2E"))
-                        .font(.custom("Saudi-Bold", size: 28))
-
+                        .font(.custom("Saudi-Regular", size: 30))
+                        .fontWeight(.bold)
+                        .foregroundColor(Color("brown"))
+                        .multilineTextAlignment(.center)
+                        .offset(x: -9 ,y: -15)
                     // Timer
                     ZStack {
                         RoundedRectangle(cornerRadius: 12)

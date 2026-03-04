@@ -282,14 +282,15 @@ struct HejazView: View {
                         }
                     }
                 }
-                .offset(x: 150, y: -310)
+                .offset(x: 153, y: -344)
 
                 VStack(spacing: 16) {
                     // Title
                     Text("لعبة الكروت - الحجاز")
-                        .foregroundStyle(Color(hex: "7A4A2E"))
-                        .font(.custom("Saudi-Bold", size: 28))
-
+                        .foregroundColor(Color("brown"))
+                        .font(.custom("Saudi-Bold", size: 30))
+                        .multilineTextAlignment(.center)
+                        .offset(x: -9 ,y: -20)
                     // Timer
                     ZStack {
                         RoundedRectangle(cornerRadius: 12)

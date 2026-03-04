@@ -355,29 +355,37 @@ struct PuzzleView: View {
                                     .frame(width: 35, height: 35)
                             }
                         }
-                        .offset(x:140,y:80)
+                        .offset(x:153,y:80)
                         
                     }
-                    
+                    VStack {
+                        Text("فك الشفرة")
+                        //                        .font(.title)
+                            .font(.custom("Saudi-Bold", size: 30))
+                        
+                            .foregroundColor(Color("brown"))
+                            .padding(.bottom, 20)
+                            .offset(x: 0 , y: -18)
+                    }
                     // الكرت
                     VStack(spacing: 10) {
                         
                         
                         
-                        Text("فك الشفرة")
-                        //                        .font(.title)
-                            .font(.custom("Saudi-Regular", size: 30))
-                        
-                            .foregroundColor(Color(hex: "874F35"))
-                            .padding(.bottom, 20)
-                            .offset(x: 0 , y: -100)
+//                        Text("فك الشفرة")
+//                        //                        .font(.title)
+//                            .font(.custom("Saudi-Regular", size: 30))
+//                        
+//                            .foregroundColor(Color(hex: "874F35"))
+//                            .padding(.bottom, 20)
+//                            .offset(x: 0 , y: -100)
                         Text(" فك الشفرات  باستخدام الرموز والتلميحات و اكتب الاجابه .")
                         //                        .font(.title)
-                            .font(.custom("Saudi-Regular", size: 14))
+                            .font(.custom("Saudi-Bold", size: 14))
                         
                             .foregroundColor(Color(hex: "874F35"))
                             .padding(.bottom, 20)
-                            .offset(x: 0 , y: -100)
+                            .offset(x: 0 , y: -80)
                         
                         HStack(spacing: 20) {
 //                            Text(puzzles[currentIndex].emojis)
@@ -388,7 +396,7 @@ struct PuzzleView: View {
                         }
                         .font(.title)
                         
-                        .offset(x: 0 , y: -100)
+                        .offset(x: 0 , y: -60)
                         
                         
                         if showSuccessEmoji {
@@ -467,7 +475,7 @@ struct PuzzleView: View {
                         
                         
                     }
-                    .frame(width: 355, height: 520) // ← هنا التحكم بالحجم
+                    .frame(width: 355, height: 450) // ← هنا التحكم بالحجم
                     .background(
                         RoundedRectangle(cornerRadius: 30)
                             .stroke(Color(hex: "874F35"), lineWidth: 4)

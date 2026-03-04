@@ -31,7 +31,7 @@ struct SaudiMapView: View {
                             .foregroundColor(Color("brown"))
                             .multilineTextAlignment(.center)
                     }
-                    .offset(y: -300)
+                    .offset(y: -370)
                     
                     ZStack(alignment: .center) {
                         

@@ -50,7 +50,7 @@ struct StackedCirclesView: View {
                         .fontWeight(.bold)
                         .foregroundColor(Color("brown"))
                         .multilineTextAlignment(.center)
-                        .offset(y: -280)
+                        .offset(x: -1 ,y: -330)
                 }
 
                 HStack {
@@ -68,7 +68,7 @@ struct StackedCirclesView: View {
                                 .frame(width: 35, height: 35)
                         }
                     }
-                    .offset(x: 140, y: -400)
+                    .offset(x: 153, y: -380)
                 }
             }
 

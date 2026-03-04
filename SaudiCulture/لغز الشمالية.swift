@@ -162,9 +162,23 @@ struct LevelAshshamaliya: View {
                     .scaledToFill()
                     .ignoresSafeArea()
                 
-                VStack {
+                VStack(spacing: -20) {
+
                     Spacer()
-                    puzzleBoard
+
+                    ZStack {
+
+                        puzzleBoard
+
+                        // ⭐ العنوان يطلع من البوكس
+                        Text("ركّب الصورة")
+                            .font(.custom("Saudi-Bold", size: 28))
+                            .foregroundColor(Color("brown"))
+                            .font(.custom("Saudi-Bold", size: 30))
+                            .multilineTextAlignment(.center)
+                            .offset(x: 3 ,y: -370)
+                    }
+
                     Spacer()
                 }
                 .overlay(alignment: .bottom) {
@@ -225,6 +239,7 @@ struct LevelAshshamaliya: View {
                         .padding(.top, 60)
                         .padding(.trailing, 0.1)
                     }
+                    .offset(x:15,y:1)
                 }
             }
             .navigationBarBackButtonHidden(true)
@@ -524,6 +539,6 @@ struct LevelAshshamaliya: View {
     }
 }
 //
-//#Preview {
-//    LevelAshshamaliya(levelNumber: 0)
-//}
+#Preview {
+    LevelAshshamaliya(levelNumber: 0)
+}

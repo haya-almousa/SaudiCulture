@@ -281,13 +281,15 @@ struct EasternView: View {
                         }
                     }
                 }
-                .offset(x: 150, y: -310)
+                .offset(x: 153, y: -334)
 
                 VStack(spacing: 16) {
                     // Title
                     Text("لعبة الكروت - المنطقة الشرقية")
-                        .foregroundStyle(Color(hex: "7A4A2E"))
-                        .font(.custom("Saudi-Regular", size: 28))
+                        .foregroundColor(Color("brown"))
+                        .font(.custom("Saudi-Bold", size: 28))
+                        .multilineTextAlignment(.center)
+                        .offset(x: -9 ,y: -20)
 
                     // Timer
                     ZStack {
