@@ -13,7 +13,7 @@ import SwiftUI
 struct PuzzleView3: View {
     let region: RegionType
     let descriptionText: String
-    
+    let levelNumber: Int
     @State private var answer: String = ""
     @State private var showText = false
     @State private var showPopup = false
@@ -70,11 +70,10 @@ struct PuzzleView3: View {
                     .padding()
                     
                     Button(action: {
-                        // إكمال المنطقة فعليًا في نظام التقدم
-                        GameProgress.shared.completeRegion(region)
-                        
-                        // إذا عندك نظام مراحل إضافي
-                     //   LevelFlow.shared.completeLevel(region: region)
+//                        // إكمال المنطقة فعليًا في نظام التقدم
+//                        GameProgress.shared.completeRegion(region)
+//                        
+                        LevelFlow.shared.completeLevel(region: region, levelNumber: levelNumber)
                         
                         goToMap = true
                     }) {
@@ -99,5 +98,5 @@ struct PuzzleView3: View {
 }
 
 #Preview {
-    PuzzleView3(region: .central, descriptionText: "مثال نص")
+    PuzzleView3(region: .central, descriptionText: "hi ", levelNumber: 1)
 }
