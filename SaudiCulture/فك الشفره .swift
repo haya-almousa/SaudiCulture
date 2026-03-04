@@ -365,7 +365,7 @@ struct PuzzleView: View {
                         
                             .foregroundColor(Color("brown"))
                             .padding(.bottom, 20)
-                            .offset(x: 0 , y: -18)
+                            .offset(x: 0 , y: 79)
                     }
                     // الكرت
                     VStack(spacing: 10) {

@@ -440,12 +440,12 @@ struct PuzzleChoicesView: View {
                     // الكرت + عنوان فوقه
                     ZStack {
                         
-                        Text("اختاري الإجابة الصحيحة")
+                        Text("اختار الإجابة الصحيحة")
                          .font(.custom("Saudi-Regular", size: 26))
                             .fontWeight(.bold)
                             .foregroundColor(Color("brown"))
                             .multilineTextAlignment(.center)
-                            .offset(x: -1 ,y: -155)
+                            .offset(x: -1 ,y: -15)
                     }
                         VStack(spacing: 20) {
                         Text(puzzle.question)

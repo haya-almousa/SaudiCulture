@@ -362,7 +362,7 @@ struct HejazView: View {
                 SaudiMapView()
             }
             .navigationDestination(isPresented: $goToNextGame) {
-                LevelAlgharbiya(levelNumber: 1)
+                LevelAlgharbiya(levelNumber: levelNumber)
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarTitleDisplayMode(.inline)

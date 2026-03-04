@@ -362,7 +362,7 @@ struct EasternView: View {
                 SaudiMapView()
             }
             .navigationDestination(isPresented: $goToNextGame) {
-                LevelAlsharqiya(levelNumber: 1)
+                LevelAlsharqiya(levelNumber: levelNumber)
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarTitleDisplayMode(.inline)

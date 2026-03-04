@@ -151,7 +151,7 @@ struct AsirView: View {
                 SaudiMapView()
             }
             .navigationDestination(isPresented: $goToNextGame) {
-                LevelAljanubiya(levelNumber: 0)
+                LevelAljanubiya(levelNumber: levelNumber)
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarTitleDisplayMode(.inline)
