@@ -92,7 +92,12 @@ struct PuzzlePieceShamaliya: Identifiable {
 
 // MARK: - شاشة لفل الشمالية
 struct LevelAshshamaliya: View {
-    
+    let levelNumber: Int
+
+       init(levelNumber: Int) {
+           self.levelNumber = levelNumber
+       }
+
     private let rows = 3
     private let cols = 3
     private let puzzleSize: CGFloat = 340
@@ -231,7 +236,7 @@ struct LevelAshshamaliya: View {
 //            }
 
             .navigationDestination(isPresented: $navigateToNext) {
-                PuzzleView(region: .northern)
+                PuzzleView(region: .northern , levelNumber: levelNumber)
             }
 
             .onAppear {
@@ -516,7 +521,7 @@ struct LevelAshshamaliya: View {
         }
     }
 }
-
-#Preview {
-    LevelAshshamaliya()
-}
+//
+//#Preview {
+//    LevelAshshamaliya(levelNumber: 0)
+//}

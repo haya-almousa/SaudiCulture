@@ -209,6 +209,8 @@ import SwiftUI
 
 struct NorthView: View {
     var region: RegionType
+    var levelNumber: Int
+
     var backgroundImageName: String {
         switch region {
         case .central:  return "الوسطى"
@@ -354,7 +356,7 @@ struct NorthView: View {
                 SaudiMapView()
             }
             .navigationDestination(isPresented: $goToNextGame) {
-                LevelAshshamaliya()
+                LevelAshshamaliya(levelNumber: levelNumber)
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarTitleDisplayMode(.inline)
@@ -428,5 +430,5 @@ struct NorthView: View {
 }
 
 #Preview {
-    NorthView(region: .central)
+    NorthView(region: .central, levelNumber: 1)
 }

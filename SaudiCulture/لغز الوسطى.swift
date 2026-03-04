@@ -90,7 +90,12 @@ struct PuzzlePiece: Identifiable {
 }
 
 struct LevelAlwosta: View {
-    
+    let levelNumber: Int
+
+       init(levelNumber: Int) {
+           self.levelNumber = levelNumber
+       }
+
     private let rows = 3
     private let cols = 3
     private let puzzleSize: CGFloat = 340
@@ -226,7 +231,7 @@ struct LevelAlwosta: View {
 //                PuzzleChoicesView()
 //            }\
             .navigationDestination(isPresented: $navigateToNext) {
-                PuzzleView(region: .central)
+                PuzzleView(region: .central , levelNumber: levelNumber)
             }
 
             .onAppear {
@@ -511,6 +516,6 @@ struct LevelAlwosta: View {
 
 
 
-#Preview {
-    LevelAlwosta()
-}
+//#Preview {
+//    LevelAlwosta( levelNumber: 0)
+//}

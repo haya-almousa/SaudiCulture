@@ -201,7 +201,7 @@ struct الغربيه: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationDestination(isPresented: $goToCards) {
-            HejazView(region: region)
+            HejazView(region: region ,levelNumber: levelNumber)
         }
     }
 }

@@ -91,7 +91,7 @@ struct PuzzlePieceJanubiya: Identifiable {
 
 // MARK: - شاشة لفل الجنوبية
 struct LevelAljanubiya: View {
-    
+    let levelNumber: Int
     private let rows = 3
     private let cols = 3
     private let puzzleSize: CGFloat = 340
@@ -243,7 +243,7 @@ struct LevelAljanubiya: View {
 //                PuzzleChoicesView()
 //            }
             .navigationDestination(isPresented: $navigateToNext ) {
-                PuzzleView(region: .southern)
+                PuzzleView(region: .southern, levelNumber: levelNumber)
             }
 
             .onAppear {
@@ -530,5 +530,5 @@ struct LevelAljanubiya: View {
 }
 
 #Preview {
-    LevelAljanubiya()
+    LevelAljanubiya(levelNumber: 0)
 }

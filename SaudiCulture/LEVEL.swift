@@ -80,7 +80,7 @@ struct StackedCirclesView: View {
                         .frame(width: index == 0 ? 110 : 90)
                         .offset(y: yPosition(for: index))
                         .onTapGesture {
-                            if index == current {
+                            if index <= current  {
                                 selectedLevelNumber = index + 1
                                 navigateToFashion = true
                             }

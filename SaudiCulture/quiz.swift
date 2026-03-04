@@ -14,10 +14,13 @@ struct ChoicePuzzle {
 
 struct PuzzleChoicesView: View {
     let region: RegionType
+    let levelNumber: Int
 
-    init(region: RegionType) {
+    init(region: RegionType, levelNumber: Int) {
         self.region = region
+        self.levelNumber = levelNumber
     }
+
 
 
     @ObservedObject var flow = LevelFlow.shared
@@ -542,7 +545,7 @@ struct PuzzleChoicesView: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationDestination(isPresented: $gotonextpage) {
-            PuzzleView3(region: region, descriptionText: selectedDescription)
+            PuzzleView3(region: region, descriptionText: selectedDescription , levelNumber: levelNumber)
         }
     }
 
@@ -592,5 +595,5 @@ struct PuzzleChoicesView: View {
 }
 
 #Preview {
-    PuzzleChoicesView(region: .southern)
+    PuzzleChoicesView(region: .southern , levelNumber: 1 )
 }

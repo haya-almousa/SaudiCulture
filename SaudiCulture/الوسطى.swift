@@ -195,7 +195,7 @@ struct الوسطى: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationDestination(isPresented: $startNajdGame) {
-            NajdView(region: region)
+            NajdView(region: region ,levelNumber: levelNumber)
         }
     }
 }

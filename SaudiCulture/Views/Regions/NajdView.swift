@@ -215,6 +215,8 @@ import SwiftUI
 
 struct NajdView: View {
     var region: RegionType
+    var levelNumber: Int
+
     var backgroundImageName: String {
         switch region {
         case .central:  return "الوسطى"
@@ -360,7 +362,7 @@ struct NajdView: View {
                 SaudiMapView()
             }
             .navigationDestination(isPresented: $goToNextGame) {
-                LevelAlwosta()
+                LevelAlwosta(levelNumber: levelNumber)
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarTitleDisplayMode(.inline)
@@ -435,5 +437,5 @@ struct NajdView: View {
 }
 
 #Preview {
-    NajdView(region: .central)
+    NajdView(region: .central, levelNumber: 1)
 }

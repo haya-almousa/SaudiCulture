@@ -214,6 +214,8 @@ import SwiftUI
 
 struct HejazView: View {
     var region: RegionType
+    var levelNumber: Int
+
     var backgroundImageName: String {
         switch region {
         case .central:  return "الوسطى"
@@ -359,7 +361,7 @@ struct HejazView: View {
                 SaudiMapView()
             }
             .navigationDestination(isPresented: $goToNextGame) {
-                LevelAlgharbiya()
+                LevelAlgharbiya(levelNumber: 1)
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarTitleDisplayMode(.inline)
@@ -434,5 +436,5 @@ struct HejazView: View {
 }
 
 #Preview {
-    HejazView(region: .central)
+    HejazView(region: .central, levelNumber: 1)
 }

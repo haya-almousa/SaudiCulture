@@ -37,6 +37,14 @@ struct Puzzle {
 
 struct PuzzleView: View {
     let region: RegionType
+    let levelNumber: Int
+    
+    
+    
+    init(region: RegionType, levelNumber: Int) {
+            self.region = region
+            self.levelNumber = levelNumber
+        }
     @ObservedObject var flow = LevelFlow.shared
 
     @State private var answer: String = ""
@@ -551,7 +559,7 @@ struct PuzzleView: View {
                 SaudiMapView()
             }
             .navigationDestination(isPresented: $goToPuzzleLevel) {
-                PuzzleChoicesView(region: region)
+                PuzzleChoicesView(region: region , levelNumber: levelNumber)
             }
             .navigationBarBackButtonHidden(true)
 
@@ -614,6 +622,6 @@ extension String {
 
 
 #Preview("PuzzleView") {
-    PuzzleView(region: .central)
+    PuzzleView(region: .central , levelNumber: 1)
 }
 

@@ -200,7 +200,7 @@ struct الشرقيه: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationDestination(isPresented: $goToCards) {
-            EasternView(region: region)
+            EasternView(region: region ,levelNumber: levelNumber)
         }
     }
 }

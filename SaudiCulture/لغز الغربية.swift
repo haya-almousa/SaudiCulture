@@ -89,6 +89,8 @@ struct PuzzlePieceGharbiya: Identifiable {
 }
 
 struct LevelAlgharbiya: View {
+    let levelNumber: Int
+
     private let rows = 3
     private let cols = 3
     private let puzzleSize: CGFloat = 340
@@ -236,7 +238,7 @@ struct LevelAlgharbiya: View {
 //                PuzzleChoicesView()
 //            }
             .navigationDestination(isPresented: $navigateToNext) {
-                PuzzleView(region: .western)
+                PuzzleView(region: .western , levelNumber: levelNumber)
             }
 
             
@@ -518,5 +520,5 @@ struct LevelAlgharbiya: View {
 }
 
 #Preview {
-    LevelAlgharbiya()
+    LevelAlgharbiya( levelNumber: 0)
 }

@@ -13,9 +13,11 @@ struct SouthernOutfitLevel {
 }
 
 struct الجنوبيه: View {
+    
     @State private var goToCards = false
     @Environment(\.dismiss) var dismiss
 
+    
     var region: RegionType
     var levelNumber: Int = 1
 
@@ -200,7 +202,7 @@ struct الجنوبيه: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationDestination(isPresented: $goToCards) {
-            AsirView(region: region)
+            AsirView(region: region ,levelNumber: levelNumber)
         }
     }
 }

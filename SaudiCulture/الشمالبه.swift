@@ -201,7 +201,7 @@ struct الشماليه: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationDestination(isPresented: $goToCards) {
-            NorthView(region: region)
+            NorthView(region: region ,levelNumber: levelNumber)
         }
     }
 }
