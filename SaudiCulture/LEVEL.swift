@@ -74,13 +74,13 @@ struct StackedCirclesView: View {
 
             ZStack {
                 ForEach(0..<totalLevels, id: \.self) { index in
-                    Image(index <= current ? "yellowCircle" : "grayCircle")
+                    Image(index == current ? "yellowCircle" : "grayCircle")
                         .resizable()
                         .scaledToFit()
                         .frame(width: index == 0 ? 110 : 90)
                         .offset(y: yPosition(for: index))
                         .onTapGesture {
-                            if index <= current  {
+                            if index == current  {
                                 selectedLevelNumber = index + 1
                                 navigateToFashion = true
                             }
