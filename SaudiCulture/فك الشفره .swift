@@ -248,8 +248,9 @@ struct PuzzleView: View {
         ),
         
         Puzzle(
-            emojis: "🍕 🥩 🪵",
+            emojis: "🥖 🥩 🪵",
             hint: "أشهر أكلة في دومة الجندل عبارة عن خبز ولحم",
+            
             answer: "الجمير"
             , secondAnswer: "المليحية"
 
