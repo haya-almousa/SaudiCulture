@@ -186,7 +186,7 @@ struct LevelAljanubiya: View {
                             .foregroundColor(Color("brown"))
                             .font(.custom("Saudi-Bold", size: 30))
                             .multilineTextAlignment(.center)
-                            .offset(x: 3 ,y: -270)
+                            .offset(x: 3 ,y: -250)
                     }
 
                     Spacer()

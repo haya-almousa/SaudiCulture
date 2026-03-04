@@ -174,7 +174,7 @@ struct LevelAlwosta: View {
                             .foregroundColor(Color("brown"))
                             .font(.custom("Saudi-Bold", size: 30))
                             .multilineTextAlignment(.center)
-                            .offset(x: 3 ,y: -370)
+                            .offset(x: 3 ,y: -250)
                     }
 
                     Spacer()
