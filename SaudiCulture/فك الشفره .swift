@@ -51,7 +51,8 @@ struct PuzzleView: View {
     @State private var showText = false
     @State private var showPopup = false
     var currentIndex: Int {
-        flow.currentLevel(for: region)
+//        flow.currentLevel(for: region)
+        return levelNumber
     }
 
 

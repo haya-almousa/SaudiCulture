@@ -396,6 +396,8 @@ struct PuzzleChoicesView: View {
     @State private var stopShaking = false
     let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
     
+    
+    
     var body: some View {
         
         
@@ -429,11 +431,13 @@ struct PuzzleChoicesView: View {
 
                 Spacer()
 
-                let level = flow.currentLevel(for: region)
+//                let level = flow.currentLevel(for: region)
 
-                if level < activePuzzles.count {
-                    let puzzle = activePuzzles[level]
-
+//                if level < activePuzzles.count {
+//                    let puzzle = activePuzzles[levelNumber]
+                if levelNumber < activePuzzles.count {
+                    let puzzle = activePuzzles[levelNumber]
+                    
                     // الكرت (نفس ديزاينك)
                     VStack(spacing: 20) {
                         Text(puzzle.question)
@@ -523,6 +527,8 @@ struct PuzzleChoicesView: View {
                     if selectedIndex == puzzle.correctIndex {
                         Button {
                             selectedDescription = puzzle.description
+                            flow.completeLevel(region: region, levelNumber: levelNumber)
+
                             gotonextpage = true
                         } label: {
                             Text("التالي")
@@ -576,7 +582,8 @@ struct PuzzleChoicesView: View {
                 .onTapGesture { withAnimation { showHint = false } }
             
             VStack(spacing: 20) {
-                Text(activePuzzles[flow.currentLevel(for: region)].hint)
+//                Text(activePuzzles[flow.currentLevel(for: region)].hint)
+                Text(activePuzzles[levelNumber].hint)
                     .font(.custom("Saudi-Regular", size: 22))
                     .foregroundColor(Color(hex: "FCF0DD"))
                     .multilineTextAlignment(.center)

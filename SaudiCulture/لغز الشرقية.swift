@@ -143,8 +143,10 @@ struct LevelAlsharqiya: View {
 
     // ⭐ دالة لحساب الصورة الحالية لكل مستوى
     var currentPuzzleImage: String {
-        let level = flow.currentLevel(for: .eastern)
-        return puzzleImages[min(level, puzzleImages.count - 1)]
+//        let level = flow.currentLevel(for: .eastern)
+//        return puzzleImages[min(level, puzzleImages.count - 1)]
+        return puzzleImages[min(levelNumber, puzzleImages.count - 1)]
+
     }
 
     // ⭐ دالة لحساب المعلم والمعلومة الحالية

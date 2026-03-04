@@ -144,8 +144,10 @@ struct LevelAshshamaliya: View {
 
     // ⭐ دالة لحساب الصورة الحالية لكل مستوى
     var currentPuzzleImage: String {
-        let level = flow.currentLevel(for: .northern)
-        return puzzleImages[min(level, puzzleImages.count - 1)]
+//        let level = flow.currentLevel(for: .northern)
+//        return puzzleImages[min(level, puzzleImages.count - 1)]
+        return puzzleImages[min(levelNumber, puzzleImages.count - 1)]
+
     }
     @State private var shake = false
     @State private var stopShaking = false
