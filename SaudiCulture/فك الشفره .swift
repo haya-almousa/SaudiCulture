@@ -127,6 +127,12 @@ struct PuzzleView: View {
             hint: "مكان يجتمع فيه الناس و الضيوف ",
             answer: "مجلس",
             secondAnswer: nil
+        ),
+        Puzzle(
+            emojis: "🇸🇦 ☕ ",
+            hint: "مشروب سعودي مشهور",
+            answer: "القهوة السعودية",
+            secondAnswer: nil
         )
     ]
     //الجنوب
@@ -170,6 +176,13 @@ struct PuzzleView: View {
             answer: "خبز ميفا"
             , secondAnswer: nil
 
+        ),
+        Puzzle(
+            emojis: "🥣 🍯 🧈",
+            hint: "أكلة شعبية جنوبية مشهورة تؤكل مع السمن والعسل",
+            answer: "عريكة"
+        
+            , secondAnswer: nil
         )
     ]
     //الشرقيه
@@ -210,6 +223,13 @@ struct PuzzleView: View {
             emojis: "⛰️ ❄️ 🧱",
             hint: "جبل مشهور في الأحساء بارد من الداخل صيفاً",
             answer: "جبل القارة"
+            , secondAnswer: nil
+
+        ),
+        Puzzle(
+            emojis: "🌴 💦 ⛰️",
+            hint: "أكبر واحة نخيل في العالم وتوجد بالأحساء",
+            answer: "واحة الأحساء"
             , secondAnswer: nil
 
         )
@@ -257,6 +277,14 @@ struct PuzzleView: View {
             answer: "قهوة مهيلة"
             , secondAnswer: nil
 
+        ),
+        Puzzle(
+            emojis: "❄️ 🏔️ ⛄",
+            hint: "جبل في تبوك يغطيه الثلج في الشتاء",
+            answer: "جبل اللوز"
+            , secondAnswer: nil
+
+            
         )
     ]
     
@@ -300,6 +328,13 @@ struct PuzzleView: View {
             hint: "أكلة حجازية أصيلة تطبخ في وعاء فخاري تحت الأرض",
             answer: "المندي"
             , secondAnswer: nil
+
+        ),
+        Puzzle(
+            emojis: "🕋 🕌 ✨",
+            hint: "أطهر بقاع الأرض وقبلة المسلمين",
+            answer: "مكة المكرمة"
+            , secondAnswer: "الكعبه "
 
         )
     ]

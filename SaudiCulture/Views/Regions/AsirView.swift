@@ -79,7 +79,7 @@ struct AsirView: View {
                         .fontWeight(.bold)
                         .foregroundColor(Color("brown"))
                         .multilineTextAlignment(.center)
-                        .offset(x: -9 ,y: -15)
+                        .offset(x: -9 ,y:5)
                     // Timer
                     ZStack {
                         RoundedRectangle(cornerRadius: 12)
