@@ -69,7 +69,7 @@ class LevelFlow: ObservableObject {
 //    }
     func completeLevel(region: RegionType, levelNumber: Int) {
         let current = currentLevel(for: region)
-        let maxLevel = 4 // لأن المراحل 0..4 (5 مراحل)
+        let maxLevel = 5 // لأن المراحل 0..4 (5 مراحل)
 
         // زيادة المستوى فقط إذا هذه أعلى مرحلة مفتوحة
         if levelNumber - 1 == current && current < maxLevel {

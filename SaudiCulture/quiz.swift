@@ -545,7 +545,8 @@ struct PuzzleChoicesView: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationDestination(isPresented: $gotonextpage) {
-            PuzzleView3(region: region, descriptionText: selectedDescription , levelNumber: levelNumber)
+            PuzzleView3(region: region, descriptionText: selectedDescription //, levelNumber: levelNumber))
+                        )
         }
     }
 
