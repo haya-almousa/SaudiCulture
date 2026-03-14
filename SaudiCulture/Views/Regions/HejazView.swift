@@ -276,7 +276,7 @@ struct HejazView: View {
                 Card(text: nil, imageName: "عمامة", borderColor: Color(hex:"731112"), pairID:2),
                 Card(text:  "عمامة", imageName: nil, borderColor: Color(hex:"731112"), pairID:2),
 
-                Card(text: nil, imageName: "ثوب", borderColor: Color(hex:"731112"), pairID:3),
+                Card(text: nil, imageName: "ثوب عادي ", borderColor: Color(hex:"731112"), pairID:3),
                 Card(text: "ثوب", imageName: nil, borderColor: Color(hex:"731112"), pairID:3),
 
                 Card(text: nil, imageName: "شاية", borderColor: Color(hex:"731112"), pairID:4),
@@ -315,7 +315,7 @@ struct HejazView: View {
                 Card(text: nil, imageName: "عقال", borderColor: Color(hex:"731112"), pairID:3),
                 Card(text: "عقال", imageName: nil, borderColor: Color(hex:"731112"), pairID:3),
 
-                Card(text: nil, imageName: "ثوب", borderColor: Color(hex:"731112"), pairID:4),
+                Card(text: nil, imageName: "ثوب عادي ", borderColor: Color(hex:"731112"), pairID:4),
                 Card(text: "ثوب", imageName: nil, borderColor: Color(hex:"731112"), pairID:4),
 
                 Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
@@ -542,5 +542,5 @@ struct HejazView: View {
 }
 
 #Preview {
-    HejazView(region: .central, levelNumber: 1)
+    HejazView(region: .central, levelNumber:3)
 }
