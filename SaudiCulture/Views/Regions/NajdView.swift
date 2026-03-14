@@ -231,42 +231,109 @@ struct NajdView: View {
     @StateObject private var viewModel = GameLogic()
     @State private var activePopup: GamePopupType? = nil
 
-    // Timer
     @State private var timeRemaining: Int = 90
     @State private var timerRunning: Bool = true
     @State private var flashRed: Bool = false
 
-    // Navigation
     @State private var goToMap = false
     @State private var goToNextGame = false
-
-    // 👇 Preview mode for shuffle animation
     @State private var isPreviewMode: Bool = true
 
-    // Cards for Najd region
-    let najdCards: [Card] = [
-        Card(text: nil, imageName: "NajdW", borderColor: Color(hex: "731112"), pairID: 1),
-        Card(text: "ثوب تور و دراعيه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
-        Card(text: nil, imageName: "NajdM", borderColor: Color(hex: "731112"), pairID: 2),
-        Card(text: "ﻋﺼﺎﺑﺔ، ﻏﺘﺮة، دﻗﻠﺔ، ﺑﺸﺖ اﻟﺒﺮﻗﺎء، ﺛﻮب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
-        Card(text: nil, imageName: "NajdG", borderColor: Color(hex: "731112"), pairID: 3),
-        Card(text: "ثوب\nشيلة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
-        Card(text: nil, imageName: "NajdB", borderColor: Color(hex: "731112"), pairID: 4),
-        Card(text: "ﻋﻘﺎل زري, ﻏﺘﺮة, زﺑﻮن, ﺑﺸت", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-        Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-    ]
+    // عدد الأزواج المطلوبة بكل لفل
+    var requiredPairsForLevel: Int {
+        switch levelNumber {
+        case 1: return 3
+        case 2: return 2
+        case 3: return 4
+        case 4: return 2
+        default: return 4
+        }
+    }
+
+    var najdCards: [Card] {
+        switch levelNumber {
+
+        case 1:
+            return [
+                Card(text: nil, imageName: "بشت اسود", borderColor: Color(hex:"731112"), pairID: 1),
+                Card(text: "بشت اسود", imageName: nil, borderColor: Color(hex:"731112"), pairID: 1),
+
+                Card(text: nil, imageName: "غترة بيضاء", borderColor: Color(hex:"731112"), pairID: 2),
+                Card(text: "غترة", imageName: nil, borderColor: Color(hex:"731112"), pairID: 2),
+
+                Card(text: nil, imageName: "عقال زري", borderColor: Color(hex:"731112"), pairID: 3),
+                Card(text: "عقال زري", imageName: nil, borderColor: Color(hex:"731112"), pairID: 3),
+
+                Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex:"731112"), pairID: 5)
+            ]
+
+        case 2:
+            return [
+                Card(text: nil, imageName: "ثوب بنت", borderColor: Color(hex:"731112"), pairID: 1),
+                Card(text: "ثوب", imageName: nil, borderColor: Color(hex:"731112"), pairID: 1),
+
+                Card(text: nil, imageName: "شيلة", borderColor: Color(hex:"731112"), pairID: 2),
+                Card(text: "شيلة", imageName: nil, borderColor: Color(hex:"731112"), pairID: 2),
+
+                Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex:"731112"), pairID: 5)
+            ]
+
+        case 3:
+            return [
+                Card(text: nil, imageName: "جوخة", borderColor: Color(hex:"731112"), pairID: 1),
+                Card(text: "جوخة", imageName: nil, borderColor: Color(hex:"731112"), pairID: 1),
+
+                Card(text: nil, imageName: "طاقيه زري", borderColor: Color(hex:"731112"), pairID: 2),
+                Card(text: "طاقية زري", imageName: nil, borderColor: Color(hex:"731112"), pairID: 2),
+
+                Card(text: nil, imageName: "غتره بيضاء طفل", borderColor: Color(hex:"731112"), pairID: 3),
+                Card(text: "غترة", imageName: nil, borderColor: Color(hex:"731112"), pairID: 3),
+
+                Card(text: nil, imageName: "عقال", borderColor: Color(hex:"731112"), pairID: 4),
+                Card(text: "عقال", imageName: nil, borderColor: Color(hex:"731112"), pairID: 4),
+
+                Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex:"731112"), pairID: 5)
+            ]
+
+        case 4:
+            return [
+                Card(text: nil, imageName: "قبع", borderColor: Color(hex:"731112"), pairID: 1),
+                Card(text: "قبع", imageName: nil, borderColor: Color(hex:"731112"), pairID: 1),
+
+                Card(text: nil, imageName: "مقطع", borderColor: Color(hex:"731112"), pairID: 2),
+                Card(text: "مقطع او دراعه", imageName: nil, borderColor: Color(hex:"731112"), pairID: 2),
+
+                Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex:"731112"), pairID: 5)
+            ]
+
+        default:
+            return [
+                Card(text: nil, imageName: "طفله نجديه", borderColor: Color(hex:"731112"), pairID: 1),
+                Card(text: nil, imageName: "طفله نجديه", borderColor: Color(hex:"731112"), pairID: 1),
+
+                Card(text: nil, imageName: "طفل نجدي", borderColor: Color(hex:"731112"), pairID: 2),
+                Card(text: nil, imageName: "طفل نجدي", borderColor: Color(hex:"731112"), pairID: 2),
+
+                Card(text: nil, imageName: "نجدي", borderColor: Color(hex:"731112"), pairID: 3),
+                Card(text: nil, imageName: "نجدي", borderColor: Color(hex:"731112"), pairID: 3),
+
+                Card(text: nil, imageName: "نجديه", borderColor: Color(hex:"731112"), pairID: 4),
+                Card(text: nil, imageName: "نجديه", borderColor: Color(hex:"731112"), pairID: 4),
+
+                Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex:"731112"), pairID: 5)
+            ]
+        }
+    }
 
     var body: some View {
         NavigationStack {
             ZStack {
-                // Background
                 Color(hex: "FFF9F2").ignoresSafeArea()
                 Image(backgroundImageName)
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
 
-                // Home Button
                 HStack {
                     Button(action: {
                         goToMap = true
@@ -275,7 +342,7 @@ struct NajdView: View {
                             Circle()
                                 .fill(Color("brown"))
                                 .frame(width: 60, height: 60)
-                            
+
                             Image("saudiMap")
                                 .resizable()
                                 .scaledToFit()
@@ -286,14 +353,12 @@ struct NajdView: View {
                 .offset(x: 153, y: -344)
 
                 VStack(spacing: 16) {
-                    // Title
                     Text("لعبة الكروت - نجد")
                         .foregroundColor(Color("brown"))
                         .font(.custom("Saudi-Bold", size: 30))
                         .multilineTextAlignment(.center)
-                        .offset(x: -9 ,y: -18)
+                        .offset(x: -9, y: -18)
 
-                    // Timer
                     ZStack {
                         RoundedRectangle(cornerRadius: 12)
                             .fill(Color.white.opacity(0.3))
@@ -310,7 +375,6 @@ struct NajdView: View {
                             .foregroundColor(Color(hex: "731112"))
                     }
 
-                    // Cards Grid
                     LazyVGrid(columns: columns, spacing: 16) {
                         ForEach(Array(viewModel.cards.enumerated()), id: \.element.id) { index, card in
                             CardView(
@@ -332,9 +396,8 @@ struct NajdView: View {
                     .blur(radius: activePopup != nil ? 10 : 0)
                     .animation(.default, value: activePopup)
 
-                    // Matched Pairs Counter
                     HStack {
-                        Text("مطابقات: \(viewModel.matchedPairsCount)/\(viewModel.getTotalPairs())")
+                        Text("مطابقات: \(viewModel.matchedPairsCount)/\(requiredPairsForLevel)")
                             .font(.custom("Saudi-Bold", size: 28))
                             .foregroundColor(Color(hex: "7A4A2E"))
                         Spacer()
@@ -345,7 +408,6 @@ struct NajdView: View {
                 }
                 .padding(.top, 60)
 
-                // MARK: - Popup
                 if let popup = activePopup {
                     GamePopupView(
                         type: popup,
@@ -369,8 +431,9 @@ struct NajdView: View {
             .navigationBarBackButtonHidden(true)
             .navigationBarTitleDisplayMode(.inline)
 
-            .onReceive(viewModel.$gameWon) { won in
-                if won {
+            // خليتها تعتمد على matchedPairsCount بدل gameWon
+            .onChange(of: viewModel.matchedPairsCount) { newValue in
+                if newValue == requiredPairsForLevel {
                     timerRunning = false
                     viewModel.revealAllCards()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -410,7 +473,6 @@ struct NajdView: View {
         }
     }
 
-    // MARK: - Reset Game
     func resetGame() {
         timeRemaining = 90
         timerRunning = true
@@ -430,7 +492,6 @@ struct NajdView: View {
         }
     }
 
-    // Helper
     func timeString(_ seconds: Int) -> String {
         let minutes = seconds / 60
         let secs = seconds % 60
@@ -439,5 +500,5 @@ struct NajdView: View {
 }
 
 #Preview {
-    NajdView(region: .central, levelNumber: 1)
+    NajdView(region: .central, levelNumber: 5)
 }
