@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "WhatsApp_Image_1447-09-22_at_04.11.17-removebg-preview.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
