@@ -500,5 +500,5 @@ struct NajdView: View {
 }
 
 #Preview {
-    NajdView(region: .central, levelNumber: 5)
+    NajdView(region: .central, levelNumber: 2)
 }
