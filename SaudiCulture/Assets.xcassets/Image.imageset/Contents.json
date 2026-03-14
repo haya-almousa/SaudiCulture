@@ -1,7 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "ثوب.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -10,6 +9,7 @@
       "scale" : "2x"
     },
     {
+      "filename" : "Screenshot_1447-09-25_at_22.19.34-removebg-preview.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
