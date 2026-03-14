@@ -44,6 +44,13 @@ struct CharacterPickerView: View {
                             // Flatten characterPairs preserving order
                             ForEach(Array(characterPairs.joined()), id: \.self) { name in
                                 VStack(spacing: 8) {
+                                    // Name above image only when selected
+                                    if selectedName == name {
+                                        Text(name)
+                                            .font(.custom("Saudi-Regular", size: 18))
+                                            .foregroundStyle(Color("brown"))
+                                    }
+
                                     Image(name)
                                         .resizable()
                                         .scaledToFit()
@@ -55,9 +62,90 @@ struct CharacterPickerView: View {
                                         }
                                         .zIndex(selectedName == name ? 1 : 0)
 
-                                    Text(name)
-                                        .font(.custom("Saudi-Regular", size: 18))
-                                        .foregroundStyle(Color("brown"))
+                                    // Name below image only when NOT selected
+                                    if selectedName != name {
+                                        Text(name)
+                                            .font(.custom("Saudi-Regular", size: 18))
+                                            .foregroundStyle(Color("brown"))
+                                    }
+
+                                    // Description appears under the image only for the selected character
+                                    if selectedName == name {
+                                        VStack(spacing: 4) {
+                                            if name == "نجديه" {
+                                                Text("لباس المرأة – المنطقة الوسطى (نجد)")
+                                                    .font(.custom("Saudi-Regular", size: 16))
+                                                    .foregroundStyle(Color("brown"))
+                                                Text("يتسم بالبساطة والطابع المحافظ.")
+                                                    .font(.custom("Saudi-Regular", size: 16))
+                                                    .foregroundStyle(Color("brown").opacity(0.9))
+                                            } else if name == "شرقاوية" {
+                                                Text("لباس المرأة – المنطقة الشرقية")
+                                                    .font(.custom("Saudi-Regular", size: 16))
+                                                    .foregroundStyle(Color("brown"))
+                                                Text("معروف بأناقته وتفاصيله التراثية.")
+                                                    .font(.custom("Saudi-Regular", size: 16))
+                                                    .foregroundStyle(Color("brown").opacity(0.9))
+                                            } else if name == "شرقاوي" {
+                                                Text("لباس الرجل – المنطقة الشرقية")
+                                                    .font(.custom("Saudi-Regular", size: 16))
+                                                    .foregroundStyle(Color("brown"))
+                                                Text("يتميز بالهيبة والطابع الرسمي.")
+                                                    .font(.custom("Saudi-Regular", size: 16))
+                                                    .foregroundStyle(Color("brown").opacity(0.9))
+                                            } else if name == "شماليه" {
+                                                Text("لباس المرأة – المنطقة الشمالية")
+                                                    .font(.custom("Saudi-Regular", size: 16))
+                                                    .foregroundStyle(Color("brown"))
+                                                Text("معروف بالاحتشام والطابع التراثي.")
+                                                    .font(.custom("Saudi-Regular", size: 16))
+                                                    .foregroundStyle(Color("brown").opacity(0.9))
+                                            } else if name == "شمالي" {
+                                                Text("لباس الرجل – المنطقة الشمالية")
+                                                    .font(.custom("Saudi-Regular", size: 16))
+                                                    .foregroundStyle(Color("brown"))
+                                                Text("يتميز بالبساطة والهيبة.")
+                                                    .font(.custom("Saudi-Regular", size: 16))
+                                                    .foregroundStyle(Color("brown").opacity(0.9))
+                                            } else if name == "جنوبي" {
+                                                Text("لباس الرجل – المنطقة الجنوبية")
+                                                    .font(.custom("Saudi-Regular", size: 16))
+                                                    .foregroundStyle(Color("brown"))
+                                                Text("يتميز بالبساطة والطابع التراثي المرتبط بطبيعة المنطقة.")
+                                                    .font(.custom("Saudi-Regular", size: 16))
+                                                    .foregroundStyle(Color("brown").opacity(0.9))
+                                            } else if name == "جنوبيه" {
+                                                Text("لباس المرأة – المنطقة الجنوبية")
+                                                    .font(.custom("Saudi-Regular", size: 16))
+                                                    .foregroundStyle(Color("brown"))
+                                                Text("يتميز بالأناقة والتفاصيل التراثية.")
+                                                    .font(.custom("Saudi-Regular", size: 16))
+                                                    .foregroundStyle(Color("brown").opacity(0.9))
+                                            } else if name == "غربيه" {
+                                                Text("لباس المرأة – المنطقة الغربية (الحجاز)")
+                                                    .font(.custom("Saudi-Regular", size: 16))
+                                                    .foregroundStyle(Color("brown"))
+                                                Text("معروف بذوقه وبساطته التراثية.")
+                                                    .font(.custom("Saudi-Regular", size: 16))
+                                                    .foregroundStyle(Color("brown").opacity(0.9))
+                                            } else if name == "غربي" {
+                                                Text("لباس الرجل – المنطقة الغربية (الحجاز)")
+                                                    .font(.custom("Saudi-Regular", size: 16))
+                                                    .foregroundStyle(Color("brown"))
+                                                Text("يتميز بالبساطة والهيبة بطابع حجازي.")
+                                                    .font(.custom("Saudi-Regular", size: 16))
+                                                    .foregroundStyle(Color("brown").opacity(0.9))
+                                            } else {
+                                                Text("لباس الرجل – المنطقة الوسطى (نجد)")
+                                                    .font(.custom("Saudi-Regular", size: 16))
+                                                    .foregroundStyle(Color("brown"))
+                                                Text("يتميز بالبساطة والهيبة.")
+                                                    .font(.custom("Saudi-Regular", size: 16))
+                                                    .foregroundStyle(Color("brown").opacity(0.9))
+                                            }
+                                        }
+                                        .multilineTextAlignment(.center)
+                                    }
                                 }
                                 .padding(8)
                                 .background(
@@ -130,3 +218,4 @@ struct CharacterPickerView: View {
 #Preview {
         CharacterPickerView(playerName: "هيا")
 }
+
