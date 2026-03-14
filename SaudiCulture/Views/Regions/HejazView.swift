@@ -542,5 +542,5 @@ struct HejazView: View {
 }
 
 #Preview {
-    HejazView(region: .central, levelNumber: 5)
+    HejazView(region: .central, levelNumber: 1)
 }
