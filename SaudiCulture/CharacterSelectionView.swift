@@ -10,15 +10,15 @@ import SwiftUI
 struct CharacterPickerView: View {
     let playerName: String
     
-    @AppStorage("selectedCharacter") private var savedCharacter: String = "نجديه"  // ✅ حفظ الشخصية
+    @AppStorage("selectedCharacter") private var savedCharacter: String = "نجدية"  // ✅ حفظ الشخصية
     @AppStorage("hasChosenCharacter") private var hasChosenCharacter: Bool = false // ✅ هل اختار فعليًا؟
     
     let characterPairs: [[String]] = [
-        ["نجدي", "نجديه"],
+        ["نجدي", "نجدية"],
         ["شرقاوية", "شرقاوي"],
-        ["شماليه", "شمالي"],
-        ["جنوبي", "جنوبيه"],
-        ["غربيه", "غربي"],
+        ["شمالية", "شمالي"],
+        ["جنوبي", "جنوبية"],
+        ["غربية", "غربي"],
     ]
 
     @State private var selectedName: String? = nil
@@ -72,7 +72,7 @@ struct CharacterPickerView: View {
                                     // Description appears under the image only for the selected character
                                     if selectedName == name {
                                         VStack(spacing: 4) {
-                                            if name == "نجديه" {
+                                            if name == "نجدية" {
                                                 Text("لباس المرأة – المنطقة الوسطى (نجد)")
                                                     .font(.custom("Saudi-Regular", size: 16))
                                                     .foregroundStyle(Color("brown"))
@@ -93,7 +93,7 @@ struct CharacterPickerView: View {
                                                 Text("يتميز بالهيبة والطابع الرسمي.")
                                                     .font(.custom("Saudi-Regular", size: 16))
                                                     .foregroundStyle(Color("brown").opacity(0.9))
-                                            } else if name == "شماليه" {
+                                            } else if name == "شمالية" {
                                                 Text("لباس المرأة – المنطقة الشمالية")
                                                     .font(.custom("Saudi-Regular", size: 16))
                                                     .foregroundStyle(Color("brown"))
@@ -114,14 +114,14 @@ struct CharacterPickerView: View {
                                                 Text("يتميز بالبساطة والطابع التراثي المرتبط بطبيعة المنطقة.")
                                                     .font(.custom("Saudi-Regular", size: 16))
                                                     .foregroundStyle(Color("brown").opacity(0.9))
-                                            } else if name == "جنوبيه" {
+                                            } else if name == "جنوبية" {
                                                 Text("لباس المرأة – المنطقة الجنوبية")
                                                     .font(.custom("Saudi-Regular", size: 16))
                                                     .foregroundStyle(Color("brown"))
                                                 Text("يتميز بالأناقة والتفاصيل التراثية.")
                                                     .font(.custom("Saudi-Regular", size: 16))
                                                     .foregroundStyle(Color("brown").opacity(0.9))
-                                            } else if name == "غربيه" {
+                                            } else if name == "غربية" {
                                                 Text("لباس المرأة – المنطقة الغربية (الحجاز)")
                                                     .font(.custom("Saudi-Regular", size: 16))
                                                     .foregroundStyle(Color("brown"))
@@ -199,15 +199,15 @@ struct CharacterPickerView: View {
     @ViewBuilder
     func getWelcomeView(for character: String, selectedCharacter: String) -> some View {
         switch character {
-        case "نجدي", "نجديه":
+        case "نجدي", "نجدية":
             مرحباالوسطى(playerName: playerName, selectedCharacter: selectedCharacter)
         case "شرقاوي", "شرقاوية":
             مرحباالشرقيه(playerName: playerName, selectedCharacter: selectedCharacter)
-        case "جنوبي", "جنوبيه":
+        case "جنوبي", "جنوبية":
             مرحباالجنوبيه(playerName: playerName, selectedCharacter: selectedCharacter)
-        case "شمالي", "شماليه":
+        case "شمالي", "شمالية":
             مرحباالشماليه(playerName: playerName, selectedCharacter: selectedCharacter)
-        case "غربي", "غربيه":
+        case "غربي", "غربية":
             مرحباالغربيه(playerName: playerName, selectedCharacter: selectedCharacter)
         default:
             مرحباالجنوبيه(playerName: playerName, selectedCharacter: selectedCharacter)
