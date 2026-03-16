@@ -232,6 +232,9 @@
 //    AsirView(region: .central, levelNumber: 1)
 //}
 
+
+///this below works fine!!
+///
 import SwiftUI
 
 struct AsirView: View {
@@ -270,7 +273,7 @@ struct AsirView: View {
     
     let asirLevels: [[Card]] = [
         
-        // LEVEL 0
+        // LEVEL 0  1
         [
             Card(text: nil, imageName: "SouthG", borderColor: Color(hex: "731112"), pairID: 1),
             Card(text: "ثوب مكلف و طفشه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
@@ -288,19 +291,67 @@ struct AsirView: View {
         ],
         
         
-        // LEVEL 1 (example)
+        // LEVEL 1 (example) 2
         [
-            Card(text: nil, imageName: "ثوب_عسيري", borderColor: Color(hex: "731112"), pairID: 1),
-            Card(text: "ثوب عسيري", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+            Card(text: nil, imageName: "S1-M", borderColor: Color(hex: "731112"), pairID: 1),
+            Card(text: "عصابه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
 
-            Card(text: nil, imageName: "عصابه", borderColor: Color(hex: "731112"), pairID: 2),
-            Card(text: "عصابة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+            Card(text: nil, imageName: "S2-M", borderColor: Color(hex: "731112"), pairID: 2),
+            Card(text: "بيدي", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
 
-            Card(text: nil, imageName: "ازار", borderColor: Color(hex: "731112"), pairID: 3),
+            Card(text: nil, imageName: "ثوب عادي", borderColor: Color(hex: "731112"), pairID: 3),
+            Card(text: "ثوب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+
+            Card(text: nil, imageName: "جنوبي", borderColor: Color(hex: "731112"), pairID: 4),
+            Card(text: "اللبس الجنوبي للرجال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+
+            Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
+        ],
+        // LEVEL 2 (example) 3
+        [
+            Card(text: nil, imageName: "S1-G", borderColor: Color(hex: "731112"), pairID: 1),
+            Card(text: "ثوب مجنب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+
+            Card(text: nil, imageName: "S2-G", borderColor: Color(hex: "731112"), pairID: 2),
+            Card(text: "الشيلة المريشة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+
+            Card(text: nil, imageName: "جنوبيه", borderColor: Color(hex: "731112"), pairID: 3),
+            Card(text: "اللبس التراثي الجنوبي للنساء", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+
+            Card(text: nil, imageName: "طفله جنوبيه", borderColor: Color(hex: "731112"), pairID: 4),
+            Card(text: "اللبس الترثي الجنوبي للبنات", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+
+            Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
+        ],
+        // LEVEL 3 (example) 4
+        [
+            Card(text: nil, imageName: "طفله جنوبيه" , borderColor: Color(hex: "731112"), pairID: 1),
+            Card(text: "اللبس التراثي الجنوبي للبنات", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+
+            Card(text: nil, imageName:"G1-S", borderColor: Color(hex: "731112"), pairID: 2),
+            Card(text: "ثوب مكلف", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+
+            Card(text: nil, imageName: "hat", borderColor: Color(hex: "731112"), pairID: 3),
+            Card(text: "طفشة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+
+            Card(text: nil, imageName: "جنوبيه", borderColor: Color(hex: "731112"), pairID: 4),
+            Card(text: "اللبس الترثي الجنوبي للبنات", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+
+            Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
+        ],
+        // LEVEL 4 (example) 5
+        [
+            Card(text: nil, imageName: "طفل جنوبي", borderColor: Color(hex: "731112"), pairID: 1),
+            Card(text: "اللبس التراثي الجنوبي للشباب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+
+            Card(text: nil, imageName: "b2-s", borderColor: Color(hex: "731112"), pairID: 2),
+            Card(text: "مصنف", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+
+            Card(text: nil, imageName: "b1-s", borderColor: Color(hex: "731112"), pairID: 3),
             Card(text: "إزار", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
 
-            Card(text: nil, imageName: "بيدي", borderColor: Color(hex: "731112"), pairID: 4),
-            Card(text: "بيدي", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+            Card(text: nil, imageName: "قميص", borderColor: Color(hex: "731112"), pairID: 4),
+            Card(text: "قميص", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
 
             Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
         ]
@@ -467,5 +518,5 @@ struct AsirView: View {
 }
 
 #Preview {
-    AsirView(region: .southern, levelNumber: 0)
+    AsirView(region: .southern, levelNumber: 4 )
 }

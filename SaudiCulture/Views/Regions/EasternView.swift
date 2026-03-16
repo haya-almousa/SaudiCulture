@@ -592,5 +592,5 @@ struct EasternView: View {
 
 
 #Preview {
-    EasternView(region: .eastern, levelNumber: 5)
+    EasternView(region: .eastern, levelNumber: 5 )
 }

@@ -303,6 +303,6 @@ Card(text: nil, imageName: "NorthG", borderColor: Color(hex: "731112"), pairID: 
 }
 
 #Preview {
-    NorthView(region: .northern, levelNumber: 5)
+    NorthView(region: .northern, levelNumber: 4)
 }
 
