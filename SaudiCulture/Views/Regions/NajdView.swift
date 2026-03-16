@@ -252,8 +252,25 @@ struct NajdView: View {
 
     var najdCards: [Card] {
         switch levelNumber {
-
         case 1:
+            return[
+                        // Pair 1
+                        Card(text: nil, imageName: "NajdW", borderColor: Color(hex: "731112"), pairID: 1),
+                        Card(text: "ثوب تور و دراعيه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+                        // Pair 2
+                        Card(text: nil, imageName: "NajdM", borderColor: Color(hex: "731112"), pairID: 2),
+                        Card(text: "ﻋﺼﺎﺑﺔ، ﻏﺘﺮة، دﻗﻠﺔ، ﺑﺸﺖ اﻟﺒﺮﻗﺎء، ﺛﻮب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+                        // Pair 3
+                        Card(text: nil, imageName: "NajdG", borderColor: Color(hex: "731112"), pairID: 3),
+                        Card(text: "ثوب\nشيلة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+                        // Pair 4
+                        Card(text: nil, imageName: "NajdB", borderColor: Color(hex: "731112"), pairID: 4),
+                        Card(text: "ﻋﻘﺎل زري, ﻏﺘﺮة, زﺑﻮن, ﺑﺸت", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+                        // Lonely card
+                        Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
+                    
+            ]
+        case 2:
             return [
                 Card(text: nil, imageName: "بشت اسود", borderColor: Color(hex:"731112"), pairID: 1),
                 Card(text: "بشت اسود", imageName: nil, borderColor: Color(hex:"731112"), pairID: 1),
@@ -263,22 +280,32 @@ struct NajdView: View {
 
                 Card(text: nil, imageName: "عقال زري", borderColor: Color(hex:"731112"), pairID: 3),
                 Card(text: "عقال زري", imageName: nil, borderColor: Color(hex:"731112"), pairID: 3),
+                
+                Card(text: nil, imageName: "NajdB", borderColor: Color(hex:"731112"), pairID: 4),
+                Card(text: "عقال زري", imageName: nil, borderColor: Color(hex:"731112"), pairID: 4),
+
 
                 Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex:"731112"), pairID: 5)
             ]
 
-        case 2:
+        case 3:
             return [
                 Card(text: nil, imageName: "ثوب بنت", borderColor: Color(hex:"731112"), pairID: 1),
                 Card(text: "ثوب", imageName: nil, borderColor: Color(hex:"731112"), pairID: 1),
 
                 Card(text: nil, imageName: "شيلة", borderColor: Color(hex:"731112"), pairID: 2),
                 Card(text: "شيلة", imageName: nil, borderColor: Color(hex:"731112"), pairID: 2),
+                
+                Card(text: nil, imageName: "نجدية", borderColor: Color(hex:"731112"), pairID: 3),
+                Card(text: "اللبس التراثي لنساء نجد", imageName: nil, borderColor: Color(hex:"731112"), pairID: 3),
+                
+                Card(text: nil, imageName: "طفله نجديه", borderColor: Color(hex:"731112"), pairID: 4),
+                Card(text: "اللبس التراثي لبنات نجد", imageName: nil, borderColor: Color(hex:"731112"), pairID: 4),
 
                 Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex:"731112"), pairID: 5)
             ]
 
-        case 3:
+        case 4:
             return [
                 Card(text: nil, imageName: "جوخة", borderColor: Color(hex:"731112"), pairID: 1),
                 Card(text: "جوخة", imageName: nil, borderColor: Color(hex:"731112"), pairID: 1),
@@ -295,13 +322,19 @@ struct NajdView: View {
                 Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex:"731112"), pairID: 5)
             ]
 
-        case 4:
+        case 5:
             return [
                 Card(text: nil, imageName: "قبع", borderColor: Color(hex:"731112"), pairID: 1),
                 Card(text: "قبع", imageName: nil, borderColor: Color(hex:"731112"), pairID: 1),
 
                 Card(text: nil, imageName: "مقطع", borderColor: Color(hex:"731112"), pairID: 2),
                 Card(text: "مقطع او دراعه", imageName: nil, borderColor: Color(hex:"731112"), pairID: 2),
+                
+                Card(text: nil, imageName:"طفله نجديه", borderColor: Color(hex:"731112"), pairID: 3),
+                Card(text: " اللبس التراثي لبنات نجد", imageName: nil, borderColor: Color(hex:"731112"), pairID: 3),
+                Card(text: nil, imageName:"NajdW", borderColor: Color(hex:"731112"), pairID: 4),
+                Card(text: " اللبس التراثي لنساء نجد", imageName: nil, borderColor: Color(hex:"731112"), pairID: 4  ),
+                
 
                 Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex:"731112"), pairID: 5)
             ]
@@ -500,5 +533,5 @@ struct NajdView: View {
 }
 
 #Preview {
-    NajdView(region: .central, levelNumber: 2)
+    NajdView(region: .central, levelNumber: 5)
 }
