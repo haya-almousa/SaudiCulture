@@ -271,29 +271,14 @@ struct AsirView: View {
 
     // MARK: - ASIR LEVELS
     
-    let asirLevels: [[Card]] = [
-        
-        // LEVEL 0  1
-        [
-            Card(text: nil, imageName: "SouthG", borderColor: Color(hex: "731112"), pairID: 1),
-            Card(text: "ثوب مكلف و طفشه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+    var asirLevels: [Card] {
 
-            Card(text: nil, imageName: "جنوبي", borderColor: Color(hex: "731112"), pairID: 2),
-            Card(text: "عصابه و بيدي", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+           switch levelNumber {// levelNumber  عشان يعرف  هو في اي مرحله و على اساسها يطلع البطايق
 
-            Card(text: nil, imageName: "SouthB", borderColor: Color(hex: "731112"), pairID: 3),
-            Card(text: "قميص، مصنف و إزار", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
-
-            Card(text: nil, imageName: "جنوبيه", borderColor: Color(hex: "731112"), pairID: 4),
-            Card(text: "ثوب مجنب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-
-            Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-        ],
-        
-        
-        // LEVEL 1 (example) 2
-        [
-            Card(text: nil, imageName: "S1-M", borderColor: Color(hex: "731112"), pairID: 1),
+           // المرحلة 1 - الرجل
+           case 1:
+               return [
+       Card(text: nil, imageName: "S1-M", borderColor: Color(hex: "731112"), pairID: 1),
             Card(text: "عصابه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
 
             Card(text: nil, imageName: "S2-M", borderColor: Color(hex: "731112"), pairID: 2),
@@ -306,10 +291,12 @@ struct AsirView: View {
             Card(text: "اللبس الجنوبي للرجال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
 
             Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-        ],
-        // LEVEL 2 (example) 3
-        [
-            Card(text: nil, imageName: "S1-G", borderColor: Color(hex: "731112"), pairID: 1),
+               ]
+
+           // المرحلة 2 - المرأة
+           case 2:
+               return [
+              Card(text: nil, imageName: "S1-G", borderColor: Color(hex: "731112"), pairID: 1),
             Card(text: "ثوب مجنب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
 
             Card(text: nil, imageName: "S2-G", borderColor: Color(hex: "731112"), pairID: 2),
@@ -322,26 +309,12 @@ struct AsirView: View {
             Card(text: "اللبس الترثي الجنوبي للبنات", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
 
             Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-        ],
-        // LEVEL 3 (example) 4
-        [
-            Card(text: nil, imageName: "طفله جنوبيه" , borderColor: Color(hex: "731112"), pairID: 1),
-            Card(text: "اللبس التراثي الجنوبي للبنات", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+               ]
 
-            Card(text: nil, imageName:"G1-S", borderColor: Color(hex: "731112"), pairID: 2),
-            Card(text: "ثوب مكلف", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
-
-            Card(text: nil, imageName: "hat", borderColor: Color(hex: "731112"), pairID: 3),
-            Card(text: "طفشة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
-
-            Card(text: nil, imageName: "جنوبيه", borderColor: Color(hex: "731112"), pairID: 4),
-            Card(text: "اللبس الترثي الجنوبي للبنات", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-
-            Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-        ],
-        // LEVEL 4 (example) 5
-        [
-            Card(text: nil, imageName: "طفل جنوبي", borderColor: Color(hex: "731112"), pairID: 1),
+           // المرحلة 3 - الطفل
+           case 3:
+               return [
+     Card(text: nil, imageName: "طفل جنوبي", borderColor: Color(hex: "731112"), pairID: 1),
             Card(text: "اللبس التراثي الجنوبي للشباب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
 
             Card(text: nil, imageName: "b2-s", borderColor: Color(hex: "731112"), pairID: 2),
@@ -354,13 +327,50 @@ struct AsirView: View {
             Card(text: "قميص", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
 
             Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-        ]
-    ]
+               ]
+
+           // المرحلة 4 - الطفلة
+           case 4:
+               return [
+   Card(text: nil, imageName: "طفله جنوبيه" , borderColor: Color(hex: "731112"), pairID: 1),
+            Card(text: "اللبس التراثي الجنوبي للبنات", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+
+            Card(text: nil, imageName:"G1-S", borderColor: Color(hex: "731112"), pairID: 2),
+            Card(text: "ثوب مكلف", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+
+            Card(text: nil, imageName: "hat", borderColor: Color(hex: "731112"), pairID: 3),
+            Card(text: "طفشة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+
+            Card(text: nil, imageName: "جنوبيه", borderColor: Color(hex: "731112"), pairID: 4),
+            Card(text: "اللبس الترثي الجنوبي للبنات", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+
+            Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
+               ]
+
+           default:
+               return [
+                          Card(text: nil, imageName: "SouthG", borderColor: Color(hex: "731112"), pairID: 1),
+            Card(text: "ثوب مكلف و طفشه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+
+            Card(text: nil, imageName: "جنوبي", borderColor: Color(hex: "731112"), pairID: 2),
+            Card(text: "عصابه و بيدي", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+
+            Card(text: nil, imageName: "SouthB", borderColor: Color(hex: "731112"), pairID: 3),
+            Card(text: "قميص، مصنف و إزار", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+
+            Card(text: nil, imageName: "جنوبيه", borderColor: Color(hex: "731112"), pairID: 4),
+            Card(text: "ثوب مجنب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+
+            Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
+               ]
+           }
+       }
+
 
     // Select cards depending on level
-    var currentLevelCards: [Card] {
-        asirLevels[min(levelNumber, asirLevels.count - 1)]
-    }
+//    var currentLevelCards: [Card] {
+//        asirLevels[min(levelNumber, asirLevels.count - 1)]
+//    }
 
     var body: some View {
         NavigationStack {
@@ -477,7 +487,7 @@ struct AsirView: View {
 
             .onAppear {
 
-                viewModel.setupCards(cardPairs: currentLevelCards)
+                viewModel.setupCards(cardPairs: asirLevels)
 
                 isPreviewMode = true
 
@@ -505,7 +515,7 @@ struct AsirView: View {
         flashRed = false
         isPreviewMode = true
 
-        viewModel.setupCards(cardPairs: currentLevelCards)
+        viewModel.setupCards(cardPairs: asirLevels)
     }
 
     func timeString(_ seconds: Int) -> String {
@@ -518,5 +528,5 @@ struct AsirView: View {
 }
 
 #Preview {
-    AsirView(region: .southern, levelNumber: 4 )
+    AsirView(region: .southern, levelNumber: 5 )
 }

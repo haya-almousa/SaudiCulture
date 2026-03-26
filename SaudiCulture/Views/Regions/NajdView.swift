@@ -251,112 +251,101 @@ struct NajdView: View {
     }
 
     var najdCards: [Card] {
-        switch levelNumber {
-        case 1:
-            return[
-                        // Pair 1
-                        Card(text: nil, imageName: "NajdW", borderColor: Color(hex: "731112"), pairID: 1),
-                        Card(text: "ثوب تور و دراعيه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
-                        // Pair 2
-                        Card(text: nil, imageName: "NajdM", borderColor: Color(hex: "731112"), pairID: 2),
-                        Card(text: "ﻋﺼﺎﺑﺔ، ﻏﺘﺮة، دﻗﻠﺔ، ﺑﺸﺖ اﻟﺒﺮﻗﺎء، ﺛﻮب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
-                        // Pair 3
-                        Card(text: nil, imageName: "NajdG", borderColor: Color(hex: "731112"), pairID: 3),
-                        Card(text: "ثوب\nشيلة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
-                        // Pair 4
-                        Card(text: nil, imageName: "NajdB", borderColor: Color(hex: "731112"), pairID: 4),
-                        Card(text: "ﻋﻘﺎل زري, ﻏﺘﺮة, زﺑﻮن, ﺑﺸت", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-                        // Lonely card
-                        Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
+
+            switch levelNumber {// levelNumber  عشان يعرف  هو في اي مرحله و على اساسها يطلع البطايق
+
+            // المرحلة 1 - الرجل
+            case 1:
+                return [
+                     Card(text: nil, imageName: "بشت اسود", borderColor: Color(hex:"731112"), pairID: 1),
+                    Card(text: "بشت اسود", imageName: nil, borderColor: Color(hex:"731112"), pairID: 1),
+
+                    Card(text: nil, imageName: "غترة بيضاء", borderColor: Color(hex:"731112"), pairID: 2),
+                    Card(text: "غترة", imageName: nil, borderColor: Color(hex:"731112"), pairID: 2),
+
+                    Card(text: nil, imageName: "عقال زري", borderColor: Color(hex:"731112"), pairID: 3),
+                    Card(text: "عقال زري", imageName: nil, borderColor: Color(hex:"731112"), pairID: 3),
                     
-            ]
-        case 2:
-            return [
-                Card(text: nil, imageName: "بشت اسود", borderColor: Color(hex:"731112"), pairID: 1),
-                Card(text: "بشت اسود", imageName: nil, borderColor: Color(hex:"731112"), pairID: 1),
-
-                Card(text: nil, imageName: "غترة بيضاء", borderColor: Color(hex:"731112"), pairID: 2),
-                Card(text: "غترة", imageName: nil, borderColor: Color(hex:"731112"), pairID: 2),
-
-                Card(text: nil, imageName: "عقال زري", borderColor: Color(hex:"731112"), pairID: 3),
-                Card(text: "عقال زري", imageName: nil, borderColor: Color(hex:"731112"), pairID: 3),
-                
-                Card(text: nil, imageName: "NajdB", borderColor: Color(hex:"731112"), pairID: 4),
-                Card(text: "عقال زري", imageName: nil, borderColor: Color(hex:"731112"), pairID: 4),
+                    Card(text: nil, imageName: "NajdB", borderColor: Color(hex:"731112"), pairID: 4),
+                    Card(text: "عقال زري", imageName: nil, borderColor: Color(hex:"731112"), pairID: 4),
 
 
-                Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex:"731112"), pairID: 5)
-            ]
+                    Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex:"731112"), pairID: 5)
+                ]
 
-        case 3:
-            return [
-                Card(text: nil, imageName: "ثوب بنت", borderColor: Color(hex:"731112"), pairID: 1),
-                Card(text: "ثوب", imageName: nil, borderColor: Color(hex:"731112"), pairID: 1),
+            // المرحلة 2 - المرأة
+            case 2:
+                return [
+                        Card(text: nil, imageName: "ثوب بنت", borderColor: Color(hex:"731112"), pairID: 1),
+                    Card(text: "ثوب", imageName: nil, borderColor: Color(hex:"731112"), pairID: 1),
 
-                Card(text: nil, imageName: "شيلة", borderColor: Color(hex:"731112"), pairID: 2),
-                Card(text: "شيلة", imageName: nil, borderColor: Color(hex:"731112"), pairID: 2),
-                
-                Card(text: nil, imageName: "نجدية", borderColor: Color(hex:"731112"), pairID: 3),
-                Card(text: "اللبس التراثي لنساء نجد", imageName: nil, borderColor: Color(hex:"731112"), pairID: 3),
-                
-                Card(text: nil, imageName: "طفله نجديه", borderColor: Color(hex:"731112"), pairID: 4),
-                Card(text: "اللبس التراثي لبنات نجد", imageName: nil, borderColor: Color(hex:"731112"), pairID: 4),
+                    Card(text: nil, imageName: "شيلة", borderColor: Color(hex:"731112"), pairID: 2),
+                    Card(text: "شيلة", imageName: nil, borderColor: Color(hex:"731112"), pairID: 2),
+                    
+                    Card(text: nil, imageName: "نجدية", borderColor: Color(hex:"731112"), pairID: 3),
+                    Card(text: "اللبس التراثي لنساء نجد", imageName: nil, borderColor: Color(hex:"731112"), pairID: 3),
+                    
+                    Card(text: nil, imageName: "طفله نجديه", borderColor: Color(hex:"731112"), pairID: 4),
+                    Card(text: "اللبس التراثي لبنات نجد", imageName: nil, borderColor: Color(hex:"731112"), pairID: 4),
 
-                Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex:"731112"), pairID: 5)
-            ]
+                    Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex:"731112"), pairID: 5)
+                ]
 
-        case 4:
-            return [
-                Card(text: nil, imageName: "جوخة", borderColor: Color(hex:"731112"), pairID: 1),
-                Card(text: "جوخة", imageName: nil, borderColor: Color(hex:"731112"), pairID: 1),
+            // المرحلة 3 - الطفل
+            case 3:
+                return [
+                               Card(text: nil, imageName: "جوخة", borderColor: Color(hex:"731112"), pairID: 1),
+                    Card(text: "جوخة", imageName: nil, borderColor: Color(hex:"731112"), pairID: 1),
 
-                Card(text: nil, imageName: "طاقيه زري", borderColor: Color(hex:"731112"), pairID: 2),
-                Card(text: "طاقية زري", imageName: nil, borderColor: Color(hex:"731112"), pairID: 2),
+                    Card(text: nil, imageName: "طاقيه زري", borderColor: Color(hex:"731112"), pairID: 2),
+                    Card(text: "طاقية زري", imageName: nil, borderColor: Color(hex:"731112"), pairID: 2),
 
-                Card(text: nil, imageName: "غتره بيضاء طفل", borderColor: Color(hex:"731112"), pairID: 3),
-                Card(text: "غترة", imageName: nil, borderColor: Color(hex:"731112"), pairID: 3),
+                    Card(text: nil, imageName: "غتره بيضاء طفل", borderColor: Color(hex:"731112"), pairID: 3),
+                    Card(text: "غترة", imageName: nil, borderColor: Color(hex:"731112"), pairID: 3),
 
-                Card(text: nil, imageName: "عقال", borderColor: Color(hex:"731112"), pairID: 4),
-                Card(text: "عقال", imageName: nil, borderColor: Color(hex:"731112"), pairID: 4),
+                    Card(text: nil, imageName: "عقال", borderColor: Color(hex:"731112"), pairID: 4),
+                    Card(text: "عقال", imageName: nil, borderColor: Color(hex:"731112"), pairID: 4),
 
-                Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex:"731112"), pairID: 5)
-            ]
+                    Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex:"731112"), pairID: 5)
+                ]
 
-        case 5:
-            return [
-                Card(text: nil, imageName: "قبع", borderColor: Color(hex:"731112"), pairID: 1),
-                Card(text: "قبع", imageName: nil, borderColor: Color(hex:"731112"), pairID: 1),
+            // المرحلة 4 - الطفلة
+            case 4:
+                return [
+                    Card(text: nil, imageName: "قبع", borderColor: Color(hex:"731112"), pairID: 1),
+                    Card(text: "قبع", imageName: nil, borderColor: Color(hex:"731112"), pairID: 1),
 
-                Card(text: nil, imageName: "مقطع", borderColor: Color(hex:"731112"), pairID: 2),
-                Card(text: "مقطع او دراعه", imageName: nil, borderColor: Color(hex:"731112"), pairID: 2),
-                
-                Card(text: nil, imageName:"طفله نجديه", borderColor: Color(hex:"731112"), pairID: 3),
-                Card(text: " اللبس التراثي لبنات نجد", imageName: nil, borderColor: Color(hex:"731112"), pairID: 3),
-                Card(text: nil, imageName:"NajdW", borderColor: Color(hex:"731112"), pairID: 4),
-                Card(text: " اللبس التراثي لنساء نجد", imageName: nil, borderColor: Color(hex:"731112"), pairID: 4  ),
-                
+                    Card(text: nil, imageName: "مقطع", borderColor: Color(hex:"731112"), pairID: 2),
+                    Card(text: "مقطع او دراعه", imageName: nil, borderColor: Color(hex:"731112"), pairID: 2),
+                    
+                    Card(text: nil, imageName:"طفله نجديه", borderColor: Color(hex:"731112"), pairID: 3),
+                    Card(text: " اللبس التراثي لبنات نجد", imageName: nil, borderColor: Color(hex:"731112"), pairID: 3),
+                    Card(text: nil, imageName:"NajdW", borderColor: Color(hex:"731112"), pairID: 4),
+                    Card(text: " اللبس التراثي لنساء نجد", imageName: nil, borderColor: Color(hex:"731112"), pairID: 4  ),
+                    
 
-                Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex:"731112"), pairID: 5)
-            ]
+                    Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex:"731112"), pairID: 5)
+       ]
 
-        default:
-            return [
-                Card(text: nil, imageName: "طفله نجديه", borderColor: Color(hex:"731112"), pairID: 1),
-                Card(text: nil, imageName: "طفله نجديه", borderColor: Color(hex:"731112"), pairID: 1),
-
-                Card(text: nil, imageName: "طفل نجدي", borderColor: Color(hex:"731112"), pairID: 2),
-                Card(text: nil, imageName: "طفل نجدي", borderColor: Color(hex:"731112"), pairID: 2),
-
-                Card(text: nil, imageName: "نجدي", borderColor: Color(hex:"731112"), pairID: 3),
-                Card(text: nil, imageName: "نجدي", borderColor: Color(hex:"731112"), pairID: 3),
-
-                Card(text: nil, imageName: "نجديه", borderColor: Color(hex:"731112"), pairID: 4),
-                Card(text: nil, imageName: "نجديه", borderColor: Color(hex:"731112"), pairID: 4),
-
-                Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex:"731112"), pairID: 5)
-            ]
+            default:
+                return [
+            // Pair 1
+                            Card(text: nil, imageName: "NajdW", borderColor: Color(hex: "731112"), pairID: 1),
+                            Card(text: "ثوب تور و دراعيه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+                            // Pair 2
+                            Card(text: nil, imageName: "NajdM", borderColor: Color(hex: "731112"), pairID: 2),
+                            Card(text: "ﻋﺼﺎﺑﺔ، ﻏﺘﺮة، دﻗﻠﺔ، ﺑﺸﺖ اﻟﺒﺮﻗﺎء، ﺛﻮب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+                            // Pair 3
+                            Card(text: nil, imageName: "NajdG", borderColor: Color(hex: "731112"), pairID: 3),
+                            Card(text: "ثوب\nشيلة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+                            // Pair 4
+                            Card(text: nil, imageName: "NajdB", borderColor: Color(hex: "731112"), pairID: 4),
+                            Card(text: "ﻋﻘﺎل زري, ﻏﺘﺮة, زﺑﻮن, ﺑﺸت", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+                            // Lonely card
+                            Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
+                ]
+            }
         }
-    }
 
     var body: some View {
         NavigationStack {

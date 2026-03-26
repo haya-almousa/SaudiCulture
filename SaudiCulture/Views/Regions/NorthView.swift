@@ -1,5 +1,3 @@
-
-
 import SwiftUI
 
 struct NorthView: View {
@@ -36,97 +34,107 @@ struct NorthView: View {
     
     // MARK: - North Levels (Clothing Theme)
     
-    let northLevels: [[Card]] = [
-        
-        // LEVEL 0 → exactly like original `northCards`
-        [
-            Card(text: nil, imageName: "شمالي", borderColor: Color(hex: "731112"), pairID: 1),
-            Card(text: "ثوب مرودن", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
-            
-            Card(text: nil, imageName: "شماليه", borderColor: Color(hex: "731112"), pairID: 2),
-            Card(text: "محوثل و المقرونة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
-            
-            Card(text: nil, imageName: "NorthG", borderColor: Color(hex: "731112"), pairID: 3),
-            Card(text: "بخنق و دراعه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
-            
-            Card(text: nil, imageName: "NorthB", borderColor: Color(hex: "731112"), pairID: 4),
-            Card(text: "ثوب مرودن", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-            
-            Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-        ],
-        
-        // LEVEL 1 → MAN DONE
-        [
-            Card(text: nil, imageName: "ثوب", borderColor: Color(hex: "731112"), pairID: 1),
-            Card(text: "ثوب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
-            
-            Card(text: nil, imageName: "عقال", borderColor: Color(hex: "731112"), pairID: 2),
-            Card(text: "عقال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
-            
-            Card(text: nil, imageName: "MAN1", borderColor: Color(hex: "731112"), pairID: 3),
-            Card(text: "غتره", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
-            
-            Card(text: nil, imageName: "بشت", borderColor: Color(hex: "731112"), pairID: 4),
-            Card(text: "بشت", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-            
-            Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-        ],
-        // LEVEL 2 → WOMAN Not done yet
-        [
-            Card(text: nil, imageName: "W3", borderColor: Color(hex: "731112"), pairID: 1),
-            Card(text: "محوثل", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
-            
-            Card(text: nil, imageName: "شيلة", borderColor: Color(hex: "731112"), pairID: 2),
-            Card(text: "شيلة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
-            
-            Card(text: nil, imageName: "W4", borderColor: Color(hex: "731112"), pairID: 3),
-            Card(text: "المقرونة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
-            
-            Card(text: nil, imageName: "W2", borderColor: Color(hex: "731112"), pairID: 4),
-            Card(text: "لبس التراثي للشمال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-            
-            Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-        ],
-        // LEVEL 3 → Girl Not done yet ٢ احتاج اضيف لها قطعتين
-        [
-            Card(text: nil, imageName: "Gdress", borderColor: Color(hex: "731112"), pairID: 1),
-            Card(text: "بخنق", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
-            
-            Card(text: nil, imageName: "GDress1", borderColor: Color(hex: "731112"), pairID: 2),
-            Card(text: "دراعه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
-            
-            Card(text: nil, imageName: "W2", borderColor: Color(hex: "731112"), pairID: 3),
-            Card(text: "اللبس التراثي للشمال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
-            
-Card(text: nil, imageName: "NorthG", borderColor: Color(hex: "731112"), pairID: 4),
-            Card(text: "لبس التراثي للنساء للشمال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-//            Card(text: nil, imageName: "بشت", borderColor: Color(hex: "731112"), pairID: 4),
-//            Card(text: "بشت", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-            
-            Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-        ],
-        // LEVEL 4 → Boy  done
-        [
-            Card(text: nil, imageName: "ثوب", borderColor: Color(hex: "731112"), pairID: 1),
-            Card(text: "ثوب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
-            
-            Card(text: nil, imageName: "عقال", borderColor: Color(hex: "731112"), pairID: 2),
-            Card(text: "عقال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
-            
-            Card(text: nil, imageName: "Boy1", borderColor: Color(hex: "731112"), pairID: 3),
-            Card(text: "غتره", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
-            
-            Card(text: nil, imageName: "Boy2", borderColor: Color(hex: "731112"), pairID: 4),
-            Card(text: "بشت", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-            
-            Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-        ],
-    ]
-    
+    var northLevels: [Card] {
+
+            switch levelNumber {// levelNumber  عشان يعرف  هو في اي مرحله و على اساسها يطلع البطايق
+
+            // المرحلة 1 - الرجل
+            case 1:
+                return [
+                    Card(text: nil, imageName: "ثوب", borderColor: Color(hex: "731112"), pairID: 1),
+                    Card(text: "ثوب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+                    
+                    Card(text: nil, imageName: "عقال", borderColor: Color(hex: "731112"), pairID: 2),
+                    Card(text: "عقال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+                    
+                    Card(text: nil, imageName: "Boy1", borderColor: Color(hex: "731112"), pairID: 3),
+                    Card(text: "غتره", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+                    
+                    Card(text: nil, imageName: "Boy2", borderColor: Color(hex: "731112"), pairID: 4),
+                    Card(text: "بشت", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+                    
+                    Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
+                ]
+
+            // المرحلة 2 - المرأة
+            case 2:
+                return [
+                        Card(text: nil, imageName: "W3", borderColor: Color(hex: "731112"), pairID: 1),
+                    Card(text: "محوثل", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+                    
+                    Card(text: nil, imageName: "شيلة", borderColor: Color(hex: "731112"), pairID: 2),
+                    Card(text: "شيلة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+                    
+                    Card(text: nil, imageName: "W4", borderColor: Color(hex: "731112"), pairID: 3),
+                    Card(text: "المقرونة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+                    
+                    Card(text: nil, imageName: "W2", borderColor: Color(hex: "731112"), pairID: 4),
+                    Card(text: "لبس التراثي للشمال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+                    
+                    Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
+                ]
+
+            // المرحلة 3 - الطفل
+            case 3:
+                return [
+                                    Card(text: nil, imageName: "ثوب", borderColor: Color(hex: "731112"), pairID: 1),
+                Card(text: "ثوب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+                
+                Card(text: nil, imageName: "عقال", borderColor: Color(hex: "731112"), pairID: 2),
+                Card(text: "عقال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+                
+                Card(text: nil, imageName: "Boy1", borderColor: Color(hex: "731112"), pairID: 3),
+                Card(text: "غتره", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+                
+                Card(text: nil, imageName: "Boy2", borderColor: Color(hex: "731112"), pairID: 4),
+                Card(text: "بشت", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+                
+                Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
+                ]
+
+            // المرحلة 4 - الطفلة
+            case 4:
+                return [
+                    Card(text: nil, imageName: "Gdress", borderColor: Color(hex: "731112"), pairID: 1),
+                    Card(text: "بخنق", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+                    
+                    Card(text: nil, imageName: "GDress1", borderColor: Color(hex: "731112"), pairID: 2),
+                    Card(text: "دراعه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+                    
+                    Card(text: nil, imageName: "W2", borderColor: Color(hex: "731112"), pairID: 3),
+                    Card(text: "اللبس التراثي للشمال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+                    
+        Card(text: nil, imageName: "NorthG", borderColor: Color(hex: "731112"), pairID: 4),
+                    Card(text: "لبس التراثي للنساء للشمال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+        //            Card(text: nil, imageName: "بشت", borderColor: Color(hex: "731112"), pairID: 4),
+        //            Card(text: "بشت", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+                    
+                    Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
+       ]
+
+            default:
+                return [
+                               Card(text: nil, imageName: "شمالي", borderColor: Color(hex: "731112"), pairID: 1),
+                    Card(text: "ﻋﻘﺎل و ﻏﺘﺮة و ﺑﺸﺖ و ﺛﻮب ﻣﺮودن", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+                    
+                    Card(text: nil, imageName: "شماليه", borderColor: Color(hex: "731112"), pairID: 2),
+                    Card(text: "اﳌﻘﺮوﻧﺔ و ﺷﻴﻠﺔ و ﻣﺤﻮﺛل", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+                    
+                    Card(text: nil, imageName: "NorthG", borderColor: Color(hex: "731112"), pairID: 3),
+                    Card(text: "بخنق و دراعه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+                    
+                    Card(text: nil, imageName: "NorthB", borderColor: Color(hex: "731112"), pairID: 4),
+                    Card(text: "ﻋﻘﺎل و ﻏﺘﺮة و ﺑﺸﺖ و ﺛﻮب ﻣﺮودن", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+                    
+                    Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
+                ]
+            }
+        }
+
     // Select cards depending on level
-    var currentLevelCards: [Card] {
-        northLevels[min(levelNumber, northLevels.count - 1)]
-    }
+//    var currentLevelCards: [Card] {
+//        northLevels[min(levelNumber, northLevels.count - 1)]
+//    }
     
     var body: some View {
         NavigationStack {
@@ -245,7 +253,7 @@ Card(text: nil, imageName: "NorthG", borderColor: Color(hex: "731112"), pairID: 
                 }
             }
             .onAppear {
-                viewModel.setupCards(cardPairs: currentLevelCards)
+                viewModel.setupCards(cardPairs: northLevels)
                 isPreviewMode = true
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
@@ -281,8 +289,7 @@ Card(text: nil, imageName: "NorthG", borderColor: Color(hex: "731112"), pairID: 
         flashRed = false
         isPreviewMode = true
         
-        viewModel.setupCards(cardPairs: currentLevelCards)
-        
+        viewModel.setupCards(cardPairs: northLevels)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             withAnimation(.easeInOut(duration: 0.4)) {
                 isPreviewMode = false
@@ -303,6 +310,6 @@ Card(text: nil, imageName: "NorthG", borderColor: Color(hex: "731112"), pairID: 
 }
 
 #Preview {
-    NorthView(region: .northern, levelNumber: 4)
+    NorthView(region: .northern, levelNumber: 5)
 }
 

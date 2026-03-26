@@ -267,93 +267,87 @@ struct EasternView: View {
     
     // MARK: - LEVELS
     var easternCards: [Card] {
-        
-        switch levelNumber {
-            
-        case 1:
-            return [ Card(text: nil, imageName: "شرقاوية", borderColor: Color(hex: "731112"), pairID: 1),
-                     Card(text: " ثوب النشل ", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
-                     Card(text: nil, imageName: "شرقاوي", borderColor: Color(hex: "731112"), pairID: 2),
-                     Card(text: " ثوب مرودن و عقال مقصب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
-                     Card(text: nil, imageName: "شرقية", borderColor: Color(hex: "731112"), pairID: 3),
-                     Card(text: " بخنق و دراعة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
-                     Card(text: nil, imageName: "شرقي", borderColor: Color(hex: "731112"), pairID: 4),
-                     Card(text: " غترة و صديريه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-                     
-                     Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-            ]
-            //MAN-SH1
-            
-        case 2:
-            return [
-                Card(text: nil, imageName: "MAN-SH1", borderColor: Color(hex: "731112"), pairID: 1),
-                Card(text: "دقلة ", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
-                Card(text: nil, imageName: "غترة بيضاء", borderColor: Color(hex: "731112"), pairID: 2),
-                Card(text: " غترة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
-                Card(text: nil, imageName: "عقال زري", borderColor: Color(hex: "731112"), pairID: 3),
-                Card(text: " بخنق و دراعة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
-                Card(text: nil, imageName: "ثوب", borderColor: Color(hex: "731112"), pairID: 4),
-                Card(text: "ثوب مرودن", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-                
-                Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-            ]
-            
-        case 3:
-            return [
-                Card(text: nil, imageName: "E1-G", borderColor: Color(hex: "731112"), pairID: 1),
-                Card(text: "ثوب النشل ", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
-                Card(text: nil, imageName: "E2-G", borderColor: Color(hex: "731112"), pairID: 2),
-                Card(text: " دراعة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
-                Card(text: nil, imageName: "شرقاوية", borderColor: Color(hex: "731112"), pairID: 3),
-                Card(text: "اللبس الثراثي للنساء في الشرقية", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
-                Card(text: nil, imageName: "شرقية", borderColor: Color(hex: "731112"), pairID: 4),
-                Card(text: "اللبس الثراثي للبنات في الشرقية" , imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-                
-                Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-            ]
-        case 4:
-            return [ Card(text: nil, imageName: "شرقاوية", borderColor: Color(hex: "731112"), pairID: 1),
-                Card(text: " اللبس الثراثي للنساء في الشرقية", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
-                     
-                Card(text: nil, imageName: "E3-G", borderColor: Color(hex: "731112"), pairID: 2),
-                Card(text: "دراعة ", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
-                     
-                Card(text: nil, imageName: "شرقية", borderColor: Color(hex: "731112"), pairID: 3),
-                Card(text: "اللبس الثراثي للبنات في الشرقية", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
-                     
-                Card(text: nil, imageName: "E4-G", borderColor: Color(hex: "731112"), pairID: 4),
-                Card(text: " بخنق", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-                     
-                Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-            ]
-            
-        case 5:
-            return [ Card(text: nil, imageName: "عقال زري", borderColor: Color(hex: "731112"), pairID: 1),
-                     Card(text:"عقال زري ", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
-                     Card(text: nil, imageName: "غترة بيضاء", borderColor: Color(hex: "731112"), pairID: 2),
-                     Card(text: "غترة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
-                     Card(text: nil, imageName: "صديرية", borderColor: Color(hex: "731112"), pairID: 3),
-                     Card(text: " صديرية", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
-                     Card(text: nil, imageName: "ثوب عادي", borderColor: Color(hex: "731112"), pairID: 4),
-                     Card(text: " غترة و صديريه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-                     
-                     Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-            ]
-            
-        default:
-            return [ Card(text: nil, imageName: "شرقاوية", borderColor: Color(hex: "731112"), pairID: 1),
-                     Card(text: " ثوب النشل ", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
-                     Card(text: nil, imageName: "شرقاوي", borderColor: Color(hex: "731112"), pairID: 2),
-                     Card(text: " ثوب مرودن و عقال مقصب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
-                     Card(text: nil, imageName: "شرقية", borderColor: Color(hex: "731112"), pairID: 3),
-                     Card(text: " بخنق و دراعة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
-                     Card(text: nil, imageName: "شرقي", borderColor: Color(hex: "731112"), pairID: 4),
-                     Card(text: " غترة و صديريه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-                     
-                     Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-            ]
+
+            switch levelNumber {// levelNumber  عشان يعرف  هو في اي مرحله و على اساسها يطلع البطايق
+
+            // المرحلة 1 - الرجل
+            case 1:
+                return [
+                     Card(text: nil, imageName: "MAN-SH1", borderColor: Color(hex: "731112"), pairID: 1),
+                    Card(text: "دقلة ", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+                    Card(text: nil, imageName: "غترة بيضاء", borderColor: Color(hex: "731112"), pairID: 2),
+                    Card(text: " غترة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+                    Card(text: nil, imageName: "عقال زري", borderColor: Color(hex: "731112"), pairID: 3),
+                    Card(text: " بخنق و دراعة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+                    Card(text: nil, imageName: "ثوب", borderColor: Color(hex: "731112"), pairID: 4),
+                    Card(text: "ثوب مرودن", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+                    
+                    Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
+                ]
+
+            // المرحلة 2 - المرأة
+            case 2:
+                return [
+                       Card(text: nil, imageName: "E1-G", borderColor: Color(hex: "731112"), pairID: 1),
+                    Card(text: "ثوب النشل ", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+                    Card(text: nil, imageName: "E2-G", borderColor: Color(hex: "731112"), pairID: 2),
+                    Card(text: " دراعة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+                    Card(text: nil, imageName: "شرقاوية", borderColor: Color(hex: "731112"), pairID: 3),
+                    Card(text: "اللبس الثراثي للنساء في الشرقية", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+                    Card(text: nil, imageName: "شرقية", borderColor: Color(hex: "731112"), pairID: 4),
+                    Card(text: "اللبس الثراثي للبنات في الشرقية" , imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+                    
+                    Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
+                ]
+
+            // المرحلة 3 - الطفل
+            case 3:
+                return [
+                               Card(text: nil, imageName: "عقال زري", borderColor: Color(hex: "731112"), pairID: 1),
+                         Card(text:"عقال زري ", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+                         Card(text: nil, imageName: "غترة بيضاء", borderColor: Color(hex: "731112"), pairID: 2),
+                         Card(text: "غترة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+                         Card(text: nil, imageName: "صديرية", borderColor: Color(hex: "731112"), pairID: 3),
+                         Card(text: " صديرية", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+                         Card(text: nil, imageName: "ثوب عادي", borderColor: Color(hex: "731112"), pairID: 4),
+                         Card(text: " غترة و صديريه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+                         
+                         Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
+                ]
+
+            // المرحلة 4 - الطفلة
+            case 4:
+                return [
+                     Card(text: nil, imageName: "شرقاوية", borderColor: Color(hex: "731112"), pairID: 1),
+                    Card(text: " اللبس الثراثي للنساء في الشرقية", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+                         
+                    Card(text: nil, imageName: "E3-G", borderColor: Color(hex: "731112"), pairID: 2),
+                    Card(text: "دراعة ", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+                         
+                    Card(text: nil, imageName: "شرقية", borderColor: Color(hex: "731112"), pairID: 3),
+                    Card(text: "اللبس الثراثي للبنات في الشرقية", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+                         
+                    Card(text: nil, imageName: "E4-G", borderColor: Color(hex: "731112"), pairID: 4),
+                    Card(text: " بخنق", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+                         
+                    Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
+       ]
+
+            default:
+                return [
+           Card(text: nil, imageName: "شرقاوية", borderColor: Color(hex: "731112"), pairID: 1),
+                         Card(text: " ثوب النشل ", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+                         Card(text: nil, imageName: "شرقاوي", borderColor: Color(hex: "731112"), pairID: 2),
+                         Card(text: " ثوب مرودن و عقال مقصب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+                         Card(text: nil, imageName: "شرقية", borderColor: Color(hex: "731112"), pairID: 3),
+                         Card(text: " بخنق و دراعة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+                         Card(text: nil, imageName: "شرقي", borderColor: Color(hex: "731112"), pairID: 4),
+                         Card(text: " غترة و صديريه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+                         
+                         Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
+                ]
+            }
         }
-    }
     
     
     var body: some View {
