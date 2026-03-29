@@ -65,8 +65,8 @@ struct NorthView: View {
                     Card(text: nil, imageName: "شيلة", borderColor: Color(hex: "731112"), pairID: 2),
                     Card(text: "شيلة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
                     
-                    Card(text: nil, imageName: "W4", borderColor: Color(hex: "731112"), pairID: 3),
-                    Card(text: "المقرونة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+                    Card(text: nil, imageName: "تمر", borderColor: Color(hex: "731112"), pairID: 3),
+                    Card(text: nil, imageName: "تمر", borderColor: Color(hex: "731112"), pairID: 3),
                     
                     Card(text: nil, imageName: "W2", borderColor: Color(hex: "731112"), pairID: 4),
                     Card(text: "لبس التراثي للشمال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
@@ -101,11 +101,11 @@ struct NorthView: View {
                     Card(text: nil, imageName: "GDress1", borderColor: Color(hex: "731112"), pairID: 2),
                     Card(text: "دراعه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
                     
-                    Card(text: nil, imageName: "W2", borderColor: Color(hex: "731112"), pairID: 3),
-                    Card(text: "اللبس التراثي للشمال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+                    Card(text: nil, imageName: "تمر", borderColor: Color(hex: "731112"), pairID: 3),
+                    Card(text: nil, imageName: "تمر", borderColor: Color(hex: "731112"), pairID: 3),
                     
         Card(text: nil, imageName: "NorthG", borderColor: Color(hex: "731112"), pairID: 4),
-                    Card(text: "لبس التراثي للنساء للشمال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+                    Card(text: "لبس التراثي  للشمال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
         //            Card(text: nil, imageName: "بشت", borderColor: Color(hex: "731112"), pairID: 4),
         //            Card(text: "بشت", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
                     
@@ -115,16 +115,17 @@ struct NorthView: View {
             default:
                 return [
                                Card(text: nil, imageName: "شمالي", borderColor: Color(hex: "731112"), pairID: 1),
-                    Card(text: "ﻋﻘﺎل و ﻏﺘﺮة و ﺑﺸﺖ و ﺛﻮب ﻣﺮودن", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+                               Card(text: nil, imageName: "شمالي", borderColor: Color(hex: "731112"), pairID: 1),
                     
                     Card(text: nil, imageName: "شماليه", borderColor: Color(hex: "731112"), pairID: 2),
-                    Card(text: "اﳌﻘﺮوﻧﺔ و ﺷﻴﻠﺔ و ﻣﺤﻮﺛل", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+                               Card(text: nil, imageName: "شماليه", borderColor: Color(hex: "731112"), pairID: 2),
                     
                     Card(text: nil, imageName: "NorthG", borderColor: Color(hex: "731112"), pairID: 3),
-                    Card(text: "بخنق و دراعه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+                               
+                               Card(text: nil, imageName: "NorthG", borderColor: Color(hex: "731112"), pairID: 3),
                     
                     Card(text: nil, imageName: "NorthB", borderColor: Color(hex: "731112"), pairID: 4),
-                    Card(text: "ﻋﻘﺎل و ﻏﺘﺮة و ﺑﺸﺖ و ﺛﻮب ﻣﺮودن", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+                               Card(text: nil, imageName: "NorthB", borderColor: Color(hex: "731112"), pairID: 4),
                     
                     Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
                 ]
@@ -312,4 +313,4 @@ struct NorthView: View {
 #Preview {
     NorthView(region: .northern, levelNumber: 5)
 }
-
+////

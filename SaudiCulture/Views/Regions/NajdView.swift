@@ -283,10 +283,10 @@ struct NajdView: View {
                     Card(text: "شيلة", imageName: nil, borderColor: Color(hex:"731112"), pairID: 2),
                     
                     Card(text: nil, imageName: "نجدية", borderColor: Color(hex:"731112"), pairID: 3),
-                    Card(text: "اللبس التراثي لنساء نجد", imageName: nil, borderColor: Color(hex:"731112"), pairID: 3),
+                    Card(text: "اللبس التراثي  نجد", imageName: nil, borderColor: Color(hex:"731112"), pairID: 3),
                     
-                    Card(text: nil, imageName: "طفله نجديه", borderColor: Color(hex:"731112"), pairID: 4),
-                    Card(text: "اللبس التراثي لبنات نجد", imageName: nil, borderColor: Color(hex:"731112"), pairID: 4),
+                    Card(text: nil, imageName: "تمر", borderColor: Color(hex:"731112"), pairID: 4),
+                    Card(text: nil, imageName:"تمر", borderColor: Color(hex:"731112"), pairID: 4),
 
                     Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex:"731112"), pairID: 5)
                 ]
@@ -319,9 +319,9 @@ struct NajdView: View {
                     Card(text: "مقطع او دراعه", imageName: nil, borderColor: Color(hex:"731112"), pairID: 2),
                     
                     Card(text: nil, imageName:"طفله نجديه", borderColor: Color(hex:"731112"), pairID: 3),
-                    Card(text: " اللبس التراثي لبنات نجد", imageName: nil, borderColor: Color(hex:"731112"), pairID: 3),
-                    Card(text: nil, imageName:"NajdW", borderColor: Color(hex:"731112"), pairID: 4),
-                    Card(text: " اللبس التراثي لنساء نجد", imageName: nil, borderColor: Color(hex:"731112"), pairID: 4  ),
+                    Card(text: " اللبس التراثي  نجد", imageName: nil, borderColor: Color(hex:"731112"), pairID: 3),
+                    Card(text: nil, imageName:"تمر", borderColor: Color(hex:"731112"), pairID: 4),
+                    Card(text: nil, imageName: "تمر", borderColor: Color(hex:"731112"), pairID: 4  ),
                     
 
                     Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex:"731112"), pairID: 5)
@@ -330,17 +330,17 @@ struct NajdView: View {
             default:
                 return [
             // Pair 1
-                            Card(text: nil, imageName: "NajdW", borderColor: Color(hex: "731112"), pairID: 1),
-                            Card(text: "ثوب تور و دراعيه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+                            Card(text: nil, imageName: "طفله نجديه", borderColor: Color(hex: "731112"), pairID: 1),
+                            Card(text: nil, imageName: "طفله نجديه", borderColor: Color(hex: "731112"), pairID: 1),
                             // Pair 2
-                            Card(text: nil, imageName: "NajdM", borderColor: Color(hex: "731112"), pairID: 2),
-                            Card(text: "ﻋﺼﺎﺑﺔ، ﻏﺘﺮة، دﻗﻠﺔ، ﺑﺸﺖ اﻟﺒﺮﻗﺎء، ﺛﻮب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+                            Card(text: nil, imageName: "طفل نجدي", borderColor: Color(hex: "731112"), pairID: 2),
+                            Card(text: nil, imageName: "طفل نجدي", borderColor: Color(hex: "731112"), pairID: 2),
                             // Pair 3
                             Card(text: nil, imageName: "NajdG", borderColor: Color(hex: "731112"), pairID: 3),
-                            Card(text: "ثوب\nشيلة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+                            Card(text: nil, imageName: "NajdG", borderColor: Color(hex: "731112"), pairID: 3),
                             // Pair 4
                             Card(text: nil, imageName: "NajdB", borderColor: Color(hex: "731112"), pairID: 4),
-                            Card(text: "ﻋﻘﺎل زري, ﻏﺘﺮة, زﺑﻮن, ﺑﺸت", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+                            Card(text: nil, imageName: "NajdB", borderColor: Color(hex: "731112"), pairID: 4),
                             // Lonely card
                             Card(text: "لحاله بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
                 ]

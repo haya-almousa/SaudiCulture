@@ -303,10 +303,10 @@ struct AsirView: View {
             Card(text: "الشيلة المريشة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
 
             Card(text: nil, imageName: "جنوبيه", borderColor: Color(hex: "731112"), pairID: 3),
-            Card(text: "اللبس التراثي الجنوبي للنساء", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+            Card(text: "اللبس التراثي  للنساء", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
 
-            Card(text: nil, imageName: "طفله جنوبيه", borderColor: Color(hex: "731112"), pairID: 4),
-            Card(text: "اللبس الترثي الجنوبي للبنات", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+            Card(text: nil, imageName: "تمر", borderColor: Color(hex: "731112"), pairID: 4),
+            Card(text: nil, imageName:"تمر", borderColor: Color(hex: "731112"), pairID: 4),
 
             Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
                ]
@@ -315,7 +315,7 @@ struct AsirView: View {
            case 3:
                return [
      Card(text: nil, imageName: "طفل جنوبي", borderColor: Color(hex: "731112"), pairID: 1),
-            Card(text: "اللبس التراثي الجنوبي للشباب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+            Card(text: "اللبس التراثي  للشباب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
 
             Card(text: nil, imageName: "b2-s", borderColor: Color(hex: "731112"), pairID: 2),
             Card(text: "مصنف", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
@@ -333,7 +333,7 @@ struct AsirView: View {
            case 4:
                return [
    Card(text: nil, imageName: "طفله جنوبيه" , borderColor: Color(hex: "731112"), pairID: 1),
-            Card(text: "اللبس التراثي الجنوبي للبنات", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+            Card(text: "اللبس التراثي  للبنات", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
 
             Card(text: nil, imageName:"G1-S", borderColor: Color(hex: "731112"), pairID: 2),
             Card(text: "ثوب مكلف", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
@@ -341,25 +341,26 @@ struct AsirView: View {
             Card(text: nil, imageName: "hat", borderColor: Color(hex: "731112"), pairID: 3),
             Card(text: "طفشة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
 
-            Card(text: nil, imageName: "جنوبيه", borderColor: Color(hex: "731112"), pairID: 4),
-            Card(text: "اللبس الترثي الجنوبي للبنات", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+            Card(text: nil, imageName: "تمر", borderColor: Color(hex: "731112"), pairID: 4),
+            Card(text: nil, imageName: "تمر", borderColor: Color(hex: "731112"), pairID: 4),
 
             Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
                ]
 
            default:
                return [
-                          Card(text: nil, imageName: "SouthG", borderColor: Color(hex: "731112"), pairID: 1),
-            Card(text: "ثوب مكلف و طفشه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+                Card(text: nil, imageName: "SouthG", borderColor: Color(hex: "731112"), pairID: 1),
+                Card(text: nil, imageName: "SouthG", borderColor: Color(hex: "731112"), pairID: 1),
 
             Card(text: nil, imageName: "جنوبي", borderColor: Color(hex: "731112"), pairID: 2),
-            Card(text: "عصابه و بيدي", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+                Card(text: nil, imageName: "جنوبي", borderColor: Color(hex: "731112"), pairID: 2),
 
             Card(text: nil, imageName: "SouthB", borderColor: Color(hex: "731112"), pairID: 3),
-            Card(text: "قميص، مصنف و إزار", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+          
+                Card(text: nil, imageName: "SouthB", borderColor: Color(hex: "731112"), pairID: 3),
 
             Card(text: nil, imageName: "جنوبيه", borderColor: Color(hex: "731112"), pairID: 4),
-            Card(text: "ثوب مجنب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+                Card(text: nil, imageName: "جنوبيه", borderColor: Color(hex: "731112"), pairID: 4),
 
             Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
                ]
@@ -528,5 +529,5 @@ struct AsirView: View {
 }
 
 #Preview {
-    AsirView(region: .southern, levelNumber: 5 )
+    AsirView(region: .southern, levelNumber:5)
 }

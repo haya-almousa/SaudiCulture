@@ -293,9 +293,9 @@ struct EasternView: View {
                     Card(text: nil, imageName: "E2-G", borderColor: Color(hex: "731112"), pairID: 2),
                     Card(text: " دراعة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
                     Card(text: nil, imageName: "شرقاوية", borderColor: Color(hex: "731112"), pairID: 3),
-                    Card(text: "اللبس الثراثي للنساء في الشرقية", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
-                    Card(text: nil, imageName: "شرقية", borderColor: Color(hex: "731112"), pairID: 4),
-                    Card(text: "اللبس الثراثي للبنات في الشرقية" , imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+                    Card(text: "اللبس الثراثي  الشرقية", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+                    Card(text: nil, imageName: "تمر", borderColor: Color(hex: "731112"), pairID: 4),
+                    Card(text: nil , imageName: "تمر", borderColor: Color(hex: "731112"), pairID: 4),
                     
                     Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
                 ]
@@ -318,31 +318,33 @@ struct EasternView: View {
             // المرحلة 4 - الطفلة
             case 4:
                 return [
-                     Card(text: nil, imageName: "شرقاوية", borderColor: Color(hex: "731112"), pairID: 1),
-                    Card(text: " اللبس الثراثي للنساء في الشرقية", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+                     Card(text: nil, imageName: "تمر", borderColor: Color(hex: "731112"), pairID: 1),
+                    Card(text: nil, imageName: "تمر", borderColor: Color(hex: "731112"), pairID: 1),
                          
                     Card(text: nil, imageName: "E3-G", borderColor: Color(hex: "731112"), pairID: 2),
                     Card(text: "دراعة ", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
                          
                     Card(text: nil, imageName: "شرقية", borderColor: Color(hex: "731112"), pairID: 3),
-                    Card(text: "اللبس الثراثي للبنات في الشرقية", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+                    Card(text: "اللبس الثراثي  الشرقية", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
                          
                     Card(text: nil, imageName: "E4-G", borderColor: Color(hex: "731112"), pairID: 4),
                     Card(text: " بخنق", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
                          
                     Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-       ]
-
+]
             default:
                 return [
            Card(text: nil, imageName: "شرقاوية", borderColor: Color(hex: "731112"), pairID: 1),
-                         Card(text: " ثوب النشل ", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+           Card(text: nil, imageName: "شرقاوية", borderColor: Color(hex: "731112"), pairID: 1),
+           
                          Card(text: nil, imageName: "شرقاوي", borderColor: Color(hex: "731112"), pairID: 2),
-                         Card(text: " ثوب مرودن و عقال مقصب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+           Card(text: nil, imageName: "شرقاوي", borderColor: Color(hex: "731112"), pairID: 2),
+           
                          Card(text: nil, imageName: "شرقية", borderColor: Color(hex: "731112"), pairID: 3),
-                         Card(text: " بخنق و دراعة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+           Card(text: nil, imageName: "شرقية", borderColor: Color(hex: "731112"), pairID: 3),
+           
                          Card(text: nil, imageName: "شرقي", borderColor: Color(hex: "731112"), pairID: 4),
-                         Card(text: " غترة و صديريه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+           Card(text: nil, imageName: "شرقي", borderColor: Color(hex: "731112"), pairID: 4),
                          
                          Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
                 ]
@@ -586,5 +588,5 @@ struct EasternView: View {
 
 
 #Preview {
-    EasternView(region: .eastern, levelNumber: 5 )
+    EasternView(region: .eastern, levelNumber: 5)
 }
