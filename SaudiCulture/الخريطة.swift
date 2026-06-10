@@ -4,7 +4,7 @@
 //
 
 import SwiftUI
-internal import Combine
+import Combine
 
 struct SaudiMapView: View {
     // MARK: - Properties
@@ -192,7 +192,7 @@ struct ClickableRegionView: View {
     }
 }
 
-// MARK: - Shape Based on PNG Alpha
+// MARK: - Shape Based on PNG Alpha (Optimized)
 struct RegionImageShape: Shape {
     let imageName: String
 
@@ -224,19 +224,26 @@ struct RegionImageShape: Shape {
 
         guard let pixelData = context.data else { return Path(rect) }
 
+        let step = max(width / 50, 1)
         var path = Path()
+        let blockW = rect.width / CGFloat(width) * CGFloat(step)
+        let blockH = rect.height / CGFloat(height) * CGFloat(step)
 
-        for y in 0..<height {
-            for x in 0..<width {
+        var y = 0
+        while y < height {
+            var x = 0
+            while x < width {
                 let pixelIndex = (y * width + x) * bytesPerPixel
                 let alpha = pixelData.load(fromByteOffset: pixelIndex + 3, as: UInt8.self)
 
                 if alpha > 10 {
                     let px = CGFloat(x) / CGFloat(width) * rect.width
                     let py = CGFloat(y) / CGFloat(height) * rect.height
-                    path.addRect(CGRect(x: px, y: py, width: 1, height: 1))
+                    path.addRect(CGRect(x: px, y: py, width: blockW, height: blockH))
                 }
+                x += step
             }
+            y += step
         }
 
         return path

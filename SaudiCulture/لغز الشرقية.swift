@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-internal import Combine
+import Combine
 
 // MARK: - شكل قطعة البزل (Puzzle Piece Shape)
 struct PuzzlePieceShapeSharqiya: Shape {

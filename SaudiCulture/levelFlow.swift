@@ -5,7 +5,7 @@
 //  Created by Wed Ahmed Alasiri on 23/08/1447 AH.
 //
 import SwiftUI
-internal import Combine
+import Combine
 
 //class LevelFlow: ObservableObject {
 //

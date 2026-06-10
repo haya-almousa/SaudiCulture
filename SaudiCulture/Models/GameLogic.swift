@@ -152,7 +152,7 @@
 //    ContentView()
 //}
 import SwiftUI
-internal import Combine
+import Combine
 
 // Card Model
 struct Card: Identifiable {

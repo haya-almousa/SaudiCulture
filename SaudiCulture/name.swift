@@ -10,6 +10,7 @@ import SwiftUI
 struct Name: View {
     @State private var name: String = ""
     @State private var navigateToCharacterPicker = false
+    @State private var showPrivacyPolicy = false
     
     @AppStorage("playerName") private var savedName: String = ""               // ✅ حفظ الاسم
     @AppStorage("hasChosenCharacter") private var hasChosenCharacter: Bool = false // ✅ هل اختار شخصية؟
@@ -44,10 +45,21 @@ struct Name: View {
                 .clipShape(Capsule())
                 .disabled(!isNameValid)
                 .opacity(isNameValid ? 1 : 0.4)
+                
+                Spacer().frame(height: 20)
+                
+                Button("سياسة الخصوصية") {
+                    showPrivacyPolicy = true
+                }
+                .font(.custom("Saudi-Regular", size: 14))
+                .foregroundStyle(Color("brown").opacity(0.6))
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color("BackgroundMain"))
             .ignoresSafeArea()
+            .sheet(isPresented: $showPrivacyPolicy) {
+                PrivacyPolicyView()
+            }
             .onAppear {
                 // ✅ إذا الاسم محفوظ: لا نعيد كتابته
                 if !savedName.isEmpty {

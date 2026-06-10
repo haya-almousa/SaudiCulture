@@ -7,7 +7,7 @@
 /*haya Queen of the world*/
 
 import SwiftUI
-internal import Combine
+import Combine
 
 struct PuzzlePieceShape: Shape {
     let row: Int
