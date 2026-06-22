@@ -37,26 +37,26 @@ struct SaudiMapView: View {
                     ZStack(alignment: .center) {
                         
                         ClickableRegionView(
-                            imageName: "المنطقة الشماليه",
-                            size: 280,
+                            imageName: "‎⁨المنطقة الشماليه",
+                            size: 200,
                             isUnlocked: gameProgress.isRegionUnlocked(.northern),
                             action: { handleRegionTap(.northern) }
                         )
-                        .offset(x: -70, y: -160)
+                        .offset(x: -60, y: -140)
                         .zIndex(1)
                         
                         ClickableRegionView(
-                            imageName: "المنطقة الغربيه",
-                            size: 280,
+                            imageName: "‎⁨المنطقة الغربيه",
+                            size: 190,
                             isUnlocked: gameProgress.isRegionUnlocked(.western),
                             action: { handleRegionTap(.western) }
                         )
-                        .offset(x: -120, y: -30)
+                        .offset(x: -120, y: -20)
                         .zIndex(3)
                         
                         ClickableRegionView(
-                            imageName: "المنطقة الشرقيه",
-                            size: 250,
+                            imageName: "‎⁨ المنطقة الشرقيه",
+                            size: 220,
                             isUnlocked: gameProgress.isRegionUnlocked(.eastern),
                             action: { handleRegionTap(.eastern) }
                         )
@@ -64,16 +64,16 @@ struct SaudiMapView: View {
                         .zIndex(2)
                         
                         ClickableRegionView(
-                            imageName: "المنطقة الوسطى",
-                            size: 220,
+                            imageName: "‎⁨المنطقة الوسطى",
+                            size: 190,
                             isUnlocked: gameProgress.isRegionUnlocked(.central),
                             action: { handleRegionTap(.central) }
                         )
-                        .offset(x: -19, y: -20)
+                        .offset(x: -20, y: -10)
                         .zIndex(10)
                         
                         ClickableRegionView(
-                            imageName: "المنطقة الجنوبيه",
+                            imageName: "المنطقة الجنوبية",
                             size: 150,
                             isUnlocked: gameProgress.isRegionUnlocked(.southern),
                             action: { handleRegionTap(.southern) }
