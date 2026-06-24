@@ -62,7 +62,7 @@ struct الشرقيه: View {
             """
         ),
         EasternOutfitLevel(
-            images: ["عائلة شرقاوية"], // صورة تجمع الرجل والمرأة والطفل والطفلة
+            images: ["عائلة شرقاوية"],
             description: """
             الزي الشرقي – الهوية والمعنى
             لا يُعد الزي التقليدي في المنطقة الشرقية مجرد لباس،
@@ -84,129 +84,134 @@ struct الشرقيه: View {
         let idx = max(0, min(levelNumber - 1, levels.count - 1))
         let level = levels[idx]
 
-        ZStack {
-            Color("BackgroundMain")
-                .ignoresSafeArea()
+        GeometryReader { geo in
+            let screenW = geo.size.width
+            let screenH = geo.size.height
 
-            VStack {
-                HStack {
-                    Button(action: { dismiss() }) {
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 25, weight: .bold))
-                            .foregroundColor(.white)
-                            .padding(12)
-                            .background(Color("brown"))
-                            .clipShape(Circle())
-                    }
-                    .padding(.leading, 20)
-                    .padding(.top, -15)
-                    Spacer()
-                }
-                Spacer()
-            }
-            .zIndex(1)
+            let isIPadSize = screenW >= 700
 
-            // ✅ الصور
-            Group {
-                if levelNumber == 5 {
-
-                    VStack(spacing: 5) {
-
-                        // الصف الخلفي (الرجل + المرأة)
-                        HStack(spacing: -15) {
-                            Image("شرقاوي")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 300)
-
-                            Image("شرقاوية")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 290)
-                        }
-                        .offset(y: 130)
-
-                        // الصف الأمامي (الطفل + الطفلة)
-                        HStack(spacing: -29) {
-                            Image("طفل شرقاوي")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 320)
-
-                            Image("طفله شرقاويه")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 310)
-                        }
-                        .offset(y: -100)
-                    }
-
-                } else {
-
-                    HStack(spacing: 20) {
-                        ForEach(level.images, id: \.self) { img in
-                            Image(img)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(
-                                    height:
-                                        (img == "طفل شرقاوي" || img == "طفله شرقاويه")
-                                        ? 480
-                                        : 360
-                                )
-                        }
-                    }
-                }
-            }
-            .position(x: UIScreen.main.bounds.width / 2, y: 160)
+            let cardWidth: CGFloat = min(screenW, 411)
+            let cardHeight: CGFloat = min(screenH * 0.69, 580)
 
             ZStack {
-                RoundedRectangle(cornerRadius: 40)
-                    .fill(Color("brown"))
+                Color("BackgroundMain")
+                    .ignoresSafeArea()
 
-                VStack(spacing: 7.5) {
-                    ScrollView {
-                        Text(level.description)
-                            .font(.custom("Saudi-Regular", size: 20))
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .multilineTextAlignment(.center)
-                            .lineSpacing(5)
-                            .padding(.horizontal, 30)
-                            .padding(.top, 70)
+                VStack {
+                    HStack {
+                        Button(action: { dismiss() }) {
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: 25, weight: .bold))
+                                .foregroundColor(.white)
+                                .padding(12)
+                                .background(Color("brown"))
+                                .clipShape(Circle())
+                        }
+                        .padding(.leading, 20)
+                        .padding(.top, -15)
+
+                        Spacer()
                     }
-                    .scrollIndicators(.hidden)
-
                     Spacer()
-
-                    Button {
-                        goToCards = true
-                    } label: {
-                        Text("ابدأ اللعبة")
-                            .font(.custom("Saudi-Regular", size: 34))
-                            .foregroundColor(Color("brown"))
-                            .frame(width: 240, height: 60)
-                            .background(Color.white)
-                            .clipShape(Capsule())
-                    }
-                    .padding(.bottom, 125)
                 }
+                .zIndex(1)
+
+                Group {
+                    if levelNumber == 5 {
+                        VStack(spacing: 5) {
+                            HStack(spacing: -15) {
+                                Image("شرقاوي")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 300)
+
+                                Image("شرقاوية")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 290)
+                            }
+                            .offset(y: 130)
+
+                            HStack(spacing: -29) {
+                                Image("طفل شرقاوي")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 320)
+
+                                Image("طفله شرقاويه")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 310)
+                            }
+                            .offset(y: -100)
+                        }
+                    } else {
+                        HStack(spacing: 20) {
+                            ForEach(level.images, id: \.self) { img in
+                                Image(img)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(
+                                        height: (img == "طفل شرقاوي" || img == "طفله شرقاويه") ? 380 : 320
+                                    )
+                            }
+                        }
+                    }
+                }
+                .position(
+                    x: screenW / 2,
+                    y: isIPadSize ? 160 : 190
+                )
+
+                ZStack {
+                    RoundedRectangle(cornerRadius: 40)
+                        .fill(Color("brown"))
+
+                    VStack(spacing: 7.5) {
+                        ScrollView {
+                            Text(level.description)
+                                .font(.custom("Saudi-Regular", size: 20))
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                                .multilineTextAlignment(.center)
+                                .lineSpacing(5)
+                                .padding(.horizontal, 30)
+                                .padding(.top, 50)
+                                .padding(.bottom, 10)
+                        }
+                        .scrollIndicators(.hidden)
+
+                        Spacer(minLength: 0)
+
+                        Button {
+                            goToCards = true
+                        } label: {
+                            Text("ابدأ اللعبة")
+                                .font(.custom("Saudi-Regular", size: 34))
+                                .foregroundColor(Color("brown"))
+                                .frame(width: 240, height: 60)
+                                .background(Color.white)
+                                .clipShape(Capsule())
+                        }
+                        .padding(.bottom, 105)
+                    }
+                }
+                .frame(width: cardWidth, height: cardHeight)
+                .position(
+                    x: screenW / 2,
+                    y: isIPadSize ? screenH * 0.80 : screenH * 0.75
+                )
             }
-            .frame(width: 411, height: 580)
-            .position(
-                x: -9 + (411 / 2),
-                y: 342 + (529 / 2)
-            )
         }
         .navigationBarBackButtonHidden(true)
         .navigationDestination(isPresented: $goToCards) {
-            EasternView(region: region ,levelNumber: levelNumber)
+            EasternView(region: region, levelNumber: levelNumber)
         }
     }
 }
 
 #Preview {
     NavigationStack {
-        الشرقيه(region: .eastern, levelNumber: 5)
+        الشرقيه(region: .eastern, levelNumber: 1)
     }
 }

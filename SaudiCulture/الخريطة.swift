@@ -69,7 +69,7 @@ struct SaudiMapView: View {
                             isUnlocked: gameProgress.isRegionUnlocked(.central),
                             action: { handleRegionTap(.central) }
                         )
-                        .offset(x: -20, y: -10)
+                        .offset(x: -18, y: -15)
                         .zIndex(10)
                         
                         ClickableRegionView(
