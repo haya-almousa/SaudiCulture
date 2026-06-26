@@ -3,9 +3,9 @@
 //  SaudiCulture
 //
 //  Created by Wed Ahmed Alasiri on 22/08/1447 AH.
-//
 
-//test the push
+
+//test the push 
 import SwiftUI
 
 struct StackedCirclesView: View {
@@ -38,25 +38,41 @@ struct StackedCirclesView: View {
 
     var body: some View {
         GeometryReader { geo in
-            let isIPad = geo.size.width >= 700
+            let screenW = geo.size.width
+            let isIPad = screenW >= 700
+            
+            let titleFontSize: CGFloat = isIPad ? 36 : 26
+            let titleOffsetY: CGFloat = isIPad ? -720 : -360
+            
+            let mapCircleSize: CGFloat = isIPad ? 75 : 60
+            let mapImageSize: CGFloat = isIPad ? 45 : 35
+            let mapOffsetX: CGFloat = isIPad ? 310 : 150
+            let mapOffsetY: CGFloat = isIPad ? -800 : -400
+            
+            let circleSize: CGFloat = isIPad ? 125 : 90
+            let firstCircleSize: CGFloat = isIPad ? 150 : 110
+            
+            let characterWidth: CGFloat = isIPad ? 140 : 100
+            let characterHeight: CGFloat = isIPad ? 190 : 140
+            let characterOffset: CGFloat = isIPad ? 95 : 70
+            
+            let stackOffsetY: CGFloat = isIPad ? -200 : 60
 
             ZStack {
                 Image(backgroundImageName)
                     .resizable()
                     .scaledToFill()
+                    .scaleEffect(isIPad ? 0.99 : 1.0)
                     .ignoresSafeArea()
 
                 VStack {
                     HStack {
                         Text("اضغط على المرحله ")
-                            .font(.custom("Saudi-Regular", size: isIPad ? 34 : 26))
+                            .font(.custom("Saudi-Regular", size: titleFontSize))
                             .fontWeight(.bold)
                             .foregroundColor(Color("brown"))
                             .multilineTextAlignment(.center)
-                            .offset(
-                                x: -1,
-                                y: isIPad ? -geo.size.height * 0.36 : -330
-                            )
+                            .offset(x: -1, y: titleOffsetY)
                     }
 
                     HStack {
@@ -66,24 +82,15 @@ struct StackedCirclesView: View {
                             ZStack {
                                 Circle()
                                     .fill(Color("brown"))
-                                    .frame(
-                                        width: isIPad ? 76 : 60,
-                                        height: isIPad ? 76 : 60
-                                    )
+                                    .frame(width: mapCircleSize, height: mapCircleSize)
                                 
                                 Image("saudiMap")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(
-                                        width: isIPad ? 45 : 35,
-                                        height: isIPad ? 45 : 35
-                                    )
+                                    .frame(width: mapImageSize, height: mapImageSize)
                             }
                         }
-                        .offset(
-                            x: isIPad ? geo.size.width * 0.34 : 153,
-                            y: isIPad ? -geo.size.height * 0.42 : -380
-                        )
+                        .offset(x: mapOffsetX, y: mapOffsetY)
                     }
                 }
 
@@ -92,11 +99,7 @@ struct StackedCirclesView: View {
                         Image(index <= current ? "yellowCircle" : "grayCircle")
                             .resizable()
                             .scaledToFit()
-                            .frame(
-                                width: isIPad
-                                ? (index == 0 ? 135 : 112)
-                                : (index == 0 ? 110 : 90)
-                            )
+                            .frame(width: index == 0 ? firstCircleSize : circleSize)
                             .offset(y: yPosition(for: index, isIPad: isIPad))
                             .onTapGesture {
                                 if index <= current {
@@ -109,17 +112,12 @@ struct StackedCirclesView: View {
                     Image(selectedCharacter)
                         .resizable()
                         .scaledToFit()
-                        .frame(
-                            width: isIPad ? 125 : 100,
-                            height: isIPad ? 175 : 140
-                        )
-                        .offset(
-                            y: yPosition(for: current, isIPad: isIPad) - (isIPad ? 88 : 70)
-                        )
+                        .frame(width: characterWidth, height: characterHeight)
+                        .offset(y: yPosition(for: current, isIPad: isIPad) - characterOffset)
                         .animation(.spring(response: 0.6, dampingFraction: 0.7), value: current)
                         .allowsHitTesting(false)
                 }
-                .offset(y: isIPad ? 0 : 60)
+                .offset(y: stackOffsetY)
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -143,15 +141,10 @@ struct StackedCirclesView: View {
     }
 
     func yPosition(for index: Int, isIPad: Bool) -> CGFloat {
-        if isIPad {
-            let spacing: CGFloat = 135
-            let startFromBottom: CGFloat = 60
-            return startFromBottom - CGFloat(index) * spacing
-        } else {
-            let spacing: CGFloat = 110
-            let startFromBottom: CGFloat = 200
-            return startFromBottom - CGFloat(index) * spacing
-        }
+        let spacing: CGFloat = isIPad ? 145 : 110
+        let startFromBottom: CGFloat = isIPad ? 300 : 200
+        
+        return startFromBottom - CGFloat(index) * spacing
     }
 }
 

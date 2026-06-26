@@ -424,7 +424,7 @@ struct AsirView: View {
     private var iPadLayout: some View {
         ZStack {
             HStack { mapButton }
-                .offset(x: 220, y: -660)
+                .offset(x: 220, y: -820)
 
             VStack(spacing: 12) {
                 Text("لعبة الكروت - عسير")

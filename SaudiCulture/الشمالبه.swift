@@ -88,11 +88,13 @@ struct NorthernView: View {
         GeometryReader { geo in
             let screenW = geo.size.width
             let screenH = geo.size.height
+            let isIPad = screenW >= 700
 
-            let isIPadSize = screenW >= 700
+            let boxWidth: CGFloat = isIPad ? 820 : min(screenW * 1, 801)
+            let boxHeight: CGFloat = isIPad ? 760 : 480
 
-            let cardWidth: CGFloat = min(screenW, 411)
-            let cardHeight: CGFloat = min(screenH * 0.69, 580)
+            let boxY: CGFloat = isIPad ? screenH * 0.72 : screenH * 0.74
+            let imageY: CGFloat = isIPad ? 220 : 140
 
             ZStack {
                 Color("BackgroundMain")
@@ -102,14 +104,14 @@ struct NorthernView: View {
                     HStack {
                         Button(action: { dismiss() }) {
                             Image(systemName: "chevron.left")
-                                .font(.system(size: 25, weight: .bold))
+                                .font(.system(size: isIPad ? 30 : 25, weight: .bold))
                                 .foregroundColor(.white)
-                                .padding(12)
+                                .padding(isIPad ? 16 : 12)
                                 .background(Color("brown"))
                                 .clipShape(Circle())
                         }
-                        .padding(.leading, 20)
-                        .padding(.top, -15)
+                        .padding(.leading, isIPad ? 35 : 20)
+                        .padding(.top, isIPad ? 20 : -15)
 
                         Spacer()
                     }
@@ -119,32 +121,36 @@ struct NorthernView: View {
 
                 Group {
                     if levelNumber == 5 {
-                        VStack(spacing: 5) {
-                            HStack(spacing: -15) {
+                        VStack(spacing: isIPad ? 5 : -10) {
+                            HStack(spacing: isIPad ? -15 : -20) {
                                 Image("شمالي")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(height: 300)
+                                    .frame(height: isIPad ? 300 : 185)
+                                    .scaleEffect(isIPad ? 1.15 : 1.25)
 
                                 Image("شماليه")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(height: 290)
+                                    .frame(height: isIPad ? 290 : 175)
+                                    .scaleEffect(isIPad ? 1.15 : 1.25)
                             }
-                            .offset(y: 130)
+                            .offset(y: isIPad ? 130 : 80)
 
-                            HStack(spacing: -29) {
+                            HStack(spacing: isIPad ? -29 : -25) {
                                 Image("طفل شمالي")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(height: 320)
+                                    .frame(height: isIPad ? 320 : 190)
+                                    .scaleEffect(isIPad ? 1.12 : 1.2)
 
                                 Image("طفله شماليه")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(height: 310)
+                                    .frame(height: isIPad ? 310 : 185)
+                                    .scaleEffect(isIPad ? 1.12 : 1.2)
                             }
-                            .offset(y: -100)
+                            .offset(y: isIPad ? -103 : 4)
                         }
                     } else {
                         HStack(spacing: 20) {
@@ -152,32 +158,29 @@ struct NorthernView: View {
                                 Image(img)
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(
-                                        height: (img == "طفل شمالي" || img == "طفله شماليه") ? 380 : 320
-                                    )
+                                    .frame(height: imageHeight(for: img, isIPad: isIPad))
+                                    .scaleEffect(imageScale(for: img, isIPad: isIPad))
+                                    .offset(y: imageOffsetY(for: img, isIPad: isIPad))
                             }
                         }
                     }
                 }
-                .position(
-                    x: screenW / 2,
-                    y: isIPadSize ? 160 : 190
-                )
+                .position(x: screenW / 2, y: imageY)
 
                 ZStack {
-                    RoundedRectangle(cornerRadius: 40)
+                    RoundedRectangle(cornerRadius: isIPad ? 50 : 42)
                         .fill(Color("brown"))
 
                     VStack(spacing: 7.5) {
                         ScrollView {
                             Text(level.description)
-                                .font(.custom("Saudi-Regular", size: 20))
+                                .font(.custom("Saudi-Regular", size: isIPad ? 29 : 18))
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
                                 .multilineTextAlignment(.center)
-                                .lineSpacing(5)
-                                .padding(.horizontal, 30)
-                                .padding(.top, 50)
+                                .lineSpacing(isIPad ? 7 : 7)
+                                .padding(.horizontal, isIPad ? 39 : 24)
+                                .padding(.top, isIPad ? 50 : 40)
                                 .padding(.bottom, 10)
                         }
                         .scrollIndicators(.hidden)
@@ -188,25 +191,56 @@ struct NorthernView: View {
                             goToCards = true
                         } label: {
                             Text("ابدأ اللعبة")
-                                .font(.custom("Saudi-Regular", size: 34))
+                                .font(.custom("Saudi-Regular", size: isIPad ? 34 : 25))
                                 .foregroundColor(Color("brown"))
-                                .frame(width: 240, height: 60)
+                                .frame(width: isIPad ? 240 : 190, height: isIPad ? 60 : 50)
                                 .background(Color.white)
                                 .clipShape(Capsule())
                         }
-                        .padding(.bottom, 110)
+                        .padding(.bottom, isIPad ? 105 : 38)
                     }
                 }
-                .frame(width: cardWidth, height: cardHeight)
-                .position(
-                    x: screenW / 2,
-                    y: isIPadSize ? screenH * 0.81 : screenH * 0.79
-                )
+                .frame(width: boxWidth, height: boxHeight)
+                .position(x: screenW / 2, y: boxY)
             }
         }
         .navigationBarBackButtonHidden(true)
         .navigationDestination(isPresented: $goToCards) {
             NorthView(region: region, levelNumber: levelNumber)
+        }
+    }
+
+    private func imageHeight(for img: String, isIPad: Bool) -> CGFloat {
+        if isIPad {
+            return (img == "طفل شمالي" || img == "طفله شماليه") ? 380 : 320
+        } else {
+            return (img == "طفل شمالي" || img == "طفله شماليه") ? 255 : 230
+        }
+    }
+
+    private func imageScale(for img: String, isIPad: Bool) -> CGFloat {
+        if isIPad {
+            return 1.12
+        } else {
+            if img == "شمالي" {
+                return 1.7
+            } else if img == "شماليه" {
+                return 1.6
+            } else {
+                return 1.7
+            }
+        }
+    }
+
+    private func imageOffsetY(for img: String, isIPad: Bool) -> CGFloat {
+        if isIPad {
+            return 0
+        } else {
+            if img == "شمالي" {
+                return -15
+            } else {
+                return 0
+            }
         }
     }
 }

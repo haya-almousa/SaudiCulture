@@ -223,9 +223,11 @@ struct GamePopupView: View {
             .cornerRadius(30)
             .shadow(color: .black.opacity(0.3), radius: 20, x: 0, y: 10)
             .frame(
-                width: UIScreen.main.bounds.width * 0.85,
-                height: UIScreen.main.bounds.height * 0.55
+                width: UIScreen.main.bounds.width * (UIDevice.current.userInterfaceIdiom == .pad ? 0.55 : 0.85),
+                height: UIScreen.main.bounds.height * (UIDevice.current.userInterfaceIdiom == .pad ? 0.45 : 0.55)
             )
+            .offset(y: UIDevice.current.userInterfaceIdiom == .pad ? -230 : -8)
+            
         }
     }
     

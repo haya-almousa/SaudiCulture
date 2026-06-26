@@ -5,6 +5,11 @@
 //  Created by Wed Ahmed Alasiri on 15/08/1447 AH.
 //
 
+//
+//  فك الشفره .swift
+//  SaudiCulture
+//
+
 import SwiftUI
 import Combine
 
@@ -25,7 +30,6 @@ extension Color {
         )
     }
 }
-  
 
 struct Puzzle {
     let emojis: String
@@ -34,32 +38,32 @@ struct Puzzle {
     let secondAnswer: String?
 }
 
-
 struct PuzzleView: View {
     let region: RegionType
     let levelNumber: Int
     
-    
-    
     init(region: RegionType, levelNumber: Int) {
-            self.region = region
-            self.levelNumber = levelNumber
-        }
+        self.region = region
+        self.levelNumber = levelNumber
+    }
+    
+    private var isIPad: Bool {
+        UIDevice.current.userInterfaceIdiom == .pad
+    }
+    
     @ObservedObject var flow = LevelFlow.shared
 
     @State private var answer: String = ""
     @State private var showText = false
     @State private var showPopup = false
+    
     var currentIndex: Int {
-//        flow.currentLevel(for: region)
         return levelNumber
     }
-
 
     @State private var feedback = ""
     @State private var showSuccessEmoji = false
     @State private var goToPuzzleLevel = false
-
 
     var activePuzzles: [Puzzle] {
         switch region {
@@ -80,234 +84,50 @@ struct PuzzleView: View {
         case .western:  return "الغربيه"
         }
     }
-    //الرياض
+
     let puzzles: [Puzzle] = [
-        
-        Puzzle(
-            emojis: "🇸🇦 ☕ ",
-            hint: "مشروب سعودي مشهور",
-            answer: "القهوة السعودية",
-            secondAnswer: nil
-        ),
-        
-        Puzzle(
-            emojis: "🌴 🍯",
-            hint: "شي حلو يطلع من النخلة",
-            answer: "تمر",
-            secondAnswer: nil
-        ),
-        
-        Puzzle(
-            emojis: "🔥 ☕",
-            hint: "طريقة قديمة لتحضير القهوة",
-            answer: "تحميص القهوة",
-            secondAnswer: nil
-        ),
-        
-        Puzzle(
-            emojis: "🏕️ 🌌",
-            hint: "جلسة في الصحراء تحت النجوم",
-            answer: "كشتة",
-            secondAnswer: nil
-        ),
-        
-     
-        
-        Puzzle(
-            emojis: "🥁 💃",
-            hint: "فن شعبي سعودي",
-            answer: "عرضة",
-            secondAnswer: nil
-        ),
-        
-       
-        
-        Puzzle(
-            emojis: "🏠 🪑 ☕",
-            hint: "مكان يجتمع فيه الناس و الضيوف ",
-            answer: "مجلس",
-            secondAnswer: nil
-        )
+        Puzzle(emojis: "🇸🇦 ☕ ", hint: "مشروب سعودي مشهور", answer: "القهوة السعودية", secondAnswer: nil),
+        Puzzle(emojis: "🌴 🍯", hint: "شي حلو يطلع من النخلة", answer: "تمر", secondAnswer: nil),
+        Puzzle(emojis: "🔥 ☕", hint: "طريقة قديمة لتحضير القهوة", answer: "تحميص القهوة", secondAnswer: nil),
+        Puzzle(emojis: "🏕️ 🌌", hint: "جلسة في الصحراء تحت النجوم", answer: "كشتة", secondAnswer: nil),
+        Puzzle(emojis: "🥁 💃", hint: "فن شعبي سعودي", answer: "عرضة", secondAnswer: nil),
+        Puzzle(emojis: "🏠 🪑 ☕", hint: "مكان يجتمع فيه الناس و الضيوف ", answer: "مجلس", secondAnswer: nil)
     ]
-    //الجنوب
     
     let southernPuzzles: [Puzzle] = [
-        
-       
-        
-        Puzzle(
-            emojis: "🥣 🍯 🧈",
-            hint: "أكلة شعبية جنوبية مشهورة تؤكل مع السمن والعسل",
-            answer: "عريكة"
-        
-            , secondAnswer: nil
-        ),
-        
-        Puzzle(
-            emojis: "🏠 🎨 ✨",
-            hint: "فن تزيين جدران المنازل في عسير",
-            answer: "القط العسيري"
-            , secondAnswer: nil
-        ),
-        
-        Puzzle(
-            emojis: "🌸 👑 🧔",
-            hint: "تاج من الزهور يوضع على الرأس في جازان وعسير",
-            answer: "عصابة"
-            , secondAnswer: nil
-        ),
-
-        Puzzle(
-            emojis: "⛰️ 🚠 🌫️",
-            hint: "جبل في أبها تصل إليه عبر العربات المعلقة",
-            answer:"جبل السودة",
-            secondAnswer: "جبل السودة"
-        ),
-
-        Puzzle(
-            emojis: "🍞 🛖 🏺",
-            hint: "خبز جنوبي يخبز في التنور أو الميفا",
-            answer: "خبز ميفا"
-            , secondAnswer: nil
-
-        )
+        Puzzle(emojis: "🥣 🍯 🧈", hint: "أكلة شعبية جنوبية مشهورة تؤكل مع السمن والعسل", answer: "عريكة", secondAnswer: nil),
+        Puzzle(emojis: "🏠 🎨 ✨", hint: "فن تزيين جدران المنازل في عسير", answer: "القط العسيري", secondAnswer: nil),
+        Puzzle(emojis: "🌸 👑 🧔", hint: "تاج من الزهور يوضع على الرأس في جازان وعسير", answer: "عصابة", secondAnswer: nil),
+        Puzzle(emojis: "⛰️ 🚠 🌫️", hint: "جبل في أبها تصل إليه عبر العربات المعلقة", answer: "جبل السودة", secondAnswer: "جبل السودة"),
+        Puzzle(emojis: "🍞 🛖 🏺", hint: "خبز جنوبي يخبز في التنور أو الميفا", answer: "خبز ميفا", secondAnswer: nil)
     ]
-    //الشرقيه
+    
     let easternPuzzles: [Puzzle] = [
-        
-        Puzzle(
-            emojis: "🌴 💦 ⛰️",
-            hint: "أكبر واحة نخيل في العالم وتوجد بالأحساء",
-            answer: "واحة الأحساء"
-            , secondAnswer: nil
-
-        ),
-        
-        Puzzle(
-            emojis: "🌊 🏝️ 🌉",
-            hint: "جسر يربط المنطقة الشرقية بمملكة البحرين",
-            answer: "جسر الملك فهد"
-            , secondAnswer: nil
-
-        ),
-        
-        Puzzle(
-            emojis: "🍚 🥘 🔴",
-            hint: "أشهر أكلة حساوية لونها أحمر",
-            answer: "أرز حساوي"
-            , secondAnswer: "المكبوس الأحمر"
-
-        ),
-        
-        Puzzle(
-            emojis: "🐚 🚢 ⚓ 🤿",
-            hint: "مهنة الأجداد القديمة في الخليج",
-            answer: "صيد اللؤلؤ"
-            , secondAnswer: "الغوص على اللؤلؤ"
-        ),
-        
-        Puzzle(
-            emojis: "⛰️ ❄️ 🧱",
-            hint: "جبل مشهور في الأحساء بارد من الداخل صيفاً",
-            answer: "جبل القارة"
-            , secondAnswer: nil
-
-        )
+        Puzzle(emojis: "🌴 💦 ⛰️", hint: "أكبر واحة نخيل في العالم وتوجد بالأحساء", answer: "واحة الأحساء", secondAnswer: nil),
+        Puzzle(emojis: "🌊 🏝️ 🌉", hint: "جسر يربط المنطقة الشرقية بمملكة البحرين", answer: "جسر الملك فهد", secondAnswer: nil),
+        Puzzle(emojis: "🍚 🥘 🔴", hint: "أشهر أكلة حساوية لونها أحمر", answer: "أرز حساوي", secondAnswer: "المكبوس الأحمر"),
+        Puzzle(emojis: "🐚 🚢 ⚓ 🤿", hint: "مهنة الأجداد القديمة في الخليج", answer: "صيد اللؤلؤ", secondAnswer: "الغوص على اللؤلؤ"),
+        Puzzle(emojis: "⛰️ ❄️ 🧱", hint: "جبل مشهور في الأحساء بارد من الداخل صيفاً", answer: "جبل القارة", secondAnswer: nil)
     ]
     
-    //الشمال 
     let northernPuzzles: [Puzzle] = [
-        
-        Puzzle(
-            emojis: "❄️ 🏔️ ⛄",
-            hint: "جبل في تبوك يغطيه الثلج في الشتاء",
-            answer: "جبل اللوز"
-            , secondAnswer: nil
-
-            
-        ),
-        
-        Puzzle(
-            emojis: "🥖 🥩 🪵",
-            hint: "أشهر أكلة في دومة الجندل عبارة عن خبز ولحم",
-            
-            answer: "الجمير"
-            , secondAnswer: "المليحية"
-
-        ),
-        
-        Puzzle(
-            emojis: "🏺🪨🏜️",
-            hint: "مدينة تاريخية تقع في محافظة العلا",
-            answer: "مدائن صالح"
-            , secondAnswer: nil
-
-        ),
-        
-        Puzzle(
-            emojis: "🫒 🌳 ",
-            hint: "منطقة تشتهر بأكبر مزارع الزيتون في المملكة",
-            answer: "الجوف"
-            , secondAnswer: "عنيزة"
-
-        ),
-        
-        Puzzle(
-            emojis: "☕ 🪵 🔥 🌿",
-            hint: "تسمية تطلق على القهوة التي تُصنع على نار الحطب في الشمال",
-            answer: "قهوة مهيلة"
-            , secondAnswer: nil
-
-        )
+        Puzzle(emojis: "❄️ 🏔️ ⛄", hint: "جبل في تبوك يغطيه الثلج في الشتاء", answer: "جبل اللوز", secondAnswer: nil),
+        Puzzle(emojis: "🥖 🥩 🪵", hint: "أشهر أكلة في دومة الجندل عبارة عن خبز ولحم", answer: "الجمير", secondAnswer: "المليحية"),
+        Puzzle(emojis: "🏺🪨🏜️", hint: "مدينة تاريخية تقع في محافظة العلا", answer: "مدائن صالح", secondAnswer: nil),
+        Puzzle(emojis: "🫒 🌳 ", hint: "منطقة تشتهر بأكبر مزارع الزيتون في المملكة", answer: "الجوف", secondAnswer: "عنيزة"),
+        Puzzle(emojis: "☕ 🪵 🔥 🌿", hint: "تسمية تطلق على القهوة التي تُصنع على نار الحطب في الشمال", answer: "قهوة مهيلة", secondAnswer: nil)
     ]
     
-    // الحجاز
     let westernPuzzles: [Puzzle] = [
-        
-        Puzzle(
-            emojis: "🕋 🕌 ✨",
-            hint: "أطهر بقاع الأرض وقبلة المسلمين",
-            answer: "مكة المكرمة"
-            , secondAnswer: "الكعبه "
-
-        ),
-        
-        Puzzle(
-            emojis: "🌊 🏙️ ⛲",
-            hint: "عروس البحر الأحمر وفيها نافورة الملك فهد",
-            answer: "جدة"
-            , secondAnswer: nil
-
-        ),
-        
-        Puzzle(
-            emojis: "🏠 🪵 🪟",
-            hint: "النوافذ الخشبية المزخرفة في بيوت جدة القديمة",
-            answer: "الرواشين"
-            , secondAnswer: "الشميسية"
-
-        ),
-        
-        Puzzle(
-            emojis: "🥛❄️✨",
-            hint: "مشروب حجازي بارد ومشهور لونه أبيض",
-            answer: "سوبيا"
-            , secondAnswer: nil
-
-        ),
-        
-        Puzzle(
-            emojis: "🍚 🥩 🏺",
-            hint: "أكلة حجازية أصيلة تطبخ في وعاء فخاري تحت الأرض",
-            answer: "المندي"
-            , secondAnswer: nil
-
-        )
+        Puzzle(emojis: "🕋 🕌 ✨", hint: "أطهر بقاع الأرض وقبلة المسلمين", answer: "مكة المكرمة", secondAnswer: "الكعبه "),
+        Puzzle(emojis: "🌊 🏙️ ⛲", hint: "عروس البحر الأحمر وفيها نافورة الملك فهد", answer: "جدة", secondAnswer: nil),
+        Puzzle(emojis: "🏠 🪵 🪟", hint: "النوافذ الخشبية المزخرفة في بيوت جدة القديمة", answer: "الرواشين", secondAnswer: "الشميسية"),
+        Puzzle(emojis: "🥛❄️✨", hint: "مشروب حجازي بارد ومشهور لونه أبيض", answer: "سوبيا", secondAnswer: nil),
+        Puzzle(emojis: "🍚 🥩 🏺", hint: "أكلة حجازية أصيلة تطبخ في وعاء فخاري تحت الأرض", answer: "المندي", secondAnswer: nil)
     ]
-    
     
     @State private var goToMap = false
-
+    
     var backgroundName: String {
         switch region {
         case .central: return "الوسطى"
@@ -323,113 +143,78 @@ struct PuzzleView: View {
     @State private var stopShaking = false
     let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
 
-    
     var body: some View {
-        
         NavigationStack {
-            
             ZStack {
-//                Image("background")
-//                    .resizable()
-//                    .scaledToFit()
-//                    .frame(maxWidth: .infinity)
-//                    .ignoresSafeArea()
                 Image(backgroundImageName)
                     .resizable()
-                    .scaledToFill()
+                    
                     .ignoresSafeArea()
                 
                 VStack {
-                    // Header
-                    HStack{
+                    HStack {
                         Button(action: {
                             goToMap = true
                         }) {
                             ZStack {
                                 Circle()
                                     .fill(Color("brown"))
-                                    .frame(width: 60, height: 60)
+                                    .frame(width: isIPad ? 70 : 60, height: isIPad ? 70 : 60)
                                 
                                 Image("saudiMap")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 35, height: 35)
+                                    .frame(width: isIPad ? 42 : 35, height: isIPad ? 42 : 35)
                             }
                         }
-                        .offset(x:153,y:80)
-                        
+                        .offset(x: isIPad ? 330 : 153, y: isIPad ? 82 : 8)
                     }
+                    
                     VStack {
                         Text("فك الشفرة")
-                        //                        .font(.title)
-                            .font(.custom("Saudi-Bold", size: 30))
-                        
+                            .font(.custom("Saudi-Bold", size: isIPad ? 42 : 30))
                             .foregroundColor(Color("brown"))
                             .padding(.bottom, 20)
-                            .offset(x: 0 , y: 79)
+                            .offset(x: 0, y: isIPad ? 38 : -19)
                     }
-                    // الكرت
-                    VStack(spacing: 10) {
-                        
-                        
-                        
-//                        Text("فك الشفرة")
-//                        //                        .font(.title)
-//                            .font(.custom("Saudi-Regular", size: 30))
-//                        
-//                            .foregroundColor(Color(hex: "874F35"))
-//                            .padding(.bottom, 20)
-//                            .offset(x: 0 , y: -100)
+                    
+                    VStack(spacing: isIPad ? 18 : 10) {
                         Text(" فك الشفرات  باستخدام الرموز والتلميحات و اكتب الاجابه .")
-                        //                        .font(.title)
-                            .font(.custom("Saudi-Bold", size: 14))
-                        
+                            .font(.custom("Saudi-Bold", size: isIPad ? 26 : 14))
                             .foregroundColor(Color(hex: "874F35"))
                             .padding(.bottom, 20)
-                            .offset(x: 0 , y: -80)
+                            .offset(x: 0, y: isIPad ? -110 : -80)
                         
-                        HStack(spacing: 20) {
-//                            Text(puzzles[currentIndex].emojis)
+                        HStack(spacing: isIPad ? 30 : 20) {
                             Text(activePuzzles[currentIndex].emojis)
-
-                            //                        Text("☕")
-                            //                        Text("🏜️")
                         }
-                        .font(.title)
-                        
-                        .offset(x: 0 , y: -60)
-                        
+                        .font(isIPad ? .system(size: 52) : .title)
+                        .offset(x: 0, y: isIPad ? -80 : -60)
                         
                         if showSuccessEmoji {
                             Text("😁")
-                                .font(.largeTitle)
+                                .font(isIPad ? .system(size: 52) : .largeTitle)
                                 .transition(.scale)
                         }
                         
                         Text(feedback)
-                            .font(.custom("Saudi-Regular", size: 18))
+                            .font(.custom("Saudi-Regular", size: isIPad ? 28 : 18))
                             .foregroundColor(.brown)
-                            .font(.title)
-                            .offset(x: 0 , y: -60)
+                            .offset(x: 0, y: isIPad ? -80 : -60)
                         
                         VStack(alignment: .trailing, spacing: 8) {
-                            
                             TextField("اكتب الإجابه هنا", text: $answer)
-                                .font(.custom("Saudi-Regular", size: 20))
-                            
+                                .font(.custom("Saudi-Regular", size: isIPad ? 28 : 20))
                                 .multilineTextAlignment(.trailing)
                                 .foregroundColor(.brown)
                                 .padding(.vertical, 4)
-                                .frame(width: 220) // ⭐ تتحكمين بطول الخط هنا
+                                .frame(width: isIPad ? 360 : 220)
                             
                             Rectangle()
-                                .frame(width: 290, height: 2) // ⭐ نفس العرض
-                                .foregroundColor(Color(hex: "874F35")/*.opacity(0.5)*/)
+                                .frame(width: isIPad ? 420 : 290, height: 2)
+                                .foregroundColor(Color(hex: "874F35"))
                         }
-                        .offset(x: 0 , y: -0)
-                        
-                        
-                        
+                        .offset(x: 0, y: 0)
                         
                         HStack {
                             Button(action: {
@@ -437,24 +222,22 @@ struct PuzzleView: View {
                                     showPopup = true
                                 }
                                 stopShaking = true
-
                             }) {
-                                Text( "💡")
-                                    .font(.system(size: 28))
+                                Text("💡")
+                                    .font(.system(size: isIPad ? 34 : 28))
                                     .foregroundColor(.white)
-                                    .padding(10)
+                                    .padding(isIPad ? 14 : 10)
                                     .background(Color(hex: "874F35"))
                                     .clipShape(Circle())
                                     .offset(x: shake ? -2 : 2, y: shake ? 1 : -1)
                                     .rotationEffect(.degrees(shake ? 3 : -3))
-
                                     .animation(
-                                            shake ?
-                                            Animation.easeInOut(duration: 0.08)
+                                        shake ?
+                                        Animation.easeInOut(duration: 0.08)
                                             .repeatCount(6, autoreverses: true)
-                                            : .default,
-                                            value: shake
-                                        )
+                                        : .default,
+                                        value: shake
+                                    )
                             }
                             
                             Spacer()
@@ -463,20 +246,14 @@ struct PuzzleView: View {
                             if !stopShaking {
                                 shake = true
                             }
-                                 // نرجعه طبيعي بعد الاهتزاز
-                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                                     shake = false
-                                 }
-                             }
-                        .padding(.leading, 20)
-                        .offset(x: 0 , y: 90)
-                        
-                        
-                        
-                        
-                        
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                                shake = false
+                            }
+                        }
+                        .padding(.leading, isIPad ? 35 : 20)
+                        .offset(x: 0, y: isIPad ? 130 : 90)
                     }
-                    .frame(width: 355, height: 450) // ← هنا التحكم بالحجم
+                    .frame(width: isIPad ? 620 : 355, height: isIPad ? 620 : 450)
                     .background(
                         RoundedRectangle(cornerRadius: 30)
                             .stroke(Color(hex: "874F35"), lineWidth: 4)
@@ -486,33 +263,30 @@ struct PuzzleView: View {
                             )
                     )
                     .padding()
-                    .offset(x:0,y:70)
+                    .offset(x: 0, y: isIPad ? 60 : -13)
                     .overlay(
                         Group {
                             if showPopup {
                                 ZStack {
-                                    
                                     VStack(spacing: 20) {
                                         Text(activePuzzles[currentIndex].hint)
-                                            .font(.custom("Saudi-Regular", size: 22))
+                                            .font(.custom("Saudi-Regular", size: isIPad ? 30 : 22))
                                             .foregroundColor(Color(hex: "FCF0DD"))
-                                        
-                                        //                                    Text("هز الجهاز لمعرفة المعلومة")
-                                        //                                        .font(.custom("Saudi-Regular", size: 16))
-                                        //                                        .foregroundColor(Color(hex: "FCF0DD"))
+                                            .multilineTextAlignment(.center)
                                         
                                         Button("إغلاق") {
                                             withAnimation {
                                                 showPopup = false
                                             }
                                         }
+                                        .font(.custom("Saudi-Regular", size: isIPad ? 24 : 18))
                                         .padding(.horizontal, 30)
                                         .padding(.vertical, 10)
                                         .background(Color(hex: "FCF0DD"))
                                         .foregroundColor(Color(hex: "874F35"))
                                         .clipShape(Capsule())
                                     }
-                                    .padding(24)
+                                    .padding(isIPad ? 34 : 24)
                                     .background(Color(hex: "874F35"))
                                     .cornerRadius(24)
                                     .shadow(radius: 10)
@@ -524,64 +298,52 @@ struct PuzzleView: View {
                     .padding()
                     
                     Button(action: {
-                        
                         let correct = activePuzzles[currentIndex].answer
                         let userAnswer = answer.trimmingCharacters(in: .whitespacesAndNewlines)
                         
-                         if userAnswer.isSimilar(to: correct)  {
-                            
-                            // صح
+                        if userAnswer.isSimilar(to: correct) {
                             showSuccessEmoji = true
                             feedback = ""
                             
-                            // بعد ثانية ينتقل للغز التالي
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                // تقدم المرحلة يتم هنا فقط بعد الإجابة الصحيحة (أزيل من PuzzleView3)
-//                                flow.completeLevel(region: region)
                                 answer = ""
                                 showSuccessEmoji = false
                                 goToPuzzleLevel = true
                             }
-                            
                         } else {
-                            
-                            // غلط
                             showSuccessEmoji = false
                             feedback = "حاول مرة أخرى"
                         }
                     }) {
                         Text("التالي")
-                            .font(.custom("Saudi-Regular", size: 20))
-                        
+                            .font(.custom("Saudi-Regular", size: isIPad ? 28 : 20))
                             .foregroundColor(Color(hex: "FCF0DD"))
-                            .padding(.horizontal, 40)
-                            .padding(.vertical, 12)
+                            .padding(.horizontal, isIPad ? 58 : 40)
+                            .padding(.vertical, isIPad ? 16 : 12)
                             .background(Color(hex: "874F35"))
                             .cornerRadius(25)
                     }
-                    
-                    .offset(x:0,y:70)
+                    .offset(x: 0, y: isIPad ? 105 : 7)
 
                     Spacer()
                 }
             }
+            .ignoresSafeArea(.keyboard, edges: .bottom)
             .navigationDestination(isPresented: $goToMap) {
                 SaudiMapView()
             }
             .navigationDestination(isPresented: $goToPuzzleLevel) {
-                PuzzleChoicesView(region: region , levelNumber: levelNumber)
+                PuzzleChoicesView(region: region, levelNumber: levelNumber)
             }
             .navigationBarBackButtonHidden(true)
-
         }
     }
 }
+
 extension String {
-    
     func normalizedArabic() -> String {
         var text = self
         
-        // إزالة التشكيل
         let diacritics = "[\\u064B-\\u0652]"
         text = text.replacingOccurrences(
             of: diacritics,
@@ -589,7 +351,6 @@ extension String {
             options: .regularExpression
         )
         
-        // توحيد الحروف
         text = text
             .replacingOccurrences(of: "أ", with: "ا")
             .replacingOccurrences(of: "إ", with: "ا")
@@ -597,41 +358,31 @@ extension String {
             .replacingOccurrences(of: "ة", with: "ه")
             .replacingOccurrences(of: "ى", with: "ي")
         
-        // إزالة (ال)
         text = text.replacingOccurrences(of: "ال", with: "")
-        
-        // إزالة المسافات
         text = text.replacingOccurrences(of: " ", with: "")
         
         return text
     }
     
     func isSimilar(to other: String) -> Bool {
-        
         let a = self.normalizedArabic()
         let b = other.normalizedArabic()
         
-        // مقارنة مباشرة
         if a == b { return true }
         
-        // مقارنة بعد حذف "ال" من الطرفين (حتى لو واحد كتبها والثاني لا)
         let aNoAl = a.replacingOccurrences(of: "ال", with: "")
         let bNoAl = b.replacingOccurrences(of: "ال", with: "")
         
         if aNoAl == bNoAl { return true }
         
-        // احتواء (مرونة إضافية)
         if aNoAl.contains(bNoAl) || bNoAl.contains(aNoAl) {
             return true
         }
         
         return false
     }
-
 }
-
 
 #Preview("PuzzleView") {
-    PuzzleView(region: .central , levelNumber: 1)
+    PuzzleView(region: .central, levelNumber: 1)
 }
-

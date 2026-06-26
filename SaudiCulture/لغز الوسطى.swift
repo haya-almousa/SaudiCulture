@@ -30,10 +30,7 @@ struct PuzzlePieceShape: Shape {
         } else {
             let midX = w / 2
             path.addLine(to: CGPoint(x: midX - tabWidth/2, y: 0))
-            path.addQuadCurve(
-                to: CGPoint(x: midX + tabWidth/2, y: 0),
-                control: CGPoint(x: midX, y: -tabHeight)
-            )
+            path.addQuadCurve(to: CGPoint(x: midX + tabWidth/2, y: 0), control: CGPoint(x: midX, y: -tabHeight))
             path.addLine(to: CGPoint(x: w, y: 0))
         }
         
@@ -42,10 +39,7 @@ struct PuzzlePieceShape: Shape {
         } else {
             let midY = h / 2
             path.addLine(to: CGPoint(x: w, y: midY - tabWidth/2))
-            path.addQuadCurve(
-                to: CGPoint(x: w, y: midY + tabWidth/2),
-                control: CGPoint(x: w + tabHeight, y: midY)
-            )
+            path.addQuadCurve(to: CGPoint(x: w, y: midY + tabWidth/2), control: CGPoint(x: w + tabHeight, y: midY))
             path.addLine(to: CGPoint(x: w, y: h))
         }
         
@@ -54,10 +48,7 @@ struct PuzzlePieceShape: Shape {
         } else {
             let midX = w / 2
             path.addLine(to: CGPoint(x: midX + tabWidth/2, y: h))
-            path.addQuadCurve(
-                to: CGPoint(x: midX - tabWidth/2, y: h),
-                control: CGPoint(x: midX, y: h + tabHeight)
-            )
+            path.addQuadCurve(to: CGPoint(x: midX - tabWidth/2, y: h), control: CGPoint(x: midX, y: h + tabHeight))
             path.addLine(to: CGPoint(x: 0, y: h))
         }
         
@@ -66,10 +57,7 @@ struct PuzzlePieceShape: Shape {
         } else {
             let midY = h / 2
             path.addLine(to: CGPoint(x: 0, y: midY + tabWidth/2))
-            path.addQuadCurve(
-                to: CGPoint(x: 0, y: midY - tabWidth/2),
-                control: CGPoint(x: -tabHeight, y: midY)
-            )
+            path.addQuadCurve(to: CGPoint(x: 0, y: midY - tabWidth/2), control: CGPoint(x: -tabHeight, y: midY))
             path.addLine(to: CGPoint(x: 0, y: 0))
         }
         
@@ -84,6 +72,7 @@ struct PuzzlePiece: Identifiable {
     let col: Int
     var currentRow: Int
     var currentCol: Int
+    
     var isInCorrectPosition: Bool {
         return currentRow == row && currentCol == col
     }
@@ -91,14 +80,25 @@ struct PuzzlePiece: Identifiable {
 
 struct LevelAlwosta: View {
     let levelNumber: Int
-
-       init(levelNumber: Int) {
-           self.levelNumber = levelNumber
-       }
-
+    
+    init(levelNumber: Int) {
+        self.levelNumber = levelNumber
+    }
+    
     private let rows = 3
     private let cols = 3
-    private let puzzleSize: CGFloat = 340
+    
+    private var isIPad: Bool {
+        UIDevice.current.model.contains("iPad") || UIDevice.current.userInterfaceIdiom == .pad
+    }
+    
+    private var puzzleSize: CGFloat {
+        isIPad ? 520 : 340
+    }
+    
+    private var titleOffsetY: CGFloat {
+        isIPad ? -365 : -250
+    }
     
     @State private var pieces: [PuzzlePiece] = []
     @State private var draggingPiece: PuzzlePiece?
@@ -109,14 +109,10 @@ struct LevelAlwosta: View {
     @State private var showCompletionDialog: Bool = false
     @State private var showHelpDialog: Bool = false
     @State private var navigateToNext: Bool = false
-    
     @State private var navigateToHome: Bool = false
     
-    
-    
-    
     @ObservedObject var flow = LevelFlow.shared
-
+    
     let puzzleImages = [
         "تراث الوسطى",
         "قرية",
@@ -127,33 +123,24 @@ struct LevelAlwosta: View {
     ]
     
     private var centralLandmarks: [(name: String, info: String)] = [
-        ("قصر سلوى", "قصر سلوى يُعد رمزًا للدولة السعودية الأولى ويظهر العمارة الطينية التقليدية للمنطقة الوسطى. قليل من الناس يعرف أن القصر كان يحتوي على ممرات داخلية مخفية وغرف لتخزين المؤن والأسلحة، مما جعله مركزًا مهمًا للقيادة والدفاع في ذلك العصر."), // ← أولاً
-        
-        ("قرية أشيقر التراثية","قرية أشيقر تحافظ على التراث النجدي القديم من خلال بيوتها الطينية وأزقتها الضيقة. بعض الزوار لا يعرفون أن القرية كانت مركزًا زراعيًا وتجاريًا صغيرًا يربط القرى المجاورة بالرياض منذ مئات السنين."),
-        
+        ("قصر سلوى", "قصر سلوى يُعد رمزًا للدولة السعودية الأولى ويظهر العمارة الطينية التقليدية للمنطقة الوسطى. قليل من الناس يعرف أن القصر كان يحتوي على ممرات داخلية مخفية وغرف لتخزين المؤن والأسلحة، مما جعله مركزًا مهمًا للقيادة والدفاع في ذلك العصر."),
+        ("قرية أشيقر التراثية", "قرية أشيقر تحافظ على التراث النجدي القديم من خلال بيوتها الطينية وأزقتها الضيقة. بعض الزوار لا يعرفون أن القرية كانت مركزًا زراعيًا وتجاريًا صغيرًا يربط القرى المجاورة بالرياض منذ مئات السنين."),
         ("قصر المربع", " قصر المربع في الرياض يُظهر العمارة التراثية للدولة السعودية الأولى، ويشتهر بفناءه الواسع والجدران الطينية السميكة. قليلون يعرفون أن القصر كان مقرًا لحفظ السجلات الرسمية وجلسات اتخاذ القرارات المهمة."),
-        
         ("قصر المصمك", "قصر المصمك قلعة تاريخية من الطين لعبت دورًا رئيسيًا في المعارك، ويمثل مركزًا استراتيجيًا قديمًا للرياض. كما يحتوي القصر على أبراج مراقبة وغرف سرية استخدمت للتخطيط العسكري والدفاع عن المدينة."),
-        
         ("قصر صاهود", "قصر صاهود يعكس التراث النجدي الأصيل في التصميم والبناء الطيني. قليل من الزوار يعرفون أن القصر كان جزءًا من شبكة قصور وحصون صغيرة حول الرياض لحماية المدينة وتنظيم الحياة الاجتماعية والسياسية."),
-        
         ("قصر سلوى", "قصر سلوى يُعد رمزًا للدولة السعودية الأولى ويظهر العمارة الطينية التقليدية للمنطقة الوسطى. قليل من الناس يعرف أن القصر كان يحتوي على ممرات داخلية مخفية وغرف لتخزين المؤن والأسلحة، مما جعله مركزًا مهمًا للقيادة والدفاع في ذلك العصر.")
     ]
-
-
+    
     var currentPuzzleImage: String {
-//        let level = flow.currentLevel(for: .central)
-//        return puzzleImages[min(level, puzzleImages.count - 1)]
         return puzzleImages[min(levelNumber, puzzleImages.count - 1)]
-
     }
+    
     @State private var shake = false
     @State private var stopShaking = false
     let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
-
+    
     var body: some View {
         NavigationStack {
-            
             ZStack {
                 Image("الوسطى")
                     .resizable()
@@ -161,40 +148,35 @@ struct LevelAlwosta: View {
                     .ignoresSafeArea()
                 
                 VStack(spacing: -20) {
-
                     Spacer()
-
+                    
                     ZStack {
-
                         puzzleBoard
-
-                        // ⭐ العنوان يطلع من البوكس
+                        
                         Text("ركّب الصورة")
-                            .font(.custom("Saudi-Bold", size: 28))
+                            .font(.custom("Saudi-Bold", size: isIPad ? 38 : 28))
                             .foregroundColor(Color("brown"))
-                            .font(.custom("Saudi-Bold", size: 30))
                             .multilineTextAlignment(.center)
-                            .offset(x: 3 ,y: -250)
+                            .offset(x: 3, y: titleOffsetY)
                     }
-
+                    
                     Spacer()
                 }
                 .overlay(alignment: .bottom) {
                     HStack {
-                        // ⭐ زر الاستفهام — مطابق للوسطى
                         Button(action: {
                             showHelpDialog = true
-                                stopShaking = true
+                            stopShaking = true
                         }) {
                             Text("💡")
-                                .font(.system(size: 28))
+                                .font(.system(size: isIPad ? 34 : 28))
                                 .foregroundColor(.white)
-                                .padding(10)
+                                .padding(isIPad ? 14 : 10)
                                 .background(Color(hex: "874F35"))
                                 .clipShape(Circle())
-                                .offset(x: shake ? -2 : 2, y: shake ? 1 : -1)        // حركة خفيفة يمين/يسار + فوق/تحت
-                                .rotationEffect(.degrees(shake ? 3 : -3))             // يميل يمين/يسار
-                                .scaleEffect(shake ? 1.05 : 0.95)                     // نبض خفيف
+                                .offset(x: shake ? -2 : 2, y: shake ? 1 : -1)
+                                .rotationEffect(.degrees(shake ? 3 : -3))
+                                .scaleEffect(shake ? 1.05 : 0.95)
                                 .animation(
                                     shake ?
                                     Animation.easeInOut(duration: 0.15).repeatCount(4, autoreverses: true)
@@ -202,7 +184,7 @@ struct LevelAlwosta: View {
                                     value: shake
                                 )
                         }
-                        .padding(.leading, 3)
+                        .padding(.leading, isIPad ? 0 : 3)
                         
                         Spacer()
                     }
@@ -214,11 +196,9 @@ struct LevelAlwosta: View {
                             }
                         }
                     }
-                    .padding(.bottom, 180)
+                    .padding(.bottom, isIPad ? 530 : 180)
                 }
                 .overlay(alignment: .topTrailing) {
-                    
-                    // ⭐ زر الهوم (معدّل)
                     HStack {
                         Button(action: {
                             navigateToHome = true
@@ -226,32 +206,27 @@ struct LevelAlwosta: View {
                             ZStack {
                                 Circle()
                                     .fill(Color("brown"))
-                                    .frame(width: 60, height: 60)
+                                    .frame(width: isIPad ? 70 : 60, height: isIPad ? 70 : 60)
                                 
-                                Image("saudiMap") // تأكد الاسم مطابق في Assets
+                                Image("saudiMap")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 35, height: 35)
+                                    .frame(width: isIPad ? 42 : 35, height: isIPad ? 700 : 35)
                             }
                         }
-                        .padding(.top, 60)
-                        .padding(.trailing, 0.1)
+                        .padding(.top, isIPad ? 80 : 60)
+                        .padding(.trailing, isIPad ? -70 : 0.1)
                     }
-                    .offset(x:15,y:1)
+                    .offset(x: isIPad ? 0 : 15, y: 1)
                 }
             }
             .navigationBarBackButtonHidden(true)
-
             .navigationDestination(isPresented: $navigateToHome) {
                 SaudiMapView()
             }
-//            .navigationDestination(isPresented: $navigateToNext) {
-//                PuzzleChoicesView()
-//            }\
             .navigationDestination(isPresented: $navigateToNext) {
-                PuzzleView(region: .central , levelNumber: levelNumber)
+                PuzzleView(region: .central, levelNumber: levelNumber)
             }
-
             .onAppear {
                 setupPuzzle()
             }
@@ -268,16 +243,14 @@ struct LevelAlwosta: View {
         }
     }
     
-    // باقي الكود بدون تغيير…
-    
     private var puzzleBoard: some View {
         let pieceSize = puzzleSize / CGFloat(cols)
         
         return ZStack {
-            RoundedRectangle(cornerRadius: 20)
+            RoundedRectangle(cornerRadius: isIPad ? 28 : 20)
                 .stroke(Color("brown"), lineWidth: 4.5)
                 .background(
-                    RoundedRectangle(cornerRadius: 20)
+                    RoundedRectangle(cornerRadius: isIPad ? 28 : 20)
                         .fill(Color("BackgroundMain"))
                 )
                 .frame(width: puzzleSize, height: puzzleSize)
@@ -288,19 +261,18 @@ struct LevelAlwosta: View {
                 }
                 
                 if isGlowing {
-                    RoundedRectangle(cornerRadius: 20)
+                    RoundedRectangle(cornerRadius: isIPad ? 28 : 20)
                         .fill(Color.white.opacity(0.4))
                         .frame(width: puzzleSize, height: puzzleSize)
                         .transition(.opacity)
                 }
             }
             .frame(width: puzzleSize, height: puzzleSize)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .clipShape(RoundedRectangle(cornerRadius: isIPad ? 28 : 20))
         }
     }
     
     private func makePieceView(piece: PuzzlePiece, pieceSize: CGFloat) -> some View {
-        
         let isDragging = draggingPiece?.id == piece.id
         let offset = isDragging ? dragOffset : .zero
         
@@ -308,7 +280,6 @@ struct LevelAlwosta: View {
         let y = CGFloat(piece.currentRow) * pieceSize + pieceSize / 2
         
         return ZStack {
-            
             if !piece.isInCorrectPosition {
                 PuzzlePieceShape(row: piece.row, col: piece.col, rows: rows, cols: cols)
                     .fill(Color("BackgroundMain").opacity(0.3))
@@ -318,7 +289,6 @@ struct LevelAlwosta: View {
             ZStack {
                 GeometryReader { geo in
                     Image(currentPuzzleImage)
-
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: puzzleSize, height: puzzleSize)
@@ -361,7 +331,6 @@ struct LevelAlwosta: View {
     }
     
     private func handleDrop(piece: PuzzlePiece, translation: CGSize, pieceSize: CGFloat) {
-        
         let dx = Int(round(translation.width / pieceSize))
         let dy = Int(round(translation.height / pieceSize))
         
@@ -422,11 +391,8 @@ struct LevelAlwosta: View {
     }
     
     private var completionDialogView: some View {
-//        
-//        let level = flow.currentLevel(for: .central)
-//        let landmark = centralLandmarks[min(level, centralLandmarks.count - 1)]
         let landmark = centralLandmarks[min(levelNumber, centralLandmarks.count - 1)]
-
+        
         return ZStack {
             Color.black.opacity(0.3)
                 .ignoresSafeArea()
@@ -440,16 +406,16 @@ struct LevelAlwosta: View {
                     Spacer()
                     
                     Text(landmark.name)
-                        .font(.custom("Saudi-Bold", size: 36))
+                        .font(.custom("Saudi-Bold", size: isIPad ? 42 : 36))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                     
                     Text(landmark.info)
-                        .font(.custom("Saudi-Bold", size: 18))
+                        .font(.custom("Saudi-Bold", size: isIPad ? 24 : 18))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
-                        .padding(.horizontal, 30)
+                        .padding(.horizontal, isIPad ? 45 : 30)
                     
                     Spacer()
                     
@@ -457,18 +423,18 @@ struct LevelAlwosta: View {
                         navigateToNext = true
                     }) {
                         Text("التالي")
-                            .font(.custom("Saudi-Regular", size: 24))
+                            .font(.custom("Saudi-Regular", size: isIPad ? 30 : 24))
                             .foregroundColor(.white)
-                            .frame(width: 200, height: 54)
+                            .frame(width: isIPad ? 260 : 200, height: isIPad ? 64 : 54)
                             .background(
                                 Capsule()
                                     .fill(Color("brown"))
                             )
                     }
-                    .padding(.bottom, 30)
+                    .padding(.bottom, isIPad ? 40 : 30)
                 }
             }
-            .frame(width: 340, height: 520)
+            .frame(width: isIPad ? 520 : 340, height: isIPad ? 650 : 520)
         }
     }
     
@@ -489,9 +455,9 @@ struct LevelAlwosta: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .clipShape(RoundedRectangle(cornerRadius: 26))
-                    .padding(20)
+                    .padding(isIPad ? 28 : 20)
             }
-            .frame(width: 340, height: 420)
+            .frame(width: isIPad ? 560 : 340, height: isIPad ? 620 : 420)
         }
     }
     
@@ -534,8 +500,6 @@ struct LevelAlwosta: View {
     }
 }
 
-
-
 #Preview {
-    LevelAlwosta( levelNumber: 0)
+    LevelAlwosta(levelNumber: 0)
 }

@@ -434,7 +434,7 @@ struct NajdView: View {
     private var iPadLayout: some View {
         ZStack {
             HStack { mapButton }
-                .offset(x: 220, y: -660)
+                .offset(x: 220, y: -820)
 
             VStack(spacing: 12) {
                 Text("لعبة الكروت - نجد")
@@ -549,5 +549,5 @@ struct NajdView: View {
 }
 
 #Preview {
-    NajdView(region: .central, levelNumber: 5)
+    NajdView(region: .central, levelNumber: 1)
 }

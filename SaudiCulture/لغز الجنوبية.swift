@@ -4,10 +4,9 @@
 //
 //  Created by Raghad Alamoudi on 22/08/1447 AH.
 //
-
 import SwiftUI
 import Combine
-// MARK: - شكل قطعة البزل (Puzzle Piece Shape)
+
 struct PuzzlePieceShapeJanubiya: Shape {
     let row: Int
     let col: Int
@@ -77,24 +76,35 @@ struct PuzzlePieceShapeJanubiya: Shape {
     }
 }
 
-// MARK: - موديل قطعة البزل
 struct PuzzlePieceJanubiya: Identifiable {
     let id: Int
     let row: Int
     let col: Int
     var currentRow: Int
     var currentCol: Int
+    
     var isInCorrectPosition: Bool {
-        return currentRow == row && currentCol == col
+        currentRow == row && currentCol == col
     }
 }
 
-// MARK: - شاشة لفل الجنوبية
 struct LevelAljanubiya: View {
     let levelNumber: Int
+    
     private let rows = 3
     private let cols = 3
-    private let puzzleSize: CGFloat = 340
+    
+    private var isIPad: Bool {
+        UIDevice.current.model.contains("iPad") || UIDevice.current.userInterfaceIdiom == .pad
+    }
+    
+    private var puzzleSize: CGFloat {
+        isIPad ? 520 : 340
+    }
+    
+    private var titleOffsetY: CGFloat {
+        isIPad ? -365 : -250
+    }
     
     @State private var pieces: [PuzzlePieceJanubiya] = []
     @State private var draggingPiece: PuzzlePieceJanubiya?
@@ -105,15 +115,10 @@ struct LevelAljanubiya: View {
     @State private var showCompletionDialog: Bool = false
     @State private var showHelpDialog: Bool = false
     @State private var navigateToNext: Bool = false
-    
-    // ⭐ زر الهوم
     @State private var navigateToHome: Bool = false
-    
-    
     
     @StateObject private var flow = LevelFlow.shared
 
-    // ⭐ صور الجنوبية
     let puzzleImages = [
         "تراث الجنوبية",
         "قصر شدا",
@@ -126,46 +131,40 @@ struct LevelAljanubiya: View {
     private let southernLandmarks: [(name: String, info: String)] = [
         (
             "رجال ألمع",
-"رجال ألمع قرية تراثية قديمة في جبال عسير، تشتهر بمبانيها الحجرية ونوافذها الملونة. قليل من الناس يعرف أن تصميم البيوت كان يهدف لتوفير التهوية والحماية من الأمطار والبرد في الجبال، مما يعكس أسلوب الحياة التقليدي للأهالي."
+            "رجال ألمع قرية تراثية قديمة في جبال عسير، تشتهر بمبانيها الحجرية ونوافذها الملونة. قليل من الناس يعرف أن تصميم البيوت كان يهدف لتوفير التهوية والحماية من الأمطار والبرد في الجبال، مما يعكس أسلوب الحياة التقليدي للأهالي."
         ),
         (
             "قصر شدا",
-"قصر شدا في أبها كان مقرًا للحكم في العصور القديمة ويعكس العمارة العسيرية التقليدية. القليل يعرف أن القصر احتوى على أقسام خاصة للمخازن وغرف للخطط الإدارية، ما يوضح دوره كمركز سياسي واجتماعي في المنطقة."
+            "قصر شدا في أبها كان مقرًا للحكم في العصور القديمة ويعكس العمارة العسيرية التقليدية. القليل يعرف أن القصر احتوى على أقسام خاصة للمخازن وغرف للخطط الإدارية، ما يوضح دوره كمركز سياسي واجتماعي في المنطقة."
         ),
         (
             "قرية ذي العين",
-"قرية ذي العين في الباحة مبنية من الرخام الطبيعي وتحيط بها عين ماء دائمة، ما أضفى جمالًا طبيعيًا فريدًا على المكان. كما تشير بعض الدراسات إلى أن تصميم المنازل كان مهيأً لمواجهة الأمطار وحماية العائلات وفق تقاليد البناء القديمة."
+            "قرية ذي العين في الباحة مبنية من الرخام الطبيعي وتحيط بها عين ماء دائمة، ما أضفى جمالًا طبيعيًا فريدًا على المكان. كما تشير بعض الدراسات إلى أن تصميم المنازل كان مهيأً لمواجهة الأمطار وحماية العائلات وفق تقاليد البناء القديمة."
         ),
         (
             "قنا",
-"قنا منطقة تاريخية في عسير تحتوي على قرى ومنازل أثرية، وتتميز بأسلوب البناء التقليدي للجبال المحيطة. قليل من الناس يعرف أن القرى القديمة كانت تستخدم سلالم حجرية وشرفات مخفية لتسهيل التنقل وحماية السكان."
+            "قنا منطقة تاريخية في عسير تحتوي على قرى ومنازل أثرية، وتتميز بأسلوب البناء التقليدي للجبال المحيطة. قليل من الناس يعرف أن القرى القديمة كانت تستخدم سلالم حجرية وشرفات مخفية لتسهيل التنقل وحماية السكان."
         ),
         (
             "قلعة شمسان",
-"قلعة شمسان كانت قلعة دفاعية في أبها لحماية المدينة من الهجمات، وتتميز بموقع استراتيجي وإطلالة واسعة على الجبال. القليل يعرف أن القلعة كانت تحتوي على أبراج مراقبة وغرف سرية لتخزين المؤن والأسلحة."
+            "قلعة شمسان كانت قلعة دفاعية في أبها لحماية المدينة من الهجمات، وتتميز بموقع استراتيجي وإطلالة واسعة على الجبال. القليل يعرف أن القلعة كانت تحتوي على أبراج مراقبة وغرف سرية لتخزين المؤن والأسلحة."
         ),
         (
             "رجال ألمع",
-"رجال ألمع قرية تراثية قديمة في جبال عسير، تشتهر بمبانيها الحجرية ونوافذها الملونة. قليل من الناس يعرف أن تصميم البيوت كان يهدف لتوفير التهوية والحماية من الأمطار والبرد في الجبال، مما يعكس أسلوب الحياة التقليدي للأهالي."
+            "رجال ألمع قرية تراثية قديمة في جبال عسير، تشتهر بمبانيها الحجرية ونوافذها الملونة. قليل من الناس يعرف أن تصميم البيوت كان يهدف لتوفير التهوية والحماية من الأمطار والبرد في الجبال، مما يعكس أسلوب الحياة التقليدي للأهالي."
         )
     ]
 
-    
     var currentPuzzleImage: String {
-//        let level = flow.currentLevel(for: .southern)
-//        return puzzleImages[min(level, puzzleImages.count - 1)]
-        return puzzleImages[min(levelNumber, puzzleImages.count - 1)]
-
+        puzzleImages[min(levelNumber, puzzleImages.count - 1)]
     }
 
-//    @State private var showHintDialog = false
     @State private var shake = false
     @State private var stopShaking = false
     let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
     
     var body: some View {
         NavigationStack {
-            
             ZStack {
                 Image("الجنوبيه")
                     .resizable()
@@ -173,41 +172,35 @@ struct LevelAljanubiya: View {
                     .ignoresSafeArea()
                 
                 VStack(spacing: -20) {
-
                     Spacer()
-
+                    
                     ZStack {
-
                         puzzleBoard
-
-                        // ⭐ العنوان يطلع من البوكس
+                        
                         Text("ركّب الصورة")
-                            .font(.custom("Saudi-Bold", size: 28))
+                            .font(.custom("Saudi-Bold", size: isIPad ? 38 : 28))
                             .foregroundColor(Color("brown"))
-                            .font(.custom("Saudi-Bold", size: 30))
                             .multilineTextAlignment(.center)
-                            .offset(x: 3 ,y: -250)
+                            .offset(x: 3, y: titleOffsetY)
                     }
-
+                    
                     Spacer()
                 }
                 .overlay(alignment: .bottom) {
-                    
                     HStack {
-                        // ⭐ زر الاستفهام — مطابق للوسطى
                         Button(action: {
                             showHelpDialog = true
-                                stopShaking = true
+                            stopShaking = true
                         }) {
                             Text("💡")
-                                .font(.system(size: 28))
+                                .font(.system(size: isIPad ? 34 : 28))
                                 .foregroundColor(.white)
-                                .padding(10)
+                                .padding(isIPad ? 14 : 10)
                                 .background(Color(hex: "874F35"))
                                 .clipShape(Circle())
-                                .offset(x: shake ? -2 : 2, y: shake ? 1 : -1)        // حركة خفيفة يمين/يسار + فوق/تحت
-                                .rotationEffect(.degrees(shake ? 3 : -3))             // يميل يمين/يسار
-                                .scaleEffect(shake ? 1.05 : 0.95)                     // نبض خفيف
+                                .offset(x: shake ? -2 : 2, y: shake ? 1 : -1)
+                                .rotationEffect(.degrees(shake ? 3 : -3))
+                                .scaleEffect(shake ? 1.05 : 0.95)
                                 .animation(
                                     shake ?
                                     Animation.easeInOut(duration: 0.15).repeatCount(4, autoreverses: true)
@@ -215,7 +208,7 @@ struct LevelAljanubiya: View {
                                     value: shake
                                 )
                         }
-                        .padding(.leading, 3)
+                        .padding(.leading, isIPad ? 0 : 3)
                         
                         Spacer()
                     }
@@ -227,11 +220,9 @@ struct LevelAljanubiya: View {
                             }
                         }
                     }
-                    .padding(.bottom, 180)
+                    .padding(.bottom, isIPad ? 530 : 180)
                 }
                 .overlay(alignment: .topTrailing) {
-                    
-                    // ⭐ زر الهوم — مطابق للوسطى + ربط الخريطة
                     HStack {
                         Button(action: {
                             navigateToHome = true
@@ -239,34 +230,27 @@ struct LevelAljanubiya: View {
                             ZStack {
                                 Circle()
                                     .fill(Color("brown"))
-                                    .frame(width: 60, height: 60)
+                                    .frame(width: isIPad ? 70 : 60, height: isIPad ? 70 : 60)
                                 
-                                Image("saudiMap") // تأكد الاسم مطابق في Assets
+                                Image("saudiMap")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 35, height: 35)
+                                    .frame(width: isIPad ? 42 : 35, height: isIPad ? 700 : 35)
                             }
                         }
-                        .padding(.top, 60)
-                        .padding(.trailing, 0.1)
+                        .padding(.top, isIPad ? 80 : 60)
+                        .padding(.trailing, isIPad ? -70 : 0.1)
                     }
-                    .offset(x:15,y:1)
+                    .offset(x: isIPad ? 0 : 15, y: 1)
                 }
             }
-            
             .navigationBarBackButtonHidden(true)
-
-            // ⭐ ربط صفحة الخريطة
             .navigationDestination(isPresented: $navigateToHome) {
                 SaudiMapView()
             }
-//            .navigationDestination(isPresented: $navigateToNext ) {
-//                PuzzleChoicesView()
-//            }
-            .navigationDestination(isPresented: $navigateToNext ) {
+            .navigationDestination(isPresented: $navigateToNext) {
                 PuzzleView(region: .southern, levelNumber: levelNumber)
             }
-
             .onAppear {
                 setupPuzzle()
             }
@@ -283,15 +267,14 @@ struct LevelAljanubiya: View {
         }
     }
     
-    // MARK: - لوح البزل
     private var puzzleBoard: some View {
         let pieceSize = puzzleSize / CGFloat(cols)
         
         return ZStack {
-            RoundedRectangle(cornerRadius: 20)
+            RoundedRectangle(cornerRadius: isIPad ? 28 : 20)
                 .stroke(Color("brown"), lineWidth: 4.5)
                 .background(
-                    RoundedRectangle(cornerRadius: 20)
+                    RoundedRectangle(cornerRadius: isIPad ? 28 : 20)
                         .fill(Color("BackgroundMain"))
                 )
                 .frame(width: puzzleSize, height: puzzleSize)
@@ -302,20 +285,18 @@ struct LevelAljanubiya: View {
                 }
                 
                 if isGlowing {
-                    RoundedRectangle(cornerRadius: 20)
+                    RoundedRectangle(cornerRadius: isIPad ? 28 : 20)
                         .fill(Color.white.opacity(0.4))
                         .frame(width: puzzleSize, height: puzzleSize)
                         .transition(.opacity)
                 }
             }
             .frame(width: puzzleSize, height: puzzleSize)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .clipShape(RoundedRectangle(cornerRadius: isIPad ? 28 : 20))
         }
     }
     
-    // MARK: - عرض قطعة واحدة
     private func makePieceView(piece: PuzzlePieceJanubiya, pieceSize: CGFloat) -> some View {
-        
         let isDragging = draggingPiece?.id == piece.id
         let offset = isDragging ? dragOffset : .zero
         
@@ -373,7 +354,6 @@ struct LevelAljanubiya: View {
         )
     }
     
-    // MARK: - معالجة السحب والإفلات
     private func handleDrop(piece: PuzzlePieceJanubiya, translation: CGSize, pieceSize: CGFloat) {
         let dx = Int(round(translation.width / pieceSize))
         let dy = Int(round(translation.height / pieceSize))
@@ -401,7 +381,6 @@ struct LevelAljanubiya: View {
         }
     }
     
-    // MARK: - التحقق من الحل
     private func checkIfSolved() {
         let allInPlace = pieces.allSatisfy { $0.isInCorrectPosition }
         
@@ -410,7 +389,6 @@ struct LevelAljanubiya: View {
         }
     }
     
-    // MARK: - الاحتفال بالحل
     private func celebrateSolve() {
         withAnimation(.easeInOut(duration: 0.3)) {
             isSolved = true
@@ -436,7 +414,6 @@ struct LevelAljanubiya: View {
         }
     }
     
-    // MARK: - نافذة الإكمال
     private var completionDialogView: some View {
         ZStack {
             Color.black.opacity(0.3)
@@ -450,21 +427,19 @@ struct LevelAljanubiya: View {
                 VStack(spacing: 16) {
                     Spacer()
                     
-//                    let level = flow.currentLevel(for: .southern)
-//                    let landmark = southernLandmarks[min(level, southernLandmarks.count - 1)]
                     let landmark = southernLandmarks[min(levelNumber, southernLandmarks.count - 1)]
+                    
                     Text(landmark.name)
-                        .font(.custom("Saudi-Bold", size: 36))
+                        .font(.custom("Saudi-Bold", size: isIPad ? 42 : 36))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                     
                     Text(landmark.info)
-
-                        .font(.custom("Saudi-Bold", size: 18))
+                        .font(.custom("Saudi-Bold", size: isIPad ? 24 : 18))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
-                        .padding(.horizontal, 30)
+                        .padding(.horizontal, isIPad ? 45 : 30)
                     
                     Spacer()
                     
@@ -472,22 +447,21 @@ struct LevelAljanubiya: View {
                         navigateToNext = true
                     }) {
                         Text("التالي")
-                            .font(.custom("Saudi-Regular", size: 24))
+                            .font(.custom("Saudi-Regular", size: isIPad ? 30 : 24))
                             .foregroundColor(.white)
-                            .frame(width: 200, height: 54)
+                            .frame(width: isIPad ? 260 : 200, height: isIPad ? 64 : 54)
                             .background(
                                 Capsule()
                                     .fill(Color("brown"))
                             )
                     }
-                    .padding(.bottom, 30)
+                    .padding(.bottom, isIPad ? 40 : 30)
                 }
             }
-            .frame(width: 340, height: 520)
+            .frame(width: isIPad ? 520 : 340, height: isIPad ? 650 : 520)
         }
     }
     
-    // MARK: - نافذة المساعدة
     private var helpDialogView: some View {
         ZStack {
             Color.black.opacity(0.3)
@@ -505,13 +479,12 @@ struct LevelAljanubiya: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .clipShape(RoundedRectangle(cornerRadius: 26))
-                    .padding(20)
+                    .padding(isIPad ? 28 : 20)
             }
-            .frame(width: 340, height: 420)
+            .frame(width: isIPad ? 560 : 340, height: isIPad ? 620 : 420)
         }
     }
     
-    // MARK: - إعداد البزل
     private func setupPuzzle() {
         var allPieces: [PuzzlePieceJanubiya] = []
         var id = 0

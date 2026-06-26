@@ -29,10 +29,7 @@ struct PuzzlePieceShapeGharbiya: Shape {
         } else {
             let midX = w / 2
             path.addLine(to: CGPoint(x: midX - tabWidth/2, y: 0))
-            path.addQuadCurve(
-                to: CGPoint(x: midX + tabWidth/2, y: 0),
-                control: CGPoint(x: midX, y: -tabHeight)
-            )
+            path.addQuadCurve(to: CGPoint(x: midX + tabWidth/2, y: 0), control: CGPoint(x: midX, y: -tabHeight))
             path.addLine(to: CGPoint(x: w, y: 0))
         }
         
@@ -41,10 +38,7 @@ struct PuzzlePieceShapeGharbiya: Shape {
         } else {
             let midY = h / 2
             path.addLine(to: CGPoint(x: w, y: midY - tabWidth/2))
-            path.addQuadCurve(
-                to: CGPoint(x: w, y: midY + tabWidth/2),
-                control: CGPoint(x: w + tabHeight, y: midY)
-            )
+            path.addQuadCurve(to: CGPoint(x: w, y: midY + tabWidth/2), control: CGPoint(x: w + tabHeight, y: midY))
             path.addLine(to: CGPoint(x: w, y: h))
         }
         
@@ -53,10 +47,7 @@ struct PuzzlePieceShapeGharbiya: Shape {
         } else {
             let midX = w / 2
             path.addLine(to: CGPoint(x: midX + tabWidth/2, y: h))
-            path.addQuadCurve(
-                to: CGPoint(x: midX - tabWidth/2, y: h),
-                control: CGPoint(x: midX, y: h + tabHeight)
-            )
+            path.addQuadCurve(to: CGPoint(x: midX - tabWidth/2, y: h), control: CGPoint(x: midX, y: h + tabHeight))
             path.addLine(to: CGPoint(x: 0, y: h))
         }
         
@@ -65,10 +56,7 @@ struct PuzzlePieceShapeGharbiya: Shape {
         } else {
             let midY = h / 2
             path.addLine(to: CGPoint(x: 0, y: midY + tabWidth/2))
-            path.addQuadCurve(
-                to: CGPoint(x: 0, y: midY - tabWidth/2),
-                control: CGPoint(x: -tabHeight, y: midY)
-            )
+            path.addQuadCurve(to: CGPoint(x: 0, y: midY - tabWidth/2), control: CGPoint(x: -tabHeight, y: midY))
             path.addLine(to: CGPoint(x: 0, y: 0))
         }
         
@@ -83,6 +71,7 @@ struct PuzzlePieceGharbiya: Identifiable {
     let col: Int
     var currentRow: Int
     var currentCol: Int
+    
     var isInCorrectPosition: Bool {
         return currentRow == row && currentCol == col
     }
@@ -93,7 +82,18 @@ struct LevelAlgharbiya: View {
 
     private let rows = 3
     private let cols = 3
-    private let puzzleSize: CGFloat = 340
+    
+    private var isIPad: Bool {
+        UIDevice.current.model.contains("iPad") || UIDevice.current.userInterfaceIdiom == .pad
+    }
+    
+    private var puzzleSize: CGFloat {
+        isIPad ? 520 : 340
+    }
+    
+    private var titleOffsetY: CGFloat {
+        isIPad ? -365 : -250
+    }
     
     @State private var pieces: [PuzzlePieceGharbiya] = []
     @State private var draggingPiece: PuzzlePieceGharbiya?
@@ -104,15 +104,10 @@ struct LevelAlgharbiya: View {
     @State private var showCompletionDialog: Bool = false
     @State private var showHelpDialog: Bool = false
     @State private var navigateToNext: Bool = false
-    
-    // ⭐ زر الهوم
     @State private var navigateToHome: Bool = false
-    
-    
     
     @StateObject private var flow = LevelFlow.shared
  
-    // ⭐ صور البزل لمستويات الغربية
     let puzzleImages = [
         "تراث الغربية",
         "بيت نصيف",
@@ -122,8 +117,6 @@ struct LevelAlgharbiya: View {
         "تراث الغربية"
     ]
 
-    
-    // ⭐ معالم المنطقة الغربية
     private let westernLandmarks: [(name: String, info: String)] = [
         (
             "البلد",
@@ -150,11 +143,9 @@ struct LevelAlgharbiya: View {
             "منطقة البلد في جدة لم تكن مجرد مركز تجاري وبوابة للحجاج، بل تحتوي على أزقة ضيقة وممرات سرية كانت تُستخدم لتسهيل حركة القوافل والحجاج. بيوتها المبنية من الحجر والخشب تحمل زخارف فريدة لا تزال تُظهر الطابع الحجازي التقليدي القديم."
         )
     ]
+    
     var currentPuzzleImage: String {
-//        let level = flow.currentLevel(for: .western)
-//        return puzzleImages[min(level, puzzleImages.count - 1)]
         return puzzleImages[min(levelNumber, puzzleImages.count - 1)]
-
     }
 
     @State private var shake = false
@@ -163,7 +154,6 @@ struct LevelAlgharbiya: View {
 
     var body: some View {
         NavigationStack {
-            
             ZStack {
                 Image("الغربيه")
                     .resizable()
@@ -171,40 +161,35 @@ struct LevelAlgharbiya: View {
                     .ignoresSafeArea()
                 
                 VStack(spacing: -20) {
-
                     Spacer()
 
                     ZStack {
-
                         puzzleBoard
 
-                        // ⭐ العنوان يطلع من البوكس
                         Text("ركّب الصورة")
-                            .font(.custom("Saudi-Bold", size: 28))
+                            .font(.custom("Saudi-Bold", size: isIPad ? 38 : 28))
                             .foregroundColor(Color("brown"))
-                            .font(.custom("Saudi-Bold", size: 30))
                             .multilineTextAlignment(.center)
-                            .offset(x: 3 ,y: -250)
+                            .offset(x: 3, y: titleOffsetY)
                     }
 
                     Spacer()
                 }
                 .overlay(alignment: .bottom) {
                     HStack {
-                        // ⭐ زر الاستفهام — مطابق للوسطى
                         Button(action: {
                             showHelpDialog = true
-                                stopShaking = true
+                            stopShaking = true
                         }) {
                             Text("💡")
-                                .font(.system(size: 28))
+                                .font(.system(size: isIPad ? 34 : 28))
                                 .foregroundColor(.white)
-                                .padding(10)
+                                .padding(isIPad ? 14 : 10)
                                 .background(Color(hex: "874F35"))
                                 .clipShape(Circle())
-                                .offset(x: shake ? -2 : 2, y: shake ? 1 : -1)        // حركة خفيفة يمين/يسار + فوق/تحت
-                                .rotationEffect(.degrees(shake ? 3 : -3))             // يميل يمين/يسار
-                                .scaleEffect(shake ? 1.05 : 0.95)                     // نبض خفيف
+                                .offset(x: shake ? -2 : 2, y: shake ? 1 : -1)
+                                .rotationEffect(.degrees(shake ? 3 : -3))
+                                .scaleEffect(shake ? 1.05 : 0.95)
                                 .animation(
                                     shake ?
                                     Animation.easeInOut(duration: 0.15).repeatCount(4, autoreverses: true)
@@ -212,7 +197,7 @@ struct LevelAlgharbiya: View {
                                     value: shake
                                 )
                         }
-                        .padding(.leading, 3)
+                        .padding(.leading, isIPad ? 0 : 3)
                         
                         Spacer()
                     }
@@ -224,11 +209,9 @@ struct LevelAlgharbiya: View {
                             }
                         }
                     }
-                    .padding(.bottom, 180)
+                    .padding(.bottom, isIPad ? 530 : 180)
                 }
                 .overlay(alignment: .topTrailing) {
-                    
-                    // ⭐ زر الهوم — مطابق للوسطى + ربط الخريطة
                     HStack {
                         Button(action: {
                             navigateToHome = true
@@ -236,34 +219,27 @@ struct LevelAlgharbiya: View {
                             ZStack {
                                 Circle()
                                     .fill(Color("brown"))
-                                    .frame(width: 60, height: 60)
+                                    .frame(width: isIPad ? 70 : 60, height: isIPad ? 70 : 60)
                                 
-                                Image("saudiMap") // تأكد الاسم مطابق في Assets
+                                Image("saudiMap")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 35, height: 35)
+                                    .frame(width: isIPad ? 42 : 35, height: isIPad ? 700 : 35)
                             }
                         }
-                        .padding(.top, 60)
-                        .padding(.trailing, 0.1)
+                        .padding(.top, isIPad ? 80 : 60)
+                        .padding(.trailing, isIPad ? -70 : 0.1)
                     }
-                    .offset(x:15,y:1)
+                    .offset(x: isIPad ? 0 : 15, y: 1)
                 }
             }
             .navigationBarBackButtonHidden(true)
-
-            // ⭐ ربط صفحة الخريطة
             .navigationDestination(isPresented: $navigateToHome) {
                 SaudiMapView()
             }
-//            .navigationDestination(isPresented: $navigateToNext ) {
-//                PuzzleChoicesView()
-//            }
             .navigationDestination(isPresented: $navigateToNext) {
-                PuzzleView(region: .western , levelNumber: levelNumber)
+                PuzzleView(region: .western, levelNumber: levelNumber)
             }
-
-            
             .onAppear {
                 setupPuzzle()
             }
@@ -280,15 +256,14 @@ struct LevelAlgharbiya: View {
         }
     }
     
-    // MARK: - لوح البزل
     private var puzzleBoard: some View {
         let pieceSize = puzzleSize / CGFloat(cols)
         
         return ZStack {
-            RoundedRectangle(cornerRadius: 20)
+            RoundedRectangle(cornerRadius: isIPad ? 28 : 20)
                 .stroke(Color("brown"), lineWidth: 4.5)
                 .background(
-                    RoundedRectangle(cornerRadius: 20)
+                    RoundedRectangle(cornerRadius: isIPad ? 28 : 20)
                         .fill(Color("BackgroundMain"))
                 )
                 .frame(width: puzzleSize, height: puzzleSize)
@@ -299,20 +274,18 @@ struct LevelAlgharbiya: View {
                 }
                 
                 if isGlowing {
-                    RoundedRectangle(cornerRadius: 20)
+                    RoundedRectangle(cornerRadius: isIPad ? 28 : 20)
                         .fill(Color.white.opacity(0.4))
                         .frame(width: puzzleSize, height: puzzleSize)
                         .transition(.opacity)
                 }
             }
             .frame(width: puzzleSize, height: puzzleSize)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .clipShape(RoundedRectangle(cornerRadius: isIPad ? 28 : 20))
         }
     }
     
-    // MARK: - عرض قطعة واحدة
     private func makePieceView(piece: PuzzlePieceGharbiya, pieceSize: CGFloat) -> some View {
-        
         let isDragging = draggingPiece?.id == piece.id
         let offset = isDragging ? dragOffset : .zero
         
@@ -443,22 +416,19 @@ struct LevelAlgharbiya: View {
                 VStack(spacing: 16) {
                     Spacer()
                     
-//                    let level = flow.currentLevel(for: .western)
-//                    let landmark = westernLandmarks[min(level, westernLandmarks.count - 1)]
                     let landmark = westernLandmarks[min(levelNumber, westernLandmarks.count - 1)]
 
                     Text(landmark.name)
-                        .font(.custom("Saudi-Bold", size: 36))
+                        .font(.custom("Saudi-Bold", size: isIPad ? 42 : 36))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                     
                     Text(landmark.info)
-
-                        .font(.custom("Saudi-Bold", size: 18))
+                        .font(.custom("Saudi-Bold", size: isIPad ? 24 : 18))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
-                        .padding(.horizontal, 30)
+                        .padding(.horizontal, isIPad ? 45 : 30)
                     
                     Spacer()
                     
@@ -466,18 +436,18 @@ struct LevelAlgharbiya: View {
                         navigateToNext = true
                     }) {
                         Text("التالي")
-                            .font(.custom("Saudi-Regular", size: 24))
+                            .font(.custom("Saudi-Regular", size: isIPad ? 30 : 24))
                             .foregroundColor(.white)
-                            .frame(width: 200, height: 54)
+                            .frame(width: isIPad ? 260 : 200, height: isIPad ? 64 : 54)
                             .background(
                                 Capsule()
                                     .fill(Color("brown"))
                             )
                     }
-                    .padding(.bottom, 30)
+                    .padding(.bottom, isIPad ? 40 : 30)
                 }
             }
-            .frame(width: 340, height: 520)
+            .frame(width: isIPad ? 520 : 340, height: isIPad ? 650 : 520)
         }
     }
     
@@ -498,9 +468,9 @@ struct LevelAlgharbiya: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .clipShape(RoundedRectangle(cornerRadius: 26))
-                    .padding(20)
+                    .padding(isIPad ? 28 : 20)
             }
-            .frame(width: 340, height: 420)
+            .frame(width: isIPad ? 560 : 340, height: isIPad ? 620 : 420)
         }
     }
     
@@ -544,5 +514,5 @@ struct LevelAlgharbiya: View {
 }
 
 #Preview {
-    LevelAlgharbiya( levelNumber: 0)
+    LevelAlgharbiya(levelNumber: 0)
 }

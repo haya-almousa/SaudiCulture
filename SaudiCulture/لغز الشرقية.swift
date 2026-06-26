@@ -8,7 +8,6 @@
 import SwiftUI
 import Combine
 
-// MARK: - شكل قطعة البزل (Puzzle Piece Shape)
 struct PuzzlePieceShapeSharqiya: Shape {
     let row: Int
     let col: Int
@@ -78,29 +77,39 @@ struct PuzzlePieceShapeSharqiya: Shape {
     }
 }
 
-// MARK: - موديل قطعة البزل
 struct PuzzlePieceSharqiya: Identifiable {
     let id: Int
     let row: Int
     let col: Int
     var currentRow: Int
     var currentCol: Int
+    
     var isInCorrectPosition: Bool {
-        return currentRow == row && currentCol == col
+        currentRow == row && currentCol == col
     }
 }
 
-// MARK: - شاشة لفل الشرقية
 struct LevelAlsharqiya: View {
     let levelNumber: Int
-
     
     init(levelNumber: Int) {
-            self.levelNumber = levelNumber
-        }
+        self.levelNumber = levelNumber
+    }
+    
     private let rows = 3
     private let cols = 3
-    private let puzzleSize: CGFloat = 340
+    
+    private var isIPad: Bool {
+        UIDevice.current.model.contains("iPad") || UIDevice.current.userInterfaceIdiom == .pad
+    }
+    
+    private var puzzleSize: CGFloat {
+        isIPad ? 520 : 340
+    }
+    
+    private var titleOffsetY: CGFloat {
+        isIPad ? -365 : -250
+    }
     
     @State private var pieces: [PuzzlePieceSharqiya] = []
     @State private var draggingPiece: PuzzlePieceSharqiya?
@@ -111,13 +120,8 @@ struct LevelAlsharqiya: View {
     @State private var showCompletionDialog: Bool = false
     @State private var showHelpDialog: Bool = false
     @State private var navigateToNext: Bool = false
-    
-    // ⭐ زر الهوم
     @State private var navigateToHome: Bool = false
     
-    
-    
-    // ⭐ قائمة صور البزل لكل مستوى
     let puzzleImages = [
         "تراث الشرقية",
         "مسجد جواثا",
@@ -127,46 +131,31 @@ struct LevelAlsharqiya: View {
         "تراث الشرقية"
     ]
 
-    // ⭐ بيانات المعالم لكل مستوى
     private var easternLandmarks: [(name: String, info: String)] = [
         ("قصر إبراهيم", "قصر إبراهيم في الهفوف بالأحساء يُظهر مزيج العمارة العسكرية والدينية، ويعود للقرن التاسع عشر. القصر يحتوي على أبراج دفاعية وغرف للعبادة، ويُقال أن له ممرات سرية تحت الأرض استخدمت للحماية والهروب. اليوم يُعد موقعًا سياحيًا وتراثيًا هامًا في المنطقة الشرقية."),
-        
         ("مسجد جواثا", "مسجد جواثا من أقدم مساجد الأحساء، ويعود تاريخه لأكثر من 1200 سنة. يتميز ببنائه التقليدي من الحجر والطين واحتوائه على بئر قديمة. كان المسجد مركزًا لحفظ القرآن وتعليم الدين قبل المدارس الحديثة، وما زال شاهدًا على التراث الديني والثقافي."),
-        
-        
         ("سوق القيصرية", "سوق القيصرية سوق تاريخي في الأحساء كان مركزًا للتجارة بين البدو والحضر. يحوي أزقة ضيقة ومحلات حجرية تقليدية، ويشتهر بالحرف اليدوية مثل صناعة النحاس والفخار. اليوم يُقام فيه مهرجان سنوي للحرف التراثية ويستقطب الزوار المهتمين بالثقافة المحلية.."),
-        
         ("ميناء العقير", "ميناء العقير على ساحل الخليج العربي كان بوابة تجارية مهمة بين الخليج والهند وشرق إفريقيا. يحتوي على بقايا أرصفة وأبراج قديمة، وكان يُستخدم لتصدير اللؤلؤ والتوابل. اليوم يُعتبر موقعًا أثريًا ودراسة تاريخية لهواة التراث."),
-        
         ("واحة الأحساء", "واحة الأحساء واحدة من أكبر الواحات في العالم، تضم ملايين النخيل ومئات الينابيع. كانت مركزًا زراعيًا متقدمًا منذ العصر الإسلامي الأول باستخدام أنظمة ري متطورة. اليوم تمثل الواحة مزيجًا من الطبيعة والتراث مع مزارع ومناظر سياحية جميلة."),
-        
         ("قصر إبراهيم", "قصر إبراهيم في الهفوف بالأحساء يُظهر مزيج العمارة العسكرية والدينية، ويعود للقرن التاسع عشر. القصر يحتوي على أبراج دفاعية وغرف للعبادة، ويُقال أن له ممرات سرية تحت الأرض استخدمت للحماية والهروب. اليوم يُعد موقعًا سياحيًا وتراثيًا هامًا في المنطقة الشرقية.")
     ]
+    
     @StateObject private var flow = LevelFlow.shared
 
-    // ⭐ دالة لحساب الصورة الحالية لكل مستوى
     var currentPuzzleImage: String {
-//        let level = flow.currentLevel(for: .eastern)
-//        return puzzleImages[min(level, puzzleImages.count - 1)]
-        return puzzleImages[min(levelNumber, puzzleImages.count - 1)]
-
+        puzzleImages[min(levelNumber, puzzleImages.count - 1)]
     }
 
-    // ⭐ دالة لحساب المعلم والمعلومة الحالية
     var currentLandmark: (name: String, info: String) {
-//        let level = flow.currentLevel(for: .eastern)
-//        return easternLandmarks[min(level, easternLandmarks.count - 1)]
-        return easternLandmarks[min(levelNumber, easternLandmarks.count - 1)]
-
+        easternLandmarks[min(levelNumber, easternLandmarks.count - 1)]
     }
     
-        @State private var shake = false
-        @State private var stopShaking = false
-        let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
+    @State private var shake = false
+    @State private var stopShaking = false
+    let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
 
     var body: some View {
         NavigationStack {
-            
             ZStack {
                 Image("الشرقيه")
                     .resizable()
@@ -174,40 +163,35 @@ struct LevelAlsharqiya: View {
                     .ignoresSafeArea()
                 
                 VStack(spacing: -20) {
-
                     Spacer()
 
                     ZStack {
-
                         puzzleBoard
 
-                        // ⭐ العنوان يطلع من البوكس
                         Text("ركّب الصورة")
-                            .font(.custom("Saudi-Bold", size: 28))
+                            .font(.custom("Saudi-Bold", size: isIPad ? 38 : 28))
                             .foregroundColor(Color("brown"))
-                            .font(.custom("Saudi-Bold", size: 30))
                             .multilineTextAlignment(.center)
-                            .offset(x: 3 ,y:-250)
+                            .offset(x: 3, y: titleOffsetY)
                     }
 
                     Spacer()
                 }
                 .overlay(alignment: .bottom) {
                     HStack {
-                        // ⭐ زر الاستفهام — مطابق للوسطى
                         Button(action: {
                             showHelpDialog = true
-                                stopShaking = true
+                            stopShaking = true
                         }) {
                             Text("💡")
-                                .font(.system(size: 28))
+                                .font(.system(size: isIPad ? 34 : 28))
                                 .foregroundColor(.white)
-                                .padding(10)
+                                .padding(isIPad ? 14 : 10)
                                 .background(Color(hex: "874F35"))
                                 .clipShape(Circle())
-                                .offset(x: shake ? -2 : 2, y: shake ? 1 : -1)        // حركة خفيفة يمين/يسار + فوق/تحت
-                                .rotationEffect(.degrees(shake ? 3 : -3))             // يميل يمين/يسار
-                                .scaleEffect(shake ? 1.05 : 0.95)                     // نبض خفيف
+                                .offset(x: shake ? -2 : 2, y: shake ? 1 : -1)
+                                .rotationEffect(.degrees(shake ? 3 : -3))
+                                .scaleEffect(shake ? 1.05 : 0.95)
                                 .animation(
                                     shake ?
                                     Animation.easeInOut(duration: 0.15).repeatCount(4, autoreverses: true)
@@ -215,7 +199,7 @@ struct LevelAlsharqiya: View {
                                     value: shake
                                 )
                         }
-                        .padding(.leading, 3)
+                        .padding(.leading, isIPad ? 0 : 3)
                         
                         Spacer()
                     }
@@ -227,11 +211,9 @@ struct LevelAlsharqiya: View {
                             }
                         }
                     }
-                    .padding(.bottom, 180)
+                    .padding(.bottom, isIPad ? 530 : 180)
                 }
                 .overlay(alignment: .topTrailing) {
-                    
-                    // ⭐ زر الهوم — مطابق للوسطى + ربط الخريطة
                     HStack {
                         Button(action: {
                             navigateToHome = true
@@ -239,34 +221,27 @@ struct LevelAlsharqiya: View {
                             ZStack {
                                 Circle()
                                     .fill(Color("brown"))
-                                    .frame(width: 60, height: 60)
+                                    .frame(width: isIPad ? 70 : 60, height: isIPad ? 70 : 60)
                                 
-                                Image("saudiMap") // تأكد الاسم مطابق في Assets
+                                Image("saudiMap")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 35, height: 35)
+                                    .frame(width: isIPad ? 42 : 35, height: isIPad ? 700 : 35)
                             }
                         }
-                        .padding(.top, 60)
-                        .padding(.trailing, 0.1)
+                        .padding(.top, isIPad ? 80 : 60)
+                        .padding(.trailing, isIPad ? -70 : 0.1)
                     }
-                    .offset(x:15,y:1)
+                    .offset(x: isIPad ? 0 : 15, y: 1)
                 }
             }
             .navigationBarBackButtonHidden(true)
-
-            // ⭐ ربط صفحة الخريطة
             .navigationDestination(isPresented: $navigateToHome) {
                 SaudiMapView()
             }
-            
-//            .navigationDestination(isPresented: $navigateToNext ) {
-//                PuzzleChoicesView()
-//            }
-            .navigationDestination(isPresented: $navigateToNext ) {
-                PuzzleView(region: .eastern , levelNumber: levelNumber)
+            .navigationDestination(isPresented: $navigateToNext) {
+                PuzzleView(region: .eastern, levelNumber: levelNumber)
             }
-
             .onAppear {
                 setupPuzzle()
             }
@@ -283,15 +258,14 @@ struct LevelAlsharqiya: View {
         }
     }
     
-    // MARK: - لوح البزل
     private var puzzleBoard: some View {
         let pieceSize = puzzleSize / CGFloat(cols)
         
         return ZStack {
-            RoundedRectangle(cornerRadius: 20)
+            RoundedRectangle(cornerRadius: isIPad ? 28 : 20)
                 .stroke(Color("brown"), lineWidth: 4.5)
                 .background(
-                    RoundedRectangle(cornerRadius: 20)
+                    RoundedRectangle(cornerRadius: isIPad ? 28 : 20)
                         .fill(Color("BackgroundMain"))
                 )
                 .frame(width: puzzleSize, height: puzzleSize)
@@ -302,20 +276,18 @@ struct LevelAlsharqiya: View {
                 }
                 
                 if isGlowing {
-                    RoundedRectangle(cornerRadius: 20)
+                    RoundedRectangle(cornerRadius: isIPad ? 28 : 20)
                         .fill(Color.white.opacity(0.4))
                         .frame(width: puzzleSize, height: puzzleSize)
                         .transition(.opacity)
                 }
             }
             .frame(width: puzzleSize, height: puzzleSize)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .clipShape(RoundedRectangle(cornerRadius: isIPad ? 28 : 20))
         }
     }
     
-    // MARK: - عرض قطعة واحدة
     private func makePieceView(piece: PuzzlePieceSharqiya, pieceSize: CGFloat) -> some View {
-        
         let isDragging = draggingPiece?.id == piece.id
         let offset = isDragging ? dragOffset : .zero
         
@@ -331,7 +303,7 @@ struct LevelAlsharqiya: View {
             
             ZStack {
                 GeometryReader { geo in
-                    Image(currentPuzzleImage) // ✅ استخدم المتغير الديناميكي
+                    Image(currentPuzzleImage)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: puzzleSize, height: puzzleSize)
@@ -373,7 +345,6 @@ struct LevelAlsharqiya: View {
         )
     }
     
-    // MARK: - معالجة السحب والإفلات
     private func handleDrop(piece: PuzzlePieceSharqiya, translation: CGSize, pieceSize: CGFloat) {
         let dx = Int(round(translation.width / pieceSize))
         let dy = Int(round(translation.height / pieceSize))
@@ -401,7 +372,6 @@ struct LevelAlsharqiya: View {
         }
     }
     
-    // MARK: - التحقق من الحل
     private func checkIfSolved() {
         let allInPlace = pieces.allSatisfy { $0.isInCorrectPosition }
         
@@ -410,7 +380,6 @@ struct LevelAlsharqiya: View {
         }
     }
     
-    // MARK: - الاحتفال بالحل
     private func celebrateSolve() {
         withAnimation(.easeInOut(duration: 0.3)) {
             isSolved = true
@@ -436,7 +405,6 @@ struct LevelAlsharqiya: View {
         }
     }
     
-    // MARK: - نافذة الإكمال
     private var completionDialogView: some View {
         ZStack {
             Color.black.opacity(0.3)
@@ -451,17 +419,16 @@ struct LevelAlsharqiya: View {
                     Spacer()
                     
                     Text(currentLandmark.name)
-                        .font(.custom("Saudi-Bold", size: 36))
+                        .font(.custom("Saudi-Bold", size: isIPad ? 42 : 36))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                     
                     Text(currentLandmark.info)
-
-                        .font(.custom("Saudi-Bold", size: 18))
+                        .font(.custom("Saudi-Bold", size: isIPad ? 24 : 18))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
-                        .padding(.horizontal, 30)
+                        .padding(.horizontal, isIPad ? 45 : 30)
                     
                     Spacer()
                     
@@ -469,22 +436,21 @@ struct LevelAlsharqiya: View {
                         navigateToNext = true
                     }) {
                         Text("التالي")
-                            .font(.custom("Saudi-Regular", size: 24))
+                            .font(.custom("Saudi-Regular", size: isIPad ? 30 : 24))
                             .foregroundColor(.white)
-                            .frame(width: 200, height: 54)
+                            .frame(width: isIPad ? 260 : 200, height: isIPad ? 64 : 54)
                             .background(
                                 Capsule()
                                     .fill(Color("brown"))
                             )
                     }
-                    .padding(.bottom, 30)
+                    .padding(.bottom, isIPad ? 40 : 30)
                 }
             }
-            .frame(width: 340, height: 520)
+            .frame(width: isIPad ? 520 : 340, height: isIPad ? 650 : 520)
         }
     }
     
-    // MARK: - نافذة المساعدة
     private var helpDialogView: some View {
         ZStack {
             Color.black.opacity(0.3)
@@ -498,16 +464,16 @@ struct LevelAlsharqiya: View {
                     .fill(Color("BackgroundMain"))
                     .stroke(Color("brown"), lineWidth: 4)
                 
-                Image(currentPuzzleImage)                     .resizable()
+                Image(currentPuzzleImage)
+                    .resizable()
                     .aspectRatio(contentMode: .fit)
                     .clipShape(RoundedRectangle(cornerRadius: 26))
-                    .padding(20)
+                    .padding(isIPad ? 28 : 20)
             }
-            .frame(width: 340, height: 420)
+            .frame(width: isIPad ? 560 : 340, height: isIPad ? 620 : 420)
         }
     }
     
-    // MARK: - إعداد البزل
     private func setupPuzzle() {
         var allPieces: [PuzzlePieceSharqiya] = []
         var id = 0
@@ -548,5 +514,5 @@ struct LevelAlsharqiya: View {
 }
 
 #Preview {
-    LevelAlsharqiya( levelNumber: 0)
+    LevelAlsharqiya(levelNumber: 0)
 }
