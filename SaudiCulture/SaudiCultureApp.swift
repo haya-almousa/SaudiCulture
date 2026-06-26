@@ -11,7 +11,7 @@ import SwiftUI
 struct SaudiCultureApp: App {
     var body: some Scene {
         WindowGroup {
-            SaudiMapView()
+            AsirView(region: .southern, levelNumber:5)
         }
     }
 }

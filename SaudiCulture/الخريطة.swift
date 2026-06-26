@@ -7,65 +7,64 @@ import SwiftUI
 import Combine
 
 struct SaudiMapView: View {
-    // MARK: - Properties
     @StateObject private var gameProgress = GameProgress.shared
     @AppStorage("selectedCharacter") private var savedCharacter: String = "نجديه"
     @State private var selectedRegion: Region?
     @State private var goToLevels = false
     private let debugUnlockAll = false
     @State private var selectedRegionType: RegionType?
-    @State private var showLockedDialog = false  // ✅ جديد
+    @State private var showLockedDialog = false
 
-    // MARK: - Body
     var body: some View {
         NavigationStack {
             GeometryReader { geometry in
+                let isIPad = true
+
                 ZStack {
                     Color("BackgroundMain")
                         .ignoresSafeArea()
                     
-                    HStack {
-                        Text("اختار المنطقة ")
-                            .font(.custom("Saudi-Regular", size: 40))
-                            .fontWeight(.bold)
-                            .foregroundColor(Color("brown"))
-                            .multilineTextAlignment(.center)
-                            .offset(x:0,y:40)
-                    }
-                    .offset(y: -370)
+                    Text("اختار المنطقة ")
+                        .font(.custom("Saudi-Regular", size: isIPad ? 44 : 40))
+                        .fontWeight(.bold)
+                        .foregroundColor(Color("brown"))
+                        .multilineTextAlignment(.center)
+                        .position(
+                            x: geometry.size.width / 2,
+                            y: geometry.size.height * 0.1
+                        )
                     
                     ZStack(alignment: .center) {
-                        
                         ClickableRegionView(
                             imageName: "‎⁨المنطقة الشماليه",
-                            size: 200,
+                            size: 450,
                             isUnlocked: gameProgress.isRegionUnlocked(.northern),
                             action: { handleRegionTap(.northern) }
                         )
-                        .offset(x: -60, y: -140)
+                        .offset(x: -99, y: -300)
                         .zIndex(1)
                         
                         ClickableRegionView(
                             imageName: "‎⁨المنطقة الغربيه",
-                            size: 190,
+                            size: 399,
                             isUnlocked: gameProgress.isRegionUnlocked(.western),
                             action: { handleRegionTap(.western) }
                         )
-                        .offset(x: -120, y: -20)
+                        .offset(x: -219, y: -20)
                         .zIndex(3)
                         
                         ClickableRegionView(
                             imageName: "‎⁨ المنطقة الشرقيه",
-                            size: 220,
+                            size: 410,
                             isUnlocked: gameProgress.isRegionUnlocked(.eastern),
                             action: { handleRegionTap(.eastern) }
                         )
-                        .offset(x: 110, y: -10)
+                        .offset(x: 235, y: -10)
                         .zIndex(2)
                         
                         ClickableRegionView(
                             imageName: "‎⁨المنطقة الوسطى",
-                            size: 190,
+                            size: 400,
                             isUnlocked: gameProgress.isRegionUnlocked(.central),
                             action: { handleRegionTap(.central) }
                         )
@@ -74,16 +73,19 @@ struct SaudiMapView: View {
                         
                         ClickableRegionView(
                             imageName: "المنطقة الجنوبية",
-                            size: 150,
+                            size: 260,
                             isUnlocked: gameProgress.isRegionUnlocked(.southern),
                             action: { handleRegionTap(.southern) }
                         )
-                        .offset(x: -12, y: 111)
+                        .offset(x: -1, y: 239)
                         .zIndex(4)
                     }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .scaleEffect(0.48)
+                    .position(
+                        x: geometry.size.width / 2,
+                        y: geometry.size.height * 0.52
+                    )
                     
-                    // ✅ Custom Dialog للمنطقة المقفلة
                     if showLockedDialog {
                         lockedRegionDialog
                     }
@@ -98,17 +100,14 @@ struct SaudiMapView: View {
         }
     }
 
-    // MARK: - Custom Dialog للمنطقة المقفلة
     private var lockedRegionDialog: some View {
         ZStack {
-            // خلفية شفافة داكنة
             Color.black.opacity(0.3)
                 .ignoresSafeArea()
                 .onTapGesture {
                     showLockedDialog = false
                 }
             
-            // النافذة
             VStack(spacing: 20) {
                 Spacer()
                 
@@ -150,7 +149,6 @@ struct SaudiMapView: View {
         }
     }
 
-    // MARK: - Functions
     private func handleRegionTap(_ regionType: RegionType) {
         let isUnlocked = gameProgress.isRegionUnlocked(regionType)
 
@@ -164,12 +162,11 @@ struct SaudiMapView: View {
                 name: regionType.displayName,
                 isLocked: true
             )
-            showLockedDialog = true  // ✅ أظهر النافذة المخصصة
+            showLockedDialog = true
         }
     }
 }
 
-// MARK: - Clickable Region View
 struct ClickableRegionView: View {
     let imageName: String
     let size: CGFloat
@@ -192,7 +189,6 @@ struct ClickableRegionView: View {
     }
 }
 
-// MARK: - Shape Based on PNG Alpha (Optimized)
 struct RegionImageShape: Shape {
     let imageName: String
 
@@ -250,7 +246,6 @@ struct RegionImageShape: Shape {
     }
 }
 
-// MARK: - Transparent Button Style
 struct TransparentButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
@@ -259,7 +254,6 @@ struct TransparentButtonStyle: ButtonStyle {
     }
 }
 
-// MARK: - Region Type Enum
 enum RegionType: String, CaseIterable, Codable {
     case central = "المنطقة الوسطى"
     case eastern = "المنطقة الشرقية"
@@ -280,7 +274,6 @@ enum RegionType: String, CaseIterable, Codable {
     }
 }
 
-// MARK: - Region Model
 struct Region: Identifiable {
     let id = UUID()
     let type: RegionType
@@ -288,7 +281,6 @@ struct Region: Identifiable {
     var isLocked: Bool = false
 }
 
-// MARK: - Game Progress Manager
 class GameProgress: ObservableObject {
     static let shared = GameProgress()
 
@@ -307,22 +299,18 @@ class GameProgress: ObservableObject {
         UserDefaults.standard.set(Array(completedRegions), forKey: userDefaultsKey)
     }
 
-    // ✅ المنطق الصحيح: المنطقة تفتح بعد إنهاء 5 مراحل من المنطقة السابقة
     func isRegionUnlocked(_ region: RegionType) -> Bool {
-        // المنطقة الوسطى دائماً مفتوحة
         if region == .central {
             return true
         }
         
-        // جيب المنطقة اللي قبلها حسب الترتيب
         guard let previousRegion = RegionType.allCases
             .first(where: { $0.order == region.order - 1 }) else {
             return false
         }
         
-        // تحقق إن المنطقة السابقة خلصت 5 مراحل (المرحلة 4 هي آخر مرحلة)
         let previousLevelCompleted = LevelFlow.shared.currentLevel(for: previousRegion)
-        return previousLevelCompleted > 4  // أكبر من 4 يعني خلص المرحلة 5
+        return previousLevelCompleted > 4
     }
 
     func isRegionCompleted(_ region: RegionType) -> Bool {
@@ -342,7 +330,6 @@ class GameProgress: ObservableObject {
     }
 }
 
-// MARK: - Preview
 #Preview {
     SaudiMapView()
 }
