@@ -16,223 +16,120 @@ struct NorthView: View {
     }
     
     let columns = Array(repeating: GridItem(.flexible(), spacing: 12), count: 3)
+    let iPadColumns = Array(repeating: GridItem(.fixed(110), spacing: 69), count: 3)
     
     @StateObject private var viewModel = GameLogic()
     @State private var activePopup: GamePopupType? = nil
     
-    // Timer
     @State private var timeRemaining: Int = 90
     @State private var timerRunning: Bool = true
     @State private var flashRed: Bool = false
     
-    // Navigation
     @State private var goToMap = false
     @State private var goToNextGame = false
-    
-    // Preview mode
     @State private var isPreviewMode: Bool = true
     
-    // MARK: - North Levels (Clothing Theme)
-    
     var northLevels: [Card] {
-
-            switch levelNumber {// levelNumber  عشان يعرف  هو في اي مرحله و على اساسها يطلع البطايق
-
-            // المرحلة 1 - الرجل
-            case 1:
-                return [
-                    Card(text: nil, imageName: "ثوب", borderColor: Color(hex: "731112"), pairID: 1),
-                    Card(text: "ثوب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
-                    
-                    Card(text: nil, imageName: "عقال", borderColor: Color(hex: "731112"), pairID: 2),
-                    Card(text: "عقال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
-                    
-                    Card(text: nil, imageName: "Boy1", borderColor: Color(hex: "731112"), pairID: 3),
-                    Card(text: "غتره", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
-                    
-                    Card(text: nil, imageName: "Boy2", borderColor: Color(hex: "731112"), pairID: 4),
-                    Card(text: "بشت", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-                    
-                    Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-                ]
-
-            // المرحلة 2 - المرأة
-            case 2:
-                return [
-                        Card(text: nil, imageName: "W3", borderColor: Color(hex: "731112"), pairID: 1),
-                    Card(text: "محوثل", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
-                    
-                    Card(text: nil, imageName: "شيلة", borderColor: Color(hex: "731112"), pairID: 2),
-                    Card(text: "شيلة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
-                    
-                    Card(text: nil, imageName: "تمر", borderColor: Color(hex: "731112"), pairID: 3),
-                    Card(text: nil, imageName: "تمر", borderColor: Color(hex: "731112"), pairID: 3),
-                    
-                    Card(text: nil, imageName: "W2", borderColor: Color(hex: "731112"), pairID: 4),
-                    Card(text: "لبس التراثي للشمال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-                    
-                    Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-                ]
-
-            // المرحلة 3 - الطفل
-            case 3:
-                return [
-                                    Card(text: nil, imageName: "ثوب", borderColor: Color(hex: "731112"), pairID: 1),
+        switch levelNumber {
+        case 1:
+            return [
+                Card(text: nil, imageName: "ثوب", borderColor: Color(hex: "731112"), pairID: 1),
                 Card(text: "ثوب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
-                
                 Card(text: nil, imageName: "عقال", borderColor: Color(hex: "731112"), pairID: 2),
                 Card(text: "عقال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
-                
                 Card(text: nil, imageName: "Boy1", borderColor: Color(hex: "731112"), pairID: 3),
                 Card(text: "غتره", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
-                
                 Card(text: nil, imageName: "Boy2", borderColor: Color(hex: "731112"), pairID: 4),
                 Card(text: "بشت", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-                
                 Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-                ]
+            ]
 
-            // المرحلة 4 - الطفلة
-            case 4:
-                return [
-                    Card(text: nil, imageName: "Gdress", borderColor: Color(hex: "731112"), pairID: 1),
-                    Card(text: "بخنق", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
-                    
-                    Card(text: nil, imageName: "GDress1", borderColor: Color(hex: "731112"), pairID: 2),
-                    Card(text: "دراعه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
-                    
-                    Card(text: nil, imageName: "تمر", borderColor: Color(hex: "731112"), pairID: 3),
-                    Card(text: nil, imageName: "تمر", borderColor: Color(hex: "731112"), pairID: 3),
-                    
-        Card(text: nil, imageName: "NorthG", borderColor: Color(hex: "731112"), pairID: 4),
-                    Card(text: "لبس التراثي  للشمال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-        //            Card(text: nil, imageName: "بشت", borderColor: Color(hex: "731112"), pairID: 4),
-        //            Card(text: "بشت", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
-                    
-                    Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-       ]
+        case 2:
+            return [
+                Card(text: nil, imageName: "W3", borderColor: Color(hex: "731112"), pairID: 1),
+                Card(text: "محوثل", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+                Card(text: nil, imageName: "شيلة", borderColor: Color(hex: "731112"), pairID: 2),
+                Card(text: "شيلة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+                Card(text: nil, imageName: "تمر", borderColor: Color(hex: "731112"), pairID: 3),
+                Card(text: nil, imageName: "تمر", borderColor: Color(hex: "731112"), pairID: 3),
+                Card(text: nil, imageName: "W2", borderColor: Color(hex: "731112"), pairID: 4),
+                Card(text: "لبس التراثي للشمال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+                Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
+            ]
 
-            default:
-                return [
-                               Card(text: nil, imageName: "شمالي", borderColor: Color(hex: "731112"), pairID: 1),
-                               Card(text: nil, imageName: "شمالي", borderColor: Color(hex: "731112"), pairID: 1),
-                    
-                    Card(text: nil, imageName: "شماليه", borderColor: Color(hex: "731112"), pairID: 2),
-                               Card(text: nil, imageName: "شماليه", borderColor: Color(hex: "731112"), pairID: 2),
-                    
-                    Card(text: nil, imageName: "NorthG", borderColor: Color(hex: "731112"), pairID: 3),
-                               
-                               Card(text: nil, imageName: "NorthG", borderColor: Color(hex: "731112"), pairID: 3),
-                    
-                    Card(text: nil, imageName: "NorthB", borderColor: Color(hex: "731112"), pairID: 4),
-                               Card(text: nil, imageName: "NorthB", borderColor: Color(hex: "731112"), pairID: 4),
-                    
-                    Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
-                ]
-            }
+        case 3:
+            return [
+                Card(text: nil, imageName: "ثوب", borderColor: Color(hex: "731112"), pairID: 1),
+                Card(text: "ثوب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+                Card(text: nil, imageName: "عقال", borderColor: Color(hex: "731112"), pairID: 2),
+                Card(text: "عقال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+                Card(text: nil, imageName: "Boy1", borderColor: Color(hex: "731112"), pairID: 3),
+                Card(text: "غتره", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+                Card(text: nil, imageName: "Boy2", borderColor: Color(hex: "731112"), pairID: 4),
+                Card(text: "بشت", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+                Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
+            ]
+
+        case 4:
+            return [
+                Card(text: nil, imageName: "Gdress", borderColor: Color(hex: "731112"), pairID: 1),
+                Card(text: "بخنق", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+                Card(text: nil, imageName: "GDress1", borderColor: Color(hex: "731112"), pairID: 2),
+                Card(text: "دراعه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
+                Card(text: nil, imageName: "تمر", borderColor: Color(hex: "731112"), pairID: 3),
+                Card(text: nil, imageName: "تمر", borderColor: Color(hex: "731112"), pairID: 3),
+                Card(text: nil, imageName: "NorthG", borderColor: Color(hex: "731112"), pairID: 4),
+                Card(text: "لبس التراثي  للشمال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+                Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
+            ]
+
+        default:
+            return [
+                Card(text: nil, imageName: "شمالي", borderColor: Color(hex: "731112"), pairID: 1),
+                Card(text: nil, imageName: "شمالي", borderColor: Color(hex: "731112"), pairID: 1),
+                Card(text: nil, imageName: "شماليه", borderColor: Color(hex: "731112"), pairID: 2),
+                Card(text: nil, imageName: "شماليه", borderColor: Color(hex: "731112"), pairID: 2),
+                Card(text: nil, imageName: "NorthG", borderColor: Color(hex: "731112"), pairID: 3),
+                Card(text: nil, imageName: "NorthG", borderColor: Color(hex: "731112"), pairID: 3),
+                Card(text: nil, imageName: "NorthB", borderColor: Color(hex: "731112"), pairID: 4),
+                Card(text: nil, imageName: "NorthB", borderColor: Color(hex: "731112"), pairID: 4),
+                Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
+            ]
         }
-
-    // Select cards depending on level
-//    var currentLevelCards: [Card] {
-//        northLevels[min(levelNumber, northLevels.count - 1)]
-//    }
+    }
     
     var body: some View {
         NavigationStack {
-            ZStack {
-                Color(hex: "FFF9F2").ignoresSafeArea()
+            GeometryReader { geo in
+                let isIPad = geo.size.width >= 600
                 
-                Image(backgroundImageName)
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
-                
-                // Home Button
-                HStack {
-                    Button {
-                        goToMap = true
-                    } label: {
-                        ZStack {
-                            Circle()
-                                .fill(Color("brown"))
-                                .frame(width: 60, height: 60)
-                            Image("saudiMap")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 35, height: 35)
-                        }
-                    }
-                }
-                .offset(x: 153, y: -344)
-                
-                VStack(spacing: 16) {
-                    Text("لعبة الكروت - الشمالية")
-                        .foregroundColor(Color("brown"))
-                        .font(.custom("Saudi-Bold", size: 30))
-                        .multilineTextAlignment(.center)
-                        .offset(x: -9 ,y: -20)
+                ZStack {
+                    Color(hex: "FFF9F2").ignoresSafeArea()
                     
-                    // Timer
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.white.opacity(0.3))
-                            .frame(width: 100, height: 40)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .stroke(Color(hex: "7A4A2E").opacity(0.5), lineWidth: 2)
-                            )
-                            .shadow(radius: 3)
-                            .opacity(flashRed ? 0.3 : 1)
-                        
-                        Text("\(timeString(timeRemaining))")
-                            .font(.system(size: 20, weight: .bold, design: .rounded))
-                            .foregroundColor(Color(hex: "731112"))
+                    Image(backgroundImageName)
+                        .resizable()
+                        .scaledToFill()
+                        .ignoresSafeArea()
+                    
+                    if isIPad {
+                        iPadLayout
+                    } else {
+                        iPhoneLayout
                     }
                     
-                    // Cards
-                    LazyVGrid(columns: columns, spacing: 16) {
-                        ForEach(Array(viewModel.cards.enumerated()), id: \.element.id) { index, card in
-                            CardView(
-                                text: card.text,
-                                imageName: card.imageName,
-                                isFaceUp: isPreviewMode ? true : viewModel.isFlipped(at: index),
-                                borderColor: card.borderColor
-                            )
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                if !isPreviewMode {
-                                    viewModel.cardTapped(at: index)
-                                }
-                            }
-                        }
+                    if let popup = activePopup {
+                        GamePopupView(
+                            type: popup,
+                            onClose: {
+                                activePopup = nil
+                                resetGame()
+                            },
+                            onPrimaryAction: popup == .win ? {
+                                activePopup = nil
+                                goToNextGame = true
+                            } : nil
+                        )
                     }
-                    .padding(.horizontal, 26)
-                    .blur(radius: activePopup != nil ? 10 : 0)
-                    
-                    HStack {
-                        Text("مطابقات: \(viewModel.matchedPairsCount)/\(viewModel.getTotalPairs())")
-                            .font(.system(size: 18, weight: .semibold, design: .rounded))
-                            .foregroundColor(Color(hex: "7A4A2E"))
-                        Spacer()
-                    }
-                    .padding(.horizontal, 26)
-                    
-                    Spacer()
-                }
-                .padding(.top, 60)
-                
-                if let popup = activePopup {
-                    GamePopupView(
-                        type: popup,
-                        onClose: {
-                            activePopup = nil
-                            resetGame()
-                        },
-                        onPrimaryAction: popup == .win ? {
-                            activePopup = nil
-                            goToNextGame = true
-                        } : nil
-                    )
                 }
             }
             .navigationDestination(isPresented: $goToMap) {
@@ -282,7 +179,122 @@ struct NorthView: View {
         }
     }
     
-    // MARK: - Reset Game
+    private var iPhoneLayout: some View {
+        ZStack {
+            HStack { mapButton }
+                .offset(x: 153, y: -344)
+            
+            VStack(spacing: 16) {
+                Text("لعبة الكروت - الشمالية")
+                    .foregroundColor(Color("brown"))
+                    .font(.custom("Saudi-Bold", size: 30))
+                    .multilineTextAlignment(.center)
+                    .offset(x: -9, y: -20)
+                
+                timerView
+                
+                LazyVGrid(columns: columns, spacing: 16) {
+                    cardsContent
+                }
+                .padding(.horizontal, 26)
+                .blur(radius: activePopup != nil ? 10 : 0)
+                
+                matchesView
+                
+                Spacer()
+            }
+            .padding(.top, 40)
+        }
+    }
+    
+    private var iPadLayout: some View {
+        ZStack {
+            HStack { mapButton }
+                .offset(x: 220, y: -660)
+            
+            VStack(spacing: 12) {
+                Text("لعبة الكروت - الشمالية")
+                    .foregroundColor(Color("brown"))
+                    .font(.custom("Saudi-Bold", size: 30))
+                    .multilineTextAlignment(.center)
+                
+                timerView
+                
+                LazyVGrid(columns: iPadColumns, spacing: 100) {
+                    cardsContent
+                        .frame(width: 205, height: 245)
+                }
+                .padding(.horizontal, 90)
+                .blur(radius: activePopup != nil ? 10 : 0)
+                
+                matchesView
+                
+                Spacer()
+            }
+            .padding(.top, 40)
+        }
+    }
+    
+    private var mapButton: some View {
+        Button {
+            goToMap = true
+        } label: {
+            ZStack {
+                Circle()
+                    .fill(Color("brown"))
+                    .frame(width: 60, height: 60)
+                Image("saudiMap")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 35, height: 35)
+            }
+        }
+    }
+    
+    private var timerView: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.white.opacity(0.3))
+                .frame(width: 100, height: 40)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Color(hex: "7A4A2E").opacity(0.5), lineWidth: 2)
+                )
+                .shadow(radius: 3)
+                .opacity(flashRed ? 0.3 : 1)
+            
+            Text("\(timeString(timeRemaining))")
+                .font(.system(size: 20, weight: .bold, design: .rounded))
+                .foregroundColor(Color(hex: "731112"))
+        }
+    }
+    
+    private var cardsContent: some View {
+        ForEach(Array(viewModel.cards.enumerated()), id: \.element.id) { index, card in
+            CardView(
+                text: card.text,
+                imageName: card.imageName,
+                isFaceUp: isPreviewMode ? true : viewModel.isFlipped(at: index),
+                borderColor: card.borderColor
+            )
+            .contentShape(Rectangle())
+            .onTapGesture {
+                if !isPreviewMode {
+                    viewModel.cardTapped(at: index)
+                }
+            }
+        }
+    }
+    
+    private var matchesView: some View {
+        HStack {
+            Text("مطابقات: \(viewModel.matchedPairsCount)/\(viewModel.getTotalPairs())")
+                .font(.system(size: 18, weight: .semibold, design: .rounded))
+                .foregroundColor(Color(hex: "7A4A2E"))
+            Spacer()
+        }
+        .padding(.horizontal, 26)
+    }
     
     func resetGame() {
         timeRemaining = 90
@@ -313,4 +325,3 @@ struct NorthView: View {
 #Preview {
     NorthView(region: .northern, levelNumber: 5)
 }
-////

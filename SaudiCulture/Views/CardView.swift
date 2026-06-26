@@ -15,70 +15,66 @@ struct CardView: View {
     var backImageName: String = "نخله"
 
     var body: some View {
+        let isIPad = UIDevice.current.userInterfaceIdiom == .pad
+
         ZStack {
-            // CARD BASE
-            RoundedRectangle(cornerRadius: 20)
+            RoundedRectangle(cornerRadius: isIPad ? 16 : 20)
                 .fill(Color.white)
-//                .font(.custom("Saudi-Regular", size: 28))
                 .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .stroke(borderColor, lineWidth: 4)
+                    RoundedRectangle(cornerRadius: isIPad ? 16 : 20)
+                        .stroke(borderColor, lineWidth: isIPad ? 3 : 4)
                 )
             
-            // Inner border - only visible when face down
             if !isFaceUp {
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: isIPad ? 12 : 16)
                     .stroke(
                         LinearGradient(
                             colors: [
-                                Color(hex: "D4AF37"), // Shiny gold
-                                Color(hex: "F4E5B0"), // Light gold
-                                Color(hex: "D4AF37")  // Shiny gold
+                                Color(hex: "D4AF37"),
+                                Color(hex: "F4E5B0"),
+                                Color(hex: "D4AF37")
                             ],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         ),
-                        lineWidth: 3
+                        lineWidth: isIPad ? 2 : 3
                     )
-                    .padding(8) // Creates space between outer and inner border
-
+                    .padding(isIPad ? 6 : 8)
             }
 
-            // BACK SIDE
             if !isFaceUp {
                 Image(backImageName)
                     .resizable()
                     .scaledToFit()
-                    .frame(maxWidth: 90, maxHeight: 90)
+                    .frame(
+                        maxWidth: isIPad ? 145 : 90,
+                        maxHeight: isIPad ? 145 : 90
+                    )
                     .opacity(0.9)
-                
             }
 
-            // FRONT SIDE
             if isFaceUp {
                 VStack {
-                    Spacer() // Push content down
+                    Spacer()
 
-                    VStack(spacing: 12) {
+                    VStack(spacing: isIPad ? 6 : 12) {
                         if let imageName = imageName {
                             Image(imageName)
                                 .resizable()
                                 .scaledToFit()
-                                // <-- Make Date image smaller
-                                .frame(maxHeight: imageName == "Date" ? 65 : 120)
+                                .frame(maxHeight: imageName == "Date" ? (isIPad ? 100 : 65) : (isIPad ? 175 : 120))
                         }
 
                         if let text = text {
                             Text(text)
                                 .foregroundStyle(Color(hex: "7A4A2E"))
-        // .font(.system(size: 20, weight: .bold, design: .rounded))
                                 .multilineTextAlignment(.center)
-                                .padding(.horizontal, 8)
-                            .font(.custom("Saudi-Bold", size: 20))
-
+                                .padding(.horizontal, isIPad ? 8 : 8)
+                                .font(.custom("Saudi-Bold", size: isIPad ? 24 : 20))
                         }
                     }
-                    Spacer() // Push content up
+
+                    Spacer()
                 }
                 .aspectRatio(0.6, contentMode: .fit)
             }
@@ -95,9 +91,8 @@ struct CardView: View {
         CardView(text: nil, imageName: "NajdW", isFaceUp: true)
             .frame(width: 120)
 
-        CardView(text: nil, imageName: "Date", isFaceUp: true) // smaller image
+        CardView(text: nil, imageName: "Date", isFaceUp: true)
             .frame(width: 120)
     }
     .padding()
 }
-
