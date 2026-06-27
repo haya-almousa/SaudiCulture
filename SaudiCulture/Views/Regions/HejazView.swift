@@ -263,7 +263,7 @@ struct HejazView: View {
         case 2:
             return [
                 Card(text: nil, imageName: "ﺛﻮب اﻟﺼﺪرة", borderColor: Color(hex:"731112"), pairID:1),
-                Card(text: "ﺛﻮب اﻟﺼﺪر]", imageName: nil, borderColor: Color(hex:"731112"), pairID:1),
+                Card(text: "ﺛﻮب اﻟﺼﺪرة", imageName: nil, borderColor: Color(hex:"731112"), pairID:1),
 
                 Card(text: nil, imageName: "ﻣﺴﻔﻊ", borderColor: Color(hex:"731112"), pairID:2),
                 Card(text: "ﻣﺴﻔﻊ", imageName: nil, borderColor: Color(hex:"731112"), pairID:2),
@@ -561,5 +561,5 @@ struct HejazView: View {
 }
 
 #Preview {
-    HejazView(region: .central, levelNumber: 5)
+    HejazView(region: .central, levelNumber: 4)
 }

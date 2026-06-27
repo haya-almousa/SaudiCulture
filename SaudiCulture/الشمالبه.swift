@@ -94,7 +94,7 @@ struct NorthernView: View {
             let boxHeight: CGFloat = isIPad ? 760 : 480
 
             let boxY: CGFloat = isIPad ? screenH * 0.72 : screenH * 0.74
-            let imageY: CGFloat = isIPad ? 220 : 140
+            let imageY: CGFloat = isIPad ? 220 : 190
 
             ZStack {
                 Color("BackgroundMain")

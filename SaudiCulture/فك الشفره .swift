@@ -58,7 +58,7 @@ struct PuzzleView: View {
     @State private var showPopup = false
     
     var currentIndex: Int {
-        return levelNumber
+        min(max(levelNumber - 1, 0), activePuzzles.count - 1)
     }
 
     @State private var feedback = ""
@@ -127,17 +127,6 @@ struct PuzzleView: View {
     ]
     
     @State private var goToMap = false
-    
-    var backgroundName: String {
-        switch region {
-        case .central: return "الوسطى"
-        case .southern: return "الجنوبية"
-        case .eastern: return "الشرقية"
-        case .northern: return "الشمالية"
-        case .western: return "الغربية"
-        }
-    }
-    
     @State private var showHint = false
     @State private var shake = false
     @State private var stopShaking = false
@@ -148,7 +137,6 @@ struct PuzzleView: View {
             ZStack {
                 Image(backgroundImageName)
                     .resizable()
-                    
                     .ignoresSafeArea()
                 
                 VStack {
@@ -214,7 +202,6 @@ struct PuzzleView: View {
                                 .frame(width: isIPad ? 420 : 290, height: 2)
                                 .foregroundColor(Color(hex: "874F35"))
                         }
-                        .offset(x: 0, y: 0)
                         
                         HStack {
                             Button(action: {
@@ -267,31 +254,29 @@ struct PuzzleView: View {
                     .overlay(
                         Group {
                             if showPopup {
-                                ZStack {
-                                    VStack(spacing: 20) {
-                                        Text(activePuzzles[currentIndex].hint)
-                                            .font(.custom("Saudi-Regular", size: isIPad ? 30 : 22))
-                                            .foregroundColor(Color(hex: "FCF0DD"))
-                                            .multilineTextAlignment(.center)
-                                        
-                                        Button("إغلاق") {
-                                            withAnimation {
-                                                showPopup = false
-                                            }
+                                VStack(spacing: 20) {
+                                    Text(activePuzzles[currentIndex].hint)
+                                        .font(.custom("Saudi-Regular", size: isIPad ? 30 : 22))
+                                        .foregroundColor(Color(hex: "FCF0DD"))
+                                        .multilineTextAlignment(.center)
+                                    
+                                    Button("إغلاق") {
+                                        withAnimation {
+                                            showPopup = false
                                         }
-                                        .font(.custom("Saudi-Regular", size: isIPad ? 24 : 18))
-                                        .padding(.horizontal, 30)
-                                        .padding(.vertical, 10)
-                                        .background(Color(hex: "FCF0DD"))
-                                        .foregroundColor(Color(hex: "874F35"))
-                                        .clipShape(Capsule())
                                     }
-                                    .padding(isIPad ? 34 : 24)
-                                    .background(Color(hex: "874F35"))
-                                    .cornerRadius(24)
-                                    .shadow(radius: 10)
-                                    .transition(.scale)
+                                    .font(.custom("Saudi-Regular", size: isIPad ? 24 : 18))
+                                    .padding(.horizontal, 30)
+                                    .padding(.vertical, 10)
+                                    .background(Color(hex: "FCF0DD"))
+                                    .foregroundColor(Color(hex: "874F35"))
+                                    .clipShape(Capsule())
                                 }
+                                .padding(isIPad ? 34 : 24)
+                                .background(Color(hex: "874F35"))
+                                .cornerRadius(24)
+                                .shadow(radius: 10)
+                                .transition(.scale)
                             }
                         }
                     )
@@ -299,9 +284,12 @@ struct PuzzleView: View {
                     
                     Button(action: {
                         let correct = activePuzzles[currentIndex].answer
+                        let secondCorrect = activePuzzles[currentIndex].secondAnswer
                         let userAnswer = answer.trimmingCharacters(in: .whitespacesAndNewlines)
                         
-                        if userAnswer.isSimilar(to: correct) {
+                        if userAnswer.isSimilar(to: correct) ||
+                            (secondCorrect != nil && userAnswer.isSimilar(to: secondCorrect!)) {
+                            
                             showSuccessEmoji = true
                             feedback = ""
                             

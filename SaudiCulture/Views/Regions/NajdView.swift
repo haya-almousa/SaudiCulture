@@ -243,10 +243,10 @@ struct NajdView: View {
 
     var requiredPairsForLevel: Int {
         switch levelNumber {
-        case 1: return 3
-        case 2: return 2
+        case 1: return 4
+        case 2: return 4
         case 3: return 4
-        case 4: return 2
+        case 4: return 4
         default: return 4
         }
     }
@@ -549,5 +549,5 @@ struct NajdView: View {
 }
 
 #Preview {
-    NajdView(region: .central, levelNumber: 1)
+    NajdView(region: .central, levelNumber: 2)
 }

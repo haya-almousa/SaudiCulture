@@ -42,7 +42,7 @@ struct StackedCirclesView: View {
             let isIPad = screenW >= 700
             
             let titleFontSize: CGFloat = isIPad ? 36 : 26
-            let titleOffsetY: CGFloat = isIPad ? -720 : -360
+            let titleOffsetY: CGFloat = isIPad ? -720 : -340
             
             let mapCircleSize: CGFloat = isIPad ? 75 : 60
             let mapImageSize: CGFloat = isIPad ? 45 : 35

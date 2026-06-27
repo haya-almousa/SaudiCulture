@@ -272,7 +272,7 @@ struct EasternView: View {
                 Card(text: nil, imageName: "غترة بيضاء", borderColor: Color(hex: "731112"), pairID: 2),
                 Card(text: " غترة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
                 Card(text: nil, imageName: "عقال زري", borderColor: Color(hex: "731112"), pairID: 3),
-                Card(text: " بخنق و دراعة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
+                Card(text: " عقال مقصب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
                 Card(text: nil, imageName: "ثوب", borderColor: Color(hex: "731112"), pairID: 4),
                 Card(text: "ثوب مرودن", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
                 Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
@@ -294,13 +294,13 @@ struct EasternView: View {
         case 3:
             return [
                 Card(text: nil, imageName: "عقال زري", borderColor: Color(hex: "731112"), pairID: 1),
-                Card(text:"عقال زري ", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+                Card(text:"عقال ", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
                 Card(text: nil, imageName: "غترة بيضاء", borderColor: Color(hex: "731112"), pairID: 2),
                 Card(text: "غترة", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
                 Card(text: nil, imageName: "صديرية", borderColor: Color(hex: "731112"), pairID: 3),
                 Card(text: " صديرية", imageName: nil, borderColor: Color(hex: "731112"), pairID: 3),
                 Card(text: nil, imageName: "ثوب عادي", borderColor: Color(hex: "731112"), pairID: 4),
-                Card(text: " غترة و صديريه", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
+                Card(text: " ثوب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 4),
                 Card(text: "لحالة بالميدان", imageName: "Date", borderColor: Color(hex: "731112"), pairID: 5)
             ]
             
@@ -370,8 +370,9 @@ struct EasternView: View {
                 SaudiMapView()
             }
             .navigationDestination(isPresented: $goToNextGame) {
-                EasternView(region: region, levelNumber: levelNumber + 1)
-            }
+                LevelAlsharqiya(levelNumber: levelNumber)
+             }
+            
             .navigationBarBackButtonHidden(true)
             .navigationBarTitleDisplayMode(.inline)
             .onReceive(viewModel.$gameWon) { won in
@@ -529,10 +530,10 @@ struct EasternView: View {
     private var matchesView: some View {
         HStack {
             Text("مطابقات: \(viewModel.matchedPairsCount)/\(viewModel.getTotalPairs())")
-                .font(.custom("Saudi-Regular", size: 28))
+                .font(.custom("Saudi-Bold", size: 28))
                 .foregroundColor(Color(hex: "7A4A2E"))
-            
             Spacer()
+        
         }
         .padding(.horizontal, 26)
     }
@@ -567,5 +568,5 @@ struct EasternView: View {
 }
 
 #Preview {
-    EasternView(region: .eastern, levelNumber: 5)
+    EasternView(region: .eastern, levelNumber: 4)
 }

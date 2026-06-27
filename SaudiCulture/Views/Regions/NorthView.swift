@@ -34,7 +34,7 @@ struct NorthView: View {
         case 1:
             return [
                 Card(text: nil, imageName: "ثوب", borderColor: Color(hex: "731112"), pairID: 1),
-                Card(text: "ثوب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+                Card(text: "ثوب مردون", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
                 Card(text: nil, imageName: "عقال", borderColor: Color(hex: "731112"), pairID: 2),
                 Card(text: "عقال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
                 Card(text: nil, imageName: "Boy1", borderColor: Color(hex: "731112"), pairID: 3),
@@ -60,7 +60,7 @@ struct NorthView: View {
         case 3:
             return [
                 Card(text: nil, imageName: "ثوب", borderColor: Color(hex: "731112"), pairID: 1),
-                Card(text: "ثوب", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
+                Card(text: "ثوب مردون", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
                 Card(text: nil, imageName: "عقال", borderColor: Color(hex: "731112"), pairID: 2),
                 Card(text: "عقال", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
                 Card(text: nil, imageName: "Boy1", borderColor: Color(hex: "731112"), pairID: 3),
@@ -289,7 +289,7 @@ struct NorthView: View {
     private var matchesView: some View {
         HStack {
             Text("مطابقات: \(viewModel.matchedPairsCount)/\(viewModel.getTotalPairs())")
-                .font(.system(size: 18, weight: .semibold, design: .rounded))
+                .font(.custom("Saudi-Bold", size: 28))
                 .foregroundColor(Color(hex: "7A4A2E"))
             Spacer()
         }
@@ -323,5 +323,5 @@ struct NorthView: View {
 }
 
 #Preview {
-    NorthView(region: .northern, levelNumber: 5)
+    NorthView(region: .northern, levelNumber: 4)
 }

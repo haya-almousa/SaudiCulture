@@ -309,7 +309,7 @@ struct AsirView: View {
 
         case 4:
             return [
-                Card(text: nil, imageName: "طفله جنوبيه" , borderColor: Color(hex: "731112"), pairID: 1),
+                Card(text: nil, imageName: "طفله جنوبيه", borderColor: Color(hex: "731112"), pairID: 1),
                 Card(text: "اللبس التراثي  للبنات", imageName: nil, borderColor: Color(hex: "731112"), pairID: 1),
                 Card(text: nil, imageName:"G1-S", borderColor: Color(hex: "731112"), pairID: 2),
                 Card(text: "ثوب مكلف", imageName: nil, borderColor: Color(hex: "731112"), pairID: 2),
@@ -376,19 +376,29 @@ struct AsirView: View {
                 LevelAljanubiya(levelNumber: levelNumber)
             }
             .navigationBarBackButtonHidden(true)
-            .onAppear {
-                viewModel.setupCards(cardPairs: asirLevels)
-                isPreviewMode = true
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                    withAnimation(.easeInOut(duration: 0.4)) {
-                        isPreviewMode = false
-                    }
+            .onReceive(viewModel.$gameWon) { won in
+                if won {
+                    timerRunning = false
+                    viewModel.revealAllCards()
                     
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        withAnimation(.spring(response: 0.6, dampingFraction: 0.7)) {
-                            viewModel.shuffleCards()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        withAnimation(.easeInOut) {
+                            activePopup = .win
                         }
+                    }
+                }
+            }
+            .onAppear {
+                startGame()
+                
+                Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+                    if timerRunning && timeRemaining > 0 {
+                        timeRemaining -= 1
+                        flashRed = timeRemaining <= 15 && timeRemaining > 0
+                    } else if timeRemaining == 0 {
+                        timer.invalidate()
+                        activePopup = .timeUp
+                        timerRunning = false
                     }
                 }
             }
@@ -510,12 +520,29 @@ struct AsirView: View {
         .padding(.horizontal, 26)
     }
 
+    func startGame() {
+        viewModel.setupCards(cardPairs: asirLevels)
+        isPreviewMode = true
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            withAnimation(.easeInOut(duration: 0.4)) {
+                isPreviewMode = false
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                withAnimation(.spring(response: 0.6, dampingFraction: 0.7)) {
+                    viewModel.shuffleCards()
+                }
+            }
+        }
+    }
+
     func resetGame() {
         timeRemaining = 90
         timerRunning = true
         flashRed = false
-        isPreviewMode = true
-        viewModel.setupCards(cardPairs: asirLevels)
+        activePopup = nil
+        startGame()
     }
 
     func timeString(_ seconds: Int) -> String {
@@ -526,5 +553,5 @@ struct AsirView: View {
 }
 
 #Preview {
-    AsirView(region: .southern, levelNumber: 5)
+    AsirView(region: .southern, levelNumber: 4)
 }
